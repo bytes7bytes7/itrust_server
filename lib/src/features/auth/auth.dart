@@ -1,73 +1,72 @@
 import 'dart:convert';
 
-import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
-final _logger = Logger('$AuthAPI');
+import '../common/common.dart';
 
-class User {
-  const User({
-    required this.email,
-    required this.password,
-  });
+part 'auth.g.dart';
 
-  final String email;
-  final String password;
-}
+final _logger = Logger('$AuthService');
 
-class AuthAPI {
-  final _storage = <User>[];
+class AuthService {
+  const AuthService({
+    required EndUserRepository endUserRepository,
+  }) : _endUserRepository = endUserRepository;
 
-  Router get router {
-    return Router()
-      ..post('/', (Request req) async {
-        final payload = await req.readAsString();
+  final EndUserRepository _endUserRepository;
 
-        final userInfo = <String, Object?>{};
-        try {
-          userInfo.addAll(json.decode(payload) as Map<String, Object?>);
-        } catch (e) {
-          _logger.warning(e);
+  Router get router => _$AuthServiceRouter(this);
 
-          return Response.badRequest(
-            body: 'Provide your email and password in JSON format',
-          );
-        }
+  @Route.post('/')
+  Future<Response> auth(Request request) async {
+    final payload = await request.readAsString();
 
-        final email = userInfo['email'];
-        final password = userInfo['password'];
+    final userInfo = <String, Object?>{};
+    try {
+      userInfo.addAll(json.decode(payload) as Map<String, Object?>);
+    } catch (e) {
+      _logger.warning(e);
 
-        if (email == null ||
-            email is! String ||
-            email.isEmpty ||
-            password == null ||
-            password is! String ||
-            password.isEmpty) {
-          return Response.badRequest(
-            body: 'Provide your email and password',
-          );
-        }
+      return Response.badRequest(
+        body: 'Provide your email and password in JSON format',
+      );
+    }
 
-        final userFromDB = _storage.firstWhereOrNull((e) => e.email == email);
+    final email = userInfo['email'];
+    final password = userInfo['password'];
 
-        if (userFromDB != null) {
-          if (password == userFromDB.password) {
-            return Response.ok('Logged in');
-          }
+    if (email == null ||
+        email is! String ||
+        email.isEmpty ||
+        password == null ||
+        password is! String ||
+        password.isEmpty) {
+      return Response.badRequest(
+        body: 'Provide your email and password',
+      );
+    }
 
-          return Response.forbidden('Wrong password');
-        }
+    final userFromDB = await _endUserRepository.findByEmail(email: email);
 
-        final newUser = User(
-          email: email,
-          password: password,
-        );
+    if (userFromDB != null) {
+      if (password == userFromDB.password) {
+        return Response.ok('Logged in');
+      }
 
-        _storage.add(newUser);
+      return Response.forbidden('Wrong password');
+    }
 
-        return Response.ok('Registered');
-      });
+    final newUser = EndUser(
+      // empty due to creation
+      id: UserID(''),
+      email: email,
+      password: password,
+    );
+
+    await _endUserRepository.create(user: newUser);
+
+    return Response.ok('Registered');
   }
 }
