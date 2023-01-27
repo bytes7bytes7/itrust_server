@@ -4,7 +4,7 @@ import '../value_objects/user_id/user_id.dart';
 abstract class EndUserRepository {
   /// Add new user to DB.
   /// Ignores id field and create new one.
-  Future<void> create({required EndUser user});
+  Future<EndUser> create({required EndUser user});
 
   Future<EndUser?> find({required UserID userID});
 

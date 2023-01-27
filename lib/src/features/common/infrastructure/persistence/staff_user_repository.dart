@@ -9,12 +9,15 @@ class TestStaffUserRepository implements StaffUserRepository {
   final _storage = <UserID, StaffUser>{};
 
   @override
-  Future<void> create({required StaffUser user}) async {
+  Future<StaffUser> create({required StaffUser user}) async {
     final id = UserID('${_maxID++}');
-
-    _storage[id] = user.copyWith(
+    final newUser = user.copyWith(
       id: id,
     );
+
+    _storage[id] = newUser;
+
+    return newUser;
   }
 
   @override

@@ -10,12 +10,15 @@ class TestEndUserRepository implements EndUserRepository {
   final _storage = <UserID, EndUser>{};
 
   @override
-  Future<void> create({required EndUser user}) async {
+  Future<EndUser> create({required EndUser user}) async {
     final id = UserID('${_maxID++}');
-
-    _storage[id] = user.copyWith(
+    final newUser = user.copyWith(
       id: id,
     );
+
+    _storage[id] = newUser;
+
+    return newUser;
   }
 
   @override

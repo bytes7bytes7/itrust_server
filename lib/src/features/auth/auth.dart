@@ -52,7 +52,7 @@ class AuthService {
 
     if (userFromDB != null) {
       if (password == userFromDB.password) {
-        return Response.ok('Logged in');
+        return Response.ok(json.encode(userFromDB.toJson()));
       }
 
       return Response.forbidden('Wrong password');
@@ -65,8 +65,8 @@ class AuthService {
       password: password,
     );
 
-    await _endUserRepository.create(user: newUser);
+    final createdUser = await _endUserRepository.create(user: newUser);
 
-    return Response.ok('Registered');
+    return Response.ok(json.encode(createdUser.toJson()));
   }
 }

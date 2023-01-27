@@ -37,6 +37,8 @@ void main(List<String> args) async {
     ..mount(
       '/users/',
       UserService(
+        // TODO: use get_it
+        logger: Logger('$UserService'),
         endUserRepository: _getIt.get<EndUserRepository>(),
         staffUserRepository: _getIt.get<StaffUserRepository>(),
       ).router,

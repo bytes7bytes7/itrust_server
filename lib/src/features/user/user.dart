@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:logging/logging.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
@@ -9,11 +10,14 @@ part 'user.g.dart';
 
 class UserService {
   const UserService({
+    required Logger logger,
     required EndUserRepository endUserRepository,
     required StaffUserRepository staffUserRepository,
-  })  : _endUserRepository = endUserRepository,
+  })  : _logger = logger,
+        _endUserRepository = endUserRepository,
         _staffUserRepository = staffUserRepository;
 
+  final Logger _logger;
   final EndUserRepository _endUserRepository;
   final StaffUserRepository _staffUserRepository;
 
