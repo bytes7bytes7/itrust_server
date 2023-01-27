@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../common/common.dart';
+
 part 'auth_response.g.dart';
 
 @JsonSerializable()
@@ -12,7 +14,7 @@ class AuthResponse {
     required this.token,
   });
 
-  final String id;
+  final UserID id;
   final String firstName;
   final String lastName;
   final String email;

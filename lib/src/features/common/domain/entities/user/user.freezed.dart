@@ -32,19 +32,25 @@ mixin _$User {
   UserID get id => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(UserID id, String email, String password) end,
+    required TResult Function(UserID id, String firstName, String lastName,
+            String email, String password)
+        end,
     required TResult Function(UserID id) staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserID id, String email, String password)? end,
+    TResult? Function(UserID id, String firstName, String lastName,
+            String email, String password)?
+        end,
     TResult? Function(UserID id)? staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserID id, String email, String password)? end,
+    TResult Function(UserID id, String firstName, String lastName, String email,
+            String password)?
+        end,
     TResult Function(UserID id)? staff,
     required TResult orElse(),
   }) =>
@@ -121,7 +127,12 @@ abstract class _$$EndUserCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$EndUserCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({UserID id, String email, String password});
+  $Res call(
+      {UserID id,
+      String firstName,
+      String lastName,
+      String email,
+      String password});
 
   @override
   $UserIDCopyWith<$Res> get id;
@@ -137,6 +148,8 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
   @override
   $Res call({
     Object? id = null,
+    Object? firstName = null,
+    Object? lastName = null,
     Object? email = null,
     Object? password = null,
   }) {
@@ -145,6 +158,14 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UserID,
+      firstName: null == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -162,6 +183,8 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
 class _$EndUser implements EndUser {
   const _$EndUser(
       {required this.id,
+      required this.firstName,
+      required this.lastName,
       required this.email,
       required this.password,
       final String? $type})
@@ -173,6 +196,10 @@ class _$EndUser implements EndUser {
   @override
   final UserID id;
   @override
+  final String firstName;
+  @override
+  final String lastName;
+  @override
   final String email;
 // TODO: replace with hashedPassword
   @override
@@ -183,7 +210,7 @@ class _$EndUser implements EndUser {
 
   @override
   String toString() {
-    return 'User.end(id: $id, email: $email, password: $password)';
+    return 'User.end(id: $id, firstName: $firstName, lastName: $lastName, email: $email, password: $password)';
   }
 
   @override
@@ -192,6 +219,10 @@ class _$EndUser implements EndUser {
         (other.runtimeType == runtimeType &&
             other is _$EndUser &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password));
@@ -199,7 +230,8 @@ class _$EndUser implements EndUser {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, email, password);
+  int get hashCode =>
+      Object.hash(runtimeType, id, firstName, lastName, email, password);
 
   @JsonKey(ignore: true)
   @override
@@ -210,30 +242,36 @@ class _$EndUser implements EndUser {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(UserID id, String email, String password) end,
+    required TResult Function(UserID id, String firstName, String lastName,
+            String email, String password)
+        end,
     required TResult Function(UserID id) staff,
   }) {
-    return end(id, email, password);
+    return end(id, firstName, lastName, email, password);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserID id, String email, String password)? end,
+    TResult? Function(UserID id, String firstName, String lastName,
+            String email, String password)?
+        end,
     TResult? Function(UserID id)? staff,
   }) {
-    return end?.call(id, email, password);
+    return end?.call(id, firstName, lastName, email, password);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserID id, String email, String password)? end,
+    TResult Function(UserID id, String firstName, String lastName, String email,
+            String password)?
+        end,
     TResult Function(UserID id)? staff,
     required TResult orElse(),
   }) {
     if (end != null) {
-      return end(id, email, password);
+      return end(id, firstName, lastName, email, password);
     }
     return orElse();
   }
@@ -280,6 +318,8 @@ class _$EndUser implements EndUser {
 abstract class EndUser implements User {
   const factory EndUser(
       {required final UserID id,
+      required final String firstName,
+      required final String lastName,
       required final String email,
       required final String password}) = _$EndUser;
 
@@ -287,6 +327,8 @@ abstract class EndUser implements User {
 
   @override
   UserID get id;
+  String get firstName;
+  String get lastName;
   String get email; // TODO: replace with hashedPassword
   String get password;
   @override
@@ -371,7 +413,9 @@ class _$StaffUser implements StaffUser {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(UserID id, String email, String password) end,
+    required TResult Function(UserID id, String firstName, String lastName,
+            String email, String password)
+        end,
     required TResult Function(UserID id) staff,
   }) {
     return staff(id);
@@ -380,7 +424,9 @@ class _$StaffUser implements StaffUser {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserID id, String email, String password)? end,
+    TResult? Function(UserID id, String firstName, String lastName,
+            String email, String password)?
+        end,
     TResult? Function(UserID id)? staff,
   }) {
     return staff?.call(id);
@@ -389,7 +435,9 @@ class _$StaffUser implements StaffUser {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserID id, String email, String password)? end,
+    TResult Function(UserID id, String firstName, String lastName, String email,
+            String password)?
+        end,
     TResult Function(UserID id)? staff,
     required TResult orElse(),
   }) {

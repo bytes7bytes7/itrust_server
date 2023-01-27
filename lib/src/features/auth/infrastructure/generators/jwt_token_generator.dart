@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../env/env_module.dart';
+import '../../../common/common.dart';
 import '../../application/application.dart';
 
 @Singleton(as: JwtTokenGenerator)
@@ -20,13 +21,13 @@ class ProdJwtTokenGenerator implements JwtTokenGenerator {
   final String audience;
 
   @override
-  String generate(String userID, String firstName, String lastName) {
+  String generate(EndUser user) {
     final jwt = JWT(
       {
-        'firstName': firstName,
-        'lastName': lastName,
+        'firstName': user.firstName,
+        'lastName': user.lastName,
       },
-      subject: userID,
+      subject: user.id.str,
       jwtId: Uuid().v4(),
       issuer: issuer,
       audience: Audience.one(audience),

@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
-import 'package:uuid/uuid.dart';
 
+import '../../../common/common.dart';
 import '../../application/application.dart';
 import '../../application/auth_result.dart';
 
@@ -9,42 +9,66 @@ import '../../application/auth_result.dart';
 class TestAuthService implements AuthService {
   const TestAuthService({
     required JwtTokenGenerator jwtTokenGenerator,
-  }) : _jwtTokenGenerator = jwtTokenGenerator;
+    required EndUserRepository endUserRepository,
+  })  : _jwtTokenGenerator = jwtTokenGenerator,
+        _endUserRepository = endUserRepository;
 
   final JwtTokenGenerator _jwtTokenGenerator;
+  final EndUserRepository _endUserRepository;
 
   @override
-  AuthResult register({
+  Future<AuthResult> register({
     required String firstName,
     required String lastName,
     required String email,
     required String password,
-  }) {
-    // check if user exists
+  }) async {
+    final userAlreadyExists =
+        await _endUserRepository.getUserByEmail(email: email) != null;
 
-    // create user
-    final userID = Uuid().v4();
+    if (userAlreadyExists) {
+      throw Exception('User with given email already exists');
+    }
 
-    // gen JWT
-    final token = _jwtTokenGenerator.generate(userID, firstName, lastName);
-
-    return AuthResult(
-      id: userID,
+    final user = EndUser(
+      id: UserID.generate(),
       firstName: firstName,
       lastName: lastName,
       email: email,
+      password: password,
+    );
+
+    await _endUserRepository.add(user: user);
+
+    final token = _jwtTokenGenerator.generate(user);
+
+    return AuthResult(
+      user: user,
       token: token,
     );
   }
 
   @override
-  AuthResult login({required String email, required String password}) {
+  Future<AuthResult> login({
+    required String email,
+    required String password,
+  }) async {
+    final user = await _endUserRepository.getUserByEmail(email: email);
+    final userDoesNotExist = user == null;
+
+    if (userDoesNotExist) {
+      throw Exception('User with given email does not exist');
+    }
+
+    if (user.password != password) {
+      throw Exception('Invalid password');
+    }
+
+    final token = _jwtTokenGenerator.generate(user);
+
     return AuthResult(
-      id: Uuid().v4(),
-      firstName: 'firstName',
-      lastName: 'lastName',
-      email: email,
-      token: 'token',
+      user: user,
+      token: token,
     );
   }
 }

@@ -31,13 +31,6 @@ void main(List<String> args) async {
     ..mount(
       authRoute,
       _getIt.get<AuthController>().router,
-    )
-    ..mount(
-      '/users/',
-      UserService(
-        endUserRepository: _getIt.get<EndUserRepository>(),
-        staffUserRepository: _getIt.get<StaffUserRepository>(),
-      ).router,
     );
 
   final handler = Pipeline().addMiddleware(logRequests()).addHandler(app);

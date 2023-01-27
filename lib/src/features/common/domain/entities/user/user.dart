@@ -12,6 +12,8 @@ part 'user.g.dart';
 class User with _$User {
   const factory User.end({
     required UserID id,
+    required String firstName,
+    required String lastName,
     required String email,
     // TODO: replace with hashedPassword
     required String password,

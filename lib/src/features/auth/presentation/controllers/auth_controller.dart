@@ -32,7 +32,7 @@ class AuthController {
       return Response.badRequest();
     }
 
-    final authResult = _authService.register(
+    final authResult = await _authService.register(
       firstName: registerRequest.firstName,
       lastName: registerRequest.lastName,
       email: registerRequest.email,
@@ -40,10 +40,10 @@ class AuthController {
     );
 
     final response = AuthResponse(
-      id: authResult.id,
-      firstName: authResult.firstName,
-      lastName: authResult.lastName,
-      email: authResult.email,
+      id: authResult.user.id,
+      firstName: authResult.user.firstName,
+      lastName: authResult.user.lastName,
+      email: authResult.user.email,
       token: authResult.token,
     );
 
@@ -61,16 +61,16 @@ class AuthController {
       return Response.badRequest();
     }
 
-    final authResult = _authService.login(
+    final authResult = await _authService.login(
       email: loginRequest.email,
       password: loginRequest.password,
     );
 
     final response = AuthResponse(
-      id: authResult.id,
-      firstName: authResult.firstName,
-      lastName: authResult.lastName,
-      email: authResult.email,
+      id: authResult.user.id,
+      firstName: authResult.user.firstName,
+      lastName: authResult.user.lastName,
+      email: authResult.user.email,
       token: authResult.token,
     );
 
