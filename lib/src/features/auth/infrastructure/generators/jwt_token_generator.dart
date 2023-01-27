@@ -4,11 +4,16 @@ import 'package:uuid/uuid.dart';
 
 import '../../application/application.dart';
 
-// TODO: move to save place
-final _key = SecretKey('signingSecretKey');
-
 @Singleton(as: JwtTokenGenerator)
 class ProdJwtTokenGenerator implements JwtTokenGenerator {
+  const ProdJwtTokenGenerator({
+    required this.secret,
+    required this.issuer,
+  });
+
+  final String secret;
+  final String issuer;
+
   @override
   String generate(String userID, String firstName, String lastName) {
     final jwt = JWT(
@@ -18,11 +23,11 @@ class ProdJwtTokenGenerator implements JwtTokenGenerator {
       },
       subject: userID,
       jwtId: Uuid().v4(),
-      issuer: 'ITrust Social Network',
+      issuer: issuer,
     );
 
     return jwt.sign(
-      _key,
+      SecretKey(secret),
       expiresIn: Duration(days: 1),
     );
   }

@@ -4,3 +4,8 @@
 
 # Conventional directory for build output.
 build/
+
+.idea/
+.env.*
+**/env.dart
+**/env.g.dart

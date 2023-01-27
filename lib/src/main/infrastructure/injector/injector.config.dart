@@ -45,7 +45,10 @@ _i1.GetIt init(
     _i6.TestEndUserRepository(),
     registerFor: {_test},
   );
-  gh.singleton<_i7.JwtTokenGenerator>(_i8.ProdJwtTokenGenerator());
+  gh.singleton<_i7.JwtTokenGenerator>(_i8.ProdJwtTokenGenerator(
+    secret: gh<String>(),
+    issuer: gh<String>(),
+  ));
   gh.singleton<_i5.StaffUserRepository>(
     _i9.TestStaffUserRepository(),
     registerFor: {_test},
