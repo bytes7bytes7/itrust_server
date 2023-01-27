@@ -29,16 +29,12 @@ void main(List<String> args) async {
 
   final app = Router()
     ..mount(
-      '/auth/',
-      AuthService(
-        endUserRepository: _getIt.get<EndUserRepository>(),
-      ).router,
+      authRoute,
+      _getIt.get<AuthController>().router,
     )
     ..mount(
       '/users/',
       UserService(
-        // TODO: use get_it
-        logger: Logger('$UserService'),
         endUserRepository: _getIt.get<EndUserRepository>(),
         staffUserRepository: _getIt.get<StaffUserRepository>(),
       ).router,

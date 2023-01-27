@@ -1,17 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth.dart';
+part of 'auth_controller.dart';
 
 // **************************************************************************
 // ShelfRouterGenerator
 // **************************************************************************
 
-Router _$AuthServiceRouter(AuthService service) {
+Router _$AuthControllerRouter(AuthController service) {
   final router = Router();
   router.add(
     'POST',
-    r'/',
-    service.auth,
+    r'/register',
+    service.register,
+  );
+  router.add(
+    'POST',
+    r'/login',
+    service.login,
   );
   return router;
 }
