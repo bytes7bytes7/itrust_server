@@ -7,6 +7,12 @@ import '../../application/auth_result.dart';
 @test
 @Singleton(as: AuthService)
 class TestAuthService implements AuthService {
+  const TestAuthService({
+    required JwtTokenGenerator jwtTokenGenerator,
+  }) : _jwtTokenGenerator = jwtTokenGenerator;
+
+  final JwtTokenGenerator _jwtTokenGenerator;
+
   @override
   AuthResult register({
     required String firstName,
@@ -14,12 +20,20 @@ class TestAuthService implements AuthService {
     required String email,
     required String password,
   }) {
+    // check if user exists
+
+    // create user
+    final userID = Uuid().v4();
+
+    // gen JWT
+    final token = _jwtTokenGenerator.generate(userID, firstName, lastName);
+
     return AuthResult(
-      id: Uuid().v4(),
+      id: userID,
       firstName: firstName,
       lastName: lastName,
       email: email,
-      token: 'token',
+      token: token,
     );
   }
 
