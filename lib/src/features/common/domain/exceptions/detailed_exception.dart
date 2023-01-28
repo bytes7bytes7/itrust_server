@@ -4,6 +4,7 @@ enum DetailedExceptionType {
   validation,
   conflict,
   notFound,
+  unauthorized,
 }
 
 class DetailedException implements Exception {
@@ -37,6 +38,11 @@ class DetailedException implements Exception {
     required this.code,
     required this.description,
   }) : type = DetailedExceptionType.notFound;
+
+  const DetailedException.unauthorized({
+    required this.code,
+    required this.description,
+  }) : type = DetailedExceptionType.unauthorized;
 
   final DetailedExceptionType type;
   final String code;

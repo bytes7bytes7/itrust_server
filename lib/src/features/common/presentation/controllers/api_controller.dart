@@ -21,6 +21,9 @@ class ApiController {
       case DetailedExceptionType.notFound:
         status = HttpStatus.notFound;
         break;
+      case DetailedExceptionType.unauthorized:
+        status = HttpStatus.unauthorized;
+        break;
       default:
     }
 
