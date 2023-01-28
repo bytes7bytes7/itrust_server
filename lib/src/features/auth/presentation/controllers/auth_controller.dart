@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
@@ -47,7 +48,12 @@ class AuthController {
       token: authResult.token,
     );
 
-    return Response.ok(json.encode(response.toJson()));
+    return Response.ok(
+      json.encode(response.toJson()),
+      headers: {
+        HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+      },
+    );
   }
 
   @Route.post('/login')
@@ -74,6 +80,11 @@ class AuthController {
       token: authResult.token,
     );
 
-    return Response.ok(json.encode(response.toJson()));
+    return Response.ok(
+      json.encode(response.toJson()),
+      headers: {
+        HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+      },
+    );
   }
 }

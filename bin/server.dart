@@ -33,7 +33,7 @@ void main(List<String> args) async {
       _getIt.get<AuthController>().router,
     );
 
-  final handler = Pipeline().addMiddleware(logRequests()).addHandler(app);
+  final handler = Pipeline().addMiddleware(errorHandler()).addHandler(app);
 
   final ip = InternetAddress.anyIPv4;
   final port = int.parse(Platform.environment['PORT'] ?? '8080');
