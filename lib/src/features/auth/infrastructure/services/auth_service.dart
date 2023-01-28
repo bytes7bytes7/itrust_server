@@ -1,3 +1,4 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../common/common.dart';
@@ -17,7 +18,7 @@ class TestAuthService implements AuthService {
   final EndUserRepository _endUserRepository;
 
   @override
-  Future<AuthResult> register({
+  Future<Either<DetailedException, AuthResult>> register({
     required String firstName,
     required String lastName,
     required String email,
@@ -27,7 +28,7 @@ class TestAuthService implements AuthService {
         await _endUserRepository.getUserByEmail(email: email) != null;
 
     if (userAlreadyExists) {
-      throw Exception('User with given email already exists');
+      return left(const DuplicateEmail());
     }
 
     final user = EndUser(
@@ -42,14 +43,16 @@ class TestAuthService implements AuthService {
 
     final token = _jwtTokenGenerator.generate(user);
 
-    return AuthResult(
-      user: user,
-      token: token,
+    return right(
+      AuthResult(
+        user: user,
+        token: token,
+      ),
     );
   }
 
   @override
-  Future<AuthResult> login({
+  Future<Either<DetailedException, AuthResult>> login({
     required String email,
     required String password,
   }) async {
@@ -57,18 +60,20 @@ class TestAuthService implements AuthService {
     final userDoesNotExist = user == null;
 
     if (userDoesNotExist) {
-      throw Exception('User with given email does not exist');
+      return left(const InvalidCredentials());
     }
 
     if (user.password != password) {
-      throw Exception('Invalid password');
+      return left(const InvalidCredentials());
     }
 
     final token = _jwtTokenGenerator.generate(user);
 
-    return AuthResult(
-      user: user,
-      token: token,
+    return right(
+      AuthResult(
+        user: user,
+        token: token,
+      ),
     );
   }
 }

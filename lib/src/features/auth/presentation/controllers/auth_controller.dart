@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
+import '../../../common/common.dart';
 import '../../application/application.dart';
 import '../contracts/contracts.dart';
 
@@ -13,7 +14,7 @@ part 'auth_controller.g.dart';
 const authRoute = '/auth/';
 
 @injectable
-class AuthController {
+class AuthController extends ApiController {
   const AuthController({
     required AuthService authService,
   }) : _authService = authService;
@@ -40,19 +41,22 @@ class AuthController {
       password: registerRequest.password,
     );
 
-    final response = AuthResponse(
-      id: authResult.user.id,
-      firstName: authResult.user.firstName,
-      lastName: authResult.user.lastName,
-      email: authResult.user.email,
-      token: authResult.token,
-    );
-
-    return Response.ok(
-      json.encode(response.toJson()),
-      headers: {
-        HttpHeaders.contentTypeHeader: ContentType.json.toString(),
-      },
+    return authResult.match(
+      problem,
+      (r) => Response.ok(
+        json.encode(
+          AuthResponse(
+            id: r.user.id,
+            firstName: r.user.firstName,
+            lastName: r.user.lastName,
+            email: r.user.email,
+            token: r.token,
+          ),
+        ),
+        headers: {
+          HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+        },
+      ),
     );
   }
 
@@ -72,19 +76,22 @@ class AuthController {
       password: loginRequest.password,
     );
 
-    final response = AuthResponse(
-      id: authResult.user.id,
-      firstName: authResult.user.firstName,
-      lastName: authResult.user.lastName,
-      email: authResult.user.email,
-      token: authResult.token,
-    );
-
-    return Response.ok(
-      json.encode(response.toJson()),
-      headers: {
-        HttpHeaders.contentTypeHeader: ContentType.json.toString(),
-      },
+    return authResult.match(
+      problem,
+      (r) => Response.ok(
+        json.encode(
+          AuthResponse(
+            id: r.user.id,
+            firstName: r.user.firstName,
+            lastName: r.user.lastName,
+            email: r.user.email,
+            token: r.token,
+          ).toJson(),
+        ),
+        headers: {
+          HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+        },
+      ),
     );
   }
 }

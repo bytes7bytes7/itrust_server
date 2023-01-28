@@ -11,12 +11,14 @@ part 'problem_details_defaults.dart';
 )
 class ProblemDetails {
   factory ProblemDetails({
-    int status = HttpStatus.internalServerError,
+    int? status,
     String? type,
     String? title,
     String? detail,
     String? instance,
   }) {
+    status ??= HttpStatus.internalServerError;
+
     final errorData = _problemDetailsDefaults[status];
 
     if (errorData != null) {

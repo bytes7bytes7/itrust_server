@@ -1,14 +1,17 @@
+import 'package:fpdart/fpdart.dart';
+
+import '../../../common/common.dart';
 import '../auth_result.dart';
 
 abstract class AuthService {
-  Future<AuthResult> register({
+  Future<Either<DetailedException, AuthResult>> register({
     required String firstName,
     required String lastName,
     required String email,
     required String password,
   });
 
-  Future<AuthResult> login({
+  Future<Either<DetailedException, AuthResult>> login({
     required String email,
     required String password,
   });
