@@ -8,7 +8,7 @@ part of 'problem_details.dart';
 
 ProblemDetails _$ProblemDetailsFromJson(Map<String, dynamic> json) =>
     ProblemDetails(
-      status: json['status'] as int? ?? HttpStatus.internalServerError,
+      status: json['status'] as int?,
       type: json['type'] as String?,
       title: json['title'] as String?,
       detail: json['detail'] as String?,

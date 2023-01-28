@@ -16,10 +16,13 @@ const authRoute = '/auth/';
 @injectable
 class AuthController extends ApiController {
   const AuthController({
-    required AuthService authService,
-  }) : _authService = authService;
+    required AuthCommandService authCommandService,
+    required AuthQueryService authQueryService,
+  })  : _authCommandService = authCommandService,
+        _authQueryService = authQueryService;
 
-  final AuthService _authService;
+  final AuthCommandService _authCommandService;
+  final AuthQueryService _authQueryService;
 
   Router get router => _$AuthControllerRouter(this);
 
@@ -34,7 +37,7 @@ class AuthController extends ApiController {
       return Response.badRequest();
     }
 
-    final authResult = await _authService.register(
+    final authResult = await _authCommandService.register(
       firstName: registerRequest.firstName,
       lastName: registerRequest.lastName,
       email: registerRequest.email,
@@ -71,7 +74,7 @@ class AuthController extends ApiController {
       return Response.badRequest();
     }
 
-    final authResult = await _authService.login(
+    final authResult = await _authQueryService.login(
       email: loginRequest.email,
       password: loginRequest.password,
     );

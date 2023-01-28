@@ -1,2 +1,3 @@
+export 'commands/commands.dart';
 export 'generators/generators.dart';
-export 'services/services.dart';
+export 'queries/queries.dart';

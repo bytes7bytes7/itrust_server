@@ -9,12 +9,14 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:itrust_server/src/features/auth/application/application.dart'
     as _i6;
+import 'package:itrust_server/src/features/auth/infrastructure/commands/auth_command_service.dart'
+    as _i8;
 import 'package:itrust_server/src/features/auth/infrastructure/generators/jwt_token_generator.dart'
     as _i7;
-import 'package:itrust_server/src/features/auth/infrastructure/services/auth_service.dart'
-    as _i8;
-import 'package:itrust_server/src/features/auth/presentation/controllers/auth_controller.dart'
+import 'package:itrust_server/src/features/auth/infrastructure/queries/auth_query_service.dart'
     as _i10;
+import 'package:itrust_server/src/features/auth/presentation/controllers/auth_controller.dart'
+    as _i11;
 import 'package:itrust_server/src/features/common/application/application.dart'
     as _i3;
 import 'package:itrust_server/src/features/common/common.dart' as _i9;
@@ -23,7 +25,7 @@ import 'package:itrust_server/src/features/common/infrastructure/persistence/end
 import 'package:itrust_server/src/features/common/infrastructure/providers/date_time_provider.dart'
     as _i4;
 
-import '../../../env/env_module.dart' as _i11;
+import '../../../env/env_module.dart' as _i12;
 
 const String _test = 'test';
 
@@ -68,16 +70,25 @@ _i1.GetIt init(
     expiresIn: gh<int>(instanceName: 'jwtExpiresInMins'),
     audience: gh<String>(instanceName: 'jwtAudience'),
   ));
-  gh.singleton<_i6.AuthService>(
-    _i8.TestAuthService(
+  gh.singleton<_i6.AuthCommandService>(
+    _i8.TestAuthCommandService(
       jwtTokenGenerator: gh<_i6.JwtTokenGenerator>(),
       endUserRepository: gh<_i9.EndUserRepository>(),
     ),
     registerFor: {_test},
   );
-  gh.factory<_i10.AuthController>(
-      () => _i10.AuthController(authService: gh<_i6.AuthService>()));
+  gh.singleton<_i6.AuthQueryService>(
+    _i10.TestAuthQueryService(
+      jwtTokenGenerator: gh<_i6.JwtTokenGenerator>(),
+      endUserRepository: gh<_i9.EndUserRepository>(),
+    ),
+    registerFor: {_test},
+  );
+  gh.factory<_i11.AuthController>(() => _i11.AuthController(
+        authCommandService: gh<_i6.AuthCommandService>(),
+        authQueryService: gh<_i6.AuthQueryService>(),
+      ));
   return getIt;
 }
 
-class _$EnvModule extends _i11.EnvModule {}
+class _$EnvModule extends _i12.EnvModule {}
