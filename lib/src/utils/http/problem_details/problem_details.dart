@@ -11,8 +11,8 @@ part 'problem_details_defaults.dart';
 )
 class ProblemDetails {
   factory ProblemDetails({
-    String? type,
     int status = HttpStatus.internalServerError,
+    String? type,
     String? title,
     String? detail,
     String? instance,
@@ -25,8 +25,8 @@ class ProblemDetails {
     }
 
     return ProblemDetails._(
-      type: type,
       status: status,
+      type: type,
       title: title,
       detail: detail,
       instance: instance,
@@ -34,15 +34,15 @@ class ProblemDetails {
   }
 
   const ProblemDetails._({
+    required this.status,
     this.type,
-    this.status,
     this.title,
     this.detail,
     this.instance,
   });
 
+  final int status;
   final String? type;
-  final int? status;
   final String? title;
   final String? detail;
   final String? instance;

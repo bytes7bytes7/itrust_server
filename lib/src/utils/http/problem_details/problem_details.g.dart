@@ -8,15 +8,17 @@ part of 'problem_details.dart';
 
 ProblemDetails _$ProblemDetailsFromJson(Map<String, dynamic> json) =>
     ProblemDetails(
-      type: json['type'] as String?,
       status: json['status'] as int? ?? HttpStatus.internalServerError,
+      type: json['type'] as String?,
       title: json['title'] as String?,
       detail: json['detail'] as String?,
       instance: json['instance'] as String?,
     );
 
 Map<String, dynamic> _$ProblemDetailsToJson(ProblemDetails instance) {
-  final val = <String, dynamic>{};
+  final val = <String, dynamic>{
+    'status': instance.status,
+  };
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -25,7 +27,6 @@ Map<String, dynamic> _$ProblemDetailsToJson(ProblemDetails instance) {
   }
 
   writeNotNull('type', instance.type);
-  writeNotNull('status', instance.status);
   writeNotNull('title', instance.title);
   writeNotNull('detail', instance.detail);
   writeNotNull('instance', instance.instance);

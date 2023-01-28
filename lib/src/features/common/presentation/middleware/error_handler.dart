@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:shelf/shelf.dart';
@@ -10,16 +9,10 @@ Middleware errorHandler() => (innerHandler) {
         try {
           return await innerHandler(request);
         } catch (e) {
-          return Response.internalServerError(
-            body: json.encode(
-              ProblemDetails(
-                status: HttpStatus.internalServerError,
-              ).toJson(),
+          return ResponseX.problem(
+            problemDetails: ProblemDetails(
+              status: HttpStatus.internalServerError,
             ),
-            headers: {
-              HttpHeaders.contentTypeHeader:
-                  ContentTypeX.problemJson.toString(),
-            },
           );
         }
       };
