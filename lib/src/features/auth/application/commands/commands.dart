@@ -1,1 +1,1 @@
-export 'auth_command_service.dart';
+export 'register/register.dart';

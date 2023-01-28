@@ -330,6 +330,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.14"
+  mediatr:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: remove_either_dart
+      resolved-ref: "5c6da40761f75285496d8e29d3b0f15816926b61"
+      url: "https://github.com/bytes7bytes7/dart_mediatr.git"
+    source: git
+    version: "0.1.0"
   meta:
     dependency: transitive
     description:

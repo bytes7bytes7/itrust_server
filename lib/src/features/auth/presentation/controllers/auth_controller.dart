@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
+import 'package:mediatr/mediatr.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
@@ -16,13 +18,10 @@ const authRoute = '/auth/';
 @injectable
 class AuthController extends ApiController {
   const AuthController({
-    required AuthCommandService authCommandService,
-    required AuthQueryService authQueryService,
-  })  : _authCommandService = authCommandService,
-        _authQueryService = authQueryService;
+    required Mediator mediator,
+  }) : _mediator = mediator;
 
-  final AuthCommandService _authCommandService;
-  final AuthQueryService _authQueryService;
+  final Mediator _mediator;
 
   Router get router => _$AuthControllerRouter(this);
 
@@ -37,12 +36,15 @@ class AuthController extends ApiController {
       return Response.badRequest();
     }
 
-    final authResult = await _authCommandService.register(
+    final command = RegisterCommand(
       firstName: registerRequest.firstName,
       lastName: registerRequest.lastName,
       email: registerRequest.email,
       password: registerRequest.password,
     );
+
+    final authResult =
+        await _mediator.send(command) as Either<DetailedException, AuthResult>;
 
     return authResult.match(
       problem,
@@ -74,10 +76,13 @@ class AuthController extends ApiController {
       return Response.badRequest();
     }
 
-    final authResult = await _authQueryService.login(
+    final query = LoginQuery(
       email: loginRequest.email,
       password: loginRequest.password,
     );
+
+    final authResult =
+        await _mediator.send(query) as Either<DetailedException, AuthResult>;
 
     return authResult.match(
       problem,

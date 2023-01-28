@@ -1,14 +1,16 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
+import 'package:mediatr/mediatr.dart';
 
-import '../../../common/common.dart';
-import '../../application/application.dart';
-import '../../application/auth_result.dart';
+import '../../../../common/common.dart';
+import '../../common/common.dart';
+import '../../generators/generators.dart';
+import 'register_command.dart';
 
-@test
-@Singleton(as: AuthCommandService)
-class TestAuthCommandService implements AuthCommandService {
-  const TestAuthCommandService({
+@injectable
+class RegisterCommandHandler extends IRequestHandler<
+    Either<DetailedException, AuthResult>, RegisterCommand> {
+  const RegisterCommandHandler({
     required JwtTokenGenerator jwtTokenGenerator,
     required EndUserRepository endUserRepository,
   })  : _jwtTokenGenerator = jwtTokenGenerator,
@@ -18,14 +20,11 @@ class TestAuthCommandService implements AuthCommandService {
   final EndUserRepository _endUserRepository;
 
   @override
-  Future<Either<DetailedException, AuthResult>> register({
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String password,
-  }) async {
+  Future<Either<DetailedException, AuthResult>> call(
+    RegisterCommand request,
+  ) async {
     final userAlreadyExists =
-        await _endUserRepository.getUserByEmail(email: email) != null;
+        await _endUserRepository.getUserByEmail(email: request.email) != null;
 
     if (userAlreadyExists) {
       return left(const DuplicateEmail());
@@ -33,10 +32,10 @@ class TestAuthCommandService implements AuthCommandService {
 
     final user = EndUser(
       id: UserID.generate(),
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
+      firstName: request.firstName,
+      lastName: request.lastName,
+      email: request.email,
+      password: request.password,
     );
 
     await _endUserRepository.add(user: user);

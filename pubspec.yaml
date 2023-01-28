@@ -1,6 +1,7 @@
 name: itrust_server
 description: ITrust server.
 version: 1.0.0
+publish_to: none
 
 environment:
   sdk: '>=2.18.6 <3.0.0'
@@ -8,14 +9,18 @@ environment:
 dependencies:
   args: ^2.3.2
   collection: ^1.17.1
+  dart_jsonwebtoken: ^2.6.4
   envied: ^0.3.0
   fpdart: ^0.4.0
   freezed_annotation: ^2.2.0
   get_it: ^7.2.0
   injectable: ^2.1.0
   json_annotation: ^4.8.0
-  dart_jsonwebtoken: ^2.6.4
   logging: ^1.1.1
+  mediatr:
+    git:
+      url: https://github.com/bytes7bytes7/dart_mediatr.git
+      ref: remove_either_dart
   shelf: ^1.4.0
   shelf_router: ^1.1.3
   uuid: ^3.0.7

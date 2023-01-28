@@ -1,3 +1,2 @@
-export 'commands/commands.dart';
 export 'generators/generators.dart';
-export 'queries/queries.dart';
+export 'third_party/third_party.dart';

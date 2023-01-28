@@ -1,4 +1,4 @@
-import '../../common/common.dart';
+import '../../../common/common.dart';
 
 class AuthResult {
   AuthResult({
