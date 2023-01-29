@@ -1,3 +1,4 @@
 library mapster;
 
-export 'src/mapster_base.dart';
+export 'src/mappers/mappers.dart';
+export 'src/mapster.dart';
