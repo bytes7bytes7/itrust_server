@@ -1,57 +1,76 @@
+// ignore_for_file: avoid_print
+
 import 'package:mapster/mapster.dart';
 
-class A {
-  const A({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-  });
+import 'post.dart';
+import 'post_response.dart';
+import 'user.dart';
+import 'user_response.dart';
 
-  final int id;
-  final String firstName;
-  final String lastName;
+class UserToUserResponseMapper implements OneSourceMapper<User, UserResponse> {
+  const UserToUserResponseMapper();
 
   @override
-  String toString() =>
-      'A {id: $id, firstName: $firstName, lastName: $lastName}';
-}
-
-class B {
-  const B({
-    required this.id,
-    required this.fullName,
-  });
-
-  final int id;
-  final String fullName;
-
-  @override
-  String toString() => 'B {id: $id, fullName: $fullName}';
-}
-
-class AToBMapper implements OneSourceMapper<A, B> {
-  const AToBMapper();
-
-  @override
-  B map(A object) {
-    return B(
+  UserResponse map(User object) {
+    return UserResponse(
       id: object.id,
       fullName: '${object.firstName} ${object.lastName}',
     );
   }
 }
 
-void main() {
-  final mapster = Mapster()..register(AToBMapper());
+void oneSourceExample(Mapster mapster) {
+  mapster.register(UserToUserResponseMapper());
 
-  const a = A(
+  const user = User(
     id: 1,
     firstName: 'Harry',
     lastName: 'Potter',
   );
 
-  final b = mapster.map<A, B>(a);
+  final userResponse = mapster.map<User, UserResponse>(user);
 
-  print(a);
-  print(b);
+  print(userResponse);
+}
+
+class UserAndPostToPostResponse
+    implements TwoSourcesMapper<User, Post, PostResponse> {
+  @override
+  PostResponse map(User object1, Post object2) {
+    return PostResponse(
+      id: object2.id,
+      text: object2.text,
+      userID: object1.id,
+      userName: '${object1.firstName} ${object1.lastName}',
+    );
+  }
+}
+
+void twoSourcesExample(Mapster mapster) {
+  mapster.register(UserAndPostToPostResponse());
+
+  const user = User(
+    id: 1,
+    firstName: 'Harry',
+    lastName: 'Potter',
+  );
+
+  const post = Post(
+    id: 1,
+    text: "The philosopher's stone",
+  );
+
+  // You can spawn `FROM` types, the result will be the same
+  final postResponse1 = mapster.map2<User, Post, PostResponse>(user, post);
+  final postResponse2 = mapster.map2<Post, User, PostResponse>(post, user);
+
+  print(postResponse1);
+  print(postResponse2);
+}
+
+void main() {
+  final mapster = Mapster();
+
+  oneSourceExample(mapster);
+  twoSourcesExample(mapster);
 }
