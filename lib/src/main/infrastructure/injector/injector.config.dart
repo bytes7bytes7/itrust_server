@@ -8,30 +8,34 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:itrust_server/src/features/auth/application/application.dart'
-    as _i8;
-import 'package:itrust_server/src/features/auth/application/commands/register/register_command_handler.dart'
-    as _i13;
-import 'package:itrust_server/src/features/auth/application/generators/generators.dart'
-    as _i11;
-import 'package:itrust_server/src/features/auth/application/queries/login/login_query_handler.dart'
     as _i10;
+import 'package:itrust_server/src/features/auth/application/commands/register/register_command_handler.dart'
+    as _i15;
+import 'package:itrust_server/src/features/auth/application/generators/generators.dart'
+    as _i13;
+import 'package:itrust_server/src/features/auth/application/queries/login/login_query_handler.dart'
+    as _i12;
 import 'package:itrust_server/src/features/auth/infrastructure/generators/jwt_token_generator.dart'
-    as _i9;
-import 'package:itrust_server/src/features/auth/infrastructure/third_party/mediator_register.dart'
-    as _i14;
-import 'package:itrust_server/src/features/auth/presentation/controllers/auth_controller.dart'
+    as _i11;
+import 'package:itrust_server/src/features/auth/infrastructure/third_party/mapster_registrar.dart'
     as _i7;
+import 'package:itrust_server/src/features/auth/infrastructure/third_party/mediator_registrar.dart'
+    as _i16;
+import 'package:itrust_server/src/features/auth/presentation/controllers/auth_controller.dart'
+    as _i9;
 import 'package:itrust_server/src/features/common/application/application.dart'
     as _i3;
-import 'package:itrust_server/src/features/common/common.dart' as _i12;
+import 'package:itrust_server/src/features/common/common.dart' as _i14;
 import 'package:itrust_server/src/features/common/infrastructure/persistence/end_user_repository.dart'
     as _i5;
 import 'package:itrust_server/src/features/common/infrastructure/providers/date_time_provider.dart'
     as _i4;
-import 'package:mediatr/mediatr.dart' as _i6;
+import 'package:mapster/mapster.dart' as _i6;
+import 'package:mediatr/mediatr.dart' as _i8;
 
-import '../../../env/env_module.dart' as _i15;
-import '../third_party/mediator_module.dart' as _i16;
+import '../../../env/env_module.dart' as _i17;
+import '../third_party/mapster_module.dart' as _i18;
+import '../third_party/mediator_module.dart' as _i19;
 
 const String _test = 'test';
 
@@ -48,6 +52,7 @@ _i1.GetIt init(
     environment,
     environmentFilter,
   );
+  final mapsterModule = _$MapsterModule();
   final mediatorModule = _$MediatorModule();
   final envModule = _$EnvModule();
   gh.singleton<_i3.DateTimeProvider>(_i4.ProdDateTimeProvider());
@@ -55,7 +60,10 @@ _i1.GetIt init(
     _i5.TestEndUserRepository(),
     registerFor: {_test},
   );
-  gh.singleton<_i6.Mediator>(mediatorModule.mediator);
+  gh.singleton<_i6.Mapster>(mapsterModule.mapster);
+  gh.singleton<_i7.MapsterRegistrar>(
+      _i7.MapsterRegistrar(gh<_i6.Mapster>())..register());
+  gh.singleton<_i8.Mediator>(mediatorModule.mediator);
   gh.factory<String>(
     () => envModule.jwtSecret,
     instanceName: 'jwtSecret',
@@ -72,30 +80,34 @@ _i1.GetIt init(
     () => envModule.jwtExpiresInMins,
     instanceName: 'jwtExpiresInMins',
   );
-  gh.factory<_i7.AuthController>(
-      () => _i7.AuthController(mediator: gh<_i6.Mediator>()));
-  gh.singleton<_i8.JwtTokenGenerator>(_i9.ProdJwtTokenGenerator(
+  gh.factory<_i9.AuthController>(() => _i9.AuthController(
+        mediator: gh<_i8.Mediator>(),
+        mapster: gh<_i6.Mapster>(),
+      ));
+  gh.singleton<_i10.JwtTokenGenerator>(_i11.ProdJwtTokenGenerator(
     secret: gh<String>(instanceName: 'jwtSecret'),
     issuer: gh<String>(instanceName: 'jwtIssuer'),
     expiresIn: gh<int>(instanceName: 'jwtExpiresInMins'),
     audience: gh<String>(instanceName: 'jwtAudience'),
   ));
-  gh.factory<_i10.LoginQueryHandler>(() => _i10.LoginQueryHandler(
-        jwtTokenGenerator: gh<_i11.JwtTokenGenerator>(),
-        endUserRepository: gh<_i12.EndUserRepository>(),
+  gh.factory<_i12.LoginQueryHandler>(() => _i12.LoginQueryHandler(
+        jwtTokenGenerator: gh<_i13.JwtTokenGenerator>(),
+        endUserRepository: gh<_i14.EndUserRepository>(),
       ));
-  gh.factory<_i13.RegisterCommandHandler>(() => _i13.RegisterCommandHandler(
-        jwtTokenGenerator: gh<_i11.JwtTokenGenerator>(),
-        endUserRepository: gh<_i12.EndUserRepository>(),
+  gh.factory<_i15.RegisterCommandHandler>(() => _i15.RegisterCommandHandler(
+        jwtTokenGenerator: gh<_i13.JwtTokenGenerator>(),
+        endUserRepository: gh<_i14.EndUserRepository>(),
       ));
-  gh.singleton<_i14.MediatorRegister>(_i14.MediatorRegister(
-    gh<_i6.Mediator>(),
-    gh<_i8.RegisterCommandHandler>(),
-    gh<_i8.LoginQueryHandler>(),
+  gh.singleton<_i16.MediatorRegistrar>(_i16.MediatorRegistrar(
+    gh<_i8.Mediator>(),
+    gh<_i10.RegisterCommandHandler>(),
+    gh<_i10.LoginQueryHandler>(),
   )..register());
   return getIt;
 }
 
-class _$EnvModule extends _i15.EnvModule {}
+class _$EnvModule extends _i17.EnvModule {}
 
-class _$MediatorModule extends _i16.MediatorModule {}
+class _$MapsterModule extends _i18.MapsterModule {}
+
+class _$MediatorModule extends _i19.MediatorModule {}

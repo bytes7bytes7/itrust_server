@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
+import 'package:mapster/mapster.dart';
 import 'package:mediatr/mediatr.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
@@ -19,9 +20,12 @@ const authRoute = '/auth/';
 class AuthController extends ApiController {
   const AuthController({
     required Mediator mediator,
-  }) : _mediator = mediator;
+    required Mapster mapster,
+  })  : _mediator = mediator,
+        _mapster = mapster;
 
   final Mediator _mediator;
+  final Mapster _mapster;
 
   Router get router => _$AuthControllerRouter(this);
 
@@ -36,32 +40,23 @@ class AuthController extends ApiController {
       return Response.badRequest();
     }
 
-    final command = RegisterCommand(
-      firstName: registerRequest.firstName,
-      lastName: registerRequest.lastName,
-      email: registerRequest.email,
-      password: registerRequest.password,
-    );
+    final command = _mapster.map(registerRequest, To<RegisterCommand>());
 
     final authResult =
         await _mediator.send(command) as Either<DetailedException, AuthResult>;
 
     return authResult.match(
       problem,
-      (r) => Response.ok(
-        json.encode(
-          AuthResponse(
-            id: r.user.id,
-            firstName: r.user.firstName,
-            lastName: r.user.lastName,
-            email: r.user.email,
-            token: r.token,
-          ),
-        ),
-        headers: {
-          HttpHeaders.contentTypeHeader: ContentType.json.toString(),
-        },
-      ),
+      (r) {
+        final resp = _mapster.map(r, To<AuthResponse>());
+
+        return Response.ok(
+          json.encode(resp),
+          headers: {
+            HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+          },
+        );
+      },
     );
   }
 
@@ -76,10 +71,7 @@ class AuthController extends ApiController {
       return Response.badRequest();
     }
 
-    final query = LoginQuery(
-      email: loginRequest.email,
-      password: loginRequest.password,
-    );
+    final query = _mapster.map(loginRequest, To<LoginQuery>());
 
     final authResult =
         await _mediator.send(query) as Either<DetailedException, AuthResult>;
@@ -88,13 +80,7 @@ class AuthController extends ApiController {
       problem,
       (r) => Response.ok(
         json.encode(
-          AuthResponse(
-            id: r.user.id,
-            firstName: r.user.firstName,
-            lastName: r.user.lastName,
-            email: r.user.email,
-            token: r.token,
-          ).toJson(),
+          _mapster.map(r, To<AuthResponse>()).toJson(),
         ),
         headers: {
           HttpHeaders.contentTypeHeader: ContentType.json.toString(),

@@ -6,8 +6,8 @@ import '../../../common/common.dart';
 import '../../application/application.dart';
 
 @singleton
-class MediatorRegister {
-  const MediatorRegister(
+class MediatorRegistrar {
+  const MediatorRegistrar(
     this._mediator,
     this._registerCommandHandler,
     this._loginQueryHandler,

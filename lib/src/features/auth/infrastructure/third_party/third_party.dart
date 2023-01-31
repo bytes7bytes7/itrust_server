@@ -1,1 +1,1 @@
-export 'mediator_register.dart';
+export 'mediator_registrar.dart';
