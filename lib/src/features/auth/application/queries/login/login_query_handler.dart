@@ -6,19 +6,19 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../common/common.dart';
 import '../../common/common.dart';
-import '../../generators/generators.dart';
+import '../../services/jwt_token_service.dart';
 import 'login_query.dart';
 
 @injectable
 class LoginQueryHandler
     extends RequestHandler<Either<List<DetailedException>, AuthResult>, LoginQuery> {
   const LoginQueryHandler({
-    required JwtTokenGenerator jwtTokenGenerator,
+    required JwtTokenService jwtTokenService,
     required EndUserRepository endUserRepository,
-  })  : _jwtTokenGenerator = jwtTokenGenerator,
+  })  : _jwtTokenService = jwtTokenService,
         _endUserRepository = endUserRepository;
 
-  final JwtTokenGenerator _jwtTokenGenerator;
+  final JwtTokenService _jwtTokenService;
   final EndUserRepository _endUserRepository;
 
   @override
@@ -36,7 +36,7 @@ class LoginQueryHandler
       return left([const InvalidCredentials()]);
     }
 
-    final token = _jwtTokenGenerator.generate(user);
+    final token = _jwtTokenService.generate(user);
 
     return right(
       AuthResult(

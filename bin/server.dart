@@ -1,4 +1,5 @@
 import 'package:itrust_server/itrust_server.dart';
+import 'package:itrust_server/src/utils/utils.dart';
 
 const _printLogsKey = 'print_logs';
 const _envKey = 'env';
@@ -33,9 +34,22 @@ void main(List<String> args) async {
     ..mount(
       authRoute,
       _getIt.get<AuthController>().router,
+    )
+    ..mount(
+      feedRoute,
+      Pipeline().addMiddleware(_authorize()).addHandler(
+            _getIt.get<FeedController>().router,
+          ),
     );
 
-  final handler = Pipeline().addMiddleware(logRequests()).addHandler(app);
+  final handler = Pipeline()
+      .addMiddleware(
+        logRequests(
+          logger: (message, isError) =>
+              isError ? _logger.warning(message) : _logger.info(message),
+        ),
+      )
+      .addHandler(app);
 
   final ip = InternetAddress.anyIPv4;
   final port = int.parse(Platform.environment['PORT'] ?? '$_defaultPort');
@@ -58,3 +72,8 @@ void _configLogger({required bool printLogs}) {
     });
   }
 }
+
+Middleware _authorize() => authorize(
+      jwtSettings: _getIt.get<JwtSettings>(),
+      jwtTokenService: _getIt.get<JwtTokenService>(),
+    );
