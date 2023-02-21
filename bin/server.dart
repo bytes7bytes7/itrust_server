@@ -3,6 +3,8 @@ import 'package:itrust_server/itrust_server.dart';
 const _printLogsKey = 'print_logs';
 const _envKey = 'env';
 
+const _defaultPort = 8080;
+
 final _getIt = GetIt.instance;
 final _logger = Logger('main');
 
@@ -36,7 +38,7 @@ void main(List<String> args) async {
   final handler = Pipeline().addMiddleware(logRequests()).addHandler(app);
 
   final ip = InternetAddress.anyIPv4;
-  final port = int.parse(Platform.environment['PORT'] ?? '8080');
+  final port = int.parse(Platform.environment['PORT'] ?? '$_defaultPort');
   final server = await serve(handler, ip, port);
 
   _logger.info('Server listening on port ${server.port}');

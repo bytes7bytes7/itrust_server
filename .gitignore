@@ -9,3 +9,5 @@ build/
 .env.*
 **/env.dart
 **/env.g.dart
+
+.fvm/

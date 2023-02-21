@@ -1,19 +1,21 @@
+import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
 
 import '../../application/application.dart';
 import '../contracts/contracts.dart';
 
+@injectable
 class RegisterRequestToRegisterCommandMapper
     extends OneSourceMapper<RegisterRequest, RegisterCommand> {
-  const RegisterRequestToRegisterCommandMapper();
+  RegisterRequestToRegisterCommandMapper(@factoryParam super.input);
 
   @override
-  RegisterCommand map(RegisterRequest object) {
+  RegisterCommand map() {
     return RegisterCommand(
-      firstName: object.firstName,
-      lastName: object.lastName,
-      email: object.email,
-      password: object.password,
+      firstName: source.firstName,
+      lastName: source.lastName,
+      email: source.email,
+      password: source.password,
     );
   }
 }

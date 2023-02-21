@@ -1,17 +1,19 @@
+import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
 
 import '../../application/application.dart';
 import '../contracts/contracts.dart';
 
+@injectable
 class LoginRequestToLoginQueryMapper
     extends OneSourceMapper<LoginRequest, LoginQuery> {
-  const LoginRequestToLoginQueryMapper();
+  LoginRequestToLoginQueryMapper(@factoryParam super.input);
 
   @override
-  LoginQuery map(LoginRequest object) {
+  LoginQuery map() {
     return LoginQuery(
-      email: object.email,
-      password: object.password,
+      email: source.email,
+      password: source.password,
     );
   }
 }

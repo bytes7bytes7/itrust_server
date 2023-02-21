@@ -1,6 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
-import 'package:mediatr/mediatr.dart';
+import 'package:mediator/mediator.dart';
 
 import '../../../../common/common.dart';
 import '../../common/common.dart';
@@ -8,7 +8,7 @@ import '../../generators/generators.dart';
 import 'register_command.dart';
 
 @injectable
-class RegisterCommandHandler extends IRequestHandler<
+class RegisterCommandHandler extends RequestHandler<
     Either<DetailedException, AuthResult>, RegisterCommand> {
   const RegisterCommandHandler({
     required JwtTokenGenerator jwtTokenGenerator,
@@ -20,7 +20,7 @@ class RegisterCommandHandler extends IRequestHandler<
   final EndUserRepository _endUserRepository;
 
   @override
-  Future<Either<DetailedException, AuthResult>> call(
+  Future<Either<DetailedException, AuthResult>> handle(
     RegisterCommand request,
   ) async {
     final userAlreadyExists =

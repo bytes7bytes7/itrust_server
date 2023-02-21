@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
-import 'package:mediatr/mediatr.dart';
+import 'package:mediator/mediator.dart';
 
 import '../../../../common/common.dart';
 import '../../common/common.dart';
@@ -9,7 +11,7 @@ import 'login_query.dart';
 
 @injectable
 class LoginQueryHandler
-    extends IRequestHandler<Either<DetailedException, AuthResult>, LoginQuery> {
+    extends RequestHandler<Either<DetailedException, AuthResult>, LoginQuery> {
   const LoginQueryHandler({
     required JwtTokenGenerator jwtTokenGenerator,
     required EndUserRepository endUserRepository,
@@ -20,7 +22,9 @@ class LoginQueryHandler
   final EndUserRepository _endUserRepository;
 
   @override
-  Future<Either<DetailedException, AuthResult>> call(LoginQuery request) async {
+  FutureOr<Either<DetailedException, AuthResult>> handle(
+    LoginQuery request,
+  ) async {
     final user = await _endUserRepository.getUserByEmail(email: request.email);
     final userDoesNotExist = user == null;
 

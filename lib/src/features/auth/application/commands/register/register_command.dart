@@ -1,16 +1,16 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:mediatr/mediatr.dart';
+import 'package:mediator/mediator.dart';
 
 import '../../../../common/common.dart';
 import '../../common/common.dart';
 
-class RegisterCommand extends IRequest<Either<DetailedException, AuthResult>> {
-  const RegisterCommand({
+class RegisterCommand extends Request<Either<DetailedException, AuthResult>> {
+  RegisterCommand({
     required this.firstName,
     required this.lastName,
     required this.email,
     required this.password,
-  });
+  }) : super(RegisterCommand);
 
   final String firstName;
   final String lastName;

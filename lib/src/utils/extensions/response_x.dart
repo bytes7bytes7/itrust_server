@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:problem_details/problem_details.dart';
 import 'package:shelf/shelf.dart';
 
-import '../http/http.dart';
 import 'content_type_x.dart';
 
 extension ResponseX on Response {

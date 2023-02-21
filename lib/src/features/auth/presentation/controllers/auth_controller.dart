@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
-import 'package:mediatr/mediatr.dart';
+import 'package:mediator/mediator.dart' as mdtr;
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
@@ -19,12 +18,12 @@ const authRoute = '/auth/';
 @injectable
 class AuthController extends ApiController {
   const AuthController({
-    required Mediator mediator,
+    required mdtr.Mediator mediator,
     required Mapster mapster,
   })  : _mediator = mediator,
         _mapster = mapster;
 
-  final Mediator _mediator;
+  final mdtr.Mediator _mediator;
   final Mapster _mapster;
 
   Router get router => _$AuthControllerRouter(this);
@@ -40,23 +39,18 @@ class AuthController extends ApiController {
       return Response.badRequest();
     }
 
-    final command = _mapster.map(registerRequest, To<RegisterCommand>());
+    final command = _mapster.map1(registerRequest, To<RegisterCommand>());
 
-    final authResult =
-        await _mediator.send(command) as Either<DetailedException, AuthResult>;
+    final authResult = await command.sendTo(_mediator);
 
     return authResult.match(
       problem,
-      (r) {
-        final resp = _mapster.map(r, To<AuthResponse>());
-
-        return Response.ok(
-          json.encode(resp),
-          headers: {
-            HttpHeaders.contentTypeHeader: ContentType.json.toString(),
-          },
-        );
-      },
+      (r) => Response.ok(
+        json.encode(_mapster.map1(r, To<AuthResponse>())),
+        headers: {
+          HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+        },
+      ),
     );
   }
 
@@ -71,17 +65,14 @@ class AuthController extends ApiController {
       return Response.badRequest();
     }
 
-    final query = _mapster.map(loginRequest, To<LoginQuery>());
+    final query = _mapster.map1(loginRequest, To<LoginQuery>());
 
-    final authResult =
-        await _mediator.send(query) as Either<DetailedException, AuthResult>;
+    final authResult = await query.sendTo(_mediator);
 
     return authResult.match(
       problem,
       (r) => Response.ok(
-        json.encode(
-          _mapster.map(r, To<AuthResponse>()).toJson(),
-        ),
+        json.encode(_mapster.map1(r, To<AuthResponse>())),
         headers: {
           HttpHeaders.contentTypeHeader: ContentType.json.toString(),
         },

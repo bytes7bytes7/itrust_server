@@ -28,7 +28,7 @@ packages:
       name: args
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.2"
+    version: "2.4.0"
   async:
     dependency: transitive
     description:
@@ -280,7 +280,7 @@ packages:
       name: injectable_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.3"
+    version: "2.1.4"
   io:
     dependency: transitive
     description:
@@ -308,7 +308,7 @@ packages:
       name: json_serializable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.6.0"
+    version: "6.6.1"
   lints:
     dependency: "direct dev"
     description:
@@ -329,7 +329,7 @@ packages:
       name: mapster
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.0"
+    version: "0.3.0"
   matcher:
     dependency: transitive
     description:
@@ -337,15 +337,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.14"
-  mediatr:
+  mediator:
     dependency: "direct main"
     description:
       path: "."
-      ref: remove_either_dart
-      resolved-ref: "5c6da40761f75285496d8e29d3b0f15816926b61"
-      url: "https://github.com/bytes7bytes7/dart_mediatr.git"
+      ref: b81e395
+      resolved-ref: b81e3953a0fc721c02f9aa18a6ae8412bea0390a
+      url: "https://github.com/bytes7bytes7/mediator"
     source: git
-    version: "0.1.0"
+    version: "0.0.1"
   meta:
     dependency: transitive
     description:
@@ -395,6 +395,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.1"
+  problem_details:
+    dependency: "direct main"
+    description:
+      name: problem_details
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   pub_semver:
     dependency: transitive
     description:
@@ -534,7 +541,7 @@ packages:
       name: test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.22.2"
+    version: "1.23.1"
   test_api:
     dependency: transitive
     description:
@@ -548,7 +555,7 @@ packages:
       name: test_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.22"
+    version: "0.4.24"
   timing:
     dependency: transitive
     description:

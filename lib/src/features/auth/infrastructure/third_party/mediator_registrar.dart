@@ -1,28 +1,27 @@
-import 'package:fpdart/fpdart.dart';
+import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-import 'package:mediatr/mediatr.dart';
+import 'package:mediator/mediator.dart';
 
-import '../../../common/common.dart';
 import '../../application/application.dart';
+
+final _getIt = GetIt.instance;
 
 @singleton
 class MediatorRegistrar {
-  const MediatorRegistrar(
-    this._mediator,
-    this._registerCommandHandler,
-    this._loginQueryHandler,
-  );
+  const MediatorRegistrar(this._mediator);
 
   final Mediator _mediator;
-  final RegisterCommandHandler _registerCommandHandler;
-  final LoginQueryHandler _loginQueryHandler;
 
   @postConstruct
   void register() {
     _mediator
-      ..registerHandler<Either<DetailedException, AuthResult>, RegisterCommand,
-          RegisterCommandHandler>(() => _registerCommandHandler)
-      ..registerHandler<Either<DetailedException, AuthResult>, LoginQuery,
-          LoginQueryHandler>(() => _loginQueryHandler);
+      // RequestHandler
+      ..registerRequestHandler(() => _getIt.get<RegisterCommandHandler>())
+      ..registerRequestHandler(() => _getIt.get<LoginQueryHandler>())
+
+      // PipelineBehavior
+      ..registerPipelineBehavior(
+        () => _getIt.get<ValidateRegisterCommandBehaviour>(),
+      );
   }
 }
