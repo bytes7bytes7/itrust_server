@@ -5,24 +5,20 @@ import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mediator/mediator.dart';
 
-import '../../../../common/common.dart';
-import '../../common/common.dart';
-import 'register_command.dart';
-import 'register_command_validator.dart';
+import '../../domain/domain.dart';
+import 'behavior_validator.dart';
 
-@injectable
-class ValidateRegisterCommandBehaviour extends PipelineBehavior<
-    Either<List<DetailedException>, AuthResult>, RegisterCommand> {
-  ValidateRegisterCommandBehaviour(
-    RegisterCommandValidator registerCommandValidator,
-  ) : _validators = [registerCommandValidator];
+class ValidationBehavior<RS,
+        RQ extends Request<Either<List<DetailedException>, RS>>>
+    extends PipelineBehavior<Either<List<DetailedException>, RS>, RQ> {
+  ValidationBehavior(@factoryParam this._validators);
 
-  final List<AbstractValidator<RegisterCommand>> _validators;
+  final List<BehaviorValidator<RS, RQ>> _validators;
 
   @override
-  FutureOr<Either<List<DetailedException>, AuthResult>> handle(
-    RegisterCommand request,
-    RequestHandlerDelegate<Either<List<DetailedException>, AuthResult>> next,
+  FutureOr<Either<List<DetailedException>, RS>> handle(
+    RQ request,
+    RequestHandlerDelegate<Either<List<DetailedException>, RS>> next,
   ) async {
     final errors = <ValidationError>[];
 

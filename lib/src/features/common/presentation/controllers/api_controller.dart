@@ -16,17 +16,14 @@ class ApiController {
       );
     }
 
-    int? status;
-
     if (exceptions.any((e) => e.type == DetailedExceptionType.validation)) {
-      status = HttpStatus.badRequest;
-
       return ResponseX.problem(
         problemDetails: _validation(exceptions),
       );
     }
 
     final error = exceptions.first;
+    int? status;
 
     switch (error.type) {
       case DetailedExceptionType.conflict:

@@ -1,10 +1,12 @@
-import 'package:fluent_validation/fluent_validation.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../common/common.dart';
+import '../../common/common.dart';
 import 'register_command.dart';
 
 @singleton
-class RegisterCommandValidator extends AbstractValidator<RegisterCommand> {
+class RegisterCommandValidator
+    extends BehaviorValidator<AuthResult, RegisterCommand> {
   RegisterCommandValidator() {
     ruleFor((e) => e.firstName, key: 'firstName').notEmpty();
     ruleFor((e) => e.lastName, key: 'lastName').notEmpty();

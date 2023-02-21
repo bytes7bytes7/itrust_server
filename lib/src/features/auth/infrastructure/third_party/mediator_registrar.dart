@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mediator/mediator.dart';
 
+import '../../../common/common.dart';
 import '../../application/application.dart';
 
 final _getIt = GetIt.instance;
@@ -21,7 +22,18 @@ class MediatorRegistrar {
 
       // PipelineBehavior
       ..registerPipelineBehavior(
-        () => _getIt.get<ValidateRegisterCommandBehaviour>(),
+        () => ValidationBehavior(
+          [
+            _getIt.get<RegisterCommandValidator>(),
+          ],
+        ),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior(
+          [
+            _getIt.get<LoginQueryValidator>(),
+          ],
+        ),
       );
   }
 }
