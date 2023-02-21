@@ -11,7 +11,7 @@ import 'login_query.dart';
 
 @injectable
 class LoginQueryHandler
-    extends RequestHandler<Either<DetailedException, AuthResult>, LoginQuery> {
+    extends RequestHandler<Either<List<DetailedException>, AuthResult>, LoginQuery> {
   const LoginQueryHandler({
     required JwtTokenGenerator jwtTokenGenerator,
     required EndUserRepository endUserRepository,
@@ -22,18 +22,18 @@ class LoginQueryHandler
   final EndUserRepository _endUserRepository;
 
   @override
-  FutureOr<Either<DetailedException, AuthResult>> handle(
+  FutureOr<Either<List<DetailedException>, AuthResult>> handle(
     LoginQuery request,
   ) async {
     final user = await _endUserRepository.getUserByEmail(email: request.email);
     final userDoesNotExist = user == null;
 
     if (userDoesNotExist) {
-      return left(const InvalidCredentials());
+      return left([const InvalidCredentials()]);
     }
 
     if (user.password != request.password) {
-      return left(const InvalidCredentials());
+      return left([const InvalidCredentials()]);
     }
 
     final token = _jwtTokenGenerator.generate(user);

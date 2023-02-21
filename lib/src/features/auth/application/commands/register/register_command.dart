@@ -4,7 +4,8 @@ import 'package:mediator/mediator.dart';
 import '../../../../common/common.dart';
 import '../../common/common.dart';
 
-class RegisterCommand extends Request<Either<DetailedException, AuthResult>> {
+class RegisterCommand
+    extends Request<Either<List<DetailedException>, AuthResult>> {
   RegisterCommand({
     required this.firstName,
     required this.lastName,

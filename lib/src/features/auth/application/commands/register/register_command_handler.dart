@@ -9,7 +9,7 @@ import 'register_command.dart';
 
 @injectable
 class RegisterCommandHandler extends RequestHandler<
-    Either<DetailedException, AuthResult>, RegisterCommand> {
+    Either<List<DetailedException>, AuthResult>, RegisterCommand> {
   const RegisterCommandHandler({
     required JwtTokenGenerator jwtTokenGenerator,
     required EndUserRepository endUserRepository,
@@ -20,14 +20,14 @@ class RegisterCommandHandler extends RequestHandler<
   final EndUserRepository _endUserRepository;
 
   @override
-  Future<Either<DetailedException, AuthResult>> handle(
+  Future<Either<List<DetailedException>, AuthResult>> handle(
     RegisterCommand request,
   ) async {
     final userAlreadyExists =
         await _endUserRepository.getUserByEmail(email: request.email) != null;
 
     if (userAlreadyExists) {
-      return left(const DuplicateEmail());
+      return left([const DuplicateEmail()]);
     }
 
     final user = EndUser(

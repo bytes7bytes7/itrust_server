@@ -4,7 +4,7 @@ import 'package:mediator/mediator.dart';
 import '../../../../common/common.dart';
 import '../../common/common.dart';
 
-class LoginQuery extends Request<Either<DetailedException, AuthResult>> {
+class LoginQuery extends Request<Either<List<DetailedException>, AuthResult>> {
   LoginQuery({
     required this.email,
     required this.password,
