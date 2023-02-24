@@ -2,11 +2,15 @@ import 'package:shelf/shelf.dart';
 
 import '../../../../utils/jwt_settings.dart';
 import '../../../common/common.dart';
+import '../persistence/token_repository.dart';
 import '../services/jwt_token_service.dart';
 
+// TODO: refactor all [Response]s
 Middleware authorize({
   required JwtSettings jwtSettings,
   required JwtTokenService jwtTokenService,
+  required EndUserRepository endUserRepository,
+  required TokenRepository tokenRepository,
 }) =>
     (innerHandler) {
       return (request) async {
@@ -33,16 +37,14 @@ Middleware authorize({
           return Response(401);
         }
 
-        // TODO: find user in storage
-        final user = EndUser(
-          id: UserID('1'),
-          firstName: 'firstName',
-          lastName: 'lastName',
-          password: 'password',
-          email: 'email',
-        );
+        final userID = await tokenRepository.getUserID(token: token);
 
-        // ignore: unnecessary_null_comparison
+        if (userID == null) {
+          return Response(401);
+        }
+
+        final user = await endUserRepository.getByID(id: userID);
+
         if (user == null) {
           return Response(401);
         }

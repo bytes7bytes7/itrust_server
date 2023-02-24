@@ -6,26 +6,26 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../common/common.dart';
 import '../../common/common.dart';
-import '../../services/jwt_token_service.dart';
+import '../../persistence/token_repository.dart';
 import 'login_query.dart';
 
 @injectable
-class LoginQueryHandler
-    extends RequestHandler<Either<List<DetailedException>, AuthResult>, LoginQuery> {
+class LoginQueryHandler extends RequestHandler<
+    Either<List<DetailedException>, AuthResult>, LoginQuery> {
   const LoginQueryHandler({
-    required JwtTokenService jwtTokenService,
     required EndUserRepository endUserRepository,
-  })  : _jwtTokenService = jwtTokenService,
-        _endUserRepository = endUserRepository;
+    required TokenRepository tokenRepository,
+  })  : _endUserRepository = endUserRepository,
+        _tokenRepository = tokenRepository;
 
-  final JwtTokenService _jwtTokenService;
   final EndUserRepository _endUserRepository;
+  final TokenRepository _tokenRepository;
 
   @override
   FutureOr<Either<List<DetailedException>, AuthResult>> handle(
     LoginQuery request,
   ) async {
-    final user = await _endUserRepository.getUserByEmail(email: request.email);
+    final user = await _endUserRepository.getByEmail(email: request.email);
     final userDoesNotExist = user == null;
 
     if (userDoesNotExist) {
@@ -36,7 +36,11 @@ class LoginQueryHandler
       return left([const InvalidCredentials()]);
     }
 
-    final token = _jwtTokenService.generate(user);
+    final token = await _tokenRepository.getToken(userID: user.id);
+
+    if (token == null) {
+      return left([const InvalidCredentials()]);
+    }
 
     return right(
       AuthResult(

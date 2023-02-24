@@ -1,5 +1,4 @@
 import 'package:itrust_server/itrust_server.dart';
-import 'package:itrust_server/src/utils/utils.dart';
 
 const _printLogsKey = 'print_logs';
 const _envKey = 'env';
@@ -76,4 +75,6 @@ void _configLogger({required bool printLogs}) {
 Middleware _authorize() => authorize(
       jwtSettings: _getIt.get<JwtSettings>(),
       jwtTokenService: _getIt.get<JwtTokenService>(),
+      endUserRepository: _getIt.get<EndUserRepository>(),
+      tokenRepository: _getIt.get<TokenRepository>(),
     );

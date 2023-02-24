@@ -15,9 +15,14 @@ class TestEndUserRepository implements EndUserRepository {
   }
 
   @override
-  Future<EndUser?> getUserByEmail({required String email}) async {
+  Future<EndUser?> getByEmail({required String email}) async {
     return _storage.entries
         .firstWhereOrNull((e) => e.value.email == email)
         ?.value;
+  }
+
+  @override
+  Future<EndUser?> getByID({required UserID id}) async {
+    return _storage[id];
   }
 }
