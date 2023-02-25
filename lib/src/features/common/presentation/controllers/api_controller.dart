@@ -50,7 +50,7 @@ class ApiController {
     return ResponseX.problem(
       problemDetails: ProblemDetails(
         status: status,
-        detail: error.description,
+        title: error.description,
       ),
     );
   }
