@@ -1,4 +1,4 @@
-import 'detailed_exception.dart';
+import '../../../common/domain/exceptions/detailed_exception.dart';
 
 class InvalidCredentials extends DetailedException {
   const InvalidCredentials()

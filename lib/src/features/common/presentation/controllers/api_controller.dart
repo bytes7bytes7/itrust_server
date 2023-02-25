@@ -26,6 +26,15 @@ class ApiController {
     int? status;
 
     switch (error.type) {
+      case DetailedExceptionType.failure:
+        status = HttpStatus.badRequest;
+        break;
+      case DetailedExceptionType.unexpected:
+        status = HttpStatus.internalServerError;
+        break;
+      case DetailedExceptionType.validation:
+        status = HttpStatus.badRequest;
+        break;
       case DetailedExceptionType.conflict:
         status = HttpStatus.conflict;
         break;

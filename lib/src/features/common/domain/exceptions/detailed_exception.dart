@@ -1,9 +1,20 @@
 enum DetailedExceptionType {
+  /// Client makes a mistake in request.
   failure,
+
+  /// A situation on a server, that should not occurs.
   unexpected,
+
+  /// Client pass correct data, but something has wrong format or invalid value.
   validation,
+
+  /// Conflict between current request and current state of a server.
   conflict,
+
+  /// A data that request need is not found.
   notFound,
+
+  /// Client must be authorized before sending current response.
   unauthorized,
 }
 

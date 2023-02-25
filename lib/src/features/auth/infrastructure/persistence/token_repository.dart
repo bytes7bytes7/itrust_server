@@ -29,13 +29,15 @@ class TestTokenRepository implements TokenRepository {
 
   @override
   Future<String?> removeByUserID({required UserID userID}) async {
-    _tokenToIDStorage.removeWhere((key, value) => value == userID);
-    return _idToTokenStorage.remove(userID);
+    final token = _idToTokenStorage.remove(userID);
+    _tokenToIDStorage.remove(token);
+    return token;
   }
 
   @override
   Future<UserID?> removeByToken({required String token}) async {
-    _idToTokenStorage.removeWhere((key, value) => value == token);
-    return _tokenToIDStorage.remove(token);
+    final userID = _tokenToIDStorage.remove(token);
+    _idToTokenStorage.remove(userID);
+    return userID;
   }
 }

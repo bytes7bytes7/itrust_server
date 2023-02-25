@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:mediator/mediator.dart';
 
 import '../../../../common/common.dart';
+import '../../../domain/domain.dart';
 import '../../common/common.dart';
 import '../../persistence/token_repository.dart';
 import 'login_query.dart';

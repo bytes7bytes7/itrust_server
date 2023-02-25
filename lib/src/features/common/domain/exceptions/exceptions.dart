@@ -1,3 +1,2 @@
 export 'detailed_exception.dart';
-export 'duplicate_email.dart';
-export 'invalid_credentials.dart';
+export 'invalid_body_exception.dart';

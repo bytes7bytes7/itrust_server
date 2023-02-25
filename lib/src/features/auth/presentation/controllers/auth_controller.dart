@@ -36,7 +36,9 @@ class AuthController extends ApiController {
       final jsonBody = json.decode(rawBody);
       registerRequest = RegisterRequest.fromJson(jsonBody);
     } catch (e) {
-      return Response.badRequest();
+      return problem(
+        [const InvalidBodyException()],
+      );
     }
 
     final command = _mapster.map1(registerRequest, To<RegisterCommand>());
@@ -62,7 +64,9 @@ class AuthController extends ApiController {
       final jsonBody = json.decode(rawBody);
       loginRequest = LoginRequest.fromJson(jsonBody);
     } catch (e) {
-      return Response.badRequest();
+      return problem(
+        [const InvalidBodyException()],
+      );
     }
 
     final query = _mapster.map1(loginRequest, To<LoginQuery>());
