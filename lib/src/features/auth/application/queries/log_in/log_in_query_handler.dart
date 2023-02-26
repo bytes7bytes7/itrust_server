@@ -38,16 +38,17 @@ class LogInQueryHandler extends RequestHandler<
       return left([const InvalidCredentials()]);
     }
 
-    final token = await _tokenRepository.getToken(userID: user.id);
+    final tokenPair = await _tokenRepository.getTokenPair(userID: user.id);
 
-    if (token == null) {
+    if (tokenPair == null) {
       return left([const InvalidCredentials()]);
     }
 
     return right(
       AuthResult(
         user: user,
-        token: token,
+        accessToken: tokenPair.access,
+        refreshToken: tokenPair.refresh,
       ),
     );
   }

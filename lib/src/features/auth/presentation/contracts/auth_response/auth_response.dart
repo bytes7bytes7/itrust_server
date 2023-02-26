@@ -12,17 +12,18 @@ class AuthResponse {
     required this.firstName,
     required this.lastName,
     required this.email,
-    required this.token,
+    required this.accessToken,
+    required this.refreshToken,
   });
 
   final UserID id;
   final String firstName;
   final String lastName;
   final String email;
-  final String token;
+  final String accessToken;
+  final String refreshToken;
 
-  factory AuthResponse.fromJson(JsonMap json) =>
-      _$AuthResponseFromJson(json);
+  factory AuthResponse.fromJson(JsonMap json) => _$AuthResponseFromJson(json);
 
   JsonMap toJson() => _$AuthResponseToJson(this);
 }

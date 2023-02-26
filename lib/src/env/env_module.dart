@@ -9,7 +9,8 @@ abstract class EnvModule {
   JwtSettings get jwtSettings => JwtSettings(
         secret: Env.jwtSecret,
         issuer: Env.jwtIssuer,
-        expiresInMins: int.parse(Env.jwtExpiresInMins),
+        accessExpiresInMins: int.parse(Env.jwtAccessExpiresInMins),
+        refreshExpiresInMins: int.parse(Env.jwtRefreshExpiresInMins),
         audience: Env.jwtAudience,
       );
 }

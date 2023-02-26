@@ -4,40 +4,59 @@ import 'package:injectable/injectable.dart';
 
 import '../../../common/common.dart';
 import '../../application/application.dart';
+import '../../domain/domain.dart';
 
 @test
 @Singleton(as: TokenRepository)
 class TestTokenRepository implements TokenRepository {
-  final _tokenToIDStorage = HashMap<String, UserID>();
-  final _idToTokenStorage = HashMap<UserID, String>();
+  final _tokenPairToIDStorage = HashMap<TokenPair, UserID>();
+  final _idToTokenPairStorage = HashMap<UserID, TokenPair>();
+  final _accessTokenToIDStorage = HashMap<String, UserID>();
 
   @override
-  Future<void> add({required String token, required UserID userID}) async {
-    _tokenToIDStorage[token] = userID;
-    _idToTokenStorage[userID] = token;
+  Future<void> add({
+    required TokenPair tokenPair,
+    required UserID userID,
+  }) async {
+    _tokenPairToIDStorage[tokenPair] = userID;
+    _idToTokenPairStorage[userID] = tokenPair;
+    _accessTokenToIDStorage[tokenPair.access] = userID;
   }
 
   @override
-  Future<UserID?> getUserID({required String token}) async {
-    return _tokenToIDStorage[token];
+  Future<UserID?> getUserID({required String accessToken}) async {
+    return _accessTokenToIDStorage[accessToken];
   }
 
   @override
-  Future<String?> getToken({required UserID userID}) async {
-    return _idToTokenStorage[userID];
+  Future<TokenPair?> getTokenPair({required UserID userID}) async {
+    return _idToTokenPairStorage[userID];
   }
 
   @override
-  Future<String?> removeByUserID({required UserID userID}) async {
-    final token = _idToTokenStorage.remove(userID);
-    _tokenToIDStorage.remove(token);
-    return token;
+  Future<TokenPair?> removeByUserID({required UserID userID}) async {
+    final tokenPair = _idToTokenPairStorage.remove(userID);
+
+    if (tokenPair != null) {
+      _tokenPairToIDStorage.remove(tokenPair);
+      _accessTokenToIDStorage.remove(tokenPair.access);
+    }
+
+    return tokenPair;
   }
 
   @override
-  Future<UserID?> removeByToken({required String token}) async {
-    final userID = _tokenToIDStorage.remove(token);
-    _idToTokenStorage.remove(userID);
+  Future<UserID?> removeByToken({required String accessToken}) async {
+    final userID = _accessTokenToIDStorage.remove(accessToken);
+
+    if (userID != null) {
+      final tokenPair = _idToTokenPairStorage.remove(userID);
+
+      if (tokenPair != null) {
+        _tokenPairToIDStorage.remove(tokenPair);
+      }
+    }
+
     return userID;
   }
 }

@@ -3,9 +3,11 @@ import '../../../common/common.dart';
 class AuthResult {
   AuthResult({
     required this.user,
-    required this.token,
+    required this.accessToken,
+    required this.refreshToken,
   });
 
   final EndUser user;
-  final String token;
+  final String accessToken;
+  final String refreshToken;
 }

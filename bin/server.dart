@@ -46,9 +46,7 @@ void main(List<String> args) async {
     )
     ..post(
       verifyTokenRoute,
-      Pipeline()
-          .addMiddleware(_authorize())
-          .addHandler(_getIt.get<AuthController>().verifyToken),
+      _getIt.get<AuthController>().verifyToken,
     )
     ..mount(
       feedRoute,

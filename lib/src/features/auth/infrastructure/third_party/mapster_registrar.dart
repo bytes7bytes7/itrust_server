@@ -18,7 +18,7 @@ class MapsterRegistrar {
       ..register(MapperMeta.two(LogOutRequestUserToLogOutCommandMapper.new))
       ..register(MapperMeta.one(LogOutResultToLogOutResponse.new))
       ..register(
-        MapperMeta.two(VerifyTokenRequestUserToVerifyTokenQueryMapper.new),
+        MapperMeta.one(VerifyTokenRequestUserToVerifyTokenQueryMapper.new),
       )
       ..register(
         MapperMeta.one(VerifyTokenResultToVerifyTokenResponseMapper.new),

@@ -1,19 +1,18 @@
 import 'package:mapster/mapster.dart';
 
-import '../../../common/domain/domain.dart';
 import '../../application/application.dart';
 import '../../presentation/contracts/contracts.dart';
 
 class VerifyTokenRequestUserToVerifyTokenQueryMapper
-    extends TwoSourcesMapper<VerifyTokenRequest, EndUser, VerifyTokenQuery> {
+    extends OneSourceMapper<VerifyTokenRequest, VerifyTokenQuery> {
   VerifyTokenRequestUserToVerifyTokenQueryMapper(super.input);
 
   @override
   VerifyTokenQuery map() {
     return VerifyTokenQuery(
-      user: _user,
+      accessToken: _request.accessToken,
     );
   }
 
-  EndUser get _user => source2;
+  VerifyTokenRequest get _request => source;
 }

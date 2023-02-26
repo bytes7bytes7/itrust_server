@@ -14,7 +14,8 @@ class AuthResultToAuthResponseMapper
       firstName: _authResult.user.firstName,
       lastName: _authResult.user.lastName,
       email: _authResult.user.email,
-      token: _authResult.token,
+      accessToken: _authResult.accessToken,
+      refreshToken: _authResult.refreshToken,
     );
   }
 

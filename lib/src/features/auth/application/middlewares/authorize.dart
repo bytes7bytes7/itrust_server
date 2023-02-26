@@ -26,19 +26,21 @@ Middleware authorize({
           return problemHandler([const InvalidToken()]);
         }
 
-        final token = authorizationHeader.replaceFirst('Bearer', '').trim();
+        final accessToken =
+            authorizationHeader.replaceFirst('Bearer', '').trim();
 
-        if (token.isEmpty) {
+        if (accessToken.isEmpty) {
           return problemHandler([const InvalidToken()]);
         }
 
-        final validationStatus = jwtTokenService.verify(token);
+        final validationStatus = jwtTokenService.verify(accessToken);
 
         if (validationStatus != JwtVerificationStatus.verified) {
           return problemHandler([const TokenExpired()]);
         }
 
-        final userID = await tokenRepository.getUserID(token: token);
+        final userID =
+            await tokenRepository.getUserID(accessToken: accessToken);
 
         if (userID == null) {
           return problemHandler([const UserDoesNotExist()]);

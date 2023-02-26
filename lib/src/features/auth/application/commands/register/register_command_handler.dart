@@ -47,14 +47,15 @@ class RegisterCommandHandler extends RequestHandler<
 
     await _endUserRepository.add(user: user);
 
-    final token = _jwtTokenService.generate(user);
+    final tokenPair = _jwtTokenService.generate(user);
 
-    await _tokenRepository.add(token: token, userID: userID);
+    await _tokenRepository.add(tokenPair: tokenPair, userID: userID);
 
     return right(
       AuthResult(
         user: user,
-        token: token,
+        accessToken: tokenPair.access,
+        refreshToken: tokenPair.refresh,
       ),
     );
   }

@@ -1,16 +1,17 @@
 import '../../../common/common.dart';
+import '../../domain/domain.dart';
 
 abstract class TokenRepository {
   Future<void> add({
-    required String token,
+    required TokenPair tokenPair,
     required UserID userID,
   });
 
-  Future<UserID?> getUserID({required String token});
+  Future<UserID?> getUserID({required String accessToken});
 
-  Future<String?> getToken({required UserID userID});
+  Future<TokenPair?> getTokenPair({required UserID userID});
 
-  Future<String?> removeByUserID({required UserID userID});
+  Future<TokenPair?> removeByUserID({required UserID userID});
 
-  Future<UserID?> removeByToken({required String token});
+  Future<UserID?> removeByToken({required String accessToken});
 }

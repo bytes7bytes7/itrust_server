@@ -134,16 +134,7 @@ class AuthController extends ApiController {
       );
     }
 
-    final user = request.user;
-
-    if (user == null) {
-      return problem(
-        [const TokenExpired()],
-      );
-    }
-
-    final query =
-        _mapster.map2(verifyTokenRequest, user, To<VerifyTokenQuery>());
+    final query = _mapster.map1(verifyTokenRequest, To<VerifyTokenQuery>());
 
     final verifyTokenResult = await query.sendTo(_mediator);
 
