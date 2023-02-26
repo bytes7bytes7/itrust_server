@@ -9,6 +9,7 @@ import '../../../../common/common.dart';
 import '../../common/common.dart';
 import '../../exceptions/exceptions.dart';
 import '../../repositories/token_repository.dart';
+import '../../services/hash_service.dart';
 import '../../services/jwt_token_service.dart';
 import 'log_in_query.dart';
 
@@ -17,13 +18,16 @@ class LogInQueryHandler extends RequestHandler<
     Either<List<DetailedException>, AuthResult>, LogInQuery> {
   const LogInQueryHandler({
     required JwtTokenService jwtTokenService,
+    required HashService hashService,
     required EndUserRepository endUserRepository,
     required TokenRepository tokenRepository,
   })  : _jwtTokenService = jwtTokenService,
+        _hashService = hashService,
         _endUserRepository = endUserRepository,
         _tokenRepository = tokenRepository;
 
   final JwtTokenService _jwtTokenService;
+  final HashService _hashService;
   final EndUserRepository _endUserRepository;
   final TokenRepository _tokenRepository;
 
@@ -38,7 +42,9 @@ class LogInQueryHandler extends RequestHandler<
       return left([const InvalidCredentials()]);
     }
 
-    if (user.password != request.password) {
+    final passwordHash = _hashService.hashPassword(request.password);
+
+    if (user.passwordHash != passwordHash) {
       return left([const InvalidCredentials()]);
     }
 

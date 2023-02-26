@@ -11,7 +11,7 @@ _$EndUser _$$EndUserFromJson(Map<String, dynamic> json) => _$EndUser(
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       email: json['email'] as String,
-      password: json['password'] as String,
+      passwordHash: json['passwordHash'] as String,
       $type: json['type'] as String?,
     );
 
@@ -20,7 +20,7 @@ Map<String, dynamic> _$$EndUserToJson(_$EndUser instance) => <String, dynamic>{
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'email': instance.email,
-      'password': instance.password,
+      'passwordHash': instance.passwordHash,
       'type': instance.$type,
     };
 

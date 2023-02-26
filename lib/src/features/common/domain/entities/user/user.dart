@@ -16,8 +16,7 @@ class User with _$User {
     required String firstName,
     required String lastName,
     required String email,
-    // TODO: replace with hashedPassword
-    required String password,
+    required String passwordHash,
   }) = EndUser;
 
   const factory User.staff({
