@@ -15,10 +15,10 @@ class MapsterRegistrar {
       ..register(MapperMeta.one(RegisterRequestToRegisterCommandMapper.new))
       ..register(MapperMeta.one(LogInRequestToLogInQueryMapper.new))
       ..register(MapperMeta.one(AuthResultToAuthResponseMapper.new))
-      ..register(MapperMeta.two(LogOutRequestUserToLogOutCommandMapper.new))
+      ..register(MapperMeta.two(LogOutRequestStringToLogOutCommandMapper.new))
       ..register(MapperMeta.one(LogOutResultToLogOutResponse.new))
       ..register(
-        MapperMeta.one(VerifyTokenRequestUserToVerifyTokenQueryMapper.new),
+        MapperMeta.two(VerifyTokenRequestStringToVerifyTokenQueryMapper.new),
       )
       ..register(
         MapperMeta.one(VerifyTokenResultToVerifyTokenResponseMapper.new),

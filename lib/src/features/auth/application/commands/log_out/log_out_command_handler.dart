@@ -27,20 +27,20 @@ class LogOutCommandHandler extends RequestHandler<
   FutureOr<Either<List<DetailedException>, LogOutResult>> handle(
     LogOutCommand request,
   ) async {
-    final tokenPair =
-        await _tokenRepository.getTokenPair(userID: request.user.id);
+    final userID =
+        await _tokenRepository.getUserID(accessToken: request.accessToken);
 
-    if (tokenPair == null) {
+    if (userID == null) {
       return left([const TokenExpired()]);
     }
 
-    final validationStatus = _jwtTokenService.verify(tokenPair.access);
+    final validationStatus = _jwtTokenService.verify(request.accessToken);
 
     if (validationStatus != JwtVerificationStatus.verified) {
       return left([const TokenExpired()]);
     }
 
-    await _tokenRepository.removeByUserID(userID: request.user.id);
+    await _tokenRepository.removeByToken(accessToken: request.accessToken);
 
     return right(LogOutResult(info: 'Log out succeeded'));
   }

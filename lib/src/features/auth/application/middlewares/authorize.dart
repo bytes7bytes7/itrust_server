@@ -1,6 +1,7 @@
 import 'package:shelf/shelf.dart';
 
 import '../../../../utils/utils.dart';
+import '../../../common/application/exceptions/exceptions.dart';
 import '../../../common/common.dart';
 import '../exceptions/exceptions.dart';
 import '../repositories/token_repository.dart';
@@ -15,21 +16,15 @@ Middleware authorize({
 }) =>
     (innerHandler) {
       return (request) async {
-        final authorizationHeader = request.headers['Authorization'] ??
-            request.headers['authorization'];
+        final authorizationHeader = request.authHeader;
 
         if (authorizationHeader == null) {
           return problemHandler([const NoTokenProvided()]);
         }
 
-        if (!authorizationHeader.startsWith('Bearer ')) {
-          return problemHandler([const InvalidToken()]);
-        }
+        final accessToken = request.token;
 
-        final accessToken =
-            authorizationHeader.replaceFirst('Bearer', '').trim();
-
-        if (accessToken.isEmpty) {
+        if (accessToken == null) {
           return problemHandler([const InvalidToken()]);
         }
 

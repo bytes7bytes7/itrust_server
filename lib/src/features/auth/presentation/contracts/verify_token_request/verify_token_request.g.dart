@@ -7,11 +7,7 @@ part of 'verify_token_request.dart';
 // **************************************************************************
 
 VerifyTokenRequest _$VerifyTokenRequestFromJson(Map<String, dynamic> json) =>
-    VerifyTokenRequest(
-      accessToken: json['accessToken'] as String,
-    );
+    VerifyTokenRequest();
 
 Map<String, dynamic> _$VerifyTokenRequestToJson(VerifyTokenRequest instance) =>
-    <String, dynamic>{
-      'accessToken': instance.accessToken,
-    };
+    <String, dynamic>{};

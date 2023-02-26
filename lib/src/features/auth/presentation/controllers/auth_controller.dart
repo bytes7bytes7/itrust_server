@@ -5,18 +5,17 @@ import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
 import 'package:mediator/mediator.dart' as mdtr;
 import 'package:shelf/shelf.dart';
+import 'package:shelf_router/shelf_router.dart';
 
 import '../../../../utils/utils.dart';
 import '../../../common/application/exceptions/exceptions.dart';
 import '../../../common/common.dart';
 import '../../application/application.dart';
-import '../../application/exceptions/exceptions.dart';
 import '../contracts/contracts.dart';
 
-const registerRoute = '/register';
-const logInRoute = '/log_in';
-const logOutRoute = '/log_out';
-const verifyTokenRoute = '/verify_token';
+part 'auth_controller.g.dart';
+
+const authRoute = '/auth';
 
 @injectable
 class AuthController extends ApiController {
@@ -29,10 +28,13 @@ class AuthController extends ApiController {
   final mdtr.Mediator _mediator;
   final Mapster _mapster;
 
+  Router get router => _$AuthControllerRouter(this);
+
   JsonEncoder get _jsonEncoder => const JsonEncoder();
 
   JsonDecoder get _jsonDecoder => const JsonDecoder();
 
+  @Route.post('/register')
   Future<Response> register(Request request) async {
     late RegisterRequest registerRequest;
     try {
@@ -60,6 +62,7 @@ class AuthController extends ApiController {
     );
   }
 
+  @Route.post('/log_in')
   Future<Response> logIn(Request request) async {
     late LogInRequest logInRequest;
     try {
@@ -87,6 +90,7 @@ class AuthController extends ApiController {
     );
   }
 
+  @Route.post('/log_out')
   Future<Response> logOut(Request request) async {
     late LogOutRequest logOutRequest;
     try {
@@ -99,15 +103,15 @@ class AuthController extends ApiController {
       );
     }
 
-    final user = request.user;
+    final token = request.token;
 
-    if (user == null) {
+    if (token == null) {
       return problem(
-        [const TokenExpired()],
+        [const NoTokenProvided()],
       );
     }
 
-    final command = _mapster.map2(logOutRequest, user, To<LogOutCommand>());
+    final command = _mapster.map2(logOutRequest, token, To<LogOutCommand>());
 
     final logOutResult = await command.sendTo(_mediator);
 
@@ -122,6 +126,7 @@ class AuthController extends ApiController {
     );
   }
 
+  @Route.post('/verify_token')
   Future<Response> verifyToken(Request request) async {
     late VerifyTokenRequest verifyTokenRequest;
     try {
@@ -134,7 +139,16 @@ class AuthController extends ApiController {
       );
     }
 
-    final query = _mapster.map1(verifyTokenRequest, To<VerifyTokenQuery>());
+    final accessToken = request.token;
+
+    if (accessToken == null) {
+      return problem(
+        [const NoTokenProvided()],
+      );
+    }
+
+    final query =
+        _mapster.map2(verifyTokenRequest, accessToken, To<VerifyTokenQuery>());
 
     final verifyTokenResult = await query.sendTo(_mediator);
 

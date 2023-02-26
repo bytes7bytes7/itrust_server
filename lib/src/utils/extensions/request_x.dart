@@ -1,23 +1,63 @@
 import '../../../itrust_server.dart';
 
 const _userContextKey = 'user';
+const _tokenHeadersKey1 = 'Authorization';
+const _tokenHeadersKey2 = 'authorization';
+const _tokenPrefix = 'Bearer ';
 
 extension RequestX on Request {
   Request setUser(EndUser user) {
-    final newContext = Map<String, Object?>.from(context)
-      ..[_userContextKey] = user;
-
-    return change(context: newContext);
+    return change(
+      context: Map<String, Object?>.from(context)..[_userContextKey] = user,
+    );
   }
 
   Request removeUser() {
-    final newContext = Map<String, Object?>.from(context)
-      ..remove(_userContextKey);
-
-    return change(context: newContext);
+    return change(
+      context: Map<String, Object?>.from(context)..remove(_userContextKey),
+    );
   }
 
   EndUser? get user {
     return context[_userContextKey] as EndUser?;
+  }
+
+  Request setToken(String token) {
+    return change(
+      headers: Map<String, Object?>.from(headers)
+        ..[_tokenHeadersKey1] = '$_tokenPrefix $token',
+    );
+  }
+
+  Request removeToken() {
+    return change(
+      headers: Map<String, Object?>.from(headers)
+        ..remove(_tokenHeadersKey1)
+        ..remove(_tokenHeadersKey2),
+    );
+  }
+
+  String? get token {
+    final header = authHeader;
+
+    if (header == null) {
+      return null;
+    }
+
+    if (header.startsWith(_tokenPrefix)) {
+      final result = header.replaceFirst(_tokenPrefix, '').trim();
+
+      if (result.isEmpty) {
+        return null;
+      }
+
+      return result;
+    }
+
+    return null;
+  }
+
+  String? get authHeader {
+    return headers[_tokenHeadersKey1] ?? headers[_tokenHeadersKey2];
   }
 }
