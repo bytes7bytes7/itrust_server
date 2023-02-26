@@ -5,11 +5,11 @@ import '../../../../common/application/exceptions/detailed_exception.dart';
 import '../../../../common/common.dart';
 import '../../common/common.dart';
 
-class LogOutCommand
-    extends Request<Either<List<DetailedException>, LogOutResult>> {
-  LogOutCommand({
+class VerifyTokenQuery
+    extends Request<Either<List<DetailedException>, VerifyTokenResult>> {
+  VerifyTokenQuery({
     required this.user,
-  }) : super(LogOutCommand);
+  }) : super(VerifyTokenQuery);
 
   final EndUser user;
 }

@@ -44,6 +44,12 @@ void main(List<String> args) async {
           .addMiddleware(_authorize())
           .addHandler(_getIt.get<AuthController>().logOut),
     )
+    ..post(
+      verifyTokenRoute,
+      Pipeline()
+          .addMiddleware(_authorize())
+          .addHandler(_getIt.get<AuthController>().verifyToken),
+    )
     ..mount(
       feedRoute,
       Pipeline()

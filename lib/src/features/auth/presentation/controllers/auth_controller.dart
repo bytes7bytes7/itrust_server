@@ -16,6 +16,7 @@ import '../contracts/contracts.dart';
 const registerRoute = '/register';
 const logInRoute = '/log_in';
 const logOutRoute = '/log_out';
+const verifyTokenRoute = '/verify_token';
 
 @injectable
 class AuthController extends ApiController {
@@ -114,6 +115,42 @@ class AuthController extends ApiController {
       problem,
       (r) => Response.ok(
         _jsonEncoder.convert(_mapster.map1(r, To<LogOutResponse>())),
+        headers: {
+          HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+        },
+      ),
+    );
+  }
+
+  Future<Response> verifyToken(Request request) async {
+    late VerifyTokenRequest verifyTokenRequest;
+    try {
+      final rawBody = await request.readAsString();
+      final jsonBody = _jsonDecoder.convert(rawBody);
+      verifyTokenRequest = VerifyTokenRequest.fromJson(jsonBody);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem(
+        [const TokenExpired()],
+      );
+    }
+
+    final query =
+        _mapster.map2(verifyTokenRequest, user, To<VerifyTokenQuery>());
+
+    final verifyTokenResult = await query.sendTo(_mediator);
+
+    return verifyTokenResult.match(
+      problem,
+      (r) => Response.ok(
+        _jsonEncoder.convert(_mapster.map1(r, To<VerifyTokenResponse>())),
         headers: {
           HttpHeaders.contentTypeHeader: ContentType.json.toString(),
         },

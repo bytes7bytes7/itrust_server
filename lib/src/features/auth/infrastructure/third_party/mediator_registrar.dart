@@ -20,6 +20,7 @@ class MediatorRegistrar {
       ..registerRequestHandler(() => _getIt.get<RegisterCommandHandler>())
       ..registerRequestHandler(() => _getIt.get<LogInQueryHandler>())
       ..registerRequestHandler(() => _getIt.get<LogOutCommandHandler>())
+      ..registerRequestHandler(() => _getIt.get<VerifyTokenQueryHandler>())
 
       // PipelineBehavior
       ..registerPipelineBehavior(
@@ -30,6 +31,9 @@ class MediatorRegistrar {
       )
       ..registerPipelineBehavior(
         () => ValidationBehavior([_getIt.get<LogOutCommandValidator>()]),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior([_getIt.get<VerifyTokenQueryValidator>()]),
       );
   }
 }

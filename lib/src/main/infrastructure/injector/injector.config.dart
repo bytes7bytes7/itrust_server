@@ -10,21 +10,25 @@ import 'package:injectable/injectable.dart' as _i2;
 import 'package:itrust_server/src/features/auth/application/application.dart'
     as _i8;
 import 'package:itrust_server/src/features/auth/application/commands/log_out/log_out_command_handler.dart'
-    as _i22;
+    as _i25;
 import 'package:itrust_server/src/features/auth/application/commands/log_out/log_out_command_validator.dart'
     as _i11;
 import 'package:itrust_server/src/features/auth/application/commands/register/register_command_handler.dart'
-    as _i24;
+    as _i26;
 import 'package:itrust_server/src/features/auth/application/commands/register/register_command_validator.dart'
     as _i16;
 import 'package:itrust_server/src/features/auth/application/queries/log_in/log_in_query_handler.dart'
-    as _i19;
+    as _i23;
 import 'package:itrust_server/src/features/auth/application/queries/log_in/log_in_query_validator.dart'
     as _i10;
-import 'package:itrust_server/src/features/auth/application/repositories/token_repository.dart'
+import 'package:itrust_server/src/features/auth/application/queries/verify_token/verify_token_query_handler.dart'
+    as _i18;
+import 'package:itrust_server/src/features/auth/application/queries/verify_token/verify_token_query_validator.dart'
     as _i21;
+import 'package:itrust_server/src/features/auth/application/repositories/token_repository.dart'
+    as _i20;
 import 'package:itrust_server/src/features/auth/application/services/jwt_token_service.dart'
-    as _i23;
+    as _i19;
 import 'package:itrust_server/src/features/auth/infrastructure/app_services/jwt_token_service.dart'
     as _i9;
 import 'package:itrust_server/src/features/auth/infrastructure/repositories/token_repository.dart'
@@ -34,10 +38,10 @@ import 'package:itrust_server/src/features/auth/infrastructure/third_party/mapst
 import 'package:itrust_server/src/features/auth/infrastructure/third_party/mediator_registrar.dart'
     as _i15;
 import 'package:itrust_server/src/features/auth/presentation/controllers/auth_controller.dart'
-    as _i18;
+    as _i22;
 import 'package:itrust_server/src/features/common/application/application.dart'
     as _i3;
-import 'package:itrust_server/src/features/common/common.dart' as _i20;
+import 'package:itrust_server/src/features/common/common.dart' as _i24;
 import 'package:itrust_server/src/features/common/infrastructure/providers/date_time_provider.dart'
     as _i4;
 import 'package:itrust_server/src/features/common/infrastructure/repositories/end_user_repository.dart'
@@ -48,9 +52,9 @@ import 'package:itrust_server/src/utils/jwt_settings.dart' as _i7;
 import 'package:mapster/mapster.dart' as _i12;
 import 'package:mediator/mediator.dart' as _i14;
 
-import '../../../env/env_module.dart' as _i25;
-import '../third_party/mapster_module.dart' as _i26;
-import '../third_party/mediator_module.dart' as _i27;
+import '../../../env/env_module.dart' as _i27;
+import '../third_party/mapster_module.dart' as _i28;
+import '../third_party/mediator_module.dart' as _i29;
 
 const String _test = 'test';
 
@@ -92,28 +96,34 @@ _i1.GetIt init(
     _i17.TestTokenRepository(),
     registerFor: {_test},
   );
-  gh.factory<_i18.AuthController>(() => _i18.AuthController(
+  gh.singleton<_i18.VerifyTokenQueryHandler>(_i18.VerifyTokenQueryHandler(
+    jwtTokenService: gh<_i19.JwtTokenService>(),
+    tokenRepository: gh<_i20.TokenRepository>(),
+  ));
+  gh.singleton<_i21.VerifyTokenQueryValidator>(
+      _i21.VerifyTokenQueryValidator());
+  gh.factory<_i22.AuthController>(() => _i22.AuthController(
         mediator: gh<_i14.Mediator>(),
         mapster: gh<_i12.Mapster>(),
       ));
-  gh.singleton<_i19.LogInQueryHandler>(_i19.LogInQueryHandler(
-    endUserRepository: gh<_i20.EndUserRepository>(),
-    tokenRepository: gh<_i21.TokenRepository>(),
+  gh.singleton<_i23.LogInQueryHandler>(_i23.LogInQueryHandler(
+    endUserRepository: gh<_i24.EndUserRepository>(),
+    tokenRepository: gh<_i20.TokenRepository>(),
   ));
-  gh.singleton<_i22.LogOutCommandHandler>(_i22.LogOutCommandHandler(
-    jwtTokenService: gh<_i23.JwtTokenService>(),
-    tokenRepository: gh<_i21.TokenRepository>(),
+  gh.singleton<_i25.LogOutCommandHandler>(_i25.LogOutCommandHandler(
+    jwtTokenService: gh<_i19.JwtTokenService>(),
+    tokenRepository: gh<_i20.TokenRepository>(),
   ));
-  gh.singleton<_i24.RegisterCommandHandler>(_i24.RegisterCommandHandler(
-    jwtTokenService: gh<_i23.JwtTokenService>(),
-    endUserRepository: gh<_i20.EndUserRepository>(),
-    tokenRepository: gh<_i21.TokenRepository>(),
+  gh.singleton<_i26.RegisterCommandHandler>(_i26.RegisterCommandHandler(
+    jwtTokenService: gh<_i19.JwtTokenService>(),
+    endUserRepository: gh<_i24.EndUserRepository>(),
+    tokenRepository: gh<_i20.TokenRepository>(),
   ));
   return getIt;
 }
 
-class _$EnvModule extends _i25.EnvModule {}
+class _$EnvModule extends _i27.EnvModule {}
 
-class _$MapsterModule extends _i26.MapsterModule {}
+class _$MapsterModule extends _i28.MapsterModule {}
 
-class _$MediatorModule extends _i27.MediatorModule {}
+class _$MediatorModule extends _i29.MediatorModule {}

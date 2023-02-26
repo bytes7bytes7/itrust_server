@@ -11,7 +11,7 @@ class LogOutRequestUserToLogOutCommandMapper
   @override
   LogOutCommand map() {
     return LogOutCommand(
-      endUser: _user,
+      user: _user,
     );
   }
 
