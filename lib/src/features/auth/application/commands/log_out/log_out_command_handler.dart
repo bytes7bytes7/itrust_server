@@ -39,6 +39,8 @@ class LogOutCommandHandler extends RequestHandler<
       return left([const TokenExpired()]);
     }
 
+    await _tokenRepository.removeByUserID(userID: request.endUser.id);
+
     return right(LogOutResult(info: 'Log out succeeded'));
   }
 }
