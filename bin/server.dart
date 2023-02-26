@@ -30,15 +30,25 @@ void main(List<String> args) async {
   await configInjector(env: env);
 
   final app = Router()
-    ..mount(
-      authRoute,
-      _getIt.get<AuthController>().router,
+    ..post(
+      registerRoute,
+      _getIt.get<AuthController>().register,
+    )
+    ..post(
+      logInRoute,
+      _getIt.get<AuthController>().logIn,
+    )
+    ..post(
+      logOutRoute,
+      Pipeline()
+          .addMiddleware(_authorize())
+          .addHandler(_getIt.get<AuthController>().logOut),
     )
     ..mount(
       feedRoute,
-      Pipeline().addMiddleware(_authorize()).addHandler(
-            _getIt.get<FeedController>().router,
-          ),
+      Pipeline()
+          .addMiddleware(_authorize())
+          .addHandler(_getIt.get<FeedController>().router),
     );
 
   final handler = Pipeline()

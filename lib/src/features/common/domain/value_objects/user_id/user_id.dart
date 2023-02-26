@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../../utils/utils.dart';
+
 part 'user_id.freezed.dart';
 
 part 'user_id.g.dart';
@@ -15,7 +17,7 @@ class UserID with _$UserID {
 
   const UserID._();
 
-  factory UserID.fromJson(Map<String, Object?> json) => _$UserIDFromJson(json);
+  factory UserID.fromJson(JsonMap json) => _$UserIDFromJson(json);
 
   String get str => value;
 }

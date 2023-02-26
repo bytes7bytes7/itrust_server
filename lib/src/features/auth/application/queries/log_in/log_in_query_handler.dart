@@ -7,13 +7,13 @@ import 'package:mediator/mediator.dart';
 import '../../../../common/common.dart';
 import '../../../domain/domain.dart';
 import '../../common/common.dart';
-import '../../persistence/token_repository.dart';
-import 'login_query.dart';
+import '../../repositories/token_repository.dart';
+import 'log_in_query.dart';
 
-@injectable
-class LoginQueryHandler extends RequestHandler<
-    Either<List<DetailedException>, AuthResult>, LoginQuery> {
-  const LoginQueryHandler({
+@singleton
+class LogInQueryHandler extends RequestHandler<
+    Either<List<DetailedException>, AuthResult>, LogInQuery> {
+  const LogInQueryHandler({
     required EndUserRepository endUserRepository,
     required TokenRepository tokenRepository,
   })  : _endUserRepository = endUserRepository,
@@ -24,7 +24,7 @@ class LoginQueryHandler extends RequestHandler<
 
   @override
   FutureOr<Either<List<DetailedException>, AuthResult>> handle(
-    LoginQuery request,
+    LogInQuery request,
   ) async {
     final user = await _endUserRepository.getByEmail(email: request.email);
     final userDoesNotExist = user == null;

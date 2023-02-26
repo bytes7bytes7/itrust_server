@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/utils.dart';
 import '../../value_objects/value_objects.dart';
 
 part 'user.freezed.dart';
@@ -23,5 +24,5 @@ class User with _$User {
     required UserID id,
   }) = StaffUser;
 
-  factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
+  factory User.fromJson(JsonMap json) => _$UserFromJson(json);
 }

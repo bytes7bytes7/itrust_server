@@ -5,11 +5,11 @@ import 'package:mediator/mediator.dart';
 import '../../../../common/common.dart';
 import '../../../domain/domain.dart';
 import '../../common/common.dart';
-import '../../persistence/token_repository.dart';
+import '../../repositories/token_repository.dart';
 import '../../services/jwt_token_service.dart';
 import 'register_command.dart';
 
-@injectable
+@singleton
 class RegisterCommandHandler extends RequestHandler<
     Either<List<DetailedException>, AuthResult>, RegisterCommand> {
   const RegisterCommandHandler({

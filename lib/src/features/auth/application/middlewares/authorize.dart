@@ -1,8 +1,8 @@
 import 'package:shelf/shelf.dart';
 
-import '../../../../utils/jwt_settings.dart';
+import '../../../../utils/utils.dart';
 import '../../../common/common.dart';
-import '../persistence/token_repository.dart';
+import '../repositories/token_repository.dart';
 import '../services/jwt_token_service.dart';
 
 // TODO: refactor all [Response]s
@@ -50,7 +50,7 @@ Middleware authorize({
         }
 
         // change context
-        request = request.change(context: {'user': user});
+        request = request.setUser(user);
 
         return Future.sync(() => innerHandler(request)).then((response) {
           return response;

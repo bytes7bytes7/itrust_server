@@ -18,22 +18,18 @@ class MediatorRegistrar {
     _mediator
       // RequestHandler
       ..registerRequestHandler(() => _getIt.get<RegisterCommandHandler>())
-      ..registerRequestHandler(() => _getIt.get<LoginQueryHandler>())
+      ..registerRequestHandler(() => _getIt.get<LogInQueryHandler>())
+      ..registerRequestHandler(() => _getIt.get<LogOutCommandHandler>())
 
       // PipelineBehavior
       ..registerPipelineBehavior(
-        () => ValidationBehavior(
-          [
-            _getIt.get<RegisterCommandValidator>(),
-          ],
-        ),
+        () => ValidationBehavior([_getIt.get<RegisterCommandValidator>()]),
       )
       ..registerPipelineBehavior(
-        () => ValidationBehavior(
-          [
-            _getIt.get<LoginQueryValidator>(),
-          ],
-        ),
+        () => ValidationBehavior([_getIt.get<LogInQueryValidator>()]),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior([_getIt.get<LogOutCommandValidator>()]),
       );
   }
 }

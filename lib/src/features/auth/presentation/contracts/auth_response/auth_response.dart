@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/utils.dart';
 import '../../../../common/common.dart';
 
 part 'auth_response.g.dart';
@@ -20,8 +21,8 @@ class AuthResponse {
   final String email;
   final String token;
 
-  factory AuthResponse.fromJson(Map<String, Object?> json) =>
+  factory AuthResponse.fromJson(JsonMap json) =>
       _$AuthResponseFromJson(json);
 
-  Map<String, Object?> toJson() => _$AuthResponseToJson(this);
+  JsonMap toJson() => _$AuthResponseToJson(this);
 }
