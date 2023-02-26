@@ -107,6 +107,7 @@ _i1.GetIt init(
         mapster: gh<_i12.Mapster>(),
       ));
   gh.singleton<_i23.LogInQueryHandler>(_i23.LogInQueryHandler(
+    jwtTokenService: gh<_i19.JwtTokenService>(),
     endUserRepository: gh<_i24.EndUserRepository>(),
     tokenRepository: gh<_i20.TokenRepository>(),
   ));
