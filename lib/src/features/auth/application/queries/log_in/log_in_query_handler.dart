@@ -4,9 +4,10 @@ import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mediator/mediator.dart';
 
+import '../../../../common/application/exceptions/detailed_exception.dart';
 import '../../../../common/common.dart';
-import '../../../domain/domain.dart';
 import '../../common/common.dart';
+import '../../exceptions/exceptions.dart';
 import '../../repositories/token_repository.dart';
 import 'log_in_query.dart';
 

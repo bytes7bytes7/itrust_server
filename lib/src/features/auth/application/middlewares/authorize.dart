@@ -2,6 +2,7 @@ import 'package:shelf/shelf.dart';
 
 import '../../../../utils/utils.dart';
 import '../../../common/common.dart';
+import '../exceptions/exceptions.dart';
 import '../repositories/token_repository.dart';
 import '../services/jwt_token_service.dart';
 
@@ -18,35 +19,35 @@ Middleware authorize({
             request.headers['authorization'];
 
         if (authorizationHeader == null) {
-          return Response(401);
+          return problemHandler([const NoTokenProvided()]);
         }
 
         if (!authorizationHeader.startsWith('Bearer ')) {
-          return Response(401);
+          return problemHandler([const InvalidToken()]);
         }
 
         final token = authorizationHeader.replaceFirst('Bearer', '').trim();
 
         if (token.isEmpty) {
-          return Response(401);
+          return problemHandler([const InvalidToken()]);
         }
 
         final validationStatus = jwtTokenService.verify(token);
 
         if (validationStatus != JwtVerificationStatus.verified) {
-          return Response(401);
+          return problemHandler([const TokenExpired()]);
         }
 
         final userID = await tokenRepository.getUserID(token: token);
 
         if (userID == null) {
-          return Response(401);
+          return problemHandler([const UserDoesNotExist()]);
         }
 
         final user = await endUserRepository.getByID(id: userID);
 
         if (user == null) {
-          return Response(401);
+          return problemHandler([const UserDoesNotExist()]);
         }
 
         // change context

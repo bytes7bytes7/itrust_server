@@ -4,9 +4,9 @@ import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mediator/mediator.dart';
 
-import '../../../../common/common.dart';
-import '../../../domain/domain.dart';
+import '../../../../common/application/exceptions/exceptions.dart';
 import '../../common/common.dart';
+import '../../exceptions/exceptions.dart';
 import '../../repositories/token_repository.dart';
 import '../../services/jwt_token_service.dart';
 import 'log_out_command.dart';

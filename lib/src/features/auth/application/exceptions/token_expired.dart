@@ -1,4 +1,4 @@
-import '../../../common/common.dart';
+import '../../../common/application/exceptions/detailed_exception.dart';
 
 class TokenExpired extends DetailedException {
   const TokenExpired()

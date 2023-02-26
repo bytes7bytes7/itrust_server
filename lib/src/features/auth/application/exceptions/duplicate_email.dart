@@ -1,4 +1,4 @@
-import '../../../common/domain/exceptions/detailed_exception.dart';
+import '../../../common/application/exceptions/detailed_exception.dart';
 
 class DuplicateEmail extends DetailedException {
   const DuplicateEmail()

@@ -4,56 +4,59 @@ import 'package:problem_details/problem_details.dart';
 import 'package:shelf/shelf.dart';
 
 import '../../../../utils/utils.dart';
-import '../../domain/domain.dart';
+import '../../application/exceptions/detailed_exception.dart';
 
 class ApiController {
   const ApiController();
 
-  Future<Response> problem(List<DetailedException> exceptions) async {
-    if (exceptions.isEmpty) {
-      return ResponseX.problem(
-        problemDetails: ProblemDetails(),
-      );
-    }
+  Response problem(List<DetailedException> exceptions) =>
+      problemHandler(exceptions);
+}
 
-    if (exceptions.any((e) => e.type == DetailedExceptionType.validation)) {
-      return ResponseX.problem(
-        problemDetails: _validation(exceptions),
-      );
-    }
-
-    final error = exceptions.first;
-    int? status;
-
-    switch (error.type) {
-      case DetailedExceptionType.failure:
-        status = HttpStatus.badRequest;
-        break;
-      case DetailedExceptionType.unexpected:
-        status = HttpStatus.internalServerError;
-        break;
-      case DetailedExceptionType.validation:
-        status = HttpStatus.badRequest;
-        break;
-      case DetailedExceptionType.conflict:
-        status = HttpStatus.conflict;
-        break;
-      case DetailedExceptionType.notFound:
-        status = HttpStatus.notFound;
-        break;
-      case DetailedExceptionType.unauthorized:
-        status = HttpStatus.unauthorized;
-        break;
-      default:
-    }
-
+Response problemHandler(List<DetailedException> exceptions) {
+  if (exceptions.isEmpty) {
     return ResponseX.problem(
-      problemDetails: ProblemDetails(
-        status: status,
-        title: error.description,
-      ),
+      problemDetails: ProblemDetails(),
     );
   }
+
+  if (exceptions.any((e) => e.type == DetailedExceptionType.validation)) {
+    return ResponseX.problem(
+      problemDetails: _validation(exceptions),
+    );
+  }
+
+  final error = exceptions.first;
+  int? status;
+
+  switch (error.type) {
+    case DetailedExceptionType.failure:
+      status = HttpStatus.badRequest;
+      break;
+    case DetailedExceptionType.unexpected:
+      status = HttpStatus.internalServerError;
+      break;
+    case DetailedExceptionType.validation:
+      status = HttpStatus.badRequest;
+      break;
+    case DetailedExceptionType.conflict:
+      status = HttpStatus.conflict;
+      break;
+    case DetailedExceptionType.notFound:
+      status = HttpStatus.notFound;
+      break;
+    case DetailedExceptionType.unauthorized:
+      status = HttpStatus.unauthorized;
+      break;
+    default:
+  }
+
+  return ResponseX.problem(
+    problemDetails: ProblemDetails(
+      status: status,
+      title: error.description,
+    ),
+  );
 }
 
 const _validationKey = 'errors';

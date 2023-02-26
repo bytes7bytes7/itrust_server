@@ -5,7 +5,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mediator/mediator.dart';
 
-import '../../domain/domain.dart';
+import '../exceptions/detailed_exception.dart';
 import 'behavior_validator.dart';
 
 class ValidationBehavior<RS,

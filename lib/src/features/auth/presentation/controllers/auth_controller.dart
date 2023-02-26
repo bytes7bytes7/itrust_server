@@ -7,9 +7,10 @@ import 'package:mediator/mediator.dart' as mdtr;
 import 'package:shelf/shelf.dart';
 
 import '../../../../utils/utils.dart';
+import '../../../common/application/exceptions/exceptions.dart';
 import '../../../common/common.dart';
 import '../../application/application.dart';
-import '../../domain/domain.dart';
+import '../../application/exceptions/exceptions.dart';
 import '../contracts/contracts.dart';
 
 const registerRoute = '/register';
