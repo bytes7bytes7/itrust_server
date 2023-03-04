@@ -45,6 +45,18 @@ class RefreshTokenCommandHandler extends RequestHandler<
       return left([const TokenExpired()]);
     }
 
+    final deviceInfo = await _tokenRepository.getDeviceInfoByRefreshToken(
+      refreshToken: request.refreshToken,
+    );
+
+    if (deviceInfo != request.deviceInfo) {
+      await _tokenRepository.removeTokenPairByRefreshToken(
+        refreshToken: request.refreshToken,
+      );
+
+      return left([const StolenToken()]);
+    }
+
     final user = await _endUserRepository.getByID(id: userID);
 
     if (user == null) {

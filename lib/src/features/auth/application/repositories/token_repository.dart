@@ -14,6 +14,8 @@ abstract class TokenRepository {
 
   Future<String?> getDeviceInfoByAccessToken({required String accessToken});
 
+  Future<String?> getDeviceInfoByRefreshToken({required String refreshToken});
+
   Future<UserID?> removeTokenPairByAccessToken({required String accessToken});
 
   Future<UserID?> removeTokenPairByRefreshToken({required String refreshToken});

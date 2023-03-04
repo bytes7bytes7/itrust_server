@@ -27,8 +27,9 @@ class VerifyTokenQueryHandler extends RequestHandler<
   FutureOr<Either<List<DetailedException>, VerifyTokenResult>> handle(
     VerifyTokenQuery request,
   ) async {
-    final userID =
-        await _tokenRepository.getUserIDByAccessToken(accessToken: request.accessToken);
+    final userID = await _tokenRepository.getUserIDByAccessToken(
+      accessToken: request.accessToken,
+    );
 
     if (userID == null) {
       return left([const TokenExpired()]);
@@ -40,11 +41,14 @@ class VerifyTokenQueryHandler extends RequestHandler<
       return left([const TokenExpired()]);
     }
 
-    final deviceInfo =
-        await _tokenRepository.getDeviceInfoByAccessToken(accessToken: request.accessToken);
+    final deviceInfo = await _tokenRepository.getDeviceInfoByAccessToken(
+      accessToken: request.accessToken,
+    );
 
     if (deviceInfo != request.deviceInfo) {
-      await _tokenRepository.removeTokenPairByAccessToken(accessToken: request.accessToken);
+      await _tokenRepository.removeTokenPairByAccessToken(
+        accessToken: request.accessToken,
+      );
 
       return left([const StolenToken()]);
     }

@@ -101,6 +101,21 @@ class TestTokenRepository implements TokenRepository {
   }
 
   @override
+  Future<String?> getDeviceInfoByRefreshToken({
+    required String refreshToken,
+  }) async {
+    for (final note in _storage.entries) {
+      for (final cred in note.value) {
+        if (cred.tokenPair.refresh == refreshToken) {
+          return cred.deviceInfo;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  @override
   Future<UserID?> removeTokenPairByAccessToken({
     required String accessToken,
   }) async {
