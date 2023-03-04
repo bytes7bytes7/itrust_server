@@ -8,7 +8,9 @@ class VerifyTokenQuery
     extends Request<Either<List<DetailedException>, VerifyTokenResult>> {
   VerifyTokenQuery({
     required this.accessToken,
+    required this.deviceInfo,
   }) : super(VerifyTokenQuery);
 
   final String accessToken;
+  final String deviceInfo;
 }

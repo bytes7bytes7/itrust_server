@@ -10,17 +10,20 @@ import '../../domain/domain.dart';
 @Singleton(as: TokenRepository)
 class TestTokenRepository implements TokenRepository {
   final _tokenPairToIDStorage = HashMap<TokenPair, UserID>();
-  final _idToTokenPairStorage = HashMap<UserID, TokenPair>();
   final _accessTokenToIDStorage = HashMap<String, UserID>();
+  final _idToTokenPairStorage = HashMap<UserID, TokenPair>();
+  final _accessTokenToDeviceInfoStorage = HashMap<String, String>();
 
   @override
   Future<void> add({
     required TokenPair tokenPair,
     required UserID userID,
+    required String deviceInfo,
   }) async {
     _tokenPairToIDStorage[tokenPair] = userID;
-    _idToTokenPairStorage[userID] = tokenPair;
     _accessTokenToIDStorage[tokenPair.access] = userID;
+    _idToTokenPairStorage[userID] = tokenPair;
+    _accessTokenToDeviceInfoStorage[tokenPair.access] = deviceInfo;
   }
 
   @override
@@ -29,24 +32,14 @@ class TestTokenRepository implements TokenRepository {
   }
 
   @override
-  Future<TokenPair?> getTokenPair({required UserID userID}) async {
-    return _idToTokenPairStorage[userID];
+  Future<String?> getDeviceInfo({required String accessToken}) async {
+    return _accessTokenToDeviceInfoStorage[accessToken];
   }
 
   @override
-  Future<TokenPair?> removeByUserID({required UserID userID}) async {
-    final tokenPair = _idToTokenPairStorage.remove(userID);
+  Future<UserID?> removeTokenPair({required String accessToken}) async {
+    _accessTokenToDeviceInfoStorage.remove(accessToken);
 
-    if (tokenPair != null) {
-      _tokenPairToIDStorage.remove(tokenPair);
-      _accessTokenToIDStorage.remove(tokenPair.access);
-    }
-
-    return tokenPair;
-  }
-
-  @override
-  Future<UserID?> removeByToken({required String accessToken}) async {
     final userID = _accessTokenToIDStorage.remove(accessToken);
 
     if (userID != null) {

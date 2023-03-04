@@ -37,9 +37,18 @@ class VerifyTokenQueryHandler extends RequestHandler<
     final validationStatus = _jwtTokenService.verify(request.accessToken);
 
     if (validationStatus != JwtVerificationStatus.verified) {
-      await _tokenRepository.removeByToken(accessToken: request.accessToken);
+      await _tokenRepository.removeTokenPair(accessToken: request.accessToken);
 
       return left([const TokenExpired()]);
+    }
+
+    final deviceInfo =
+        await _tokenRepository.getDeviceInfo(accessToken: request.accessToken);
+
+    if (deviceInfo != request.deviceInfo) {
+      await _tokenRepository.removeTokenPair(accessToken: request.accessToken);
+
+      return left([const StolenToken()]);
     }
 
     return right(VerifyTokenResult(info: 'Token is valid'));

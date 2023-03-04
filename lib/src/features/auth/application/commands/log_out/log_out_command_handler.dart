@@ -40,7 +40,7 @@ class LogOutCommandHandler extends RequestHandler<
       return left([const TokenExpired()]);
     }
 
-    await _tokenRepository.removeByToken(accessToken: request.accessToken);
+    await _tokenRepository.removeTokenPair(accessToken: request.accessToken);
 
     return right(LogOutResult(info: 'Log out succeeded'));
   }

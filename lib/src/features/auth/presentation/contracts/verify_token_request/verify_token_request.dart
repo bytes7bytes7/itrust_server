@@ -6,7 +6,11 @@ part 'verify_token_request.g.dart';
 
 @JsonSerializable()
 class VerifyTokenRequest {
-  const VerifyTokenRequest();
+  const VerifyTokenRequest({
+    required this.deviceInfo,
+  });
+
+  final String deviceInfo;
 
   factory VerifyTokenRequest.fromJson(JsonMap json) =>
       _$VerifyTokenRequestFromJson(json);

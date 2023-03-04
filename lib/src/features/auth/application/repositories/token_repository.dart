@@ -5,13 +5,12 @@ abstract class TokenRepository {
   Future<void> add({
     required TokenPair tokenPair,
     required UserID userID,
+    required String deviceInfo,
   });
 
   Future<UserID?> getUserID({required String accessToken});
 
-  Future<TokenPair?> getTokenPair({required UserID userID});
+  Future<String?> getDeviceInfo({required String accessToken});
 
-  Future<TokenPair?> removeByUserID({required UserID userID});
-
-  Future<UserID?> removeByToken({required String accessToken});
+  Future<UserID?> removeTokenPair({required String accessToken});
 }

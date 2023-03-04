@@ -48,13 +48,13 @@ class LogInQueryHandler extends RequestHandler<
       return left([const InvalidCredentials()]);
     }
 
-    var tokenPair = await _tokenRepository.getTokenPair(userID: user.id);
+    final tokenPair = _jwtTokenService.generate(user);
 
-    if (tokenPair == null) {
-      tokenPair = _jwtTokenService.generate(user);
-
-      await _tokenRepository.add(tokenPair: tokenPair, userID: user.id);
-    }
+    await _tokenRepository.add(
+      tokenPair: tokenPair,
+      userID: user.id,
+      deviceInfo: request.deviceInfo,
+    );
 
     return right(
       AuthResult(

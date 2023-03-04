@@ -12,6 +12,7 @@ RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
       lastName: json['lastName'] as String,
       email: json['email'] as String,
       password: json['password'] as String,
+      deviceInfo: json['deviceInfo'] as String,
     );
 
 Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
       'lastName': instance.lastName,
       'email': instance.email,
       'password': instance.password,
+      'deviceInfo': instance.deviceInfo,
     };

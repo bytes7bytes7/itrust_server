@@ -11,8 +11,11 @@ class VerifyTokenRequestStringToVerifyTokenQueryMapper
   VerifyTokenQuery map() {
     return VerifyTokenQuery(
       accessToken: _accessToken,
+      deviceInfo: _request.deviceInfo,
     );
   }
+
+  VerifyTokenRequest get _request => source1;
 
   String get _accessToken => source2;
 }

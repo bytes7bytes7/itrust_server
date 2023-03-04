@@ -11,12 +11,14 @@ class RegisterRequest {
     required this.lastName,
     required this.email,
     required this.password,
+    required this.deviceInfo,
   });
 
   final String firstName;
   final String lastName;
   final String email;
   final String password;
+  final String deviceInfo;
 
   factory RegisterRequest.fromJson(JsonMap json) =>
       _$RegisterRequestFromJson(json);

@@ -12,6 +12,7 @@ class LogInRequestToLogInQueryMapper
     return LogInQuery(
       email: _request.email,
       password: _request.password,
+      deviceInfo: _request.deviceInfo,
     );
   }
 
