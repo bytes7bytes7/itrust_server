@@ -2,7 +2,7 @@ import '../../../common/common.dart';
 import '../../domain/domain.dart';
 
 abstract class TokenRepository {
-  Future<void> add({
+  Future<void> addOrUpdate({
     required TokenPair tokenPair,
     required UserID userID,
     required String deviceInfo,

@@ -1,55 +1,105 @@
 import 'dart:collection';
 
+import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../common/common.dart';
 import '../../application/application.dart';
 import '../../domain/domain.dart';
 
+class _UserCred extends Equatable {
+  const _UserCred(
+    this.tokenPair,
+    this.deviceInfo,
+  );
+
+  final TokenPair tokenPair;
+  final String deviceInfo;
+
+  @override
+  List<Object?> get props => [tokenPair, deviceInfo];
+}
+
 @test
 @Singleton(as: TokenRepository)
 class TestTokenRepository implements TokenRepository {
-  final _tokenPairToIDStorage = HashMap<TokenPair, UserID>();
-  final _accessTokenToIDStorage = HashMap<String, UserID>();
-  final _idToTokenPairStorage = HashMap<UserID, TokenPair>();
-  final _accessTokenToDeviceInfoStorage = HashMap<String, String>();
+  final _storage = HashMap<UserID, List<_UserCred>>();
 
   @override
-  Future<void> add({
+  Future<void> addOrUpdate({
     required TokenPair tokenPair,
     required UserID userID,
     required String deviceInfo,
   }) async {
-    _tokenPairToIDStorage[tokenPair] = userID;
-    _accessTokenToIDStorage[tokenPair.access] = userID;
-    _idToTokenPairStorage[userID] = tokenPair;
-    _accessTokenToDeviceInfoStorage[tokenPair.access] = deviceInfo;
+    final creds = _storage[userID];
+
+    if (creds != null) {
+      var updated = false;
+
+      final iterator = creds.iterator..moveNext();
+      for (var i = 0; i < creds.length; i++) {
+        final cred = iterator.current;
+
+        if (cred.deviceInfo == deviceInfo) {
+          creds[i] = _UserCred(tokenPair, deviceInfo);
+          updated = true;
+          break;
+        }
+
+        iterator.moveNext();
+      }
+
+      if (!updated) {
+        creds.add(_UserCred(tokenPair, deviceInfo));
+      }
+    } else {
+      _storage[userID] = <_UserCred>[_UserCred(tokenPair, deviceInfo)];
+    }
   }
 
   @override
   Future<UserID?> getUserID({required String accessToken}) async {
-    return _accessTokenToIDStorage[accessToken];
+    for (final note in _storage.entries) {
+      for (final cred in note.value) {
+        if (cred.tokenPair.access == accessToken) {
+          return note.key;
+        }
+      }
+    }
+
+    return null;
   }
 
   @override
   Future<String?> getDeviceInfo({required String accessToken}) async {
-    return _accessTokenToDeviceInfoStorage[accessToken];
+    for (final note in _storage.entries) {
+      for (final cred in note.value) {
+        if (cred.tokenPair.access == accessToken) {
+          return cred.deviceInfo;
+        }
+      }
+    }
+
+    return null;
   }
 
   @override
   Future<UserID?> removeTokenPair({required String accessToken}) async {
-    _accessTokenToDeviceInfoStorage.remove(accessToken);
+    for (final note in _storage.entries) {
+      final iterator = note.value.iterator;
 
-    final userID = _accessTokenToIDStorage.remove(accessToken);
+      for (var i = 0; i < note.value.length; i++) {
+        final cred = iterator.current;
 
-    if (userID != null) {
-      final tokenPair = _idToTokenPairStorage.remove(userID);
+        if (cred.tokenPair.access == accessToken) {
+          note.value.removeAt(i);
+          return note.key;
+        }
 
-      if (tokenPair != null) {
-        _tokenPairToIDStorage.remove(tokenPair);
+        iterator.moveNext();
       }
     }
 
-    return userID;
+    return null;
   }
 }

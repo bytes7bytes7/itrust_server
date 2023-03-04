@@ -55,7 +55,7 @@ class RegisterCommandHandler extends RequestHandler<
 
     final tokenPair = _jwtTokenService.generate(user);
 
-    await _tokenRepository.add(
+    await _tokenRepository.addOrUpdate(
       tokenPair: tokenPair,
       userID: userID,
       deviceInfo: request.deviceInfo,

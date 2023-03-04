@@ -50,7 +50,7 @@ class LogInQueryHandler extends RequestHandler<
 
     final tokenPair = _jwtTokenService.generate(user);
 
-    await _tokenRepository.add(
+    await _tokenRepository.addOrUpdate(
       tokenPair: tokenPair,
       userID: user.id,
       deviceInfo: request.deviceInfo,
