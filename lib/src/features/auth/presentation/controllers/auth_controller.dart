@@ -162,4 +162,33 @@ class AuthController extends ApiController {
       ),
     );
   }
+
+  @Route.post('/refresh_token')
+  Future<Response> refreshToken(Request request) async {
+    late RefreshTokenRequest refreshTokenRequest;
+    try {
+      final rawBody = await request.readAsString();
+      final jsonBody = _jsonDecoder.convert(rawBody);
+      refreshTokenRequest = RefreshTokenRequest.fromJson(jsonBody);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final command =
+        _mapster.map1(refreshTokenRequest, To<RefreshTokenCommand>());
+
+    final refreshTokenResult = await command.sendTo(_mediator);
+
+    return refreshTokenResult.match(
+      problem,
+      (r) => Response.ok(
+        _jsonEncoder.convert(_mapster.map1(r, To<RefreshTokenResponse>())),
+        headers: {
+          HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+        },
+      ),
+    );
+  }
 }

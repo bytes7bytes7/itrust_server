@@ -28,7 +28,7 @@ class LogOutCommandHandler extends RequestHandler<
     LogOutCommand request,
   ) async {
     final userID =
-        await _tokenRepository.getUserID(accessToken: request.accessToken);
+        await _tokenRepository.getUserIDByAccessToken(accessToken: request.accessToken);
 
     if (userID == null) {
       return left([const TokenExpired()]);
@@ -40,7 +40,7 @@ class LogOutCommandHandler extends RequestHandler<
       return left([const TokenExpired()]);
     }
 
-    await _tokenRepository.removeTokenPair(accessToken: request.accessToken);
+    await _tokenRepository.removeTokenPairByAccessToken(accessToken: request.accessToken);
 
     return right(LogOutResult(info: 'Log out succeeded'));
   }

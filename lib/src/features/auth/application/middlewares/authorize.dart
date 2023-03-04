@@ -35,7 +35,7 @@ Middleware authorize({
         }
 
         final userID =
-            await tokenRepository.getUserID(accessToken: accessToken);
+            await tokenRepository.getUserIDByAccessToken(accessToken: accessToken);
 
         if (userID == null) {
           return problemHandler([const UserDoesNotExist()]);

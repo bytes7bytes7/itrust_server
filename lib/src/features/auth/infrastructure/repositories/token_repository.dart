@@ -58,7 +58,7 @@ class TestTokenRepository implements TokenRepository {
   }
 
   @override
-  Future<UserID?> getUserID({required String accessToken}) async {
+  Future<UserID?> getUserIDByAccessToken({required String accessToken}) async {
     for (final note in _storage.entries) {
       for (final cred in note.value) {
         if (cred.tokenPair.access == accessToken) {
@@ -71,7 +71,24 @@ class TestTokenRepository implements TokenRepository {
   }
 
   @override
-  Future<String?> getDeviceInfo({required String accessToken}) async {
+  Future<UserID?> getUserIDByRefreshToken({
+    required String refreshToken,
+  }) async {
+    for (final note in _storage.entries) {
+      for (final cred in note.value) {
+        if (cred.tokenPair.refresh == refreshToken) {
+          return note.key;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  @override
+  Future<String?> getDeviceInfoByAccessToken({
+    required String accessToken,
+  }) async {
     for (final note in _storage.entries) {
       for (final cred in note.value) {
         if (cred.tokenPair.access == accessToken) {
@@ -84,7 +101,9 @@ class TestTokenRepository implements TokenRepository {
   }
 
   @override
-  Future<UserID?> removeTokenPair({required String accessToken}) async {
+  Future<UserID?> removeTokenPairByAccessToken({
+    required String accessToken,
+  }) async {
     for (final note in _storage.entries) {
       final iterator = note.value.iterator;
 
@@ -92,6 +111,28 @@ class TestTokenRepository implements TokenRepository {
         final cred = iterator.current;
 
         if (cred.tokenPair.access == accessToken) {
+          note.value.removeAt(i);
+          return note.key;
+        }
+
+        iterator.moveNext();
+      }
+    }
+
+    return null;
+  }
+
+  @override
+  Future<UserID?> removeTokenPairByRefreshToken({
+    required String refreshToken,
+  }) async {
+    for (final note in _storage.entries) {
+      final iterator = note.value.iterator..moveNext();
+
+      for (var i = 0; i < note.value.length; i++) {
+        final cred = iterator.current;
+
+        if (cred.tokenPair.refresh == refreshToken) {
           note.value.removeAt(i);
           return note.key;
         }

@@ -22,6 +22,12 @@ class MapsterRegistrar {
       )
       ..register(
         MapperMeta.one(VerifyTokenResultToVerifyTokenResponseMapper.new),
+      )
+      ..register(
+        MapperMeta.one(RefreshTokenRequestToRefreshTokenCommandMapper.new),
+      )
+      ..register(
+        MapperMeta.one(RefreshTokenResultToRefreshTokenResponseMapper.new),
       );
   }
 }
