@@ -120,7 +120,7 @@ class TestTokenRepository implements TokenRepository {
     required String accessToken,
   }) async {
     for (final note in _storage.entries) {
-      final iterator = note.value.iterator;
+      final iterator = note.value.iterator..moveNext();
 
       for (var i = 0; i < note.value.length; i++) {
         final cred = iterator.current;
