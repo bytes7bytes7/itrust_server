@@ -11,6 +11,8 @@ import '../contracts/contracts.dart';
 
 part 'user_controller.g.dart';
 
+const _userIDParam = 'userID';
+
 @injectable
 class UserController extends ApiController {
   static const path = '/users/';
@@ -26,7 +28,7 @@ class UserController extends ApiController {
 
   Router get router => _$UserControllerRouter(this);
 
-  @Route.get('/<userID>')
+  @Route.get('/<$_userIDParam>')
   Future<Response> getUser(Request request) async {
     late GetUserRequest getUserRequest;
     try {
@@ -37,7 +39,13 @@ class UserController extends ApiController {
       );
     }
 
-    final query = _mapster.map1(getUserRequest, To<GetUserQuery>());
+    final userID = request.params[_userIDParam];
+
+    if (userID == null) {
+      return problem([const InvalidRequest()]);
+    }
+
+    final query = _mapster.map2(getUserRequest, userID, To<GetUserQuery>());
 
     final getUserResult = await query.sendTo(_mediator);
 

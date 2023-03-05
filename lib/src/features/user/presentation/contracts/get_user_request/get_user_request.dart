@@ -6,11 +6,7 @@ part 'get_user_request.g.dart';
 
 @JsonSerializable()
 class GetUserRequest {
-  const GetUserRequest({
-    required this.userID,
-  });
-
-  final String userID;
+  const GetUserRequest();
 
   factory GetUserRequest.fromJson(JsonMap json) =>
       _$GetUserRequestFromJson(json);

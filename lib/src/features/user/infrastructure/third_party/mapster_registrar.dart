@@ -12,7 +12,7 @@ class UserMapsterRegistrar {
   @postConstruct
   void register() {
     _mapster
-      ..register(MapperMeta.one(GetUserRequestToGetUserQueryMapper.new))
+      ..register(MapperMeta.two(GetUserRequestIDToGetUserQueryMapper.new))
       ..register(MapperMeta.one(GetUserResultToGetUserResponseMapper.new));
   }
 }

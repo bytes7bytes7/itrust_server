@@ -7,11 +7,7 @@ part of 'get_user_request.dart';
 // **************************************************************************
 
 GetUserRequest _$GetUserRequestFromJson(Map<String, dynamic> json) =>
-    GetUserRequest(
-      userID: json['userID'] as String,
-    );
+    GetUserRequest();
 
 Map<String, dynamic> _$GetUserRequestToJson(GetUserRequest instance) =>
-    <String, dynamic>{
-      'userID': instance.userID,
-    };
+    <String, dynamic>{};

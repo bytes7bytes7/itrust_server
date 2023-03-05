@@ -4,16 +4,16 @@ import '../../../common/domain/domain.dart';
 import '../../application/application.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class GetUserRequestToGetUserQueryMapper
-    extends OneSourceMapper<GetUserRequest, GetUserQuery> {
-  GetUserRequestToGetUserQueryMapper(super.input);
+class GetUserRequestIDToGetUserQueryMapper
+    extends TwoSourcesMapper<GetUserRequest, String, GetUserQuery> {
+  GetUserRequestIDToGetUserQueryMapper(super.input);
 
   @override
   GetUserQuery map() {
     return GetUserQuery(
-      userID: UserID(_request.userID),
+      userID: UserID(_id),
     );
   }
 
-  GetUserRequest get _request => source;
+  String get _id => source2;
 }
