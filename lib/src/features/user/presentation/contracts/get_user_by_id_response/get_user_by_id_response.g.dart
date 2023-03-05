@@ -1,18 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'get_user_response_by_id.dart';
+part of 'get_user_by_id_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-GetUserResponseByID _$GetUserResponseByIDFromJson(Map<String, dynamic> json) =>
-    GetUserResponseByID(
+GetUserByIDResponse _$GetUserByIDResponseFromJson(Map<String, dynamic> json) =>
+    GetUserByIDResponse(
       user: User.fromJson(json['user'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$GetUserResponseByIDToJson(
-        GetUserResponseByID instance) =>
+Map<String, dynamic> _$GetUserByIDResponseToJson(
+        GetUserByIDResponse instance) =>
     <String, dynamic>{
       'user': instance.user.toJson(),
     };

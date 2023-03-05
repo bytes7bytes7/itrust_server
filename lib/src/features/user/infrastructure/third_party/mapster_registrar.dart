@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
 
-import '../../../../../itrust_server.dart';
+import '../mappers/mappers.dart';
 
 @singleton
 class UserMapsterRegistrar {
@@ -13,10 +13,10 @@ class UserMapsterRegistrar {
   void register() {
     _mapster
       ..register(
-        MapperMeta.two(GetUserByIDRequestByIDIDToGetUserQueryMapper.new),
+        MapperMeta.two(GetUserByIDRequestIDToGetUserQueryMapper.new),
       )
       ..register(
-        MapperMeta.one(GetUserByIDResultToGetUserResponseByIDMapper.new),
+        MapperMeta.one(GetUserByIDResultToGetUserByIDResponseMapper.new),
       );
   }
 }

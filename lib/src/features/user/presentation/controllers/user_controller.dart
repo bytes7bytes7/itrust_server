@@ -30,9 +30,9 @@ class UserController extends ApiController {
 
   @Route.get('/id<$_userIDParam>')
   Future<Response> getUserByID(Request request) async {
-    late GetUserRequestByID getUserRequestByID;
+    late GetUserByIDRequest getUserByIDRequest;
     try {
-      getUserRequestByID = await parseRequest<GetUserRequestByID>(request);
+      getUserByIDRequest = await parseRequest<GetUserByIDRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -46,13 +46,13 @@ class UserController extends ApiController {
     }
 
     final query =
-        _mapster.map2(getUserRequestByID, userID, To<GetUserByIDQuery>());
+        _mapster.map2(getUserByIDRequest, userID, To<GetUserByIDQuery>());
 
-    final getUserResult = await query.sendTo(_mediator);
+    final getUserByIDResult = await query.sendTo(_mediator);
 
-    return getUserResult.match(
+    return getUserByIDResult.match(
       problem,
-      (r) => ok(_mapster.map1(r, To<GetUserResponseByID>())),
+      (r) => ok(_mapster.map1(r, To<GetUserByIDResponse>())),
     );
   }
 }

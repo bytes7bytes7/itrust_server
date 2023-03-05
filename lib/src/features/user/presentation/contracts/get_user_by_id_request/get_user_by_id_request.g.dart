@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'get_user_request_by_id.dart';
+part of 'get_user_by_id_request.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-GetUserRequestByID _$GetUserRequestByIDFromJson(Map<String, dynamic> json) =>
-    GetUserRequestByID();
+GetUserByIDRequest _$GetUserByIDRequestFromJson(Map<String, dynamic> json) =>
+    GetUserByIDRequest();
 
-Map<String, dynamic> _$GetUserRequestByIDToJson(GetUserRequestByID instance) =>
+Map<String, dynamic> _$GetUserByIDRequestToJson(GetUserByIDRequest instance) =>
     <String, dynamic>{};
