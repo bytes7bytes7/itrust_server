@@ -7,7 +7,6 @@ import '../exceptions/exceptions.dart';
 import '../repositories/token_repository.dart';
 import '../services/jwt_token_service.dart';
 
-// TODO: refactor all [Response]s
 Middleware authorize({
   required JwtSettings jwtSettings,
   required JwtTokenService jwtTokenService,

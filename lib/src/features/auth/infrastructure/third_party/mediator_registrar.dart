@@ -8,8 +8,8 @@ import '../../application/application.dart';
 final _getIt = GetIt.instance;
 
 @singleton
-class MediatorRegistrar {
-  const MediatorRegistrar(this._mediator);
+class AuthMediatorRegistrar {
+  const AuthMediatorRegistrar(this._mediator);
 
   final Mediator _mediator;
 

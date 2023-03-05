@@ -1,5 +1,7 @@
 import 'package:itrust_server/itrust_server.dart';
 
+import 'router_authorization_x.dart';
+
 const _printLogsKey = 'print_logs';
 const _envKey = 'env';
 
@@ -35,10 +37,12 @@ void main(List<String> args) async {
       _getIt.get<AuthController>().router,
     )
     ..mount(
+      UserController.path,
+      _getIt.get<UserController>().router.addAuthorization(),
+    )
+    ..mount(
       feedRoute,
-      Pipeline()
-          .addMiddleware(_authorize())
-          .addHandler(_getIt.get<FeedController>().router),
+      _getIt.get<FeedController>().router.addAuthorization(),
     );
 
   final handler = Pipeline()
@@ -71,10 +75,3 @@ void _configLogger({required bool printLogs}) {
     });
   }
 }
-
-Middleware _authorize() => authorize(
-      jwtSettings: _getIt.get<JwtSettings>(),
-      jwtTokenService: _getIt.get<JwtTokenService>(),
-      endUserRepository: _getIt.get<EndUserRepository>(),
-      tokenRepository: _getIt.get<TokenRepository>(),
-    );

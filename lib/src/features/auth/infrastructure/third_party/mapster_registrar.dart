@@ -4,8 +4,8 @@ import 'package:mapster/mapster.dart';
 import '../mappers/mappers.dart';
 
 @singleton
-class MapsterRegistrar {
-  const MapsterRegistrar(this._mapster);
+class AuthMapsterRegistrar {
+  const AuthMapsterRegistrar(this._mapster);
 
   final Mapster _mapster;
 
