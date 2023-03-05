@@ -13,13 +13,13 @@ class UserMapsterRegistrar {
   void register() {
     _mapster
       ..register(
-        MapperMeta.two(GetUserByIDRequestIDToGetUserQueryMapper.new),
+        MapperMeta.one(IDToGetUserQueryMapper.new),
       )
       ..register(
         MapperMeta.one(GetUserByIDResultToGetUserByIDResponseMapper.new),
       )
       ..register(
-        MapperMeta.two(GetUserByNickRequestNickToGetUserByNickQueryMapper.new),
+        MapperMeta.one(NickToGetUserByNickQueryMapper.new),
       )
       ..register(
         MapperMeta.one(GetUserByNickResultToGetUserByNickResponseMapper.new),

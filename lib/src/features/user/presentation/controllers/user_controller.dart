@@ -31,23 +31,13 @@ class UserController extends ApiController {
 
   @Route.get('/id<$_userIDParam>')
   Future<Response> getUserByID(Request request) async {
-    late GetUserByIDRequest getUserByIDRequest;
-    try {
-      getUserByIDRequest = await parseRequest<GetUserByIDRequest>(request);
-    } catch (e) {
-      return problem(
-        [const InvalidBodyException()],
-      );
-    }
-
     final userID = request.params[_userIDParam];
 
     if (userID == null) {
       return problem([const InvalidRequest()]);
     }
 
-    final query =
-        _mapster.map2(getUserByIDRequest, userID, To<GetUserByIDQuery>());
+    final query = _mapster.map1(userID, To<GetUserByIDQuery>());
 
     final getUserByIDResult = await query.sendTo(_mediator);
 
@@ -59,23 +49,13 @@ class UserController extends ApiController {
 
   @Route.get('/<$_userNickParam>')
   Future<Response> getUserByNick(Request request) async {
-    late GetUserByNickRequest getUserByNickRequest;
-    try {
-      getUserByNickRequest = await parseRequest<GetUserByNickRequest>(request);
-    } catch (e) {
-      return problem(
-        [const InvalidBodyException()],
-      );
-    }
-
     final userID = request.params[_userNickParam];
 
     if (userID == null) {
       return problem([const InvalidRequest()]);
     }
 
-    final query =
-        _mapster.map2(getUserByNickRequest, userID, To<GetUserByNickQuery>());
+    final query = _mapster.map1(userID, To<GetUserByNickQuery>());
 
     final getUserByNickResult = await query.sendTo(_mediator);
 
