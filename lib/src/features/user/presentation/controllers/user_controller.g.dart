@@ -10,8 +10,8 @@ Router _$UserControllerRouter(UserController service) {
   final router = Router();
   router.add(
     'GET',
-    r'/<userID>',
-    service.getUser,
+    r'/id<userID>',
+    service.getUserByID,
   );
   return router;
 }

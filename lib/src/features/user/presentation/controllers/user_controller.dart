@@ -28,11 +28,11 @@ class UserController extends ApiController {
 
   Router get router => _$UserControllerRouter(this);
 
-  @Route.get('/<$_userIDParam>')
-  Future<Response> getUser(Request request) async {
-    late GetUserRequest getUserRequest;
+  @Route.get('/id<$_userIDParam>')
+  Future<Response> getUserByID(Request request) async {
+    late GetUserRequestByID getUserRequestByID;
     try {
-      getUserRequest = await parseRequest<GetUserRequest>(request);
+      getUserRequestByID = await parseRequest<GetUserRequestByID>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -45,13 +45,14 @@ class UserController extends ApiController {
       return problem([const InvalidRequest()]);
     }
 
-    final query = _mapster.map2(getUserRequest, userID, To<GetUserQuery>());
+    final query =
+        _mapster.map2(getUserRequestByID, userID, To<GetUserByIDQuery>());
 
     final getUserResult = await query.sendTo(_mediator);
 
     return getUserResult.match(
       problem,
-      (r) => ok(_mapster.map1(r, To<GetUserResponse>())),
+      (r) => ok(_mapster.map1(r, To<GetUserResponseByID>())),
     );
   }
 }

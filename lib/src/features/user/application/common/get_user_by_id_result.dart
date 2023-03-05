@@ -1,7 +1,7 @@
 import '../../../common/common.dart';
 
-class GetUserResult {
-  const GetUserResult({
+class GetUserByIDResult {
+  const GetUserByIDResult({
     required this.user,
   });
 

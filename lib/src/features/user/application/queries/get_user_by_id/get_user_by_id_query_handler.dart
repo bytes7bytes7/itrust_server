@@ -8,12 +8,12 @@ import '../../../../auth/application/exceptions/exceptions.dart';
 import '../../../../common/application/application.dart';
 import '../../../../common/application/exceptions/detailed_exception.dart';
 import '../../common/common.dart';
-import 'get_user_query.dart';
+import 'get_user_by_id_query.dart';
 
 @singleton
-class GetUserQueryHandler extends RequestHandler<
-    Either<List<DetailedException>, GetUserResult>, GetUserQuery> {
-  const GetUserQueryHandler({
+class GetUserByIDQueryHandler extends RequestHandler<
+    Either<List<DetailedException>, GetUserByIDResult>, GetUserByIDQuery> {
+  const GetUserByIDQueryHandler({
     required EndUserRepository endUserRepository,
     required StaffUserRepository staffUserRepository,
   })  : _endUserRepository = endUserRepository,
@@ -23,15 +23,15 @@ class GetUserQueryHandler extends RequestHandler<
   final StaffUserRepository _staffUserRepository;
 
   @override
-  FutureOr<Either<List<DetailedException>, GetUserResult>> handle(
-    GetUserQuery request,
+  FutureOr<Either<List<DetailedException>, GetUserByIDResult>> handle(
+    GetUserByIDQuery request,
   ) async {
     if (request.userID.isEndUserID) {
       final endUser = await _endUserRepository.getByID(id: request.userID);
 
       if (endUser != null) {
         return right(
-          GetUserResult(
+          GetUserByIDResult(
             user: endUser,
           ),
         );
@@ -43,7 +43,7 @@ class GetUserQueryHandler extends RequestHandler<
 
       if (staffUser != null) {
         return right(
-          GetUserResult(
+          GetUserByIDResult(
             user: staffUser,
           ),
         );

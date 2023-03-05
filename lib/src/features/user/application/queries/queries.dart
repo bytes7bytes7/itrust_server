@@ -1,1 +1,1 @@
-export 'get_user/get_user.dart';
+export 'get_user_by_id/get_user_by_id.dart';
