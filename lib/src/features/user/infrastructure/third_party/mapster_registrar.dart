@@ -17,6 +17,12 @@ class UserMapsterRegistrar {
       )
       ..register(
         MapperMeta.one(GetUserByIDResultToGetUserByIDResponseMapper.new),
+      )
+      ..register(
+        MapperMeta.two(GetUserByNickRequestNickToGetUserByNickQueryMapper.new),
+      )
+      ..register(
+        MapperMeta.one(GetUserByNickResultToGetUserByNickResponseMapper.new),
       );
   }
 }

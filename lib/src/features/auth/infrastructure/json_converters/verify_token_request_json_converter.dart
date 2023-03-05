@@ -7,6 +7,8 @@ import '../../presentation/contracts/contracts.dart';
 @Singleton(as: JsonConverter<VerifyTokenRequest, JsonMap>)
 class VerifyTokenRequestJsonConverter
     extends JsonConverter<VerifyTokenRequest, JsonMap> {
+  const VerifyTokenRequestJsonConverter();
+
   @override
   VerifyTokenRequest fromJson(JsonMap json) {
     return VerifyTokenRequest.fromJson(json);

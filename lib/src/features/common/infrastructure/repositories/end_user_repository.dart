@@ -25,4 +25,11 @@ class TestEndUserRepository implements EndUserRepository {
   Future<EndUser?> getByID({required UserID id}) async {
     return _storage[id];
   }
+
+  @override
+  Future<EndUser?> getByNick({required String nick}) async {
+    return _storage.entries
+        .firstWhereOrNull((e) => e.value.nick == nick)
+        ?.value;
+  }
 }

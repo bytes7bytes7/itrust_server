@@ -6,4 +6,6 @@ abstract class StaffUserRepository {
   Future<StaffUser?> getByName({required String name});
 
   Future<StaffUser?> getByID({required UserID id});
+
+  Future<StaffUser?> getByNick({required String nick});
 }

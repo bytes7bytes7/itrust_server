@@ -12,6 +12,7 @@ import '../contracts/contracts.dart';
 part 'user_controller.g.dart';
 
 const _userIDParam = 'userID';
+const _userNickParam = 'userNick';
 
 @injectable
 class UserController extends ApiController {
@@ -53,6 +54,34 @@ class UserController extends ApiController {
     return getUserByIDResult.match(
       problem,
       (r) => ok(_mapster.map1(r, To<GetUserByIDResponse>())),
+    );
+  }
+
+  @Route.get('/<$_userNickParam>')
+  Future<Response> getUserByNick(Request request) async {
+    late GetUserByNickRequest getUserByNickRequest;
+    try {
+      getUserByNickRequest = await parseRequest<GetUserByNickRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final userID = request.params[_userNickParam];
+
+    if (userID == null) {
+      return problem([const InvalidRequest()]);
+    }
+
+    final query =
+        _mapster.map2(getUserByNickRequest, userID, To<GetUserByNickQuery>());
+
+    final getUserByNickResult = await query.sendTo(_mediator);
+
+    return getUserByNickResult.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<GetUserByNickResponse>())),
     );
   }
 }

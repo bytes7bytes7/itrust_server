@@ -14,7 +14,7 @@ part 'auth_controller.g.dart';
 
 @injectable
 class AuthController extends ApiController {
-  static const path = '/auth';
+  static const path = '/auth/';
 
   const AuthController({
     required mdtr.Mediator mediator,

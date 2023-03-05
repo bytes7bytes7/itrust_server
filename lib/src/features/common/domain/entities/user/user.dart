@@ -17,11 +17,13 @@ class User with _$User {
     required String lastName,
     required String email,
     required String passwordHash,
+    String? nick,
   }) = EndUser;
 
   const factory User.staff({
     required UserID id,
     required String name,
+    String? nick,
   }) = StaffUser;
 
   factory User.fromJson(JsonMap json) => _$UserFromJson(json);

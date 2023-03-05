@@ -13,5 +13,10 @@ Router _$UserControllerRouter(UserController service) {
     r'/id<userID>',
     service.getUserByID,
   );
+  router.add(
+    'GET',
+    r'/<userNick>',
+    service.getUserByNick,
+  );
   return router;
 }

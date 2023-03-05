@@ -1,2 +1,4 @@
 export 'get_user_by_id_request_id_to_get_user_by_id_query_mapper.dart';
 export 'get_user_by_id_result_to_get_user_by_id_response_mapper.dart';
+export 'get_user_by_nick_request_nick_to_get_user_by_nick_query_mapper.dart';
+export 'get_user_by_nick_result_to_get_user_by_nick_response_mapper.dart';

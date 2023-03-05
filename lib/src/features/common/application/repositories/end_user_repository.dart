@@ -6,4 +6,6 @@ abstract class EndUserRepository {
   Future<EndUser?> getByEmail({required String email});
 
   Future<EndUser?> getByID({required UserID id});
+
+  Future<EndUser?> getByNick({required String nick});
 }

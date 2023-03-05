@@ -30,28 +30,29 @@ User _$UserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$User {
   UserID get id => throw _privateConstructorUsedError;
+  String? get nick => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(UserID id, String firstName, String lastName,
-            String email, String passwordHash)
+            String email, String passwordHash, String? nick)
         end,
-    required TResult Function(UserID id, String name) staff,
+    required TResult Function(UserID id, String name, String? nick) staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(UserID id, String firstName, String lastName,
-            String email, String passwordHash)?
+            String email, String passwordHash, String? nick)?
         end,
-    TResult? Function(UserID id, String name)? staff,
+    TResult? Function(UserID id, String name, String? nick)? staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(UserID id, String firstName, String lastName, String email,
-            String passwordHash)?
+            String passwordHash, String? nick)?
         end,
-    TResult Function(UserID id, String name)? staff,
+    TResult Function(UserID id, String name, String? nick)? staff,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -84,7 +85,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({UserID id});
+  $Res call({UserID id, String? nick});
 
   $UserIDCopyWith<$Res> get id;
 }
@@ -103,12 +104,17 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @override
   $Res call({
     Object? id = null,
+    Object? nick = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UserID,
+      nick: freezed == nick
+          ? _value.nick
+          : nick // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -132,7 +138,8 @@ abstract class _$$EndUserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String firstName,
       String lastName,
       String email,
-      String passwordHash});
+      String passwordHash,
+      String? nick});
 
   @override
   $UserIDCopyWith<$Res> get id;
@@ -152,6 +159,7 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
     Object? lastName = null,
     Object? email = null,
     Object? passwordHash = null,
+    Object? nick = freezed,
   }) {
     return _then(_$EndUser(
       id: null == id
@@ -174,6 +182,10 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
           ? _value.passwordHash
           : passwordHash // ignore: cast_nullable_to_non_nullable
               as String,
+      nick: freezed == nick
+          ? _value.nick
+          : nick // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -187,6 +199,7 @@ class _$EndUser implements EndUser {
       required this.lastName,
       required this.email,
       required this.passwordHash,
+      this.nick,
       final String? $type})
       : $type = $type ?? 'end';
 
@@ -203,13 +216,15 @@ class _$EndUser implements EndUser {
   final String email;
   @override
   final String passwordHash;
+  @override
+  final String? nick;
 
   @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'User.end(id: $id, firstName: $firstName, lastName: $lastName, email: $email, passwordHash: $passwordHash)';
+    return 'User.end(id: $id, firstName: $firstName, lastName: $lastName, email: $email, passwordHash: $passwordHash, nick: $nick)';
   }
 
   @override
@@ -224,13 +239,14 @@ class _$EndUser implements EndUser {
                 other.lastName == lastName) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.passwordHash, passwordHash) ||
-                other.passwordHash == passwordHash));
+                other.passwordHash == passwordHash) &&
+            (identical(other.nick, nick) || other.nick == nick));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, firstName, lastName, email, passwordHash);
+  int get hashCode => Object.hash(
+      runtimeType, id, firstName, lastName, email, passwordHash, nick);
 
   @JsonKey(ignore: true)
   @override
@@ -242,35 +258,35 @@ class _$EndUser implements EndUser {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(UserID id, String firstName, String lastName,
-            String email, String passwordHash)
+            String email, String passwordHash, String? nick)
         end,
-    required TResult Function(UserID id, String name) staff,
+    required TResult Function(UserID id, String name, String? nick) staff,
   }) {
-    return end(id, firstName, lastName, email, passwordHash);
+    return end(id, firstName, lastName, email, passwordHash, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(UserID id, String firstName, String lastName,
-            String email, String passwordHash)?
+            String email, String passwordHash, String? nick)?
         end,
-    TResult? Function(UserID id, String name)? staff,
+    TResult? Function(UserID id, String name, String? nick)? staff,
   }) {
-    return end?.call(id, firstName, lastName, email, passwordHash);
+    return end?.call(id, firstName, lastName, email, passwordHash, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(UserID id, String firstName, String lastName, String email,
-            String passwordHash)?
+            String passwordHash, String? nick)?
         end,
-    TResult Function(UserID id, String name)? staff,
+    TResult Function(UserID id, String name, String? nick)? staff,
     required TResult orElse(),
   }) {
     if (end != null) {
-      return end(id, firstName, lastName, email, passwordHash);
+      return end(id, firstName, lastName, email, passwordHash, nick);
     }
     return orElse();
   }
@@ -320,7 +336,8 @@ abstract class EndUser implements User {
       required final String firstName,
       required final String lastName,
       required final String email,
-      required final String passwordHash}) = _$EndUser;
+      required final String passwordHash,
+      final String? nick}) = _$EndUser;
 
   factory EndUser.fromJson(Map<String, dynamic> json) = _$EndUser.fromJson;
 
@@ -330,6 +347,8 @@ abstract class EndUser implements User {
   String get lastName;
   String get email;
   String get passwordHash;
+  @override
+  String? get nick;
   @override
   @JsonKey(ignore: true)
   _$$EndUserCopyWith<_$EndUser> get copyWith =>
@@ -343,7 +362,7 @@ abstract class _$$StaffUserCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$StaffUserCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({UserID id, String name});
+  $Res call({UserID id, String name, String? nick});
 
   @override
   $UserIDCopyWith<$Res> get id;
@@ -362,6 +381,7 @@ class __$$StaffUserCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? nick = freezed,
   }) {
     return _then(_$StaffUser(
       id: null == id
@@ -372,6 +392,10 @@ class __$$StaffUserCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      nick: freezed == nick
+          ? _value.nick
+          : nick // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -379,7 +403,8 @@ class __$$StaffUserCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$StaffUser implements StaffUser {
-  const _$StaffUser({required this.id, required this.name, final String? $type})
+  const _$StaffUser(
+      {required this.id, required this.name, this.nick, final String? $type})
       : $type = $type ?? 'staff';
 
   factory _$StaffUser.fromJson(Map<String, dynamic> json) =>
@@ -389,13 +414,15 @@ class _$StaffUser implements StaffUser {
   final UserID id;
   @override
   final String name;
+  @override
+  final String? nick;
 
   @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'User.staff(id: $id, name: $name)';
+    return 'User.staff(id: $id, name: $name, nick: $nick)';
   }
 
   @override
@@ -404,12 +431,13 @@ class _$StaffUser implements StaffUser {
         (other.runtimeType == runtimeType &&
             other is _$StaffUser &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.nick, nick) || other.nick == nick));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name);
+  int get hashCode => Object.hash(runtimeType, id, name, nick);
 
   @JsonKey(ignore: true)
   @override
@@ -421,35 +449,35 @@ class _$StaffUser implements StaffUser {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(UserID id, String firstName, String lastName,
-            String email, String passwordHash)
+            String email, String passwordHash, String? nick)
         end,
-    required TResult Function(UserID id, String name) staff,
+    required TResult Function(UserID id, String name, String? nick) staff,
   }) {
-    return staff(id, name);
+    return staff(id, name, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(UserID id, String firstName, String lastName,
-            String email, String passwordHash)?
+            String email, String passwordHash, String? nick)?
         end,
-    TResult? Function(UserID id, String name)? staff,
+    TResult? Function(UserID id, String name, String? nick)? staff,
   }) {
-    return staff?.call(id, name);
+    return staff?.call(id, name, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(UserID id, String firstName, String lastName, String email,
-            String passwordHash)?
+            String passwordHash, String? nick)?
         end,
-    TResult Function(UserID id, String name)? staff,
+    TResult Function(UserID id, String name, String? nick)? staff,
     required TResult orElse(),
   }) {
     if (staff != null) {
-      return staff(id, name);
+      return staff(id, name, nick);
     }
     return orElse();
   }
@@ -495,13 +523,17 @@ class _$StaffUser implements StaffUser {
 
 abstract class StaffUser implements User {
   const factory StaffUser(
-      {required final UserID id, required final String name}) = _$StaffUser;
+      {required final UserID id,
+      required final String name,
+      final String? nick}) = _$StaffUser;
 
   factory StaffUser.fromJson(Map<String, dynamic> json) = _$StaffUser.fromJson;
 
   @override
   UserID get id;
   String get name;
+  @override
+  String? get nick;
   @override
   @JsonKey(ignore: true)
   _$$StaffUserCopyWith<_$StaffUser> get copyWith =>

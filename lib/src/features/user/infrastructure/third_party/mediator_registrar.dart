@@ -18,10 +18,14 @@ class UserMediatorRegistrar {
     _mediator
       // RequestHandler
       ..registerRequestHandler(() => _getIt.get<GetUserByIDQueryHandler>())
+      ..registerRequestHandler(() => _getIt.get<GetUserByNickQueryHandler>())
 
       // PipelineBehavior
       ..registerPipelineBehavior(
         () => ValidationBehavior([_getIt.get<GetUserByIDQueryValidator>()]),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior([_getIt.get<GetUserByNickQueryValidator>()]),
       );
   }
 }

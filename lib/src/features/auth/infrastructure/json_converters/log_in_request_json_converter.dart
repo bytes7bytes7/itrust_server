@@ -6,6 +6,8 @@ import '../../presentation/contracts/contracts.dart';
 
 @Singleton(as: JsonConverter<LogInRequest, JsonMap>)
 class LogInRequestJsonConverter extends JsonConverter<LogInRequest, JsonMap> {
+  const LogInRequestJsonConverter();
+
   @override
   LogInRequest fromJson(JsonMap json) {
     return LogInRequest.fromJson(json);

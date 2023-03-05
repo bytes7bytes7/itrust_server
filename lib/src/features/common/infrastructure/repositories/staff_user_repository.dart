@@ -26,4 +26,11 @@ class TestStaffUserRepository implements StaffUserRepository {
   Future<StaffUser?> getByID({required UserID id}) async {
     return _storage[id];
   }
+
+  @override
+  Future<StaffUser?> getByNick({required String nick}) async {
+    return _storage.entries
+        .firstWhereOrNull((e) => e.value.nick == nick)
+        ?.value;
+  }
 }

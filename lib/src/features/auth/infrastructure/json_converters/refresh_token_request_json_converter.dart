@@ -7,6 +7,8 @@ import '../../presentation/contracts/contracts.dart';
 @Singleton(as: JsonConverter<RefreshTokenRequest, JsonMap>)
 class RefreshTokenRequestJsonConverter
     extends JsonConverter<RefreshTokenResponse, JsonMap> {
+  const RefreshTokenRequestJsonConverter();
+
   @override
   RefreshTokenResponse fromJson(JsonMap json) {
     return RefreshTokenResponse.fromJson(json);

@@ -7,6 +7,8 @@ import '../../presentation/contracts/contracts.dart';
 @Singleton(as: JsonConverter<RegisterRequest, JsonMap>)
 class RegisterRequestJsonConverter
     extends JsonConverter<RegisterRequest, JsonMap> {
+  const RegisterRequestJsonConverter();
+
   @override
   RegisterRequest fromJson(JsonMap json) {
     return RegisterRequest.fromJson(json);
