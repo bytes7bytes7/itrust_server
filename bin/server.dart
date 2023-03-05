@@ -31,7 +31,7 @@ void main(List<String> args) async {
 
   final app = Router()
     ..mount(
-      authRoute,
+      AuthController.path,
       _getIt.get<AuthController>().router,
     )
     ..mount(

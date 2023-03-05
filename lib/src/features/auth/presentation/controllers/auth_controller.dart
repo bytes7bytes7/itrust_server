@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
 import 'package:mediator/mediator.dart' as mdtr;
@@ -15,10 +12,10 @@ import '../contracts/contracts.dart';
 
 part 'auth_controller.g.dart';
 
-const authRoute = '/auth';
-
 @injectable
 class AuthController extends ApiController {
+  static const path = '/auth';
+
   const AuthController({
     required mdtr.Mediator mediator,
     required Mapster mapster,
@@ -30,17 +27,11 @@ class AuthController extends ApiController {
 
   Router get router => _$AuthControllerRouter(this);
 
-  JsonEncoder get _jsonEncoder => const JsonEncoder();
-
-  JsonDecoder get _jsonDecoder => const JsonDecoder();
-
   @Route.post('/register')
   Future<Response> register(Request request) async {
     late RegisterRequest registerRequest;
     try {
-      final rawBody = await request.readAsString();
-      final jsonBody = _jsonDecoder.convert(rawBody);
-      registerRequest = RegisterRequest.fromJson(jsonBody);
+      registerRequest = await parseRequest<RegisterRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -53,12 +44,7 @@ class AuthController extends ApiController {
 
     return authResult.match(
       problem,
-      (r) => Response.ok(
-        _jsonEncoder.convert(_mapster.map1(r, To<AuthResponse>())),
-        headers: {
-          HttpHeaders.contentTypeHeader: ContentType.json.toString(),
-        },
-      ),
+      (r) => ok(_mapster.map1(r, To<AuthResponse>())),
     );
   }
 
@@ -66,9 +52,7 @@ class AuthController extends ApiController {
   Future<Response> logIn(Request request) async {
     late LogInRequest logInRequest;
     try {
-      final rawBody = await request.readAsString();
-      final jsonBody = _jsonDecoder.convert(rawBody);
-      logInRequest = LogInRequest.fromJson(jsonBody);
+      logInRequest = await parseRequest<LogInRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -81,12 +65,7 @@ class AuthController extends ApiController {
 
     return authResult.match(
       problem,
-      (r) => Response.ok(
-        _jsonEncoder.convert(_mapster.map1(r, To<AuthResponse>())),
-        headers: {
-          HttpHeaders.contentTypeHeader: ContentType.json.toString(),
-        },
-      ),
+      (r) => ok(_mapster.map1(r, To<AuthResponse>())),
     );
   }
 
@@ -94,9 +73,7 @@ class AuthController extends ApiController {
   Future<Response> logOut(Request request) async {
     late LogOutRequest logOutRequest;
     try {
-      final rawBody = await request.readAsString();
-      final jsonBody = _jsonDecoder.convert(rawBody);
-      logOutRequest = LogOutRequest.fromJson(jsonBody);
+      logOutRequest = await parseRequest<LogOutRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -117,12 +94,7 @@ class AuthController extends ApiController {
 
     return logOutResult.match(
       problem,
-      (r) => Response.ok(
-        _jsonEncoder.convert(_mapster.map1(r, To<LogOutResponse>())),
-        headers: {
-          HttpHeaders.contentTypeHeader: ContentType.json.toString(),
-        },
-      ),
+      (r) => ok(_mapster.map1(r, To<LogOutResponse>())),
     );
   }
 
@@ -130,9 +102,7 @@ class AuthController extends ApiController {
   Future<Response> verifyToken(Request request) async {
     late VerifyTokenRequest verifyTokenRequest;
     try {
-      final rawBody = await request.readAsString();
-      final jsonBody = _jsonDecoder.convert(rawBody);
-      verifyTokenRequest = VerifyTokenRequest.fromJson(jsonBody);
+      verifyTokenRequest = await parseRequest<VerifyTokenRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -154,12 +124,7 @@ class AuthController extends ApiController {
 
     return verifyTokenResult.match(
       problem,
-      (r) => Response.ok(
-        _jsonEncoder.convert(_mapster.map1(r, To<VerifyTokenResponse>())),
-        headers: {
-          HttpHeaders.contentTypeHeader: ContentType.json.toString(),
-        },
-      ),
+      (r) => ok(_mapster.map1(r, To<VerifyTokenResponse>())),
     );
   }
 
@@ -167,9 +132,7 @@ class AuthController extends ApiController {
   Future<Response> refreshToken(Request request) async {
     late RefreshTokenRequest refreshTokenRequest;
     try {
-      final rawBody = await request.readAsString();
-      final jsonBody = _jsonDecoder.convert(rawBody);
-      refreshTokenRequest = RefreshTokenRequest.fromJson(jsonBody);
+      refreshTokenRequest = await parseRequest<RefreshTokenRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -183,12 +146,7 @@ class AuthController extends ApiController {
 
     return refreshTokenResult.match(
       problem,
-      (r) => Response.ok(
-        _jsonEncoder.convert(_mapster.map1(r, To<RefreshTokenResponse>())),
-        headers: {
-          HttpHeaders.contentTypeHeader: ContentType.json.toString(),
-        },
-      ),
+      (r) => ok(_mapster.map1(r, To<RefreshTokenResponse>())),
     );
   }
 }

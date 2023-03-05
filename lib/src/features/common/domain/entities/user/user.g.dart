@@ -26,11 +26,13 @@ Map<String, dynamic> _$$EndUserToJson(_$EndUser instance) => <String, dynamic>{
 
 _$StaffUser _$$StaffUserFromJson(Map<String, dynamic> json) => _$StaffUser(
       id: UserID.fromJson(json['id'] as Map<String, dynamic>),
+      name: json['name'] as String,
       $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$StaffUserToJson(_$StaffUser instance) =>
     <String, dynamic>{
       'id': instance.id.toJson(),
+      'name': instance.name,
       'type': instance.$type,
     };

@@ -1,16 +1,42 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get_it/get_it.dart';
 import 'package:problem_details/problem_details.dart';
 import 'package:shelf/shelf.dart';
 
 import '../../../../utils/utils.dart';
 import '../../application/exceptions/detailed_exception.dart';
 
+final _getIt = GetIt.instance;
+
 class ApiController {
   const ApiController();
 
+  JsonEncoder get _jsonEncoder => const JsonEncoder();
+
+  JsonDecoder get _jsonDecoder => const JsonDecoder();
+
+  Future<T> parseRequest<T extends Object>(Request request) async {
+    final rawBody = await request.readAsString();
+    final jsonBody = _jsonDecoder.convert(rawBody);
+
+    final jsonConverter = _getIt.get<JsonConverter<T, JsonMap>>();
+    return jsonConverter.fromJson(jsonBody);
+  }
+
   Response problem(List<DetailedException> exceptions) =>
       problemHandler(exceptions);
+
+  Response ok(Object result) {
+    return Response.ok(
+      _jsonEncoder.convert(result),
+      headers: {
+        HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+      },
+    );
+  }
 }
 
 Response problemHandler(List<DetailedException> exceptions) {

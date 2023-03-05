@@ -35,7 +35,7 @@ mixin _$User {
     required TResult Function(UserID id, String firstName, String lastName,
             String email, String passwordHash)
         end,
-    required TResult Function(UserID id) staff,
+    required TResult Function(UserID id, String name) staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,7 +43,7 @@ mixin _$User {
     TResult? Function(UserID id, String firstName, String lastName,
             String email, String passwordHash)?
         end,
-    TResult? Function(UserID id)? staff,
+    TResult? Function(UserID id, String name)? staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,7 +51,7 @@ mixin _$User {
     TResult Function(UserID id, String firstName, String lastName, String email,
             String passwordHash)?
         end,
-    TResult Function(UserID id)? staff,
+    TResult Function(UserID id, String name)? staff,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -244,7 +244,7 @@ class _$EndUser implements EndUser {
     required TResult Function(UserID id, String firstName, String lastName,
             String email, String passwordHash)
         end,
-    required TResult Function(UserID id) staff,
+    required TResult Function(UserID id, String name) staff,
   }) {
     return end(id, firstName, lastName, email, passwordHash);
   }
@@ -255,7 +255,7 @@ class _$EndUser implements EndUser {
     TResult? Function(UserID id, String firstName, String lastName,
             String email, String passwordHash)?
         end,
-    TResult? Function(UserID id)? staff,
+    TResult? Function(UserID id, String name)? staff,
   }) {
     return end?.call(id, firstName, lastName, email, passwordHash);
   }
@@ -266,7 +266,7 @@ class _$EndUser implements EndUser {
     TResult Function(UserID id, String firstName, String lastName, String email,
             String passwordHash)?
         end,
-    TResult Function(UserID id)? staff,
+    TResult Function(UserID id, String name)? staff,
     required TResult orElse(),
   }) {
     if (end != null) {
@@ -343,7 +343,7 @@ abstract class _$$StaffUserCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$StaffUserCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({UserID id});
+  $Res call({UserID id, String name});
 
   @override
   $UserIDCopyWith<$Res> get id;
@@ -361,12 +361,17 @@ class __$$StaffUserCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? name = null,
   }) {
     return _then(_$StaffUser(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UserID,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -374,7 +379,7 @@ class __$$StaffUserCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$StaffUser implements StaffUser {
-  const _$StaffUser({required this.id, final String? $type})
+  const _$StaffUser({required this.id, required this.name, final String? $type})
       : $type = $type ?? 'staff';
 
   factory _$StaffUser.fromJson(Map<String, dynamic> json) =>
@@ -382,13 +387,15 @@ class _$StaffUser implements StaffUser {
 
   @override
   final UserID id;
+  @override
+  final String name;
 
   @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'User.staff(id: $id)';
+    return 'User.staff(id: $id, name: $name)';
   }
 
   @override
@@ -396,12 +403,13 @@ class _$StaffUser implements StaffUser {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$StaffUser &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, id, name);
 
   @JsonKey(ignore: true)
   @override
@@ -415,9 +423,9 @@ class _$StaffUser implements StaffUser {
     required TResult Function(UserID id, String firstName, String lastName,
             String email, String passwordHash)
         end,
-    required TResult Function(UserID id) staff,
+    required TResult Function(UserID id, String name) staff,
   }) {
-    return staff(id);
+    return staff(id, name);
   }
 
   @override
@@ -426,9 +434,9 @@ class _$StaffUser implements StaffUser {
     TResult? Function(UserID id, String firstName, String lastName,
             String email, String passwordHash)?
         end,
-    TResult? Function(UserID id)? staff,
+    TResult? Function(UserID id, String name)? staff,
   }) {
-    return staff?.call(id);
+    return staff?.call(id, name);
   }
 
   @override
@@ -437,11 +445,11 @@ class _$StaffUser implements StaffUser {
     TResult Function(UserID id, String firstName, String lastName, String email,
             String passwordHash)?
         end,
-    TResult Function(UserID id)? staff,
+    TResult Function(UserID id, String name)? staff,
     required TResult orElse(),
   }) {
     if (staff != null) {
-      return staff(id);
+      return staff(id, name);
     }
     return orElse();
   }
@@ -486,12 +494,14 @@ class _$StaffUser implements StaffUser {
 }
 
 abstract class StaffUser implements User {
-  const factory StaffUser({required final UserID id}) = _$StaffUser;
+  const factory StaffUser(
+      {required final UserID id, required final String name}) = _$StaffUser;
 
   factory StaffUser.fromJson(Map<String, dynamic> json) = _$StaffUser.fromJson;
 
   @override
   UserID get id;
+  String get name;
   @override
   @JsonKey(ignore: true)
   _$$StaffUserCopyWith<_$StaffUser> get copyWith =>

@@ -40,7 +40,11 @@ class RegisterCommandHandler extends RequestHandler<
       return left([const DuplicateEmail()]);
     }
 
-    final userID = UserID.generate();
+    late UserID userID;
+    do {
+      userID = UserID.generateEnd();
+    } while ((await _endUserRepository.getByID(id: userID)) != null);
+
     final passwordHash = _hashService.hashPassword(request.password);
 
     final user = EndUser(

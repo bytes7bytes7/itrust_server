@@ -21,6 +21,7 @@ class User with _$User {
 
   const factory User.staff({
     required UserID id,
+    required String name,
   }) = StaffUser;
 
   factory User.fromJson(JsonMap json) => _$UserFromJson(json);
