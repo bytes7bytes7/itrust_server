@@ -13,16 +13,18 @@ part 'user.g.dart';
 class User with _$User {
   const factory User.end({
     required UserID id,
-    required String firstName,
-    required String lastName,
     required String email,
+    required String firstName,
+    required List<String> avatarUrls,
     required String passwordHash,
+    String? lastName,
     String? nick,
   }) = EndUser;
 
   const factory User.staff({
     required UserID id,
     required String name,
+    required List<String> avatarUrls,
     String? nick,
   }) = StaffUser;
 

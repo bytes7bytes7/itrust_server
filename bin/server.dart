@@ -49,7 +49,7 @@ void main(List<String> args) async {
       .addMiddleware(
         logRequests(
           logger: (message, isError) =>
-              isError ? _logger.warning(message) : _logger.info(message),
+              isError ? _logger.shout(message) : _logger.info(message),
         ),
       )
       .addHandler(app);

@@ -53,6 +53,7 @@ class RegisterCommandHandler extends RequestHandler<
       lastName: request.lastName,
       email: request.email,
       passwordHash: passwordHash,
+      avatarUrls: [],
     );
 
     await _endUserRepository.add(user: user);

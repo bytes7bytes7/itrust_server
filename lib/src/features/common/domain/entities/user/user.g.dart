@@ -8,20 +8,24 @@ part of 'user.dart';
 
 _$EndUser _$$EndUserFromJson(Map<String, dynamic> json) => _$EndUser(
       id: UserID.fromJson(json['id'] as Map<String, dynamic>),
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
       email: json['email'] as String,
+      firstName: json['firstName'] as String,
+      avatarUrls: (json['avatarUrls'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       passwordHash: json['passwordHash'] as String,
+      lastName: json['lastName'] as String?,
       nick: json['nick'] as String?,
       $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$EndUserToJson(_$EndUser instance) => <String, dynamic>{
       'id': instance.id.toJson(),
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
       'email': instance.email,
+      'firstName': instance.firstName,
+      'avatarUrls': instance.avatarUrls,
       'passwordHash': instance.passwordHash,
+      'lastName': instance.lastName,
       'nick': instance.nick,
       'type': instance.$type,
     };
@@ -29,6 +33,9 @@ Map<String, dynamic> _$$EndUserToJson(_$EndUser instance) => <String, dynamic>{
 _$StaffUser _$$StaffUserFromJson(Map<String, dynamic> json) => _$StaffUser(
       id: UserID.fromJson(json['id'] as Map<String, dynamic>),
       name: json['name'] as String,
+      avatarUrls: (json['avatarUrls'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       nick: json['nick'] as String?,
       $type: json['type'] as String?,
     );
@@ -37,6 +44,7 @@ Map<String, dynamic> _$$StaffUserToJson(_$StaffUser instance) =>
     <String, dynamic>{
       'id': instance.id.toJson(),
       'name': instance.name,
+      'avatarUrls': instance.avatarUrls,
       'nick': instance.nick,
       'type': instance.$type,
     };

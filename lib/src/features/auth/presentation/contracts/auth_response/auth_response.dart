@@ -18,7 +18,7 @@ class AuthResponse {
 
   final UserID id;
   final String firstName;
-  final String lastName;
+  final String? lastName;
   final String email;
   final String accessToken;
   final String refreshToken;
