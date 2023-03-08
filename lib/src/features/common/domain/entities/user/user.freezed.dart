@@ -34,14 +34,8 @@ mixin _$User {
   String? get nick => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            String passwordHash,
-            String? lastName,
-            String? nick)
+    required TResult Function(UserID id, String email, String firstName,
+            List<String> avatarUrls, String? lastName, String? nick)
         end,
     required TResult Function(
             UserID id, String name, List<String> avatarUrls, String? nick)
@@ -50,14 +44,8 @@ mixin _$User {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            String passwordHash,
-            String? lastName,
-            String? nick)?
+    TResult? Function(UserID id, String email, String firstName,
+            List<String> avatarUrls, String? lastName, String? nick)?
         end,
     TResult? Function(
             UserID id, String name, List<String> avatarUrls, String? nick)?
@@ -66,14 +54,8 @@ mixin _$User {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            String passwordHash,
-            String? lastName,
-            String? nick)?
+    TResult Function(UserID id, String email, String firstName,
+            List<String> avatarUrls, String? lastName, String? nick)?
         end,
     TResult Function(
             UserID id, String name, List<String> avatarUrls, String? nick)?
@@ -168,7 +150,6 @@ abstract class _$$EndUserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String email,
       String firstName,
       List<String> avatarUrls,
-      String passwordHash,
       String? lastName,
       String? nick});
 
@@ -189,7 +170,6 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
     Object? email = null,
     Object? firstName = null,
     Object? avatarUrls = null,
-    Object? passwordHash = null,
     Object? lastName = freezed,
     Object? nick = freezed,
   }) {
@@ -210,10 +190,6 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
           ? _value._avatarUrls
           : avatarUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      passwordHash: null == passwordHash
-          ? _value.passwordHash
-          : passwordHash // ignore: cast_nullable_to_non_nullable
-              as String,
       lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
@@ -234,7 +210,6 @@ class _$EndUser implements EndUser {
       required this.email,
       required this.firstName,
       required final List<String> avatarUrls,
-      required this.passwordHash,
       this.lastName,
       this.nick,
       final String? $type})
@@ -259,8 +234,6 @@ class _$EndUser implements EndUser {
   }
 
   @override
-  final String passwordHash;
-  @override
   final String? lastName;
   @override
   final String? nick;
@@ -270,7 +243,7 @@ class _$EndUser implements EndUser {
 
   @override
   String toString() {
-    return 'User.end(id: $id, email: $email, firstName: $firstName, avatarUrls: $avatarUrls, passwordHash: $passwordHash, lastName: $lastName, nick: $nick)';
+    return 'User.end(id: $id, email: $email, firstName: $firstName, avatarUrls: $avatarUrls, lastName: $lastName, nick: $nick)';
   }
 
   @override
@@ -284,8 +257,6 @@ class _$EndUser implements EndUser {
                 other.firstName == firstName) &&
             const DeepCollectionEquality()
                 .equals(other._avatarUrls, _avatarUrls) &&
-            (identical(other.passwordHash, passwordHash) ||
-                other.passwordHash == passwordHash) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
             (identical(other.nick, nick) || other.nick == nick));
@@ -293,15 +264,8 @@ class _$EndUser implements EndUser {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      email,
-      firstName,
-      const DeepCollectionEquality().hash(_avatarUrls),
-      passwordHash,
-      lastName,
-      nick);
+  int get hashCode => Object.hash(runtimeType, id, email, firstName,
+      const DeepCollectionEquality().hash(_avatarUrls), lastName, nick);
 
   @JsonKey(ignore: true)
   @override
@@ -312,53 +276,34 @@ class _$EndUser implements EndUser {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            String passwordHash,
-            String? lastName,
-            String? nick)
+    required TResult Function(UserID id, String email, String firstName,
+            List<String> avatarUrls, String? lastName, String? nick)
         end,
     required TResult Function(
             UserID id, String name, List<String> avatarUrls, String? nick)
         staff,
   }) {
-    return end(id, email, firstName, avatarUrls, passwordHash, lastName, nick);
+    return end(id, email, firstName, avatarUrls, lastName, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            String passwordHash,
-            String? lastName,
-            String? nick)?
+    TResult? Function(UserID id, String email, String firstName,
+            List<String> avatarUrls, String? lastName, String? nick)?
         end,
     TResult? Function(
             UserID id, String name, List<String> avatarUrls, String? nick)?
         staff,
   }) {
-    return end?.call(
-        id, email, firstName, avatarUrls, passwordHash, lastName, nick);
+    return end?.call(id, email, firstName, avatarUrls, lastName, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            String passwordHash,
-            String? lastName,
-            String? nick)?
+    TResult Function(UserID id, String email, String firstName,
+            List<String> avatarUrls, String? lastName, String? nick)?
         end,
     TResult Function(
             UserID id, String name, List<String> avatarUrls, String? nick)?
@@ -366,8 +311,7 @@ class _$EndUser implements EndUser {
     required TResult orElse(),
   }) {
     if (end != null) {
-      return end(
-          id, email, firstName, avatarUrls, passwordHash, lastName, nick);
+      return end(id, email, firstName, avatarUrls, lastName, nick);
     }
     return orElse();
   }
@@ -417,7 +361,6 @@ abstract class EndUser implements User {
       required final String email,
       required final String firstName,
       required final List<String> avatarUrls,
-      required final String passwordHash,
       final String? lastName,
       final String? nick}) = _$EndUser;
 
@@ -429,7 +372,6 @@ abstract class EndUser implements User {
   String get firstName;
   @override
   List<String> get avatarUrls;
-  String get passwordHash;
   String? get lastName;
   @override
   String? get nick;
@@ -553,14 +495,8 @@ class _$StaffUser implements StaffUser {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            String passwordHash,
-            String? lastName,
-            String? nick)
+    required TResult Function(UserID id, String email, String firstName,
+            List<String> avatarUrls, String? lastName, String? nick)
         end,
     required TResult Function(
             UserID id, String name, List<String> avatarUrls, String? nick)
@@ -572,14 +508,8 @@ class _$StaffUser implements StaffUser {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            String passwordHash,
-            String? lastName,
-            String? nick)?
+    TResult? Function(UserID id, String email, String firstName,
+            List<String> avatarUrls, String? lastName, String? nick)?
         end,
     TResult? Function(
             UserID id, String name, List<String> avatarUrls, String? nick)?
@@ -591,14 +521,8 @@ class _$StaffUser implements StaffUser {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            String passwordHash,
-            String? lastName,
-            String? nick)?
+    TResult Function(UserID id, String email, String firstName,
+            List<String> avatarUrls, String? lastName, String? nick)?
         end,
     TResult Function(
             UserID id, String name, List<String> avatarUrls, String? nick)?

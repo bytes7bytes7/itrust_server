@@ -6,6 +6,7 @@ import '../../../../common/application/exceptions/detailed_exception.dart';
 import '../../../../common/common.dart';
 import '../../common/common.dart';
 import '../../exceptions/duplicate_email.dart';
+import '../../repositories/password_hash_repository.dart';
 import '../../repositories/token_repository.dart';
 import '../../services/hash_service.dart';
 import '../../services/jwt_token_service.dart';
@@ -18,15 +19,18 @@ class RegisterCommandHandler extends RequestHandler<
     required JwtTokenService jwtTokenService,
     required HashService hashService,
     required EndUserRepository endUserRepository,
+    required PasswordHashRepository passwordHashRepository,
     required TokenRepository tokenRepository,
   })  : _jwtTokenService = jwtTokenService,
         _hashService = hashService,
         _endUserRepository = endUserRepository,
+        _passwordHashRepository = passwordHashRepository,
         _tokenRepository = tokenRepository;
 
   final JwtTokenService _jwtTokenService;
   final HashService _hashService;
   final EndUserRepository _endUserRepository;
+  final PasswordHashRepository _passwordHashRepository;
   final TokenRepository _tokenRepository;
 
   @override
@@ -52,11 +56,14 @@ class RegisterCommandHandler extends RequestHandler<
       firstName: request.firstName,
       lastName: request.lastName,
       email: request.email,
-      passwordHash: passwordHash,
       avatarUrls: [],
     );
 
     await _endUserRepository.add(user: user);
+    await _passwordHashRepository.saveHashByID(
+      userID: userID,
+      passwordHash: passwordHash,
+    );
 
     final tokenPair = _jwtTokenService.generate(user);
 

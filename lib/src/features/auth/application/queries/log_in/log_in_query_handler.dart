@@ -8,6 +8,7 @@ import '../../../../common/application/exceptions/detailed_exception.dart';
 import '../../../../common/common.dart';
 import '../../common/common.dart';
 import '../../exceptions/exceptions.dart';
+import '../../repositories/password_hash_repository.dart';
 import '../../repositories/token_repository.dart';
 import '../../services/hash_service.dart';
 import '../../services/jwt_token_service.dart';
@@ -20,15 +21,18 @@ class LogInQueryHandler extends RequestHandler<
     required JwtTokenService jwtTokenService,
     required HashService hashService,
     required EndUserRepository endUserRepository,
+    required PasswordHashRepository passwordHashRepository,
     required TokenRepository tokenRepository,
   })  : _jwtTokenService = jwtTokenService,
         _hashService = hashService,
         _endUserRepository = endUserRepository,
+        _passwordHashRepository = passwordHashRepository,
         _tokenRepository = tokenRepository;
 
   final JwtTokenService _jwtTokenService;
   final HashService _hashService;
   final EndUserRepository _endUserRepository;
+  final PasswordHashRepository _passwordHashRepository;
   final TokenRepository _tokenRepository;
 
   @override
@@ -42,9 +46,11 @@ class LogInQueryHandler extends RequestHandler<
       return left([const InvalidCredentials()]);
     }
 
-    final passwordHash = _hashService.hashPassword(request.password);
+    final rightPasswordHash =
+        await _passwordHashRepository.getHashByID(userID: user.id);
+    final currentPasswordHash = _hashService.hashPassword(request.password);
 
-    if (user.passwordHash != passwordHash) {
+    if (currentPasswordHash != rightPasswordHash) {
       return left([const InvalidCredentials()]);
     }
 
