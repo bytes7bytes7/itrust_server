@@ -59,7 +59,7 @@ class RegisterCommandHandler extends RequestHandler<
       avatarUrls: [],
     );
 
-    await _endUserRepository.add(user: user);
+    await _endUserRepository.addOrUpdate(user: user);
     await _passwordHashRepository.saveHashByID(
       userID: userID,
       passwordHash: passwordHash,

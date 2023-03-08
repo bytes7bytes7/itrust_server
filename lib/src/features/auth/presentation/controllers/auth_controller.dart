@@ -29,7 +29,7 @@ class AuthController extends ApiController {
 
   @Route.post('/register')
   Future<Response> register(Request request) async {
-    late RegisterRequest registerRequest;
+    late final RegisterRequest registerRequest;
     try {
       registerRequest = await parseRequest<RegisterRequest>(request);
     } catch (e) {
@@ -50,7 +50,7 @@ class AuthController extends ApiController {
 
   @Route.post('/log_in')
   Future<Response> logIn(Request request) async {
-    late LogInRequest logInRequest;
+    late final LogInRequest logInRequest;
     try {
       logInRequest = await parseRequest<LogInRequest>(request);
     } catch (e) {
@@ -71,7 +71,7 @@ class AuthController extends ApiController {
 
   @Route.post('/log_out')
   Future<Response> logOut(Request request) async {
-    late LogOutRequest logOutRequest;
+    late final LogOutRequest logOutRequest;
     try {
       logOutRequest = await parseRequest<LogOutRequest>(request);
     } catch (e) {
@@ -100,7 +100,7 @@ class AuthController extends ApiController {
 
   @Route.post('/verify_token')
   Future<Response> verifyToken(Request request) async {
-    late VerifyTokenRequest verifyTokenRequest;
+    late final VerifyTokenRequest verifyTokenRequest;
     try {
       verifyTokenRequest = await parseRequest<VerifyTokenRequest>(request);
     } catch (e) {
@@ -130,7 +130,7 @@ class AuthController extends ApiController {
 
   @Route.post('/refresh_token')
   Future<Response> refreshToken(Request request) async {
-    late RefreshTokenRequest refreshTokenRequest;
+    late final RefreshTokenRequest refreshTokenRequest;
     try {
       refreshTokenRequest = await parseRequest<RefreshTokenRequest>(request);
     } catch (e) {

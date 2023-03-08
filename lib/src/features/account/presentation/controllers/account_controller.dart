@@ -1,0 +1,61 @@
+import 'package:injectable/injectable.dart';
+import 'package:mapster/mapster.dart';
+import 'package:mediator/mediator.dart' as mdtr;
+import 'package:shelf/shelf.dart';
+import 'package:shelf_router/shelf_router.dart';
+
+import '../../../../utils/extensions/extensions.dart';
+import '../../../common/application/exceptions/exceptions.dart';
+import '../../../common/common.dart';
+import '../../application/application.dart';
+import '../contracts/contracts.dart';
+
+part 'account_controller.g.dart';
+
+@injectable
+class AccountController extends ApiController {
+  static const path = '/account/';
+
+  const AccountController({
+    required mdtr.Mediator mediator,
+    required Mapster mapster,
+  })  : _mediator = mediator,
+        _mapster = mapster;
+
+  final mdtr.Mediator _mediator;
+  final Mapster _mapster;
+
+  Router get router => _$AccountControllerRouter(this);
+
+  @Route.post('/personal_info')
+  Future<Response> changePersonalInfo(Request request) async {
+    late final ChangePersonalInfoRequest changePersonalInfoRequest;
+    try {
+      changePersonalInfoRequest =
+          await parseRequest<ChangePersonalInfoRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserDoesNotExist()]);
+    }
+
+    final command = _mapster.map2(
+      changePersonalInfoRequest,
+      user.id,
+      To<ChangePersonalInfoCommand>(),
+    );
+
+    final result = await command.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<ChangePersonalInfoResponse>())),
+    );
+  }
+}

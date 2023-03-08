@@ -41,6 +41,10 @@ void main(List<String> args) async {
       _getIt.get<UserController>().router.addAuthorization(),
     )
     ..mount(
+      AccountController.path,
+      _getIt.get<AccountController>().router.addAuthorization(),
+    )
+    ..mount(
       feedRoute,
       _getIt.get<FeedController>().router.addAuthorization(),
     );

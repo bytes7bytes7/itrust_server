@@ -4,9 +4,8 @@ import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mediator/mediator.dart';
 
-import '../../../../auth/application/exceptions/exceptions.dart';
 import '../../../../common/application/application.dart';
-import '../../../../common/application/exceptions/detailed_exception.dart';
+import '../../../../common/application/exceptions/exceptions.dart';
 import '../../common/common.dart';
 import 'get_user_by_id_query.dart';
 

@@ -10,7 +10,7 @@ class TestEndUserRepository implements EndUserRepository {
   final _storage = <UserID, EndUser>{};
 
   @override
-  Future<void> add({required EndUser user}) async {
+  Future<void> addOrUpdate({required EndUser user}) async {
     _storage[user.id] = user;
   }
 
