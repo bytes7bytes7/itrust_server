@@ -4,8 +4,8 @@ import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mediator/mediator.dart';
 
+import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
-import '../../../../common/common.dart';
 import '../../common/change_personal_info_result.dart';
 import 'change_personal_info.dart';
 

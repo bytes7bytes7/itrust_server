@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/utils.dart';
+import '../../../domain/domain.dart';
 
 part 'register_request.g.dart';
 
@@ -18,7 +19,7 @@ class RegisterRequest {
   final String lastName;
   final String email;
   final String password;
-  final String deviceInfo;
+  final DeviceInfo deviceInfo;
 
   factory RegisterRequest.fromJson(JsonMap json) =>
       _$RegisterRequestFromJson(json);

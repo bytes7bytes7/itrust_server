@@ -2,6 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:mediator/mediator.dart';
 
 import '../../../../common/application/exceptions/detailed_exception.dart';
+import '../../../domain/domain.dart';
 import '../../common/common.dart';
 
 class RegisterCommand
@@ -18,5 +19,5 @@ class RegisterCommand
   final String lastName;
   final String email;
   final String password;
-  final String deviceInfo;
+  final DeviceInfo deviceInfo;
 }

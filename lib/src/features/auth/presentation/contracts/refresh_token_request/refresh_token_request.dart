@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/typedef.dart';
+import '../../../domain/domain.dart';
 
 part 'refresh_token_request.g.dart';
 
@@ -12,7 +13,7 @@ class RefreshTokenRequest {
   });
 
   final String refreshToken;
-  final String deviceInfo;
+  final DeviceInfo deviceInfo;
 
   factory RefreshTokenRequest.fromJson(JsonMap json) =>
       _$RefreshTokenRequestFromJson(json);

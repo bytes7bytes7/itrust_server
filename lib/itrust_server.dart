@@ -8,4 +8,5 @@ export 'package:shelf_router/shelf_router.dart';
 
 export 'src/features/features.dart';
 export 'src/main/main.dart';
+export 'src/repositories/repositories.dart';
 export 'src/utils/utils.dart';

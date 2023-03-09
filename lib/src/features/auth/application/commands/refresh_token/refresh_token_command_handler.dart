@@ -4,11 +4,10 @@ import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mediator/mediator.dart';
 
+import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
-import '../../../../common/application/repositories/end_user_repository.dart';
 import '../../common/common.dart';
 import '../../exceptions/exceptions.dart';
-import '../../repositories/token_repository.dart';
 import '../../services/jwt_token_service.dart';
 import 'refresh_token_command.dart';
 

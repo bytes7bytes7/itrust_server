@@ -1,9 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../application/repositories/repositories.dart';
-import '../../domain/entities/user/user.dart';
-import '../../domain/value_objects/user_id/user_id.dart';
+import '../../features/common/domain/entities/user/user.dart';
+import '../../features/common/domain/value_objects/user_id/user_id.dart';
+import '../interfaces/interfaces.dart';
 
 @test
 @Singleton(as: StaffUserRepository)

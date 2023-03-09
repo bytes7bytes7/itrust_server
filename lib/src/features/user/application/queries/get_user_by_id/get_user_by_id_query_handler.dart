@@ -4,7 +4,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mediator/mediator.dart';
 
-import '../../../../common/application/application.dart';
+import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
 import '../../common/common.dart';
 import 'get_user_by_id_query.dart';

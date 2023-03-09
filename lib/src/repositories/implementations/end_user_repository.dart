@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../application/application.dart';
-import '../../domain/domain.dart';
+import '../../features/common/domain/domain.dart';
+import '../interfaces/interfaces.dart';
 
 @test
 @Singleton(as: EndUserRepository)

@@ -3,9 +3,9 @@ import 'dart:collection';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../common/common.dart';
-import '../../application/application.dart';
-import '../../domain/domain.dart';
+import '../../features/auth/domain/domain.dart';
+import '../../features/common/common.dart';
+import '../interfaces/interfaces.dart';
 
 class _UserCred extends Equatable {
   const _UserCred(
@@ -14,7 +14,7 @@ class _UserCred extends Equatable {
   );
 
   final TokenPair tokenPair;
-  final String deviceInfo;
+  final DeviceInfo deviceInfo;
 
   @override
   List<Object?> get props => [tokenPair, deviceInfo];
@@ -29,7 +29,7 @@ class TestTokenRepository implements TokenRepository {
   Future<void> addOrUpdate({
     required TokenPair tokenPair,
     required UserID userID,
-    required String deviceInfo,
+    required DeviceInfo deviceInfo,
   }) async {
     final creds = _storage[userID];
 
@@ -86,7 +86,7 @@ class TestTokenRepository implements TokenRepository {
   }
 
   @override
-  Future<String?> getDeviceInfoByAccessToken({
+  Future<DeviceInfo?> getDeviceInfoByAccessToken({
     required String accessToken,
   }) async {
     for (final note in _storage.entries) {
@@ -101,7 +101,7 @@ class TestTokenRepository implements TokenRepository {
   }
 
   @override
-  Future<String?> getDeviceInfoByRefreshToken({
+  Future<DeviceInfo?> getDeviceInfoByRefreshToken({
     required String refreshToken,
   }) async {
     for (final note in _storage.entries) {

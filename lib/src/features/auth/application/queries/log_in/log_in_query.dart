@@ -2,6 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:mediator/mediator.dart';
 
 import '../../../../common/application/exceptions/detailed_exception.dart';
+import '../../../domain/domain.dart';
 import '../../common/common.dart';
 
 class LogInQuery extends Request<Either<List<DetailedException>, AuthResult>> {
@@ -13,5 +14,5 @@ class LogInQuery extends Request<Either<List<DetailedException>, AuthResult>> {
 
   final String email;
   final String password;
-  final String deviceInfo;
+  final DeviceInfo deviceInfo;
 }

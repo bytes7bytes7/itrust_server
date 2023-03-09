@@ -2,8 +2,8 @@ import 'dart:collection';
 
 import 'package:injectable/injectable.dart';
 
-import '../../../common/domain/value_objects/user_id/user_id.dart';
-import '../../application/application.dart';
+import '../../features/common/domain/value_objects/user_id/user_id.dart';
+import '../interfaces/interfaces.dart';
 
 @test
 @Singleton(as: PasswordHashRepository)

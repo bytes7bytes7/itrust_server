@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/utils.dart';
+import '../../../domain/domain.dart';
 
 part 'verify_token_request.g.dart';
 
@@ -10,7 +11,7 @@ class VerifyTokenRequest {
     required this.deviceInfo,
   });
 
-  final String deviceInfo;
+  final DeviceInfo deviceInfo;
 
   factory VerifyTokenRequest.fromJson(JsonMap json) =>
       _$VerifyTokenRequestFromJson(json);

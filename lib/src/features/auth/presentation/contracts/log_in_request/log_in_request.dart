@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/utils.dart';
+import '../../../domain/domain.dart';
 
 part 'log_in_request.g.dart';
 
@@ -14,7 +15,7 @@ class LogInRequest {
 
   final String email;
   final String password;
-  final String deviceInfo;
+  final DeviceInfo deviceInfo;
 
   factory LogInRequest.fromJson(JsonMap json) =>
       _$LogInRequestFromJson(json);
