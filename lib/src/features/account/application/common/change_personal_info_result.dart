@@ -1,9 +1,9 @@
+import '../../../common/common.dart';
+
 class ChangePersonalInfoResult {
   const ChangePersonalInfoResult({
-    required this.firstName,
-    required this.lastName,
+    required this.user,
   });
 
-  final String firstName;
-  final String lastName;
+  final EndUser user;
 }

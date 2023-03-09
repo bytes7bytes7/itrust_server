@@ -13,13 +13,13 @@ import 'package:itrust_server/src/features/account/application/commands/change_p
 import 'package:itrust_server/src/features/account/application/commands/change_personal_info/change_personal_info_command_validator.dart'
     as _i3;
 import 'package:itrust_server/src/features/account/infrastructure/json_converters/change_personal_info_request_json_converter.dart'
-    as _i19;
+    as _i14;
 import 'package:itrust_server/src/features/account/infrastructure/third_party/mapster_registrar.dart'
     as _i43;
 import 'package:itrust_server/src/features/account/infrastructure/third_party/mediator_registrar.dart'
     as _i44;
 import 'package:itrust_server/src/features/account/presentation/contracts/contracts.dart'
-    as _i18;
+    as _i13;
 import 'package:itrust_server/src/features/account/presentation/controllers/account_controller.dart'
     as _i42;
 import 'package:itrust_server/src/features/auth/application/application.dart'
@@ -57,15 +57,15 @@ import 'package:itrust_server/src/features/auth/infrastructure/app_services/hash
 import 'package:itrust_server/src/features/auth/infrastructure/app_services/jwt_token_service.dart'
     as _i24;
 import 'package:itrust_server/src/features/auth/infrastructure/json_converters/log_in_request_json_converter.dart'
-    as _i17;
+    as _i18;
 import 'package:itrust_server/src/features/auth/infrastructure/json_converters/log_out_request_json_converter.dart'
-    as _i14;
+    as _i19;
 import 'package:itrust_server/src/features/auth/infrastructure/json_converters/refresh_token_request_json_converter.dart'
-    as _i20;
-import 'package:itrust_server/src/features/auth/infrastructure/json_converters/register_request_json_converter.dart'
-    as _i16;
-import 'package:itrust_server/src/features/auth/infrastructure/json_converters/verify_token_request_json_converter.dart'
     as _i21;
+import 'package:itrust_server/src/features/auth/infrastructure/json_converters/register_request_json_converter.dart'
+    as _i17;
+import 'package:itrust_server/src/features/auth/infrastructure/json_converters/verify_token_request_json_converter.dart'
+    as _i20;
 import 'package:itrust_server/src/features/auth/infrastructure/repositories/password_hash_repository.dart'
     as _i29;
 import 'package:itrust_server/src/features/auth/infrastructure/repositories/token_repository.dart'
@@ -75,7 +75,7 @@ import 'package:itrust_server/src/features/auth/infrastructure/third_party/mapst
 import 'package:itrust_server/src/features/auth/infrastructure/third_party/mediator_registrar.dart'
     as _i47;
 import 'package:itrust_server/src/features/auth/presentation/contracts/contracts.dart'
-    as _i13;
+    as _i16;
 import 'package:itrust_server/src/features/auth/presentation/controllers/auth_controller.dart'
     as _i45;
 import 'package:itrust_server/src/features/common/application/application.dart'
@@ -146,21 +146,21 @@ _i1.GetIt init(
   gh.singleton<_i9.GetUserByNickQueryValidator>(
       _i9.GetUserByNickQueryValidator());
   gh.singleton<_i10.HashService>(_i11.ProdHashService());
-  gh.singleton<_i12.JsonConverter<_i13.LogOutRequest, Map<String, Object?>>>(
-      _i14.LogOutRequestJsonConverter());
-  gh.singleton<_i15.JsonConverter<_i13.RegisterRequest, Map<String, Object?>>>(
-      _i16.RegisterRequestJsonConverter());
-  gh.singleton<_i12.JsonConverter<_i13.LogInRequest, Map<String, Object?>>>(
-      _i17.LogInRequestJsonConverter());
   gh.singleton<
-      _i12.JsonConverter<_i18.ChangePersonalInfoRequest,
-          Map<String, Object?>>>(_i19.ChangePersonalInfoRequestJsonConverter());
+      _i12.JsonConverter<_i13.ChangePersonalInfoRequest,
+          Map<String, Object?>>>(_i14.ChangePersonalInfoRequestJsonConverter());
+  gh.singleton<_i15.JsonConverter<_i16.RegisterRequest, Map<String, Object?>>>(
+      _i17.RegisterRequestJsonConverter());
+  gh.singleton<_i12.JsonConverter<_i16.LogInRequest, Map<String, Object?>>>(
+      _i18.LogInRequestJsonConverter());
+  gh.singleton<_i12.JsonConverter<_i16.LogOutRequest, Map<String, Object?>>>(
+      _i19.LogOutRequestJsonConverter());
   gh.singleton<
-          _i12.JsonConverter<_i13.RefreshTokenRequest, Map<String, Object?>>>(
-      _i20.RefreshTokenRequestJsonConverter());
+          _i12.JsonConverter<_i16.VerifyTokenRequest, Map<String, Object?>>>(
+      _i20.VerifyTokenRequestJsonConverter());
   gh.singleton<
-          _i12.JsonConverter<_i13.VerifyTokenRequest, Map<String, Object?>>>(
-      _i21.VerifyTokenRequestJsonConverter());
+          _i12.JsonConverter<_i16.RefreshTokenRequest, Map<String, Object?>>>(
+      _i21.RefreshTokenRequestJsonConverter());
   gh.singleton<_i22.JwtSettings>(envModule.jwtSettings);
   gh.singleton<_i23.JwtTokenService>(
       _i24.ProdJwtTokenService(gh<_i22.JwtSettings>()));

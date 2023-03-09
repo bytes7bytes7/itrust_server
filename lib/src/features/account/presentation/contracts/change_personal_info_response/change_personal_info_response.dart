@@ -1,18 +1,17 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/typedef.dart';
+import '../../../../common/common.dart';
 
 part 'change_personal_info_response.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class ChangePersonalInfoResponse {
   const ChangePersonalInfoResponse({
-    this.firstName,
-    this.lastName,
+    required this.user,
   });
 
-  final String? firstName;
-  final String? lastName;
+  final EndUser user;
 
   factory ChangePersonalInfoResponse.fromJson(JsonMap json) =>
       _$ChangePersonalInfoResponseFromJson(json);

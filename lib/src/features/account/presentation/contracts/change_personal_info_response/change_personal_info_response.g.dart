@@ -9,21 +9,11 @@ part of 'change_personal_info_response.dart';
 ChangePersonalInfoResponse _$ChangePersonalInfoResponseFromJson(
         Map<String, dynamic> json) =>
     ChangePersonalInfoResponse(
-      firstName: json['firstName'] as String?,
-      lastName: json['lastName'] as String?,
+      user: EndUser.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ChangePersonalInfoResponseToJson(
-    ChangePersonalInfoResponse instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('firstName', instance.firstName);
-  writeNotNull('lastName', instance.lastName);
-  return val;
-}
+        ChangePersonalInfoResponse instance) =>
+    <String, dynamic>{
+      'user': instance.user.toJson(),
+    };

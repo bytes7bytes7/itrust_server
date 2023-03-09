@@ -11,8 +11,7 @@ class ChangePersonalInfoResultToChangePersonalInfoResponseMapper
   @override
   ChangePersonalInfoResponse map() {
     return ChangePersonalInfoResponse(
-      firstName: _result.firstName,
-      lastName: _result.lastName,
+      user: _result.user,
     );
   }
 

@@ -38,8 +38,7 @@ class ChangePersonalInfoCommandHandler extends RequestHandler<
 
     return right(
       ChangePersonalInfoResult(
-        firstName: request.firstName,
-        lastName: request.lastName,
+        user: newUser,
       ),
     );
   }
