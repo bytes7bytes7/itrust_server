@@ -58,4 +58,25 @@ class AccountController extends ApiController {
       (r) => ok(_mapster.map1(r, To<ChangePersonalInfoResponse>())),
     );
   }
+
+  @Route.get('/devices')
+  Future<Response> getDevices(Request request) async {
+    late final GetDevicesRequest getDevicesRequest;
+    try {
+      getDevicesRequest = await parseRequest<GetDevicesRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final query = _mapster.map1(getDevicesRequest, To<GetDevicesQuery>());
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<GetDevicesResponse>())),
+    );
+  }
 }

@@ -13,5 +13,10 @@ Router _$AccountControllerRouter(AccountController service) {
     r'/personal_info',
     service.changePersonalInfo,
   );
+  router.add(
+    'GET',
+    r'/devices',
+    service.getDevices,
+  );
   return router;
 }

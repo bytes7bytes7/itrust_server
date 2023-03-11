@@ -20,11 +20,19 @@ class AccountMediatorRegistrar {
       ..registerRequestHandler(
         () => _getIt.get<ChangePersonalInfoCommandHandler>(),
       )
+      ..registerRequestHandler(
+        () => _getIt.get<GetDevicesQueryHandler>(),
+      )
 
       // PipelineBehavior
       ..registerPipelineBehavior(
         () => ValidationBehavior(
           [_getIt.get<ChangePersonalInfoCommandValidator>()],
+        ),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior(
+          [_getIt.get<GetDevicesQueryValidator>()],
         ),
       );
   }

@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:problem_details/problem_details.dart';
 import 'package:shelf/shelf.dart';
+import 'package:shelf_router/shelf_router.dart';
 
 import '../../../../utils/utils.dart';
 import '../../application/exceptions/detailed_exception.dart';
@@ -20,10 +21,13 @@ class ApiController {
 
   Future<T> parseRequest<T extends Object>(Request request) async {
     final rawBody = await request.readAsString();
-    final jsonBody = _jsonDecoder.convert(rawBody);
+    final jsonBody = _jsonDecoder.convert(rawBody.isNotEmpty ? rawBody : '{}');
 
     final jsonConverter = _getIt.get<JsonConverter<T, JsonMap>>();
-    return jsonConverter.fromJson(jsonBody);
+
+    final fullJson = (jsonBody as JsonMap)..addAll(request.params);
+
+    return jsonConverter.fromJson(fullJson);
   }
 
   Response problem(List<DetailedException> exceptions) =>
