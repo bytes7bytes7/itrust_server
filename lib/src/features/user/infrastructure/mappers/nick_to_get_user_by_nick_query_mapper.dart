@@ -1,9 +1,10 @@
 import 'package:mapster/mapster.dart';
 
 import '../../application/application.dart';
+import '../../presentation/contracts/contracts.dart';
 
 class NickToGetUserByNickQueryMapper
-    extends OneSourceMapper<String, GetUserByNickQuery> {
+    extends TwoSourcesMapper<GetUserByNickRequest, String, GetUserByNickQuery> {
   NickToGetUserByNickQueryMapper(super.input);
 
   @override
@@ -13,5 +14,5 @@ class NickToGetUserByNickQueryMapper
     );
   }
 
-  String get _nick => source;
+  String get _nick => source2;
 }

@@ -2,8 +2,10 @@ import 'package:mapster/mapster.dart';
 
 import '../../../common/domain/domain.dart';
 import '../../application/application.dart';
+import '../../presentation/contracts/contracts.dart';
 
-class IDToGetUserQueryMapper extends OneSourceMapper<String, GetUserByIDQuery> {
+class IDToGetUserQueryMapper
+    extends TwoSourcesMapper<GetUserByIDRequest, String, GetUserByIDQuery> {
   IDToGetUserQueryMapper(super.input);
 
   @override
@@ -13,5 +15,5 @@ class IDToGetUserQueryMapper extends OneSourceMapper<String, GetUserByIDQuery> {
     );
   }
 
-  String get _id => source;
+  String get _id => source2;
 }
