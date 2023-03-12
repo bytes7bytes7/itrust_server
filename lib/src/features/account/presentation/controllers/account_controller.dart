@@ -113,9 +113,16 @@ class AccountController extends ApiController {
       return problem([const UserDoesNotExist()]);
     }
 
-    final command = _mapster.map2(
+    final accessToken = request.token;
+
+    if (accessToken == null) {
+      return problem([const UserDoesNotExist()]);
+    }
+
+    final command = _mapster.map3(
       removeDeviceRequest,
       user.id,
+      accessToken,
       To<RemoveDeviceCommand>(),
     );
 

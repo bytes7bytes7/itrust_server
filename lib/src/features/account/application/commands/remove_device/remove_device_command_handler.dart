@@ -6,6 +6,7 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/application.dart';
+import '../../../domain/domain.dart';
 import '../../common/common.dart';
 import '../../exceptions/exceptions.dart';
 import 'remove_device.dart';
@@ -51,9 +52,35 @@ class RemoveDeviceCommandHandler extends RequestHandler<
       sessionID: request.sessionID,
     );
 
+    final infoList = await _tokenRepository.getFullSessionInfoListByUserID(
+      userID: request.userID,
+    );
+
+    DeviceSession? thisSession;
+    final otherSessions = <DeviceSession>[];
+    for (final info in infoList) {
+      final session = DeviceSession(
+        id: info.id,
+        deviceName: '${info.deviceInfo.name}, ${info.deviceInfo.platform}',
+        ip: info.ip,
+        createdAt: info.createdAt,
+      );
+
+      if (info.tokenPair.access == request.accessToken) {
+        thisSession = session;
+      } else {
+        otherSessions.add(session);
+      }
+    }
+
+    if (thisSession == null) {
+      return left([const CurrentSessionNotFound()]);
+    }
+
     return right(
       RemoveDeviceResult(
-        info: 'Successfully removed.',
+        thisSession: thisSession,
+        otherSessions: otherSessions,
       ),
     );
   }

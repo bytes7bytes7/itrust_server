@@ -10,9 +10,11 @@ class RemoveDeviceCommand
     required this.userID,
     required this.sessionID,
     required this.password,
+    required this.accessToken,
   }) : super(RemoveDeviceCommand);
 
   final UserID userID;
   final int sessionID;
   final String password;
+  final String accessToken;
 }

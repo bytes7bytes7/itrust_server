@@ -31,7 +31,9 @@ class AccountMapsterRegistrar {
         MapperMeta.one(GetDevicesResultToGetDevicesResponseMapper.new),
       )
       ..register(
-        MapperMeta.two(RemoveDeviceRequestIDToRemoveDeviceCommandMapper.new),
+        MapperMeta.three(
+          RemoveDeviceRequestIDAccessTokenToRemoveDeviceCommandMapper.new,
+        ),
       )
       ..register(
         MapperMeta.one(RemoveDeviceResultToRemoveDeviceResponseMapper.new),

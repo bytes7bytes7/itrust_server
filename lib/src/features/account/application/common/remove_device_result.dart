@@ -1,7 +1,11 @@
+import '../../domain/domain.dart';
+
 class RemoveDeviceResult {
   const RemoveDeviceResult({
-    required this.info,
+    required this.thisSession,
+    required this.otherSessions,
   });
 
-  final String info;
+  final DeviceSession thisSession;
+  final List<DeviceSession> otherSessions;
 }

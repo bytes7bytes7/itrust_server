@@ -10,7 +10,8 @@ class RemoveDeviceResultToRemoveDeviceResponseMapper
   @override
   RemoveDeviceResponse map() {
     return RemoveDeviceResponse(
-      info: _result.info,
+      thisSession: _result.thisSession,
+      otherSessions: _result.otherSessions,
     );
   }
 
