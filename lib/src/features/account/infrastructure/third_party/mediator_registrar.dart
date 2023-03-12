@@ -23,6 +23,7 @@ class AccountMediatorRegistrar {
       ..registerRequestHandler(
         () => _getIt.get<GetDevicesQueryHandler>(),
       )
+      ..registerRequestHandler(() => _getIt.get<RemoveDeviceCommandHandler>())
 
       // PipelineBehavior
       ..registerPipelineBehavior(
@@ -33,6 +34,11 @@ class AccountMediatorRegistrar {
       ..registerPipelineBehavior(
         () => ValidationBehavior(
           [_getIt.get<GetDevicesQueryValidator>()],
+        ),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior(
+          [_getIt.get<RemoveDeviceCommandValidator>()],
         ),
       );
   }

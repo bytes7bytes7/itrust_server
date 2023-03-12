@@ -1,7 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:mediator/mediator.dart';
 
-import '../../../../common/application/exceptions/detailed_exception.dart';
 import '../../../../common/common.dart';
 import '../../common/change_personal_info_result.dart';
 

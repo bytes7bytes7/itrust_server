@@ -3,11 +3,9 @@ import 'package:injectable/injectable.dart';
 import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
-import '../../../../common/application/exceptions/detailed_exception.dart';
 import '../../../../common/common.dart';
 import '../../common/common.dart';
 import '../../exceptions/duplicate_email.dart';
-import '../../services/hash_service.dart';
 import '../../services/jwt_token_service.dart';
 import 'register_command.dart';
 

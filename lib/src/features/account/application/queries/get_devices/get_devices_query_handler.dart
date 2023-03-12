@@ -32,6 +32,7 @@ class GetDevicesQueryHandler extends RequestHandler<
     final otherSessions = <DeviceSession>[];
     for (final info in infoList) {
       final session = DeviceSession(
+        id: info.id,
         deviceName: '${info.deviceInfo.name}, ${info.deviceInfo.platform}',
         ip: info.ip,
         createdAt: info.createdAt,

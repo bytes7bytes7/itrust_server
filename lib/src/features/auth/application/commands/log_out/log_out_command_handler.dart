@@ -41,7 +41,7 @@ class LogOutCommandHandler extends RequestHandler<
       return left([const TokenExpired()]);
     }
 
-    await _tokenRepository.removeTokenPairByAccessToken(
+    await _tokenRepository.removeNoteByAccessToken(
       accessToken: request.accessToken,
     );
 

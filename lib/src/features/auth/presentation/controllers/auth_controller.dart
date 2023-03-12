@@ -5,7 +5,6 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
 import '../../../../utils/utils.dart';
-import '../../../common/application/exceptions/exceptions.dart';
 import '../../../common/common.dart';
 import '../../application/application.dart';
 import '../contracts/contracts.dart';

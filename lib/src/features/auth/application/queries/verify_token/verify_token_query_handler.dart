@@ -46,7 +46,7 @@ class VerifyTokenQueryHandler extends RequestHandler<
     );
 
     if (deviceInfo != request.deviceInfo) {
-      await _tokenRepository.removeTokenPairByAccessToken(
+      await _tokenRepository.removeNoteByAccessToken(
         accessToken: request.accessToken,
       );
 

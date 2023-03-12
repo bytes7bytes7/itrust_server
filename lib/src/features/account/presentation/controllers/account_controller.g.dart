@@ -18,5 +18,10 @@ Router _$AccountControllerRouter(AccountController service) {
     r'/devices',
     service.getDevices,
   );
+  router.add(
+    'POST',
+    r'/remove_device',
+    service.removeDevice,
+  );
   return router;
 }

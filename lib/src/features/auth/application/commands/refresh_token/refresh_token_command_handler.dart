@@ -52,7 +52,7 @@ class RefreshTokenCommandHandler extends RequestHandler<
     );
 
     if (deviceInfo != request.deviceInfo) {
-      await _tokenRepository.removeTokenPairByRefreshToken(
+      await _tokenRepository.removeNoteByRefreshToken(
         refreshToken: request.refreshToken,
       );
 
@@ -65,7 +65,7 @@ class RefreshTokenCommandHandler extends RequestHandler<
       return left([const UserDoesNotExist()]);
     }
 
-    await _tokenRepository.removeTokenPairByRefreshToken(
+    await _tokenRepository.removeNoteByRefreshToken(
       refreshToken: request.refreshToken,
     );
 

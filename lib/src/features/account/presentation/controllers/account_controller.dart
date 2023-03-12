@@ -5,7 +5,6 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
 import '../../../../utils/extensions/extensions.dart';
-import '../../../common/application/exceptions/exceptions.dart';
 import '../../../common/common.dart';
 import '../../application/application.dart';
 import '../contracts/contracts.dart';
@@ -94,6 +93,37 @@ class AccountController extends ApiController {
     return result.match(
       problem,
       (r) => ok(_mapster.map1(r, To<GetDevicesResponse>())),
+    );
+  }
+
+  @Route.post('/remove_device')
+  Future<Response> removeDevice(Request request) async {
+    late final RemoveDeviceRequest removeDeviceRequest;
+    try {
+      removeDeviceRequest = await parseRequest<RemoveDeviceRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserDoesNotExist()]);
+    }
+
+    final command = _mapster.map2(
+      removeDeviceRequest,
+      user.id,
+      To<RemoveDeviceCommand>(),
+    );
+
+    final result = await command.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<RemoveDeviceResponse>())),
     );
   }
 }

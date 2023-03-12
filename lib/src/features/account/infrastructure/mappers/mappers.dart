@@ -2,3 +2,5 @@ export 'change_personal_info_request_id_to_change_personal_info_command_mapper.d
 export 'change_personal_info_result_to_change_personal_info_response_mapper.dart';
 export 'get_devices_request_id_access_token_to_get_devices_query_mapper.dart';
 export 'get_devices_result_to_get_devices_response_mapper.dart';
+export 'remove_device_request_id_to_remove_device_command_mapper.dart';
+export 'remove_device_result_to_remove_device_response_mapper.dart';

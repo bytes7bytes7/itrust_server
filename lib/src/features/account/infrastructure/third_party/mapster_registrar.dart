@@ -29,6 +29,12 @@ class AccountMapsterRegistrar {
       )
       ..register(
         MapperMeta.one(GetDevicesResultToGetDevicesResponseMapper.new),
+      )
+      ..register(
+        MapperMeta.two(RemoveDeviceRequestIDToRemoveDeviceCommandMapper.new),
+      )
+      ..register(
+        MapperMeta.one(RemoveDeviceResultToRemoveDeviceResponseMapper.new),
       );
   }
 }

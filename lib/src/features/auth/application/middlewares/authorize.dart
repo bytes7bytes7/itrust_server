@@ -2,7 +2,6 @@ import 'package:shelf/shelf.dart';
 
 import '../../../../repositories/interfaces/interfaces.dart';
 import '../../../../utils/utils.dart';
-import '../../../common/application/exceptions/exceptions.dart';
 import '../../../common/common.dart';
 import '../exceptions/exceptions.dart';
 import '../services/jwt_token_service.dart';

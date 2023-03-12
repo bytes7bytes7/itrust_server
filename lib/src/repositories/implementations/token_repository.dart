@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../features/auth/domain/domain.dart';
@@ -21,6 +22,7 @@ class TestTokenRepository implements TokenRepository {
   }) async {
     final info = _storage[userID];
     final newInfo = FullSessionInfo(
+      id: (info?.lastOrNull?.id ?? -1) + 1,
       tokenPair: tokenPair,
       deviceInfo: deviceInfo,
       ip: ip,
@@ -117,7 +119,7 @@ class TestTokenRepository implements TokenRepository {
   }
 
   @override
-  Future<UserID?> removeTokenPairByAccessToken({
+  Future<void> removeNoteByAccessToken({
     required String accessToken,
   }) async {
     for (final note in _storage.entries) {
@@ -128,18 +130,18 @@ class TestTokenRepository implements TokenRepository {
 
         if (info.tokenPair.access == accessToken) {
           note.value.removeAt(i);
-          return note.key;
+          return;
         }
 
         iterator.moveNext();
       }
     }
 
-    return null;
+    return;
   }
 
   @override
-  Future<UserID?> removeTokenPairByRefreshToken({
+  Future<void> removeNoteByRefreshToken({
     required String refreshToken,
   }) async {
     for (final note in _storage.entries) {
@@ -150,13 +152,38 @@ class TestTokenRepository implements TokenRepository {
 
         if (info.tokenPair.refresh == refreshToken) {
           note.value.removeAt(i);
-          return note.key;
+          return;
         }
 
         iterator.moveNext();
       }
     }
 
-    return null;
+    return;
+  }
+
+  @override
+  Future<void> removeNoteByUserIDSessionID({
+    required UserID userID,
+    required int sessionID,
+  }) async {
+    final note = _storage[userID];
+
+    if (note != null) {
+      final iterator = note.iterator..moveNext();
+
+      for (var i = 0; i < note.length; i++) {
+        final session = iterator.current;
+
+        if (session.id == sessionID) {
+          note.removeAt(i);
+          return;
+        }
+
+        iterator.moveNext();
+      }
+    }
+
+    return;
   }
 }

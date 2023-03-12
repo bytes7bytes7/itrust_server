@@ -24,7 +24,12 @@ abstract class TokenRepository {
     required UserID userID,
   });
 
-  Future<UserID?> removeTokenPairByAccessToken({required String accessToken});
+  Future<void> removeNoteByAccessToken({required String accessToken});
 
-  Future<UserID?> removeTokenPairByRefreshToken({required String refreshToken});
+  Future<void> removeNoteByRefreshToken({required String refreshToken});
+
+  Future<void> removeNoteByUserIDSessionID({
+    required UserID userID,
+    required int sessionID,
+  });
 }

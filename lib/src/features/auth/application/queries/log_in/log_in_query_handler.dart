@@ -6,9 +6,9 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/detailed_exception.dart';
+import '../../../../common/application/services/hash_service.dart';
 import '../../common/common.dart';
 import '../../exceptions/exceptions.dart';
-import '../../services/hash_service.dart';
 import '../../services/jwt_token_service.dart';
 import 'log_in_query.dart';
 
