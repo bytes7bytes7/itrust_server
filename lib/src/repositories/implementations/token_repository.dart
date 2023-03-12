@@ -8,16 +8,25 @@ import '../../features/common/common.dart';
 import '../interfaces/interfaces.dart';
 
 class _UserCred extends Equatable {
-  const _UserCred(
-    this.tokenPair,
-    this.deviceInfo,
-  );
+  const _UserCred({
+    required this.tokenPair,
+    required this.deviceInfo,
+    required this.ip,
+    required this.createdAt,
+  });
 
   final TokenPair tokenPair;
   final DeviceInfo deviceInfo;
+  final String ip;
+  final DateTime createdAt;
 
   @override
-  List<Object?> get props => [tokenPair, deviceInfo];
+  List<Object?> get props => [
+        tokenPair,
+        deviceInfo,
+        ip,
+        createdAt,
+      ];
 }
 
 @test
@@ -30,18 +39,26 @@ class TestTokenRepository implements TokenRepository {
     required TokenPair tokenPair,
     required UserID userID,
     required DeviceInfo deviceInfo,
+    required String ip,
+    required DateTime createdAt,
   }) async {
-    final creds = _storage[userID];
+    final credentials = _storage[userID];
+    final newCred = _UserCred(
+      tokenPair: tokenPair,
+      deviceInfo: deviceInfo,
+      ip: ip,
+      createdAt: createdAt,
+    );
 
-    if (creds != null) {
+    if (credentials != null) {
       var updated = false;
 
-      final iterator = creds.iterator..moveNext();
-      for (var i = 0; i < creds.length; i++) {
+      final iterator = credentials.iterator..moveNext();
+      for (var i = 0; i < credentials.length; i++) {
         final cred = iterator.current;
 
         if (cred.deviceInfo == deviceInfo) {
-          creds[i] = _UserCred(tokenPair, deviceInfo);
+          credentials[i] = newCred;
           updated = true;
           break;
         }
@@ -50,10 +67,10 @@ class TestTokenRepository implements TokenRepository {
       }
 
       if (!updated) {
-        creds.add(_UserCred(tokenPair, deviceInfo));
+        credentials.add(newCred);
       }
     } else {
-      _storage[userID] = <_UserCred>[_UserCred(tokenPair, deviceInfo)];
+      _storage[userID] = <_UserCred>[newCred];
     }
   }
 

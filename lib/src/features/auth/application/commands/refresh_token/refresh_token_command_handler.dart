@@ -18,13 +18,16 @@ class RefreshTokenCommandHandler extends RequestHandler<
     required JwtTokenService jwtTokenService,
     required TokenRepository tokenRepository,
     required EndUserRepository endUserRepository,
+    required DateTimeRepository dateTimeRepository,
   })  : _jwtTokenService = jwtTokenService,
         _tokenRepository = tokenRepository,
-        _endUserRepository = endUserRepository;
+        _endUserRepository = endUserRepository,
+        _dateTimeRepository = dateTimeRepository;
 
   final JwtTokenService _jwtTokenService;
   final TokenRepository _tokenRepository;
   final EndUserRepository _endUserRepository;
+  final DateTimeRepository _dateTimeRepository;
 
   @override
   FutureOr<Either<List<DetailedException>, RefreshTokenResult>> handle(
@@ -72,6 +75,8 @@ class RefreshTokenCommandHandler extends RequestHandler<
       tokenPair: tokenPair,
       userID: userID,
       deviceInfo: request.deviceInfo,
+      ip: request.ip,
+      createdAt: _dateTimeRepository.now(),
     );
 
     return right(

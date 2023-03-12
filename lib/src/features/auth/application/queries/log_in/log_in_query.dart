@@ -10,9 +10,11 @@ class LogInQuery extends Request<Either<List<DetailedException>, AuthResult>> {
     required this.email,
     required this.password,
     required this.deviceInfo,
+    required this.ip,
   }) : super(LogInQuery);
 
   final String email;
   final String password;
   final DeviceInfo deviceInfo;
+  final String ip;
 }

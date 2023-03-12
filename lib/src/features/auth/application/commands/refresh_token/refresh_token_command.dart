@@ -10,8 +10,10 @@ class RefreshTokenCommand
   RefreshTokenCommand({
     required this.refreshToken,
     required this.deviceInfo,
+    required this.ip,
   }) : super(RefreshTokenCommand);
 
   final String refreshToken;
   final DeviceInfo deviceInfo;
+  final String ip;
 }

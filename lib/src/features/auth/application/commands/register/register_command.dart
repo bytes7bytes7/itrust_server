@@ -13,6 +13,7 @@ class RegisterCommand
     required this.email,
     required this.password,
     required this.deviceInfo,
+    required this.ip,
   }) : super(RegisterCommand);
 
   final String firstName;
@@ -20,4 +21,5 @@ class RegisterCommand
   final String email;
   final String password;
   final DeviceInfo deviceInfo;
+  final String ip;
 }

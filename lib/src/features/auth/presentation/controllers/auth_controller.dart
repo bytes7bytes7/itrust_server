@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
-import 'package:mediator/mediator.dart' as mdtr;
+import 'package:mediator/mediator.dart' as mediator;
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
@@ -17,12 +17,12 @@ class AuthController extends ApiController {
   static const path = '/auth/';
 
   const AuthController({
-    required mdtr.Mediator mediator,
+    required mediator.Mediator mediator,
     required Mapster mapster,
   })  : _mediator = mediator,
         _mapster = mapster;
 
-  final mdtr.Mediator _mediator;
+  final mediator.Mediator _mediator;
   final Mapster _mapster;
 
   Router get router => _$AuthControllerRouter(this);
@@ -38,7 +38,10 @@ class AuthController extends ApiController {
       );
     }
 
-    final command = _mapster.map1(registerRequest, To<RegisterCommand>());
+    final connectionInfo = request.connectionInfo;
+    final ip = connectionInfo.remoteAddress.address;
+
+    final command = _mapster.map2(registerRequest, ip, To<RegisterCommand>());
 
     final authResult = await command.sendTo(_mediator);
 
@@ -59,7 +62,10 @@ class AuthController extends ApiController {
       );
     }
 
-    final query = _mapster.map1(logInRequest, To<LogInQuery>());
+    final connectionInfo = request.connectionInfo;
+    final ip = connectionInfo.remoteAddress.address;
+
+    final query = _mapster.map2(logInRequest, ip, To<LogInQuery>());
 
     final authResult = await query.sendTo(_mediator);
 
@@ -139,8 +145,11 @@ class AuthController extends ApiController {
       );
     }
 
+    final connectionInfo = request.connectionInfo;
+    final ip = connectionInfo.remoteAddress.address;
+
     final command =
-        _mapster.map1(refreshTokenRequest, To<RefreshTokenCommand>());
+        _mapster.map2(refreshTokenRequest, ip, To<RefreshTokenCommand>());
 
     final refreshTokenResult = await command.sendTo(_mediator);
 

@@ -1,20 +1,31 @@
-import '../../../itrust_server.dart';
+import 'dart:io';
 
+import 'package:shelf/shelf.dart';
+
+import '../../features/common/domain/domain.dart';
+
+const _shelfConnectionInfoKey = 'shelf.io.connection_info';
 const _userContextKey = 'user';
 const _tokenHeadersKey1 = 'Authorization';
 const _tokenHeadersKey2 = 'authorization';
 const _tokenPrefix = 'Bearer ';
 
 extension RequestX on Request {
+  HttpConnectionInfo get connectionInfo {
+    return context[_shelfConnectionInfoKey] as HttpConnectionInfo;
+  }
+
   Request setUser(EndUser user) {
     return change(
-      context: Map<String, Object?>.from(context)..[_userContextKey] = user,
+      context: Map<String, Object?>.from(context)
+        ..[_userContextKey] = user,
     );
   }
 
   Request removeUser() {
     return change(
-      context: Map<String, Object?>.from(context)..remove(_userContextKey),
+      context: Map<String, Object?>.from(context)
+        ..remove(_userContextKey),
     );
   }
 
@@ -32,8 +43,7 @@ extension RequestX on Request {
   Request removeToken() {
     return change(
       headers: Map<String, Object?>.from(headers)
-        ..remove(_tokenHeadersKey1)
-        ..remove(_tokenHeadersKey2),
+        ..remove(_tokenHeadersKey1)..remove(_tokenHeadersKey2),
     );
   }
 

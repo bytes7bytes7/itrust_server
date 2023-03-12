@@ -6,6 +6,8 @@ abstract class TokenRepository {
     required TokenPair tokenPair,
     required UserID userID,
     required DeviceInfo deviceInfo,
+    required String ip,
+    required DateTime createdAt,
   });
 
   Future<UserID?> getUserIDByAccessToken({required String accessToken});

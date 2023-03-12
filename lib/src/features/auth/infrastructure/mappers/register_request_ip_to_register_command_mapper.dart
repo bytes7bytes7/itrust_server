@@ -3,9 +3,9 @@ import 'package:mapster/mapster.dart';
 import '../../application/application.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class RegisterRequestToRegisterCommandMapper
-    extends OneSourceMapper<RegisterRequest, RegisterCommand> {
-  RegisterRequestToRegisterCommandMapper(super.input);
+class RegisterRequestIPToRegisterCommandMapper
+    extends TwoSourcesMapper<RegisterRequest, String, RegisterCommand> {
+  RegisterRequestIPToRegisterCommandMapper(super.input);
 
   @override
   RegisterCommand map() {
@@ -15,8 +15,11 @@ class RegisterRequestToRegisterCommandMapper
       email: _request.email,
       password: _request.password,
       deviceInfo: _request.deviceInfo,
+      ip: _ip,
     );
   }
 
-  RegisterRequest get _request => source;
+  RegisterRequest get _request => source1;
+
+  String get _ip => source2;
 }

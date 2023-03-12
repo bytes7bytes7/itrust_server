@@ -20,17 +20,20 @@ class RegisterCommandHandler extends RequestHandler<
     required EndUserRepository endUserRepository,
     required PasswordHashRepository passwordHashRepository,
     required TokenRepository tokenRepository,
+    required DateTimeRepository dateTimeRepository,
   })  : _jwtTokenService = jwtTokenService,
         _hashService = hashService,
         _endUserRepository = endUserRepository,
         _passwordHashRepository = passwordHashRepository,
-        _tokenRepository = tokenRepository;
+        _tokenRepository = tokenRepository,
+        _dateTimeRepository = dateTimeRepository;
 
   final JwtTokenService _jwtTokenService;
   final HashService _hashService;
   final EndUserRepository _endUserRepository;
   final PasswordHashRepository _passwordHashRepository;
   final TokenRepository _tokenRepository;
+  final DateTimeRepository _dateTimeRepository;
 
   @override
   Future<Either<List<DetailedException>, AuthResult>> handle(
@@ -70,6 +73,8 @@ class RegisterCommandHandler extends RequestHandler<
       tokenPair: tokenPair,
       userID: userID,
       deviceInfo: request.deviceInfo,
+      ip: request.ip,
+      createdAt: _dateTimeRepository.now(),
     );
 
     return right(
