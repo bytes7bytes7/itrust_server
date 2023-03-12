@@ -70,7 +70,24 @@ class AccountController extends ApiController {
       );
     }
 
-    final query = _mapster.map1(getDevicesRequest, To<GetDevicesQuery>());
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserDoesNotExist()]);
+    }
+
+    final accessToken = request.token;
+
+    if (accessToken == null) {
+      return problem([const UserDoesNotExist()]);
+    }
+
+    final query = _mapster.map3(
+      getDevicesRequest,
+      user.id,
+      accessToken,
+      To<GetDevicesQuery>(),
+    );
 
     final result = await query.sendTo(_mediator);
 

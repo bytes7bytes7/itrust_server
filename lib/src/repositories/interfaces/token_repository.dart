@@ -20,6 +20,10 @@ abstract class TokenRepository {
     required String refreshToken,
   });
 
+  Future<List<FullSessionInfo>> getFullSessionInfoListByUserID({
+    required UserID userID,
+  });
+
   Future<UserID?> removeTokenPairByAccessToken({required String accessToken});
 
   Future<UserID?> removeTokenPairByRefreshToken({required String refreshToken});

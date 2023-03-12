@@ -22,7 +22,11 @@ class AccountMapsterRegistrar {
           ChangePersonalInfoResultToChangePersonalInfoResponseMapper.new,
         ),
       )
-      ..register(MapperMeta.one(GetDevicesRequestToGetDevicesQueryMapper.new))
+      ..register(
+        MapperMeta.three(
+          GetDevicesRequestIDAccessTokenToGetDevicesQueryMapper.new,
+        ),
+      )
       ..register(
         MapperMeta.one(GetDevicesResultToGetDevicesResponseMapper.new),
       );

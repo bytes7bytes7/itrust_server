@@ -1,4 +1,4 @@
 export 'change_personal_info_request_id_to_change_personal_info_command_mapper.dart';
 export 'change_personal_info_result_to_change_personal_info_response_mapper.dart';
-export 'get_devices_request_to_get_devices_query_mapper.dart';
+export 'get_devices_request_id_access_token_to_get_devices_query_mapper.dart';
 export 'get_devices_result_to_get_devices_response_mapper.dart';

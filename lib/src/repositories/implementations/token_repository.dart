@@ -1,38 +1,15 @@
 import 'dart:collection';
 
-import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../features/auth/domain/domain.dart';
 import '../../features/common/common.dart';
 import '../interfaces/interfaces.dart';
 
-class _UserCred extends Equatable {
-  const _UserCred({
-    required this.tokenPair,
-    required this.deviceInfo,
-    required this.ip,
-    required this.createdAt,
-  });
-
-  final TokenPair tokenPair;
-  final DeviceInfo deviceInfo;
-  final String ip;
-  final DateTime createdAt;
-
-  @override
-  List<Object?> get props => [
-        tokenPair,
-        deviceInfo,
-        ip,
-        createdAt,
-      ];
-}
-
 @test
 @Singleton(as: TokenRepository)
 class TestTokenRepository implements TokenRepository {
-  final _storage = HashMap<UserID, List<_UserCred>>();
+  final _storage = HashMap<UserID, List<FullSessionInfo>>();
 
   @override
   Future<void> addOrUpdate({
@@ -42,23 +19,23 @@ class TestTokenRepository implements TokenRepository {
     required String ip,
     required DateTime createdAt,
   }) async {
-    final credentials = _storage[userID];
-    final newCred = _UserCred(
+    final info = _storage[userID];
+    final newInfo = FullSessionInfo(
       tokenPair: tokenPair,
       deviceInfo: deviceInfo,
       ip: ip,
       createdAt: createdAt,
     );
 
-    if (credentials != null) {
+    if (info != null) {
       var updated = false;
 
-      final iterator = credentials.iterator..moveNext();
-      for (var i = 0; i < credentials.length; i++) {
+      final iterator = info.iterator..moveNext();
+      for (var i = 0; i < info.length; i++) {
         final cred = iterator.current;
 
         if (cred.deviceInfo == deviceInfo) {
-          credentials[i] = newCred;
+          info[i] = newInfo;
           updated = true;
           break;
         }
@@ -67,18 +44,18 @@ class TestTokenRepository implements TokenRepository {
       }
 
       if (!updated) {
-        credentials.add(newCred);
+        info.add(newInfo);
       }
     } else {
-      _storage[userID] = <_UserCred>[newCred];
+      _storage[userID] = <FullSessionInfo>[newInfo];
     }
   }
 
   @override
   Future<UserID?> getUserIDByAccessToken({required String accessToken}) async {
     for (final note in _storage.entries) {
-      for (final cred in note.value) {
-        if (cred.tokenPair.access == accessToken) {
+      for (final info in note.value) {
+        if (info.tokenPair.access == accessToken) {
           return note.key;
         }
       }
@@ -92,8 +69,8 @@ class TestTokenRepository implements TokenRepository {
     required String refreshToken,
   }) async {
     for (final note in _storage.entries) {
-      for (final cred in note.value) {
-        if (cred.tokenPair.refresh == refreshToken) {
+      for (final info in note.value) {
+        if (info.tokenPair.refresh == refreshToken) {
           return note.key;
         }
       }
@@ -107,9 +84,9 @@ class TestTokenRepository implements TokenRepository {
     required String accessToken,
   }) async {
     for (final note in _storage.entries) {
-      for (final cred in note.value) {
-        if (cred.tokenPair.access == accessToken) {
-          return cred.deviceInfo;
+      for (final info in note.value) {
+        if (info.tokenPair.access == accessToken) {
+          return info.deviceInfo;
         }
       }
     }
@@ -122,14 +99,21 @@ class TestTokenRepository implements TokenRepository {
     required String refreshToken,
   }) async {
     for (final note in _storage.entries) {
-      for (final cred in note.value) {
-        if (cred.tokenPair.refresh == refreshToken) {
-          return cred.deviceInfo;
+      for (final info in note.value) {
+        if (info.tokenPair.refresh == refreshToken) {
+          return info.deviceInfo;
         }
       }
     }
 
     return null;
+  }
+
+  @override
+  Future<List<FullSessionInfo>> getFullSessionInfoListByUserID({
+    required UserID userID,
+  }) async {
+    return _storage[userID] ?? <FullSessionInfo>[];
   }
 
   @override
@@ -140,9 +124,9 @@ class TestTokenRepository implements TokenRepository {
       final iterator = note.value.iterator..moveNext();
 
       for (var i = 0; i < note.value.length; i++) {
-        final cred = iterator.current;
+        final info = iterator.current;
 
-        if (cred.tokenPair.access == accessToken) {
+        if (info.tokenPair.access == accessToken) {
           note.value.removeAt(i);
           return note.key;
         }
@@ -162,9 +146,9 @@ class TestTokenRepository implements TokenRepository {
       final iterator = note.value.iterator..moveNext();
 
       for (var i = 0; i < note.value.length; i++) {
-        final cred = iterator.current;
+        final info = iterator.current;
 
-        if (cred.tokenPair.refresh == refreshToken) {
+        if (info.tokenPair.refresh == refreshToken) {
           note.value.removeAt(i);
           return note.key;
         }

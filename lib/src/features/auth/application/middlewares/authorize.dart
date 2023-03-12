@@ -33,11 +33,12 @@ Middleware authorize({
           return problemHandler([const TokenExpired()]);
         }
 
-        final userID =
-            await tokenRepository.getUserIDByAccessToken(accessToken: accessToken);
+        final userID = await tokenRepository.getUserIDByAccessToken(
+          accessToken: accessToken,
+        );
 
         if (userID == null) {
-          return problemHandler([const UserDoesNotExist()]);
+          return problemHandler([const TokenExpired()]);
         }
 
         final user = await endUserRepository.getByID(id: userID);
