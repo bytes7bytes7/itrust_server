@@ -14,10 +14,10 @@ class PostUserIDToPostVMMapper extends TwoSourcesMapper<Post, UserID, PostVM> {
       authorID: _post.authorID,
       createdAt: _post.createdAt,
       text: _post.text,
-      mediaUrls: _post.mediaUrls,
-      likedByMe: _post.likedBy.contains(_userID),
-      likesAmount: _post.likedBy.length,
-      commentsAmount: _post.comments.length,
+      mediaIDs: _post.mediaIDs,
+      likedByMe: _post.likedByIDs.contains(_userID),
+      likesAmount: _post.likedByIDs.length,
+      commentsAmount: _post.commentIDs.length,
       tags: _post.tags,
     );
   }

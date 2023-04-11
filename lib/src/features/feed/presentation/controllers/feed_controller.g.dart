@@ -13,5 +13,10 @@ Router _$FeedControllerRouter(FeedController service) {
     r'/',
     service.getFeed,
   );
+  router.add(
+    'POST',
+    r'/new_post',
+    service.createPost,
+  );
   return router;
 }

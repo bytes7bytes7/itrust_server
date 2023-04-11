@@ -17,9 +17,9 @@ class Comment with _$Comment {
     required PostID postID,
     required DateTime createdAt,
     required String text,
-    required List<UserID> likedBy,
-    required List<CommentID> replies,
-    CommentID? replyTo,
+    required List<UserID> likedByIDs,
+    required List<CommentID> replyIDs,
+    CommentID? replyToID,
     DateTime? modifiedAt,
   }) = _Comment;
 

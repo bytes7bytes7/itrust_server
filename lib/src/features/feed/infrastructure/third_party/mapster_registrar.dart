@@ -20,6 +20,12 @@ class FeedMapsterRegistrar {
       )
       ..register(
         MapperMeta.two(PostUserIDToPostVMMapper.new),
+      )
+      ..register(
+        MapperMeta.two(CreatePostRequestIDToCreatePostCommandMapper.new),
+      )
+      ..register(
+        MapperMeta.one(PostResultToPostResponseMapper.new),
       );
   }
 }

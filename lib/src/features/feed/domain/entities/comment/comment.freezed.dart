@@ -25,9 +25,9 @@ mixin _$Comment {
   PostID get postID => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  List<UserID> get likedBy => throw _privateConstructorUsedError;
-  List<CommentID> get replies => throw _privateConstructorUsedError;
-  CommentID? get replyTo => throw _privateConstructorUsedError;
+  List<UserID> get likedByIDs => throw _privateConstructorUsedError;
+  List<CommentID> get replyIDs => throw _privateConstructorUsedError;
+  CommentID? get replyToID => throw _privateConstructorUsedError;
   DateTime? get modifiedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,15 +46,15 @@ abstract class $CommentCopyWith<$Res> {
       PostID postID,
       DateTime createdAt,
       String text,
-      List<UserID> likedBy,
-      List<CommentID> replies,
-      CommentID? replyTo,
+      List<UserID> likedByIDs,
+      List<CommentID> replyIDs,
+      CommentID? replyToID,
       DateTime? modifiedAt});
 
   $CommentIDCopyWith<$Res> get id;
   $UserIDCopyWith<$Res> get authorID;
   $PostIDCopyWith<$Res> get postID;
-  $CommentIDCopyWith<$Res>? get replyTo;
+  $CommentIDCopyWith<$Res>? get replyToID;
 }
 
 /// @nodoc
@@ -75,9 +75,9 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
     Object? postID = null,
     Object? createdAt = null,
     Object? text = null,
-    Object? likedBy = null,
-    Object? replies = null,
-    Object? replyTo = freezed,
+    Object? likedByIDs = null,
+    Object? replyIDs = null,
+    Object? replyToID = freezed,
     Object? modifiedAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -101,17 +101,17 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      likedBy: null == likedBy
-          ? _value.likedBy
-          : likedBy // ignore: cast_nullable_to_non_nullable
+      likedByIDs: null == likedByIDs
+          ? _value.likedByIDs
+          : likedByIDs // ignore: cast_nullable_to_non_nullable
               as List<UserID>,
-      replies: null == replies
-          ? _value.replies
-          : replies // ignore: cast_nullable_to_non_nullable
+      replyIDs: null == replyIDs
+          ? _value.replyIDs
+          : replyIDs // ignore: cast_nullable_to_non_nullable
               as List<CommentID>,
-      replyTo: freezed == replyTo
-          ? _value.replyTo
-          : replyTo // ignore: cast_nullable_to_non_nullable
+      replyToID: freezed == replyToID
+          ? _value.replyToID
+          : replyToID // ignore: cast_nullable_to_non_nullable
               as CommentID?,
       modifiedAt: freezed == modifiedAt
           ? _value.modifiedAt
@@ -146,13 +146,13 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
 
   @override
   @pragma('vm:prefer-inline')
-  $CommentIDCopyWith<$Res>? get replyTo {
-    if (_value.replyTo == null) {
+  $CommentIDCopyWith<$Res>? get replyToID {
+    if (_value.replyToID == null) {
       return null;
     }
 
-    return $CommentIDCopyWith<$Res>(_value.replyTo!, (value) {
-      return _then(_value.copyWith(replyTo: value) as $Val);
+    return $CommentIDCopyWith<$Res>(_value.replyToID!, (value) {
+      return _then(_value.copyWith(replyToID: value) as $Val);
     });
   }
 }
@@ -170,9 +170,9 @@ abstract class _$$_CommentCopyWith<$Res> implements $CommentCopyWith<$Res> {
       PostID postID,
       DateTime createdAt,
       String text,
-      List<UserID> likedBy,
-      List<CommentID> replies,
-      CommentID? replyTo,
+      List<UserID> likedByIDs,
+      List<CommentID> replyIDs,
+      CommentID? replyToID,
       DateTime? modifiedAt});
 
   @override
@@ -182,7 +182,7 @@ abstract class _$$_CommentCopyWith<$Res> implements $CommentCopyWith<$Res> {
   @override
   $PostIDCopyWith<$Res> get postID;
   @override
-  $CommentIDCopyWith<$Res>? get replyTo;
+  $CommentIDCopyWith<$Res>? get replyToID;
 }
 
 /// @nodoc
@@ -200,9 +200,9 @@ class __$$_CommentCopyWithImpl<$Res>
     Object? postID = null,
     Object? createdAt = null,
     Object? text = null,
-    Object? likedBy = null,
-    Object? replies = null,
-    Object? replyTo = freezed,
+    Object? likedByIDs = null,
+    Object? replyIDs = null,
+    Object? replyToID = freezed,
     Object? modifiedAt = freezed,
   }) {
     return _then(_$_Comment(
@@ -226,17 +226,17 @@ class __$$_CommentCopyWithImpl<$Res>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      likedBy: null == likedBy
-          ? _value._likedBy
-          : likedBy // ignore: cast_nullable_to_non_nullable
+      likedByIDs: null == likedByIDs
+          ? _value._likedByIDs
+          : likedByIDs // ignore: cast_nullable_to_non_nullable
               as List<UserID>,
-      replies: null == replies
-          ? _value._replies
-          : replies // ignore: cast_nullable_to_non_nullable
+      replyIDs: null == replyIDs
+          ? _value._replyIDs
+          : replyIDs // ignore: cast_nullable_to_non_nullable
               as List<CommentID>,
-      replyTo: freezed == replyTo
-          ? _value.replyTo
-          : replyTo // ignore: cast_nullable_to_non_nullable
+      replyToID: freezed == replyToID
+          ? _value.replyToID
+          : replyToID // ignore: cast_nullable_to_non_nullable
               as CommentID?,
       modifiedAt: freezed == modifiedAt
           ? _value.modifiedAt
@@ -255,12 +255,12 @@ class _$_Comment implements _Comment {
       required this.postID,
       required this.createdAt,
       required this.text,
-      required final List<UserID> likedBy,
-      required final List<CommentID> replies,
-      this.replyTo,
+      required final List<UserID> likedByIDs,
+      required final List<CommentID> replyIDs,
+      this.replyToID,
       this.modifiedAt})
-      : _likedBy = likedBy,
-        _replies = replies;
+      : _likedByIDs = likedByIDs,
+        _replyIDs = replyIDs;
 
   factory _$_Comment.fromJson(Map<String, dynamic> json) =>
       _$$_CommentFromJson(json);
@@ -275,30 +275,30 @@ class _$_Comment implements _Comment {
   final DateTime createdAt;
   @override
   final String text;
-  final List<UserID> _likedBy;
+  final List<UserID> _likedByIDs;
   @override
-  List<UserID> get likedBy {
-    if (_likedBy is EqualUnmodifiableListView) return _likedBy;
+  List<UserID> get likedByIDs {
+    if (_likedByIDs is EqualUnmodifiableListView) return _likedByIDs;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_likedBy);
+    return EqualUnmodifiableListView(_likedByIDs);
   }
 
-  final List<CommentID> _replies;
+  final List<CommentID> _replyIDs;
   @override
-  List<CommentID> get replies {
-    if (_replies is EqualUnmodifiableListView) return _replies;
+  List<CommentID> get replyIDs {
+    if (_replyIDs is EqualUnmodifiableListView) return _replyIDs;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_replies);
+    return EqualUnmodifiableListView(_replyIDs);
   }
 
   @override
-  final CommentID? replyTo;
+  final CommentID? replyToID;
   @override
   final DateTime? modifiedAt;
 
   @override
   String toString() {
-    return 'Comment(id: $id, authorID: $authorID, postID: $postID, createdAt: $createdAt, text: $text, likedBy: $likedBy, replies: $replies, replyTo: $replyTo, modifiedAt: $modifiedAt)';
+    return 'Comment(id: $id, authorID: $authorID, postID: $postID, createdAt: $createdAt, text: $text, likedByIDs: $likedByIDs, replyIDs: $replyIDs, replyToID: $replyToID, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -313,9 +313,11 @@ class _$_Comment implements _Comment {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.text, text) || other.text == text) &&
-            const DeepCollectionEquality().equals(other._likedBy, _likedBy) &&
-            const DeepCollectionEquality().equals(other._replies, _replies) &&
-            (identical(other.replyTo, replyTo) || other.replyTo == replyTo) &&
+            const DeepCollectionEquality()
+                .equals(other._likedByIDs, _likedByIDs) &&
+            const DeepCollectionEquality().equals(other._replyIDs, _replyIDs) &&
+            (identical(other.replyToID, replyToID) ||
+                other.replyToID == replyToID) &&
             (identical(other.modifiedAt, modifiedAt) ||
                 other.modifiedAt == modifiedAt));
   }
@@ -329,9 +331,9 @@ class _$_Comment implements _Comment {
       postID,
       createdAt,
       text,
-      const DeepCollectionEquality().hash(_likedBy),
-      const DeepCollectionEquality().hash(_replies),
-      replyTo,
+      const DeepCollectionEquality().hash(_likedByIDs),
+      const DeepCollectionEquality().hash(_replyIDs),
+      replyToID,
       modifiedAt);
 
   @JsonKey(ignore: true)
@@ -355,9 +357,9 @@ abstract class _Comment implements Comment {
       required final PostID postID,
       required final DateTime createdAt,
       required final String text,
-      required final List<UserID> likedBy,
-      required final List<CommentID> replies,
-      final CommentID? replyTo,
+      required final List<UserID> likedByIDs,
+      required final List<CommentID> replyIDs,
+      final CommentID? replyToID,
       final DateTime? modifiedAt}) = _$_Comment;
 
   factory _Comment.fromJson(Map<String, dynamic> json) = _$_Comment.fromJson;
@@ -373,11 +375,11 @@ abstract class _Comment implements Comment {
   @override
   String get text;
   @override
-  List<UserID> get likedBy;
+  List<UserID> get likedByIDs;
   @override
-  List<CommentID> get replies;
+  List<CommentID> get replyIDs;
   @override
-  CommentID? get replyTo;
+  CommentID? get replyToID;
   @override
   DateTime? get modifiedAt;
   @override

@@ -6,6 +6,7 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
+import '../../../../common/application/providers/date_time_provider.dart';
 import '../../common/common.dart';
 import '../../exceptions/exceptions.dart';
 import '../../services/jwt_token_service.dart';
@@ -18,16 +19,16 @@ class RefreshTokenCommandHandler extends RequestHandler<RefreshTokenCommand,
     required JwtTokenService jwtTokenService,
     required TokenRepository tokenRepository,
     required EndUserRepository endUserRepository,
-    required DateTimeRepository dateTimeRepository,
+    required DateTimeProvider dateTimeProvider,
   })  : _jwtTokenService = jwtTokenService,
         _tokenRepository = tokenRepository,
         _endUserRepository = endUserRepository,
-        _dateTimeRepository = dateTimeRepository;
+        _dateTimeProvider = dateTimeProvider;
 
   final JwtTokenService _jwtTokenService;
   final TokenRepository _tokenRepository;
   final EndUserRepository _endUserRepository;
-  final DateTimeRepository _dateTimeRepository;
+  final DateTimeProvider _dateTimeProvider;
 
   @override
   FutureOr<Either<List<DetailedException>, RefreshTokenResult>> handle(
@@ -76,7 +77,7 @@ class RefreshTokenCommandHandler extends RequestHandler<RefreshTokenCommand,
       userID: userID,
       deviceInfo: request.deviceInfo,
       ip: request.ip,
-      createdAt: _dateTimeRepository.now(),
+      createdAt: _dateTimeProvider.nowUtc(),
     );
 
     return right(

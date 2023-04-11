@@ -15,9 +15,9 @@ _$_CommentVM _$$_CommentVMFromJson(Map<String, dynamic> json) => _$_CommentVM(
       likedByMe: json['likedByMe'] as bool,
       likesAmount: json['likesAmount'] as int,
       repliesAmount: json['repliesAmount'] as int,
-      replyTo: json['replyTo'] == null
+      replyToID: json['replyToID'] == null
           ? null
-          : CommentID.fromJson(json['replyTo'] as Map<String, dynamic>),
+          : CommentID.fromJson(json['replyToID'] as Map<String, dynamic>),
       modifiedAt: json['modifiedAt'] == null
           ? null
           : DateTime.parse(json['modifiedAt'] as String),
@@ -33,6 +33,6 @@ Map<String, dynamic> _$$_CommentVMToJson(_$_CommentVM instance) =>
       'likedByMe': instance.likedByMe,
       'likesAmount': instance.likesAmount,
       'repliesAmount': instance.repliesAmount,
-      'replyTo': instance.replyTo?.toJson(),
+      'replyToID': instance.replyToID?.toJson(),
       'modifiedAt': instance.modifiedAt?.toIso8601String(),
     };

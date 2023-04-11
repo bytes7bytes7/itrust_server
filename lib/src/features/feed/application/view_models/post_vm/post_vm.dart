@@ -15,7 +15,7 @@ class PostVM with _$PostVM {
     required UserID authorID,
     required DateTime createdAt,
     required String text,
-    required List<String> mediaUrls,
+    required List<MediaID> mediaIDs,
     required bool likedByMe,
     required int likesAmount,
     required int commentsAmount,

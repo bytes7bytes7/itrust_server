@@ -28,7 +28,7 @@ mixin _$CommentVM {
   bool get likedByMe => throw _privateConstructorUsedError;
   int get likesAmount => throw _privateConstructorUsedError;
   int get repliesAmount => throw _privateConstructorUsedError;
-  CommentID? get replyTo => throw _privateConstructorUsedError;
+  CommentID? get replyToID => throw _privateConstructorUsedError;
   DateTime? get modifiedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -51,13 +51,13 @@ abstract class $CommentVMCopyWith<$Res> {
       bool likedByMe,
       int likesAmount,
       int repliesAmount,
-      CommentID? replyTo,
+      CommentID? replyToID,
       DateTime? modifiedAt});
 
   $CommentIDCopyWith<$Res> get id;
   $UserIDCopyWith<$Res> get authorID;
   $PostIDCopyWith<$Res> get postID;
-  $CommentIDCopyWith<$Res>? get replyTo;
+  $CommentIDCopyWith<$Res>? get replyToID;
 }
 
 /// @nodoc
@@ -81,7 +81,7 @@ class _$CommentVMCopyWithImpl<$Res, $Val extends CommentVM>
     Object? likedByMe = null,
     Object? likesAmount = null,
     Object? repliesAmount = null,
-    Object? replyTo = freezed,
+    Object? replyToID = freezed,
     Object? modifiedAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -117,9 +117,9 @@ class _$CommentVMCopyWithImpl<$Res, $Val extends CommentVM>
           ? _value.repliesAmount
           : repliesAmount // ignore: cast_nullable_to_non_nullable
               as int,
-      replyTo: freezed == replyTo
-          ? _value.replyTo
-          : replyTo // ignore: cast_nullable_to_non_nullable
+      replyToID: freezed == replyToID
+          ? _value.replyToID
+          : replyToID // ignore: cast_nullable_to_non_nullable
               as CommentID?,
       modifiedAt: freezed == modifiedAt
           ? _value.modifiedAt
@@ -154,13 +154,13 @@ class _$CommentVMCopyWithImpl<$Res, $Val extends CommentVM>
 
   @override
   @pragma('vm:prefer-inline')
-  $CommentIDCopyWith<$Res>? get replyTo {
-    if (_value.replyTo == null) {
+  $CommentIDCopyWith<$Res>? get replyToID {
+    if (_value.replyToID == null) {
       return null;
     }
 
-    return $CommentIDCopyWith<$Res>(_value.replyTo!, (value) {
-      return _then(_value.copyWith(replyTo: value) as $Val);
+    return $CommentIDCopyWith<$Res>(_value.replyToID!, (value) {
+      return _then(_value.copyWith(replyToID: value) as $Val);
     });
   }
 }
@@ -181,7 +181,7 @@ abstract class _$$_CommentVMCopyWith<$Res> implements $CommentVMCopyWith<$Res> {
       bool likedByMe,
       int likesAmount,
       int repliesAmount,
-      CommentID? replyTo,
+      CommentID? replyToID,
       DateTime? modifiedAt});
 
   @override
@@ -191,7 +191,7 @@ abstract class _$$_CommentVMCopyWith<$Res> implements $CommentVMCopyWith<$Res> {
   @override
   $PostIDCopyWith<$Res> get postID;
   @override
-  $CommentIDCopyWith<$Res>? get replyTo;
+  $CommentIDCopyWith<$Res>? get replyToID;
 }
 
 /// @nodoc
@@ -213,7 +213,7 @@ class __$$_CommentVMCopyWithImpl<$Res>
     Object? likedByMe = null,
     Object? likesAmount = null,
     Object? repliesAmount = null,
-    Object? replyTo = freezed,
+    Object? replyToID = freezed,
     Object? modifiedAt = freezed,
   }) {
     return _then(_$_CommentVM(
@@ -249,9 +249,9 @@ class __$$_CommentVMCopyWithImpl<$Res>
           ? _value.repliesAmount
           : repliesAmount // ignore: cast_nullable_to_non_nullable
               as int,
-      replyTo: freezed == replyTo
-          ? _value.replyTo
-          : replyTo // ignore: cast_nullable_to_non_nullable
+      replyToID: freezed == replyToID
+          ? _value.replyToID
+          : replyToID // ignore: cast_nullable_to_non_nullable
               as CommentID?,
       modifiedAt: freezed == modifiedAt
           ? _value.modifiedAt
@@ -273,7 +273,7 @@ class _$_CommentVM implements _CommentVM {
       required this.likedByMe,
       required this.likesAmount,
       required this.repliesAmount,
-      this.replyTo,
+      this.replyToID,
       this.modifiedAt});
 
   factory _$_CommentVM.fromJson(Map<String, dynamic> json) =>
@@ -296,13 +296,13 @@ class _$_CommentVM implements _CommentVM {
   @override
   final int repliesAmount;
   @override
-  final CommentID? replyTo;
+  final CommentID? replyToID;
   @override
   final DateTime? modifiedAt;
 
   @override
   String toString() {
-    return 'CommentVM(id: $id, authorID: $authorID, postID: $postID, createdAt: $createdAt, text: $text, likedByMe: $likedByMe, likesAmount: $likesAmount, repliesAmount: $repliesAmount, replyTo: $replyTo, modifiedAt: $modifiedAt)';
+    return 'CommentVM(id: $id, authorID: $authorID, postID: $postID, createdAt: $createdAt, text: $text, likedByMe: $likedByMe, likesAmount: $likesAmount, repliesAmount: $repliesAmount, replyToID: $replyToID, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -323,7 +323,8 @@ class _$_CommentVM implements _CommentVM {
                 other.likesAmount == likesAmount) &&
             (identical(other.repliesAmount, repliesAmount) ||
                 other.repliesAmount == repliesAmount) &&
-            (identical(other.replyTo, replyTo) || other.replyTo == replyTo) &&
+            (identical(other.replyToID, replyToID) ||
+                other.replyToID == replyToID) &&
             (identical(other.modifiedAt, modifiedAt) ||
                 other.modifiedAt == modifiedAt));
   }
@@ -331,7 +332,7 @@ class _$_CommentVM implements _CommentVM {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, authorID, postID, createdAt,
-      text, likedByMe, likesAmount, repliesAmount, replyTo, modifiedAt);
+      text, likedByMe, likesAmount, repliesAmount, replyToID, modifiedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -357,7 +358,7 @@ abstract class _CommentVM implements CommentVM {
       required final bool likedByMe,
       required final int likesAmount,
       required final int repliesAmount,
-      final CommentID? replyTo,
+      final CommentID? replyToID,
       final DateTime? modifiedAt}) = _$_CommentVM;
 
   factory _CommentVM.fromJson(Map<String, dynamic> json) =
@@ -380,7 +381,7 @@ abstract class _CommentVM implements CommentVM {
   @override
   int get repliesAmount;
   @override
-  CommentID? get replyTo;
+  CommentID? get replyToID;
   @override
   DateTime? get modifiedAt;
   @override

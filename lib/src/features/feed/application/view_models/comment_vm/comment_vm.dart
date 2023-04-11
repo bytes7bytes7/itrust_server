@@ -19,7 +19,7 @@ class CommentVM with _$CommentVM {
     required bool likedByMe,
     required int likesAmount,
     required int repliesAmount,
-    CommentID? replyTo,
+    CommentID? replyToID,
     DateTime? modifiedAt,
   }) = _CommentVM;
 

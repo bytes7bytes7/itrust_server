@@ -11,9 +11,11 @@ class GetFeedRequestIDToGetFeedQueryMapper
 
   @override
   GetFeedQuery map() {
+    final lastPostID = _request.lastPostID;
+
     return GetFeedQuery(
       userID: _userID,
-      lastPostID: PostID.fromString(_request.lastPostID),
+      lastPostID: lastPostID != null ? PostID.fromString(lastPostID) : null,
     );
   }
 

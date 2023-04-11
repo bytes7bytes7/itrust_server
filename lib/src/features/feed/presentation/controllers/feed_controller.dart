@@ -56,4 +56,35 @@ class FeedController extends ApiController {
       (r) => ok(_mapster.map1(r, To<GetFeedResponse>())),
     );
   }
+
+  @Route.post('/new_post')
+  Future<Response> createPost(Request request) async {
+    late final CreatePostRequest createPostRequest;
+    try {
+      createPostRequest = await parseRequest<CreatePostRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserDoesNotExist()]);
+    }
+
+    final command = _mapster.map2(
+      createPostRequest,
+      user.id,
+      To<CreatePostCommand>(),
+    );
+
+    final result = await command.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<PostResponse>())),
+    );
+  }
 }

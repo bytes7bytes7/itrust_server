@@ -18,10 +18,14 @@ class FeedMediatorRegistrar {
     _mediator
       // RequestHandler
       ..registerRequestHandler(() => _getIt.get<GetFeedQueryHandler>())
+      ..registerRequestHandler(() => _getIt.get<CreatePostCommandHandler>())
 
       // PipelineBehavior
       ..registerPipelineBehavior(
         () => ValidationBehavior([_getIt.get<GetFeedQueryValidator>()]),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior([_getIt.get<CreatePostCommandValidator>()]),
       );
   }
 }

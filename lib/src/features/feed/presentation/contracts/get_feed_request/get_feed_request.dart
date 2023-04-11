@@ -7,10 +7,10 @@ part 'get_feed_request.g.dart';
 @JsonSerializable()
 class GetFeedRequest {
   const GetFeedRequest({
-    required this.lastPostID,
+    this.lastPostID,
   });
 
-  final String lastPostID;
+  final String? lastPostID;
 
   factory GetFeedRequest.fromJson(JsonMap json) =>
       _$GetFeedRequestFromJson(json);

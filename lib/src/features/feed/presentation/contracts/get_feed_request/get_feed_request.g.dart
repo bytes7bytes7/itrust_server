@@ -8,7 +8,7 @@ part of 'get_feed_request.dart';
 
 GetFeedRequest _$GetFeedRequestFromJson(Map<String, dynamic> json) =>
     GetFeedRequest(
-      lastPostID: json['lastPostID'] as String,
+      lastPostID: json['lastPostID'] as String?,
     );
 
 Map<String, dynamic> _$GetFeedRequestToJson(GetFeedRequest instance) =>
