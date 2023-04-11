@@ -26,7 +26,7 @@ class TestMediaRepository implements MediaRepository {
     final media = Media(
       id: id,
       type: _getMediaType(newMedia.filename),
-      bytes: newMedia.bytes,
+      encodedBytes: newMedia.encodedBytes,
     );
 
     _storage[id] = media;

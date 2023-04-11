@@ -9,13 +9,13 @@ part of 'media.dart';
 _$_Media _$$_MediaFromJson(Map<String, dynamic> json) => _$_Media(
       id: MediaID.fromJson(json['id'] as Map<String, dynamic>),
       type: $enumDecode(_$MediaTypeEnumMap, json['type']),
-      bytes: (json['bytes'] as List<dynamic>).map((e) => e as int).toList(),
+      encodedBytes: json['encodedBytes'] as String,
     );
 
 Map<String, dynamic> _$$_MediaToJson(_$_Media instance) => <String, dynamic>{
       'id': instance.id.toJson(),
       'type': _$MediaTypeEnumMap[instance.type]!,
-      'bytes': instance.bytes,
+      'encodedBytes': instance.encodedBytes,
     };
 
 const _$MediaTypeEnumMap = {

@@ -8,10 +8,10 @@ part of 'new_media.dart';
 
 NewMedia _$NewMediaFromJson(Map<String, dynamic> json) => NewMedia(
       filename: json['filename'] as String,
-      bytes: (json['bytes'] as List<dynamic>).map((e) => e as int).toList(),
+      encodedBytes: json['encodedBytes'] as String,
     );
 
 Map<String, dynamic> _$NewMediaToJson(NewMedia instance) => <String, dynamic>{
       'filename': instance.filename,
-      'bytes': instance.bytes,
+      'encodedBytes': instance.encodedBytes,
     };
