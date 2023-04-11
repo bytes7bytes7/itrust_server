@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/typedef.dart';
-import '../../../domain/domain.dart';
+import '../../../../common/common.dart';
 
 part 'refresh_token_request.g.dart';
 

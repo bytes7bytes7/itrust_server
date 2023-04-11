@@ -9,9 +9,9 @@ part of 'get_devices_response.dart';
 GetDevicesResponse _$GetDevicesResponseFromJson(Map<String, dynamic> json) =>
     GetDevicesResponse(
       thisSession:
-          DeviceSession.fromJson(json['thisSession'] as Map<String, dynamic>),
+          DeviceSessionVM.fromJson(json['thisSession'] as Map<String, dynamic>),
       otherSessions: (json['otherSessions'] as List<dynamic>)
-          .map((e) => DeviceSession.fromJson(e as Map<String, dynamic>))
+          .map((e) => DeviceSessionVM.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

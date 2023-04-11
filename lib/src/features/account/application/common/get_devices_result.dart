@@ -1,4 +1,4 @@
-import '../../domain/domain.dart';
+import '../view_models/view_models.dart';
 
 class GetDevicesResult {
   const GetDevicesResult({
@@ -6,6 +6,6 @@ class GetDevicesResult {
     required this.otherSessions,
   });
 
-  final DeviceSession thisSession;
-  final List<DeviceSession> otherSessions;
+  final DeviceSessionVM thisSession;
+  final List<DeviceSessionVM> otherSessions;
 }

@@ -2,7 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:mediator/mediator.dart';
 
 import '../../../../common/application/exceptions/exceptions.dart';
-import '../../../domain/domain.dart';
+import '../../../../common/domain/domain.dart';
 import '../../common/common.dart';
 
 class RefreshTokenCommand

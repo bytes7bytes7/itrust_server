@@ -8,7 +8,7 @@ part of 'remove_device_request.dart';
 
 RemoveDeviceRequest _$RemoveDeviceRequestFromJson(Map<String, dynamic> json) =>
     RemoveDeviceRequest(
-      sessionID: json['sessionID'] as int,
+      sessionID: json['sessionID'] as String,
       password: json['password'] as String,
     );
 

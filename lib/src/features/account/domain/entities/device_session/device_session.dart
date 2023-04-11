@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/typedef.dart';
+import '../../../../common/common.dart';
+import '../../value_objects/device_session_id/device_session_id.dart';
 
 part 'device_session.g.dart';
 
@@ -8,13 +10,13 @@ part 'device_session.g.dart';
 class DeviceSession {
   const DeviceSession({
     required this.id,
-    required this.deviceName,
+    required this.deviceInfo,
     required this.ip,
     required this.createdAt,
   });
 
-  final int id;
-  final String deviceName;
+  final DeviceSessionID id;
+  final DeviceInfo deviceInfo;
   final String ip;
   final DateTime createdAt;
 

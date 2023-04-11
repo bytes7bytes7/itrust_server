@@ -8,16 +8,17 @@ part of 'device_session.dart';
 
 DeviceSession _$DeviceSessionFromJson(Map<String, dynamic> json) =>
     DeviceSession(
-      id: json['id'] as int,
-      deviceName: json['deviceName'] as String,
+      id: DeviceSessionID.fromJson(json['id'] as Map<String, dynamic>),
+      deviceInfo:
+          DeviceInfo.fromJson(json['deviceInfo'] as Map<String, dynamic>),
       ip: json['ip'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
 
 Map<String, dynamic> _$DeviceSessionToJson(DeviceSession instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'deviceName': instance.deviceName,
+      'id': instance.id.toJson(),
+      'deviceInfo': instance.deviceInfo.toJson(),
       'ip': instance.ip,
       'createdAt': instance.createdAt.toIso8601String(),
     };

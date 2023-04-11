@@ -14,7 +14,7 @@ class RemoveDeviceCommand
   }) : super(RemoveDeviceCommand);
 
   final UserID userID;
-  final int sessionID;
+  final String sessionID;
   final String password;
   final String accessToken;
 }

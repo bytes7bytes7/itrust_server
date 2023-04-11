@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/typedef.dart';
-import '../../../domain/domain.dart';
+import '../../../application/view_models/view_models.dart';
 
 part 'get_devices_response.g.dart';
 
@@ -12,8 +12,8 @@ class GetDevicesResponse {
     required this.otherSessions,
   });
 
-  final DeviceSession thisSession;
-  final List<DeviceSession> otherSessions;
+  final DeviceSessionVM thisSession;
+  final List<DeviceSessionVM> otherSessions;
 
   factory GetDevicesResponse.fromJson(JsonMap json) =>
       _$GetDevicesResponseFromJson(json);

@@ -1,16 +1,26 @@
 import 'dart:collection';
 
-import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../features/account/account.dart';
 import '../../features/auth/domain/domain.dart';
 import '../../features/common/common.dart';
 import '../interfaces/interfaces.dart';
 
+class _Note {
+  const _Note({
+    required this.tokenPair,
+    required this.session,
+  });
+
+  final TokenPair tokenPair;
+  final DeviceSession session;
+}
+
 @test
 @Singleton(as: TokenRepository)
 class TestTokenRepository implements TokenRepository {
-  final _storage = HashMap<UserID, List<FullSessionInfo>>();
+  final _storage = HashMap<UserID, List<_Note>>();
 
   @override
   Future<void> addOrUpdate({
@@ -20,24 +30,26 @@ class TestTokenRepository implements TokenRepository {
     required String ip,
     required DateTime createdAt,
   }) async {
-    final info = _storage[userID];
-    final newInfo = FullSessionInfo(
-      id: (info?.lastOrNull?.id ?? -1) + 1,
+    final notes = _storage[userID];
+    final newNote = _Note(
       tokenPair: tokenPair,
-      deviceInfo: deviceInfo,
-      ip: ip,
-      createdAt: createdAt,
+      session: DeviceSession(
+        id: DeviceSessionID.generate(),
+        deviceInfo: deviceInfo,
+        ip: ip,
+        createdAt: createdAt,
+      ),
     );
 
-    if (info != null) {
+    if (notes != null) {
       var updated = false;
 
-      final iterator = info.iterator..moveNext();
-      for (var i = 0; i < info.length; i++) {
-        final cred = iterator.current;
+      final iterator = notes.iterator..moveNext();
+      for (var i = 0; i < notes.length; i++) {
+        final note = iterator.current;
 
-        if (cred.deviceInfo == deviceInfo) {
-          info[i] = newInfo;
+        if (note.session.deviceInfo == deviceInfo) {
+          notes[i] = newNote;
           updated = true;
           break;
         }
@@ -46,19 +58,19 @@ class TestTokenRepository implements TokenRepository {
       }
 
       if (!updated) {
-        info.add(newInfo);
+        notes.add(newNote);
       }
     } else {
-      _storage[userID] = <FullSessionInfo>[newInfo];
+      _storage[userID] = <_Note>[newNote];
     }
   }
 
   @override
   Future<UserID?> getUserIDByAccessToken({required String accessToken}) async {
-    for (final note in _storage.entries) {
-      for (final info in note.value) {
-        if (info.tokenPair.access == accessToken) {
-          return note.key;
+    for (final notes in _storage.entries) {
+      for (final note in notes.value) {
+        if (note.tokenPair.access == accessToken) {
+          return notes.key;
         }
       }
     }
@@ -70,10 +82,10 @@ class TestTokenRepository implements TokenRepository {
   Future<UserID?> getUserIDByRefreshToken({
     required String refreshToken,
   }) async {
-    for (final note in _storage.entries) {
-      for (final info in note.value) {
-        if (info.tokenPair.refresh == refreshToken) {
-          return note.key;
+    for (final notes in _storage.entries) {
+      for (final note in notes.value) {
+        if (note.tokenPair.refresh == refreshToken) {
+          return notes.key;
         }
       }
     }
@@ -85,10 +97,10 @@ class TestTokenRepository implements TokenRepository {
   Future<DeviceInfo?> getDeviceInfoByAccessToken({
     required String accessToken,
   }) async {
-    for (final note in _storage.entries) {
-      for (final info in note.value) {
-        if (info.tokenPair.access == accessToken) {
-          return info.deviceInfo;
+    for (final notes in _storage.entries) {
+      for (final note in notes.value) {
+        if (note.tokenPair.access == accessToken) {
+          return note.session.deviceInfo;
         }
       }
     }
@@ -100,10 +112,10 @@ class TestTokenRepository implements TokenRepository {
   Future<DeviceInfo?> getDeviceInfoByRefreshToken({
     required String refreshToken,
   }) async {
-    for (final note in _storage.entries) {
-      for (final info in note.value) {
-        if (info.tokenPair.refresh == refreshToken) {
-          return info.deviceInfo;
+    for (final notes in _storage.entries) {
+      for (final note in notes.value) {
+        if (note.tokenPair.refresh == refreshToken) {
+          return note.session.deviceInfo;
         }
       }
     }
@@ -112,24 +124,45 @@ class TestTokenRepository implements TokenRepository {
   }
 
   @override
-  Future<List<FullSessionInfo>> getFullSessionInfoListByUserID({
+  Future<List<DeviceSession>> getSessionsByUserID({
     required UserID userID,
   }) async {
-    return _storage[userID] ?? <FullSessionInfo>[];
+    return _storage[userID]?.map((e) => e.session).toList() ??
+        <DeviceSession>[];
+  }
+
+  @override
+  Future<DeviceSession?> getSessionByUserIDAccessToken({
+    required UserID userID,
+    required String accessToken,
+  }) async {
+    final notes = _storage[userID];
+
+    if (notes == null) {
+      return null;
+    }
+
+    for (final note in notes) {
+      if (note.tokenPair.access == accessToken) {
+        return note.session;
+      }
+    }
+
+    return null;
   }
 
   @override
   Future<void> removeNoteByAccessToken({
     required String accessToken,
   }) async {
-    for (final note in _storage.entries) {
-      final iterator = note.value.iterator..moveNext();
+    for (final notes in _storage.entries) {
+      final iterator = notes.value.iterator..moveNext();
 
-      for (var i = 0; i < note.value.length; i++) {
-        final info = iterator.current;
+      for (var i = 0; i < notes.value.length; i++) {
+        final note = iterator.current;
 
-        if (info.tokenPair.access == accessToken) {
-          note.value.removeAt(i);
+        if (note.tokenPair.access == accessToken) {
+          notes.value.removeAt(i);
           return;
         }
 
@@ -144,14 +177,14 @@ class TestTokenRepository implements TokenRepository {
   Future<void> removeNoteByRefreshToken({
     required String refreshToken,
   }) async {
-    for (final note in _storage.entries) {
-      final iterator = note.value.iterator..moveNext();
+    for (final notes in _storage.entries) {
+      final iterator = notes.value.iterator..moveNext();
 
-      for (var i = 0; i < note.value.length; i++) {
-        final info = iterator.current;
+      for (var i = 0; i < notes.value.length; i++) {
+        final note = iterator.current;
 
-        if (info.tokenPair.refresh == refreshToken) {
-          note.value.removeAt(i);
+        if (note.tokenPair.refresh == refreshToken) {
+          notes.value.removeAt(i);
           return;
         }
 
@@ -165,18 +198,18 @@ class TestTokenRepository implements TokenRepository {
   @override
   Future<void> removeNoteByUserIDSessionID({
     required UserID userID,
-    required int sessionID,
+    required DeviceSessionID sessionID,
   }) async {
-    final note = _storage[userID];
+    final notes = _storage[userID];
 
-    if (note != null) {
-      final iterator = note.iterator..moveNext();
+    if (notes != null) {
+      final iterator = notes.iterator..moveNext();
 
-      for (var i = 0; i < note.length; i++) {
-        final session = iterator.current;
+      for (var i = 0; i < notes.length; i++) {
+        final note = iterator.current;
 
-        if (session.id == sessionID) {
-          note.removeAt(i);
+        if (note.session.id == sessionID) {
+          notes.removeAt(i);
           return;
         }
 

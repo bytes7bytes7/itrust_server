@@ -1,3 +1,5 @@
+library itrust_server;
+
 export 'dart:io';
 export 'package:args/args.dart';
 export 'package:get_it/get_it.dart';

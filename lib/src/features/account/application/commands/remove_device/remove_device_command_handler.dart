@@ -49,26 +49,21 @@ class RemoveDeviceCommandHandler extends RequestHandler<
 
     await _tokenRepository.removeNoteByUserIDSessionID(
       userID: request.userID,
-      sessionID: request.sessionID,
+      sessionID: DeviceSessionID(request.sessionID),
     );
 
-    final infoList = await _tokenRepository.getFullSessionInfoListByUserID(
+    final sessions = await _tokenRepository.getSessionsByUserID(
       userID: request.userID,
     );
 
-    DeviceSession? thisSession;
-    final otherSessions = <DeviceSession>[];
-    for (final info in infoList) {
-      final session = DeviceSession(
-        id: info.id,
-        deviceName: '${info.deviceInfo.name}, ${info.deviceInfo.platform}',
-        ip: info.ip,
-        createdAt: info.createdAt,
-      );
+    final thisSession = await _tokenRepository.getSessionByUserIDAccessToken(
+      userID: request.userID,
+      accessToken: request.accessToken,
+    );
 
-      if (info.tokenPair.access == request.accessToken) {
-        thisSession = session;
-      } else {
+    final otherSessions = <DeviceSession>[];
+    for (final session in sessions) {
+      if (session.id != thisSession?.id) {
         otherSessions.add(session);
       }
     }

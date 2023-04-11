@@ -11,7 +11,7 @@ class RemoveDeviceRequest {
     required this.password,
   });
 
-  final int sessionID;
+  final String sessionID;
   final String password;
 
   factory RemoveDeviceRequest.fromJson(JsonMap json) =>

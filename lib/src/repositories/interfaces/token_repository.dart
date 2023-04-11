@@ -1,3 +1,4 @@
+import '../../features/account/domain/domain.dart';
 import '../../features/auth/domain/domain.dart';
 import '../../features/common/common.dart';
 
@@ -20,8 +21,13 @@ abstract class TokenRepository {
     required String refreshToken,
   });
 
-  Future<List<FullSessionInfo>> getFullSessionInfoListByUserID({
+  Future<List<DeviceSession>> getSessionsByUserID({
     required UserID userID,
+  });
+
+  Future<DeviceSession?> getSessionByUserIDAccessToken({
+    required UserID userID,
+    required String accessToken,
   });
 
   Future<void> removeNoteByAccessToken({required String accessToken});
@@ -30,6 +36,6 @@ abstract class TokenRepository {
 
   Future<void> removeNoteByUserIDSessionID({
     required UserID userID,
-    required int sessionID,
+    required DeviceSessionID sessionID,
   });
 }
