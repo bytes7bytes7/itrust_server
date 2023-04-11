@@ -6,4 +6,4 @@ import 'get_user_by_nick_query.dart';
 
 @singleton
 class GetUserByNickQueryValidator
-    extends BehaviorValidator<GetUserByNickResult, GetUserByNickQuery> {}
+    extends BehaviorValidator<GetUserByNickQuery, GetUserByNickResult> {}

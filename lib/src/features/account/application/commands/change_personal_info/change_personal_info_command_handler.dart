@@ -11,8 +11,8 @@ import 'change_personal_info.dart';
 
 @singleton
 class ChangePersonalInfoCommandHandler extends RequestHandler<
-    Either<List<DetailedException>, ChangePersonalInfoResult>,
-    ChangePersonalInfoCommand> {
+    ChangePersonalInfoCommand,
+    Either<List<DetailedException>, ChangePersonalInfoResult>> {
   const ChangePersonalInfoCommandHandler({
     required EndUserRepository endUserRepository,
   }) : _endUserRepository = endUserRepository;

@@ -26,6 +26,8 @@ class UserID with _$UserID {
 
   factory UserID.fromJson(JsonMap json) => _$UserIDFromJson(json);
 
+  factory UserID.fromString(String string) => UserID(string);
+
   String get str => value;
 
   bool get isEndUserID => value.startsWith(_endUserPrefix);

@@ -6,7 +6,7 @@ import 'register_command.dart';
 
 @singleton
 class RegisterCommandValidator
-    extends BehaviorValidator<AuthResult, RegisterCommand> {
+    extends BehaviorValidator<RegisterCommand, AuthResult> {
   RegisterCommandValidator() {
     ruleFor((e) => e.firstName, key: 'firstName').notEmpty();
     ruleFor((e) => e.lastName, key: 'lastName').notEmpty();

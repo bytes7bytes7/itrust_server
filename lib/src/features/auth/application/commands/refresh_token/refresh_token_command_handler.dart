@@ -12,8 +12,8 @@ import '../../services/jwt_token_service.dart';
 import 'refresh_token_command.dart';
 
 @singleton
-class RefreshTokenCommandHandler extends RequestHandler<
-    Either<List<DetailedException>, RefreshTokenResult>, RefreshTokenCommand> {
+class RefreshTokenCommandHandler extends RequestHandler<RefreshTokenCommand,
+    Either<List<DetailedException>, RefreshTokenResult>> {
   const RefreshTokenCommandHandler({
     required JwtTokenService jwtTokenService,
     required TokenRepository tokenRepository,

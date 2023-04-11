@@ -14,8 +14,8 @@ import '../../view_models/view_models.dart';
 import 'get_devices_query.dart';
 
 @singleton
-class GetDevicesQueryHandler extends RequestHandler<
-    Either<List<DetailedException>, GetDevicesResult>, GetDevicesQuery> {
+class GetDevicesQueryHandler extends RequestHandler<GetDevicesQuery,
+    Either<List<DetailedException>, GetDevicesResult>> {
   const GetDevicesQueryHandler({
     required TokenRepository tokenRepository,
     required Mapster mapster,

@@ -10,8 +10,8 @@ import '../../common/common.dart';
 import 'get_user_by_id_query.dart';
 
 @singleton
-class GetUserByIDQueryHandler extends RequestHandler<
-    Either<List<DetailedException>, GetUserByIDResult>, GetUserByIDQuery> {
+class GetUserByIDQueryHandler extends RequestHandler<GetUserByIDQuery,
+    Either<List<DetailedException>, GetUserByIDResult>> {
   const GetUserByIDQueryHandler({
     required EndUserRepository endUserRepository,
     required StaffUserRepository staffUserRepository,

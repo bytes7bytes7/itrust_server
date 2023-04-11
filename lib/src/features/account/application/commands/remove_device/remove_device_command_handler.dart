@@ -12,8 +12,8 @@ import '../../exceptions/exceptions.dart';
 import 'remove_device.dart';
 
 @singleton
-class RemoveDeviceCommandHandler extends RequestHandler<
-    Either<List<DetailedException>, RemoveDeviceResult>, RemoveDeviceCommand> {
+class RemoveDeviceCommandHandler extends RequestHandler<RemoveDeviceCommand,
+    Either<List<DetailedException>, RemoveDeviceResult>> {
   const RemoveDeviceCommandHandler({
     required TokenRepository tokenRepository,
     required PasswordHashRepository passwordHashRepository,

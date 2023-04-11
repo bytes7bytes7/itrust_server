@@ -11,7 +11,7 @@ class IDToGetUserQueryMapper
   @override
   GetUserByIDQuery map() {
     return GetUserByIDQuery(
-      userID: UserID(_id),
+      userID: UserID.fromString(_id),
     );
   }
 

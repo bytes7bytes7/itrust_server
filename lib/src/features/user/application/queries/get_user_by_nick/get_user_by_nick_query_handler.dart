@@ -10,8 +10,8 @@ import '../../common/common.dart';
 import 'get_user_by_nick_query.dart';
 
 @singleton
-class GetUserByNickQueryHandler extends RequestHandler<
-    Either<List<DetailedException>, GetUserByNickResult>, GetUserByNickQuery> {
+class GetUserByNickQueryHandler extends RequestHandler<GetUserByNickQuery,
+    Either<List<DetailedException>, GetUserByNickResult>> {
   const GetUserByNickQueryHandler({
     required EndUserRepository endUserRepository,
     required StaffUserRepository staffUserRepository,

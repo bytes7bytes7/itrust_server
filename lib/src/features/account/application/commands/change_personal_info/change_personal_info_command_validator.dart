@@ -6,4 +6,4 @@ import 'change_personal_info.dart';
 
 @singleton
 class ChangePersonalInfoCommandValidator extends BehaviorValidator<
-    ChangePersonalInfoResult, ChangePersonalInfoCommand> {}
+    ChangePersonalInfoCommand, ChangePersonalInfoResult> {}

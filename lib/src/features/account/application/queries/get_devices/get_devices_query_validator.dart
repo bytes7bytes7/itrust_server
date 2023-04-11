@@ -6,4 +6,4 @@ import 'get_devices_query.dart';
 
 @singleton
 class GetDevicesQueryValidator
-    extends BehaviorValidator<GetDevicesResult, GetDevicesQuery> {}
+    extends BehaviorValidator<GetDevicesQuery, GetDevicesResult> {}

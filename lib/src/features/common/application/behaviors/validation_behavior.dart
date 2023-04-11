@@ -8,12 +8,12 @@ import 'package:mediator/mediator.dart';
 import '../exceptions/detailed_exception.dart';
 import 'behavior_validator.dart';
 
-class ValidationBehavior<RS,
-        RQ extends Request<Either<List<DetailedException>, RS>>>
-    extends PipelineBehavior<Either<List<DetailedException>, RS>, RQ> {
+class ValidationBehavior<
+    RQ extends Request<Either<List<DetailedException>, RS>>,
+    RS> extends PipelineBehavior<RQ, Either<List<DetailedException>, RS>> {
   ValidationBehavior(@factoryParam this._validators);
 
-  final List<BehaviorValidator<RS, RQ>> _validators;
+  final List<BehaviorValidator<RQ, RS>> _validators;
 
   @override
   FutureOr<Either<List<DetailedException>, RS>> handle(

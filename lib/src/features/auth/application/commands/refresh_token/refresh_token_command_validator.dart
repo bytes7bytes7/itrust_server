@@ -6,4 +6,4 @@ import 'refresh_token_command.dart';
 
 @singleton
 class RefreshTokenCommandValidator
-    extends BehaviorValidator<RefreshTokenResult, RefreshTokenCommand> {}
+    extends BehaviorValidator<RefreshTokenCommand, RefreshTokenResult> {}

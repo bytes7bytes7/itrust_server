@@ -6,4 +6,4 @@ import 'remove_device_command.dart';
 
 @singleton
 class RemoveDeviceCommandValidator
-    extends BehaviorValidator<RemoveDeviceResult, RemoveDeviceCommand> {}
+    extends BehaviorValidator<RemoveDeviceCommand, RemoveDeviceResult> {}
