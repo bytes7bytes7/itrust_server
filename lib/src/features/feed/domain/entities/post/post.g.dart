@@ -13,7 +13,6 @@ _$_Post _$$_PostFromJson(Map<String, dynamic> json) => _$_Post(
       text: json['text'] as String,
       mediaUrls:
           (json['mediaUrls'] as List<dynamic>).map((e) => e as String).toList(),
-      commentsAmount: json['commentsAmount'] as int,
       likedBy: (json['likedBy'] as List<dynamic>)
           .map((e) => UserID.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -29,7 +28,6 @@ Map<String, dynamic> _$$_PostToJson(_$_Post instance) => <String, dynamic>{
       'createdAt': instance.createdAt.toIso8601String(),
       'text': instance.text,
       'mediaUrls': instance.mediaUrls,
-      'commentsAmount': instance.commentsAmount,
       'likedBy': instance.likedBy.map((e) => e.toJson()).toList(),
       'comments': instance.comments.map((e) => e.toJson()).toList(),
       'tags': instance.tags,

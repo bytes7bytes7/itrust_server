@@ -14,5 +14,5 @@ class GetFeedQuery
   }) : super(GetFeedQuery);
 
   final UserID userID;
-  final PostID lastPostID;
+  final PostID? lastPostID;
 }

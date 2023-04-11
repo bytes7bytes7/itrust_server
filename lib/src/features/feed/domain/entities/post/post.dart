@@ -17,7 +17,6 @@ class Post with _$Post {
     required DateTime createdAt,
     required String text,
     required List<String> mediaUrls,
-    required int commentsAmount,
     required List<UserID> likedBy,
     required List<CommentID> comments,
     required List<String> tags,

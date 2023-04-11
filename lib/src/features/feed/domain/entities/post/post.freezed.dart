@@ -25,7 +25,6 @@ mixin _$Post {
   DateTime get createdAt => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   List<String> get mediaUrls => throw _privateConstructorUsedError;
-  int get commentsAmount => throw _privateConstructorUsedError;
   List<UserID> get likedBy => throw _privateConstructorUsedError;
   List<CommentID> get comments => throw _privateConstructorUsedError;
   List<String> get tags => throw _privateConstructorUsedError;
@@ -46,7 +45,6 @@ abstract class $PostCopyWith<$Res> {
       DateTime createdAt,
       String text,
       List<String> mediaUrls,
-      int commentsAmount,
       List<UserID> likedBy,
       List<CommentID> comments,
       List<String> tags});
@@ -73,7 +71,6 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? createdAt = null,
     Object? text = null,
     Object? mediaUrls = null,
-    Object? commentsAmount = null,
     Object? likedBy = null,
     Object? comments = null,
     Object? tags = null,
@@ -99,10 +96,6 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.mediaUrls
           : mediaUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      commentsAmount: null == commentsAmount
-          ? _value.commentsAmount
-          : commentsAmount // ignore: cast_nullable_to_non_nullable
-              as int,
       likedBy: null == likedBy
           ? _value.likedBy
           : likedBy // ignore: cast_nullable_to_non_nullable
@@ -147,7 +140,6 @@ abstract class _$$_PostCopyWith<$Res> implements $PostCopyWith<$Res> {
       DateTime createdAt,
       String text,
       List<String> mediaUrls,
-      int commentsAmount,
       List<UserID> likedBy,
       List<CommentID> comments,
       List<String> tags});
@@ -172,7 +164,6 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
     Object? createdAt = null,
     Object? text = null,
     Object? mediaUrls = null,
-    Object? commentsAmount = null,
     Object? likedBy = null,
     Object? comments = null,
     Object? tags = null,
@@ -198,10 +189,6 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
           ? _value._mediaUrls
           : mediaUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      commentsAmount: null == commentsAmount
-          ? _value.commentsAmount
-          : commentsAmount // ignore: cast_nullable_to_non_nullable
-              as int,
       likedBy: null == likedBy
           ? _value._likedBy
           : likedBy // ignore: cast_nullable_to_non_nullable
@@ -227,7 +214,6 @@ class _$_Post implements _Post {
       required this.createdAt,
       required this.text,
       required final List<String> mediaUrls,
-      required this.commentsAmount,
       required final List<UserID> likedBy,
       required final List<CommentID> comments,
       required final List<String> tags})
@@ -254,8 +240,6 @@ class _$_Post implements _Post {
     return EqualUnmodifiableListView(_mediaUrls);
   }
 
-  @override
-  final int commentsAmount;
   final List<UserID> _likedBy;
   @override
   List<UserID> get likedBy {
@@ -282,7 +266,7 @@ class _$_Post implements _Post {
 
   @override
   String toString() {
-    return 'Post(id: $id, authorID: $authorID, createdAt: $createdAt, text: $text, mediaUrls: $mediaUrls, commentsAmount: $commentsAmount, likedBy: $likedBy, comments: $comments, tags: $tags)';
+    return 'Post(id: $id, authorID: $authorID, createdAt: $createdAt, text: $text, mediaUrls: $mediaUrls, likedBy: $likedBy, comments: $comments, tags: $tags)';
   }
 
   @override
@@ -298,8 +282,6 @@ class _$_Post implements _Post {
             (identical(other.text, text) || other.text == text) &&
             const DeepCollectionEquality()
                 .equals(other._mediaUrls, _mediaUrls) &&
-            (identical(other.commentsAmount, commentsAmount) ||
-                other.commentsAmount == commentsAmount) &&
             const DeepCollectionEquality().equals(other._likedBy, _likedBy) &&
             const DeepCollectionEquality().equals(other._comments, _comments) &&
             const DeepCollectionEquality().equals(other._tags, _tags));
@@ -314,7 +296,6 @@ class _$_Post implements _Post {
       createdAt,
       text,
       const DeepCollectionEquality().hash(_mediaUrls),
-      commentsAmount,
       const DeepCollectionEquality().hash(_likedBy),
       const DeepCollectionEquality().hash(_comments),
       const DeepCollectionEquality().hash(_tags));
@@ -340,7 +321,6 @@ abstract class _Post implements Post {
       required final DateTime createdAt,
       required final String text,
       required final List<String> mediaUrls,
-      required final int commentsAmount,
       required final List<UserID> likedBy,
       required final List<CommentID> comments,
       required final List<String> tags}) = _$_Post;
@@ -357,8 +337,6 @@ abstract class _Post implements Post {
   String get text;
   @override
   List<String> get mediaUrls;
-  @override
-  int get commentsAmount;
   @override
   List<UserID> get likedBy;
   @override
