@@ -49,6 +49,6 @@ class GetUserByIDQueryHandler extends RequestHandler<GetUserByIDQuery,
       }
     }
 
-    return left([const UserDoesNotExist()]);
+    return left([const UserNotFound()]);
   }
 }

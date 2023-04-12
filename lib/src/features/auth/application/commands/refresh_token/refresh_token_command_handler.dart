@@ -63,7 +63,7 @@ class RefreshTokenCommandHandler extends RequestHandler<RefreshTokenCommand,
     final user = await _endUserRepository.getByID(id: userID);
 
     if (user == null) {
-      return left([const UserDoesNotExist()]);
+      return left([const UserNotFound()]);
     }
 
     await _tokenRepository.removeNoteByRefreshToken(

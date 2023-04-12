@@ -43,7 +43,7 @@ Middleware authorize({
         final user = await endUserRepository.getByID(id: userID);
 
         if (user == null) {
-          return problemHandler([const UserDoesNotExist()]);
+          return problemHandler([const UserNotFound()]);
         }
 
         // change context

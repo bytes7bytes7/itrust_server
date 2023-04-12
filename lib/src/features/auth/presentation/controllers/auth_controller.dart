@@ -42,9 +42,9 @@ class AuthController extends ApiController {
 
     final command = _mapster.map2(registerRequest, ip, To<RegisterCommand>());
 
-    final authResult = await command.sendTo(_mediator);
+    final result = await command.sendTo(_mediator);
 
-    return authResult.match(
+    return result.match(
       problem,
       (r) => ok(_mapster.map1(r, To<AuthResponse>())),
     );
@@ -66,9 +66,9 @@ class AuthController extends ApiController {
 
     final query = _mapster.map2(logInRequest, ip, To<LogInQuery>());
 
-    final authResult = await query.sendTo(_mediator);
+    final result = await query.sendTo(_mediator);
 
-    return authResult.match(
+    return result.match(
       problem,
       (r) => ok(_mapster.map1(r, To<AuthResponse>())),
     );
@@ -95,9 +95,9 @@ class AuthController extends ApiController {
 
     final command = _mapster.map2(logOutRequest, token, To<LogOutCommand>());
 
-    final logOutResult = await command.sendTo(_mediator);
+    final result = await command.sendTo(_mediator);
 
-    return logOutResult.match(
+    return result.match(
       problem,
       (r) => ok(_mapster.map1(r, To<LogOutResponse>())),
     );
@@ -125,9 +125,9 @@ class AuthController extends ApiController {
     final query =
         _mapster.map2(verifyTokenRequest, accessToken, To<VerifyTokenQuery>());
 
-    final verifyTokenResult = await query.sendTo(_mediator);
+    final result = await query.sendTo(_mediator);
 
-    return verifyTokenResult.match(
+    return result.match(
       problem,
       (r) => ok(_mapster.map1(r, To<VerifyTokenResponse>())),
     );
@@ -150,9 +150,9 @@ class AuthController extends ApiController {
     final command =
         _mapster.map2(refreshTokenRequest, ip, To<RefreshTokenCommand>());
 
-    final refreshTokenResult = await command.sendTo(_mediator);
+    final result = await command.sendTo(_mediator);
 
-    return refreshTokenResult.match(
+    return result.match(
       problem,
       (r) => ok(_mapster.map1(r, To<RefreshTokenResponse>())),
     );

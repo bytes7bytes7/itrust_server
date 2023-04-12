@@ -48,9 +48,9 @@ class PostController extends ApiController {
 
     final query = _mapster.map2(getPostRequest, postID, To<GetPostQuery>());
 
-    final getUserByIDResult = await query.sendTo(_mediator);
+    final result = await query.sendTo(_mediator);
 
-    return getUserByIDResult.match(
+    return result.match(
       problem,
       (r) => ok(_mapster.map1(r, To<PostResponse>())),
     );
@@ -70,7 +70,7 @@ class PostController extends ApiController {
     final user = request.user;
 
     if (user == null) {
-      return problem([const UserDoesNotExist()]);
+      return problem([const UserNotFound()]);
     }
 
     final command = _mapster.map2(

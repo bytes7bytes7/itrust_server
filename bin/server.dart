@@ -47,6 +47,10 @@ void main(List<String> args) async {
     ..mount(
       FeedController.path,
       _getIt.get<FeedController>().router.addAuthorization(),
+    )
+    ..mount(
+      PostController.path,
+      _getIt.get<PostController>().router.addAuthorization(),
     );
 
   final handler = Pipeline()

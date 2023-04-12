@@ -45,6 +45,6 @@ class GetUserByNickQueryHandler extends RequestHandler<GetUserByNickQuery,
       );
     }
 
-    return left([const UserDoesNotExist()]);
+    return left([const UserNotFound()]);
   }
 }

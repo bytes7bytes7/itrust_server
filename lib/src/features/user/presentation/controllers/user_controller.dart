@@ -48,9 +48,9 @@ class UserController extends ApiController {
     final query =
         _mapster.map2(getUserByIDRequest, userID, To<GetUserByIDQuery>());
 
-    final getUserByIDResult = await query.sendTo(_mediator);
+    final result = await query.sendTo(_mediator);
 
-    return getUserByIDResult.match(
+    return result.match(
       problem,
       (r) => ok(_mapster.map1(r, To<GetUserByIDResponse>())),
     );
@@ -76,9 +76,9 @@ class UserController extends ApiController {
     final query =
         _mapster.map2(getUserByNickRequest, userID, To<GetUserByNickQuery>());
 
-    final getUserByNickResult = await query.sendTo(_mediator);
+    final result = await query.sendTo(_mediator);
 
-    return getUserByNickResult.match(
+    return result.match(
       problem,
       (r) => ok(_mapster.map1(r, To<GetUserByNickResponse>())),
     );

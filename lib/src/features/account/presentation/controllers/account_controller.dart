@@ -41,7 +41,7 @@ class AccountController extends ApiController {
     final user = request.user;
 
     if (user == null) {
-      return problem([const UserDoesNotExist()]);
+      return problem([const UserNotFound()]);
     }
 
     final command = _mapster.map2(
@@ -72,13 +72,13 @@ class AccountController extends ApiController {
     final user = request.user;
 
     if (user == null) {
-      return problem([const UserDoesNotExist()]);
+      return problem([const UserNotFound()]);
     }
 
     final accessToken = request.token;
 
     if (accessToken == null) {
-      return problem([const UserDoesNotExist()]);
+      return problem([const UserNotFound()]);
     }
 
     final query = _mapster.map3(
@@ -110,13 +110,13 @@ class AccountController extends ApiController {
     final user = request.user;
 
     if (user == null) {
-      return problem([const UserDoesNotExist()]);
+      return problem([const UserNotFound()]);
     }
 
     final accessToken = request.token;
 
     if (accessToken == null) {
-      return problem([const UserDoesNotExist()]);
+      return problem([const UserNotFound()]);
     }
 
     final command = _mapster.map3(

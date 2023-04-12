@@ -7,10 +7,10 @@ part of 'post_response.dart';
 // **************************************************************************
 
 PostResponse _$PostResponseFromJson(Map<String, dynamic> json) => PostResponse(
-      post: json['post'],
+      post: PostVM.fromJson(json['post'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PostResponseToJson(PostResponse instance) =>
     <String, dynamic>{
-      'post': instance.post,
+      'post': instance.post.toJson(),
     };

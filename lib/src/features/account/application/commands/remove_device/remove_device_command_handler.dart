@@ -36,7 +36,7 @@ class RemoveDeviceCommandHandler extends RequestHandler<RemoveDeviceCommand,
     final user = await _endUserRepository.getByID(id: request.userID);
 
     if (user == null) {
-      return left([const UserDoesNotExist()]);
+      return left([const UserNotFound()]);
     }
 
     final rightPasswordHash =

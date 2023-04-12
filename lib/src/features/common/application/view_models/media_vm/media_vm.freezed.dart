@@ -34,6 +34,8 @@ abstract class $MediaVMCopyWith<$Res> {
       _$MediaVMCopyWithImpl<$Res, MediaVM>;
   @useResult
   $Res call({MediaID id, MediaType type});
+
+  $MediaIDCopyWith<$Res> get id;
 }
 
 /// @nodoc
@@ -49,19 +51,27 @@ class _$MediaVMCopyWithImpl<$Res, $Val extends MediaVM>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? type = freezed,
+    Object? id = null,
+    Object? type = null,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as MediaID,
-      type: freezed == type
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as MediaType,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MediaIDCopyWith<$Res> get id {
+    return $MediaIDCopyWith<$Res>(_value.id, (value) {
+      return _then(_value.copyWith(id: value) as $Val);
+    });
   }
 }
 
@@ -73,6 +83,9 @@ abstract class _$$_MediaVMCopyWith<$Res> implements $MediaVMCopyWith<$Res> {
   @override
   @useResult
   $Res call({MediaID id, MediaType type});
+
+  @override
+  $MediaIDCopyWith<$Res> get id;
 }
 
 /// @nodoc
@@ -85,15 +98,15 @@ class __$$_MediaVMCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? type = freezed,
+    Object? id = null,
+    Object? type = null,
   }) {
     return _then(_$_MediaVM(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as MediaID,
-      type: freezed == type
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as MediaType,
@@ -124,16 +137,13 @@ class _$_MediaVM implements _MediaVM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MediaVM &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.type, type));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(type));
+  int get hashCode => Object.hash(runtimeType, id, type);
 
   @JsonKey(ignore: true)
   @override

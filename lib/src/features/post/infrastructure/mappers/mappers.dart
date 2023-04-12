@@ -1,2 +1,3 @@
 export 'create_post_request_id_to_create_post_command_mapper.dart';
+export 'get_post_request_id_to_get_post_query_mapper.dart';
 export 'post_result_to_post_response_mapper.dart';

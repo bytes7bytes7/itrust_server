@@ -42,7 +42,7 @@ class FeedController extends ApiController {
     final user = request.user;
 
     if (user == null) {
-      return problem([const UserDoesNotExist()]);
+      return problem([const UserNotFound()]);
     }
 
     final query = _mapster.map2(

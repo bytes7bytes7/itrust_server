@@ -26,7 +26,7 @@ class ChangePersonalInfoCommandHandler extends RequestHandler<
     final oldUser = await _endUserRepository.getByID(id: request.userID);
 
     if (oldUser == null) {
-      return left([const UserDoesNotExist()]);
+      return left([const UserNotFound()]);
     }
 
     final newUser = oldUser.copyWith(
