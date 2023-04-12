@@ -15,6 +15,11 @@ Router _$FeedControllerRouter(FeedController service) {
   );
   router.add(
     'GET',
+    r'/tags',
+    service.getTags,
+  );
+  router.add(
+    'GET',
     r'/media/<mediaID>',
     service.getMedia,
   );

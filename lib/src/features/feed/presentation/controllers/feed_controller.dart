@@ -59,6 +59,36 @@ class FeedController extends ApiController {
     );
   }
 
+  @Route.get('/tags')
+  Future<Response> getTags(Request request) async {
+    late final GetTagsRequest getTagsRequest;
+    try {
+      getTagsRequest = await parseRequest<GetTagsRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query = _mapster.map2(
+      getTagsRequest,
+      user.id,
+      To<GetTagsQuery>(),
+    );
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<GetTagsResponse>())),
+    );
+  }
 
   @Route.get('/media/<mediaID>')
   Future<Response> getMedia(Request request) async {

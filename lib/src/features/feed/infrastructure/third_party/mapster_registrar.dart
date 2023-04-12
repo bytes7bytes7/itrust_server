@@ -17,6 +17,12 @@ class FeedMapsterRegistrar {
       )
       ..register(
         MapperMeta.one(GetFeedResultToGetFeedResponseMapper.new),
+      )
+      ..register(
+        MapperMeta.two(GetTagsRequestIDToGetTagsQueryMapper.new),
+      )
+      ..register(
+        MapperMeta.one(GetTagsResultToGetTagsResponseMapper.new),
       );
   }
 }
