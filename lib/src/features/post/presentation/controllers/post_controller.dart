@@ -46,7 +46,14 @@ class PostController extends ApiController {
       return problem([const InvalidRequest()]);
     }
 
-    final query = _mapster.map2(getPostRequest, postID, To<GetPostQuery>());
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query =
+        _mapster.map3(getPostRequest, postID, user.id, To<GetPostQuery>());
 
     final result = await query.sendTo(_mediator);
 

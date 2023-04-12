@@ -8,7 +8,6 @@ import 'package:mediator/mediator.dart';
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
 import '../../../../common/application/view_models/view_models.dart';
-import '../../../../common/domain/domain.dart';
 import '../../common/common.dart';
 import '../../exceptions/exceptions.dart';
 import 'get_post_query.dart';
@@ -19,19 +18,13 @@ class GetPostQueryHandler extends RequestHandler<GetPostQuery,
   const GetPostQueryHandler({
     required PostRepository postRepository,
     required MediaRepository mediaRepository,
-    required EndUserRepository endUserRepository,
-    required StaffUserRepository staffUserRepository,
     required Mapster mapster,
   })  : _postRepository = postRepository,
         _mediaRepository = mediaRepository,
-        _endUserRepository = endUserRepository,
-        _staffUserRepository = staffUserRepository,
         _mapster = mapster;
 
   final PostRepository _postRepository;
   final MediaRepository _mediaRepository;
-  final EndUserRepository _endUserRepository;
-  final StaffUserRepository _staffUserRepository;
   final Mapster _mapster;
 
   @override
@@ -43,19 +36,6 @@ class GetPostQueryHandler extends RequestHandler<GetPostQuery,
     if (post == null) {
       return left(
         [const PostNotFound()],
-      );
-    }
-
-    User? author;
-    if (post.authorID.isEndUserID) {
-      author = await _endUserRepository.getByID(id: post.authorID);
-    } else if (post.authorID.isStaffUserID) {
-      author = await _staffUserRepository.getByID(id: post.authorID);
-    }
-
-    if (author == null) {
-      return left(
-        [const UserNotFound()],
       );
     }
 
@@ -72,7 +52,7 @@ class GetPostQueryHandler extends RequestHandler<GetPostQuery,
 
     return right(
       PostResult(
-        post: _mapster.map3(post, author, mediaList, To<PostVM>()),
+        post: _mapster.map3(post, request.userID, mediaList, To<PostVM>()),
       ),
     );
   }

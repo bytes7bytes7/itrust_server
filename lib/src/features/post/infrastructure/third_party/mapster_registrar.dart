@@ -19,7 +19,7 @@ class PostMapsterRegistrar {
         MapperMeta.one(PostResultToPostResponseMapper.new),
       )
       ..register(
-        MapperMeta.two(GetPostRequestIDToGetPostQueryMapper.new),
+        MapperMeta.three(GetPostRequestPostIDUserIDToGetPostQueryMapper.new),
       );
   }
 }

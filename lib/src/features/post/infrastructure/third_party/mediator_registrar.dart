@@ -18,10 +18,14 @@ class PostMediatorRegistrar {
     _mediator
       // RequestHandler
       ..registerRequestHandler(() => _getIt.get<CreatePostCommandHandler>())
+      ..registerRequestHandler(() => _getIt.get<GetPostQueryHandler>())
 
       // PipelineBehavior
       ..registerPipelineBehavior(
         () => ValidationBehavior([_getIt.get<CreatePostCommandValidator>()]),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior([_getIt.get<GetPostQueryValidator>()]),
       );
   }
 }

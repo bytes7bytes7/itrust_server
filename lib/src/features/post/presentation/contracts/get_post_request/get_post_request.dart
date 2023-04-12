@@ -6,11 +6,7 @@ part 'get_post_request.g.dart';
 
 @JsonSerializable()
 class GetPostRequest {
-  const GetPostRequest({
-    required this.id,
-  });
-
-  final String id;
+  const GetPostRequest();
 
   factory GetPostRequest.fromJson(JsonMap json) =>
       _$GetPostRequestFromJson(json);
