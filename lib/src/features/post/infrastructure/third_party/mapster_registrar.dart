@@ -25,6 +25,11 @@ class PostMapsterRegistrar {
         MapperMeta.three(
           LikePostRequestPostIDUserIDToLikePostCommandMapper.new,
         ),
+      )
+      ..register(
+        MapperMeta.three(
+          UnlikePostRequestPostIDUserIDToUnlikePostCommandMapper.new,
+        ),
       );
   }
 }
