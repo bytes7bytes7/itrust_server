@@ -61,8 +61,8 @@ class TestPostRepository implements PostRepository {
   }
 
   @override
-  Future<void> update({required Post newPost}) async {
-    _storage[newPost.id] = newPost;
+  Future<void> update({required Post post}) async {
+    _storage[post.id] = post;
   }
 
   @override

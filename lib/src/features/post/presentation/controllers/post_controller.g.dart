@@ -18,5 +18,10 @@ Router _$PostControllerRouter(PostController service) {
     r'/new',
     service.createPost,
   );
+  router.add(
+    'POST',
+    r'/<postID>/like',
+    service.likePost,
+  );
   return router;
 }

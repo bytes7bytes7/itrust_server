@@ -20,6 +20,11 @@ class PostMapsterRegistrar {
       )
       ..register(
         MapperMeta.three(GetPostRequestPostIDUserIDToGetPostQueryMapper.new),
+      )
+      ..register(
+        MapperMeta.three(
+          LikePostRequestPostIDUserIDToLikePostCommandMapper.new,
+        ),
       );
   }
 }

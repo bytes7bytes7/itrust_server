@@ -7,7 +7,7 @@ abstract class PostRepository {
     required UserID authorID,
   });
 
-  Future<void> update({required Post newPost});
+  Future<void> update({required Post post});
 
   Future<Post?> getByID({required PostID id});
 
