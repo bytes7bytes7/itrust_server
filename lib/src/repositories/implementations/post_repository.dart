@@ -3,9 +3,8 @@ import 'dart:collection';
 import 'package:injectable/injectable.dart';
 
 import '../../features/common/application/providers/date_time_provider.dart';
-import '../../features/common/domain/value_objects/user_id/user_id.dart';
-import '../../features/feed/application/dto/dto.dart';
-import '../../features/feed/domain/domain.dart';
+import '../../features/common/domain/domain.dart';
+import '../../features/post/application/dto/dto.dart';
 import '../interfaces/media_repository.dart';
 import '../interfaces/post_repository.dart';
 

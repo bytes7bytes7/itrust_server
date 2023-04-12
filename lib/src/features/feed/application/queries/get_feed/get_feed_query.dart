@@ -3,7 +3,6 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../common/application/exceptions/detailed_exception.dart';
 import '../../../../common/domain/domain.dart';
-import '../../../domain/domain.dart';
 import '../../common/common.dart';
 
 class GetFeedQuery

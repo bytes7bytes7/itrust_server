@@ -1,0 +1,29 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../../../utils/typedef.dart';
+import '../../value_objects/value_objects.dart';
+
+part 'comment.freezed.dart';
+
+part 'comment.g.dart';
+
+@freezed
+class Comment with _$Comment {
+  /// If this [Comment] comments some Post,
+  /// then [replyTo] == null
+  /// If this [Comment] replies to other [Comment],
+  /// then [replyTo] != null
+  const factory Comment({
+    required CommentID id,
+    required UserID authorID,
+    required PostID postID,
+    required DateTime createdAt,
+    required String text,
+    required List<UserID> likedByIDs,
+    required List<CommentID> replyIDs,
+    CommentID? replyToID,
+    DateTime? modifiedAt,
+  }) = _Comment;
+
+  factory Comment.fromJson(JsonMap json) => _$CommentFromJson(json);
+}

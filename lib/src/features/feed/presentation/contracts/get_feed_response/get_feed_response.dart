@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/typedef.dart';
-import '../../../application/application.dart';
+import '../../../../common/application/view_models/view_models.dart';
 
 part 'get_feed_response.g.dart';
 

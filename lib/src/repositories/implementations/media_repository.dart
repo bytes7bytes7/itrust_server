@@ -3,8 +3,8 @@ import 'dart:collection';
 import 'package:injectable/injectable.dart';
 import 'package:path/path.dart';
 
-import '../../features/feed/application/dto/dto.dart';
-import '../../features/feed/domain/domain.dart';
+import '../../features/common/domain/domain.dart';
+import '../../features/post/application/dto/dto.dart';
 import '../interfaces/media_repository.dart';
 
 @test

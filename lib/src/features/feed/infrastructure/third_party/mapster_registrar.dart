@@ -17,15 +17,6 @@ class FeedMapsterRegistrar {
       )
       ..register(
         MapperMeta.one(GetFeedResultToGetFeedResponseMapper.new),
-      )
-      ..register(
-        MapperMeta.two(PostUserIDToPostVMMapper.new),
-      )
-      ..register(
-        MapperMeta.two(CreatePostRequestIDToCreatePostCommandMapper.new),
-      )
-      ..register(
-        MapperMeta.one(PostResultToPostResponseMapper.new),
       );
   }
 }

@@ -1,6 +1,5 @@
 import '../../features/common/domain/domain.dart';
-import '../../features/feed/application/dto/dto.dart';
-import '../../features/feed/domain/domain.dart';
+import '../../features/post/application/dto/dto.dart';
 
 abstract class PostRepository {
   Future<Post> create({

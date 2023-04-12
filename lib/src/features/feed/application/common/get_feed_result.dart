@@ -1,4 +1,4 @@
-import '../view_models/post_vm/post_vm.dart';
+import '../../../common/application/view_models/view_models.dart';
 
 class GetFeedResult {
   const GetFeedResult({

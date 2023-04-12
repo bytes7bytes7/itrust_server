@@ -14,9 +14,9 @@ Router _$FeedControllerRouter(FeedController service) {
     service.getFeed,
   );
   router.add(
-    'POST',
-    r'/new_post',
-    service.createPost,
+    'GET',
+    r'/media/<mediaID>',
+    service.getMedia,
   );
   return router;
 }

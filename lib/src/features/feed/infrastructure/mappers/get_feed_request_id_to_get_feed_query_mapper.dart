@@ -2,7 +2,6 @@ import 'package:mapster/mapster.dart';
 
 import '../../../common/domain/domain.dart';
 import '../../application/application.dart';
-import '../../domain/domain.dart';
 import '../../presentation/contracts/contracts.dart';
 
 class GetFeedRequestIDToGetFeedQueryMapper
