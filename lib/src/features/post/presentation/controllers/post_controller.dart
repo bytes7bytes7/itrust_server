@@ -235,7 +235,7 @@ class PostController extends ApiController {
 
     return result.match(
       problem,
-      (r) => ok(_mapster.map1(r, To<PostCommentResponse>())),
+      (r) => ok(_mapster.map1(r, To<PostCommentsResponse>())),
     );
   }
 }

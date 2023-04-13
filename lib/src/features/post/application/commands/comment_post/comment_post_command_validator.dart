@@ -6,7 +6,7 @@ import 'comment_post_command.dart';
 
 @singleton
 class CommentPostCommandValidator
-    extends BehaviorValidator<CommentPostCommand, PostCommentResult> {
+    extends BehaviorValidator<CommentPostCommand, PostCommentsResult> {
   CommentPostCommandValidator() {
     ruleFor((e) => e.text.trim(), key: 'text').notEmpty();
   }

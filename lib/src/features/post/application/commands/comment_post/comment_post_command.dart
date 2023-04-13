@@ -6,7 +6,7 @@ import '../../../../common/domain/domain.dart';
 import '../../common/common.dart';
 
 class CommentPostCommand
-    extends Request<Either<List<DetailedException>, PostCommentResult>> {
+    extends Request<Either<List<DetailedException>, PostCommentsResult>> {
   CommentPostCommand({
     required this.userID,
     required this.postID,
