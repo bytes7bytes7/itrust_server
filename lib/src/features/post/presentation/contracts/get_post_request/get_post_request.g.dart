@@ -7,7 +7,11 @@ part of 'get_post_request.dart';
 // **************************************************************************
 
 GetPostRequest _$GetPostRequestFromJson(Map<String, dynamic> json) =>
-    GetPostRequest();
+    GetPostRequest(
+      postID: json['postID'] as String,
+    );
 
 Map<String, dynamic> _$GetPostRequestToJson(GetPostRequest instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'postID': instance.postID,
+    };

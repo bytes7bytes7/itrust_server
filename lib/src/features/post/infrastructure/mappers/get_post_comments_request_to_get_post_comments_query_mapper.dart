@@ -4,10 +4,10 @@ import '../../../common/domain/domain.dart';
 import '../../application/queries/get_post_comments/get_post_comments.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class GetPostCommentsRequestPostIDUserIDToGetPostCommentsQueryMapper
-    extends ThreeSourcesMapper<GetPostCommentsRequest, String, UserID,
+class GetPostCommentsRequestToGetPostCommentsQueryMapper
+    extends TwoSourcesMapper<GetPostCommentsRequest, UserID,
         GetPostCommentsQuery> {
-  GetPostCommentsRequestPostIDUserIDToGetPostCommentsQueryMapper(super.input);
+  GetPostCommentsRequestToGetPostCommentsQueryMapper(super.input);
 
   @override
   GetPostCommentsQuery map() {
@@ -16,7 +16,7 @@ class GetPostCommentsRequestPostIDUserIDToGetPostCommentsQueryMapper
 
     return GetPostCommentsQuery(
       userID: _userID,
-      postID: PostID.fromString(_postID),
+      postID: PostID.fromString(_request.postID),
       lastCommentID:
           lastCommentID != null ? CommentID.fromString(lastCommentID) : null,
       repliedTo: repliedTo != null ? CommentID.fromString(repliedTo) : null,
@@ -25,7 +25,5 @@ class GetPostCommentsRequestPostIDUserIDToGetPostCommentsQueryMapper
 
   GetPostCommentsRequest get _request => source1;
 
-  String get _postID => source2;
-
-  UserID get _userID => source3;
+  UserID get _userID => source2;
 }

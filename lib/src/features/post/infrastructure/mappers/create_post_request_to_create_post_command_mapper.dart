@@ -4,9 +4,9 @@ import '../../../common/domain/domain.dart';
 import '../../application/commands/commands.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class CreatePostRequestIDToCreatePostCommandMapper
+class CreatePostRequestToCreatePostCommandMapper
     extends TwoSourcesMapper<CreatePostRequest, UserID, CreatePostCommand> {
-  CreatePostRequestIDToCreatePostCommandMapper(super.input);
+  CreatePostRequestToCreatePostCommandMapper(super.input);
 
   @override
   CreatePostCommand map() {

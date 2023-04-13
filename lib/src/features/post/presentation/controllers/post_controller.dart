@@ -12,9 +12,6 @@ import '../contracts/contracts.dart';
 
 part 'post_controller.g.dart';
 
-const _postIDParam = 'postID';
-const _commentIDParam = 'commentID';
-
 @injectable
 class PostController extends ApiController {
   static const path = '/post/';
@@ -30,7 +27,7 @@ class PostController extends ApiController {
 
   Router get router => _$PostControllerRouter(this);
 
-  @Route.get('/<$_postIDParam>')
+  @Route.get('/<$postIDKey>')
   Future<Response> getPost(Request request) async {
     late final GetPostRequest getPostRequest;
     try {
@@ -41,20 +38,13 @@ class PostController extends ApiController {
       );
     }
 
-    final postID = request.params[_postIDParam];
-
-    if (postID == null) {
-      return problem([const InvalidRequest()]);
-    }
-
     final user = request.user;
 
     if (user == null) {
       return problem([const UserNotFound()]);
     }
 
-    final query =
-        _mapster.map3(getPostRequest, postID, user.id, To<GetPostQuery>());
+    final query = _mapster.map2(getPostRequest, user.id, To<GetPostQuery>());
 
     final result = await query.sendTo(_mediator);
 
@@ -95,7 +85,7 @@ class PostController extends ApiController {
     );
   }
 
-  @Route.post('/<$_postIDParam>/like')
+  @Route.post('/<$postIDKey>/like')
   Future<Response> likePost(Request request) async {
     late final LikePostRequest likePostRequest;
     try {
@@ -106,12 +96,6 @@ class PostController extends ApiController {
       );
     }
 
-    final postID = request.params[_postIDParam];
-
-    if (postID == null) {
-      return problem([const InvalidRequest()]);
-    }
-
     final user = request.user;
 
     if (user == null) {
@@ -119,7 +103,7 @@ class PostController extends ApiController {
     }
 
     final command =
-        _mapster.map3(likePostRequest, postID, user.id, To<LikePostCommand>());
+        _mapster.map2(likePostRequest, user.id, To<LikePostCommand>());
 
     final result = await command.sendTo(_mediator);
 
@@ -129,7 +113,7 @@ class PostController extends ApiController {
     );
   }
 
-  @Route.post('/<$_postIDParam>/unlike')
+  @Route.post('/<$postIDKey>/unlike')
   Future<Response> unlikePost(Request request) async {
     late final UnlikePostRequest unlikePostRequest;
     try {
@@ -140,21 +124,14 @@ class PostController extends ApiController {
       );
     }
 
-    final postID = request.params[_postIDParam];
-
-    if (postID == null) {
-      return problem([const InvalidRequest()]);
-    }
-
     final user = request.user;
 
     if (user == null) {
       return problem([const UserNotFound()]);
     }
 
-    final command = _mapster.map3(
+    final command = _mapster.map2(
       unlikePostRequest,
-      postID,
       user.id,
       To<UnlikePostCommand>(),
     );
@@ -167,7 +144,7 @@ class PostController extends ApiController {
     );
   }
 
-  @Route.get('/<$_postIDParam>/comments')
+  @Route.get('/<$postIDKey>/comments')
   Future<Response> getPostComments(Request request) async {
     late final GetPostCommentsRequest getPostCommentsRequest;
     try {
@@ -179,21 +156,14 @@ class PostController extends ApiController {
       );
     }
 
-    final postID = request.params[_postIDParam];
-
-    if (postID == null) {
-      return problem([const InvalidRequest()]);
-    }
-
     final user = request.user;
 
     if (user == null) {
       return problem([const UserNotFound()]);
     }
 
-    final query = _mapster.map3(
+    final query = _mapster.map2(
       getPostCommentsRequest,
-      postID,
       user.id,
       To<GetPostCommentsQuery>(),
     );
@@ -206,7 +176,7 @@ class PostController extends ApiController {
     );
   }
 
-  @Route.get('/<$_postIDParam>/comment/<$_commentIDParam>')
+  @Route.get('/<$postIDKey>/comment/<$commentIDKey>')
   Future<Response> getPostComment(Request request) async {
     late final GetPostCommentRequest getPostCommentRequest;
     try {
@@ -218,28 +188,14 @@ class PostController extends ApiController {
       );
     }
 
-    final postID = request.params[_postIDParam];
-
-    if (postID == null) {
-      return problem([const InvalidRequest()]);
-    }
-
-    final commentID = request.params[_commentIDParam];
-
-    if (commentID == null) {
-      return problem([const InvalidRequest()]);
-    }
-
     final user = request.user;
 
     if (user == null) {
       return problem([const UserNotFound()]);
     }
 
-    final query = _mapster.map4(
+    final query = _mapster.map2(
       getPostCommentRequest,
-      postID,
-      commentID,
       user.id,
       To<GetPostCommentQuery>(),
     );
@@ -252,7 +208,7 @@ class PostController extends ApiController {
     );
   }
 
-  @Route.post('/<$_postIDParam>/comment')
+  @Route.post('/<$postIDKey>/comment')
   Future<Response> commentPost(Request request) async {
     late final CommentPostRequest commentPostRequest;
     try {
@@ -263,21 +219,14 @@ class PostController extends ApiController {
       );
     }
 
-    final postID = request.params[_postIDParam];
-
-    if (postID == null) {
-      return problem([const InvalidRequest()]);
-    }
-
     final user = request.user;
 
     if (user == null) {
       return problem([const UserNotFound()]);
     }
 
-    final command = _mapster.map3(
+    final command = _mapster.map2(
       commentPostRequest,
-      postID,
       user.id,
       To<CommentPostCommand>(),
     );

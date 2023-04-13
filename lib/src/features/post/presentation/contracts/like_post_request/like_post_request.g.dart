@@ -7,7 +7,11 @@ part of 'like_post_request.dart';
 // **************************************************************************
 
 LikePostRequest _$LikePostRequestFromJson(Map<String, dynamic> json) =>
-    LikePostRequest();
+    LikePostRequest(
+      postID: json['postID'] as String,
+    );
 
 Map<String, dynamic> _$LikePostRequestToJson(LikePostRequest instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'postID': instance.postID,
+    };

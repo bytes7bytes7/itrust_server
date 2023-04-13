@@ -7,7 +7,11 @@ part of 'unlike_post_request.dart';
 // **************************************************************************
 
 UnlikePostRequest _$UnlikePostRequestFromJson(Map<String, dynamic> json) =>
-    UnlikePostRequest();
+    UnlikePostRequest(
+      postID: json['postID'] as String,
+    );
 
 Map<String, dynamic> _$UnlikePostRequestToJson(UnlikePostRequest instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'postID': instance.postID,
+    };
