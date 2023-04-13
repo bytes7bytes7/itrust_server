@@ -8,4 +8,5 @@ export 'post_or_comment_not_found.dart';
 export 'user_not_found.dart';
 export 'you_already_liked_comment.dart';
 export 'you_already_liked_post.dart';
+export 'you_not_liked_comment_yet.dart';
 export 'you_not_liked_post_yet.dart';

@@ -38,14 +38,16 @@ class UnlikePostCommandHandler extends RequestHandler<UnlikePostCommand,
       );
     }
 
-    if (!post.likedByIDs.contains(request.userID)) {
+    final index = post.likedByIDs.indexOf(request.userID);
+
+    if (index == -1) {
       return left(
         [const YouNotLikedPostYet()],
       );
     }
 
     final updatedPost = post.copyWith(
-      likedByIDs: List.of(post.likedByIDs)..remove(request.userID),
+      likedByIDs: List.of(post.likedByIDs)..removeAt(index),
     );
 
     await _postRepository.updatePost(post: updatedPost);

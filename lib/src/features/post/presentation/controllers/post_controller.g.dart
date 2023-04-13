@@ -48,5 +48,10 @@ Router _$PostControllerRouter(PostController service) {
     r'/<postID>/comment/<commentID>/like',
     service.likePostComment,
   );
+  router.add(
+    'POST',
+    r'/<postID>/comment/<commentID>/unlike',
+    service.unlikePostComment,
+  );
   return router;
 }

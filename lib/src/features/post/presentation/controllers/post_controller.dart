@@ -270,4 +270,36 @@ class PostController extends ApiController {
       (r) => ok(_mapster.map1(r, To<PostCommentResponse>())),
     );
   }
+
+  @Route.post('/<$postIDKey>/comment/<$commentIDKey>/unlike')
+  Future<Response> unlikePostComment(Request request) async {
+    late final UnlikePostCommentRequest unlikePostCommentRequest;
+    try {
+      unlikePostCommentRequest =
+          await parseRequest<UnlikePostCommentRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final command = _mapster.map2(
+      unlikePostCommentRequest,
+      user.id,
+      To<UnlikePostCommentCommand>(),
+    );
+
+    final result = await command.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<PostCommentResponse>())),
+    );
+  }
 }

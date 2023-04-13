@@ -8,4 +8,5 @@ export 'like_post_request_to_like_post_command_mapper.dart';
 export 'post_comment_result_to_post_comment_response_mapper.dart';
 export 'post_comments_result_to_post_comments_response_mapper.dart';
 export 'post_result_to_post_response_mapper.dart';
+export 'unlike_post_comment_request_to_unlike_post_comment_command_mapper.dart';
 export 'unlike_post_request_to_unlike_post_command_mapper.dart';

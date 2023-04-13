@@ -9,4 +9,5 @@ export 'like_post_request/like_post_request.dart';
 export 'post_comment_response/post_comment_response.dart';
 export 'post_comments_response/post_comments_response.dart';
 export 'post_response/post_response.dart';
+export 'unlike_post_comment_request/unlike_post_comment_request.dart';
 export 'unlike_post_request/unlike_post_request.dart';

@@ -9,13 +9,13 @@ import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
 import '../../../../common/application/view_models/comment_vm/comment_vm.dart';
 import '../../common/common.dart';
-import 'like_post_comment_command.dart';
+import 'unlike_post_comment_command.dart';
 
 @singleton
-class LikePostCommentCommandHandler extends RequestHandler<
-    LikePostCommentCommand,
+class UnlikePostCommentCommandHandler extends RequestHandler<
+    UnlikePostCommentCommand,
     Either<List<DetailedException>, PostCommentResult>> {
-  const LikePostCommentCommandHandler({
+  const UnlikePostCommentCommandHandler({
     required PostRepository postRepository,
     required Mapster mapster,
   })  : _postRepository = postRepository,
@@ -26,7 +26,7 @@ class LikePostCommentCommandHandler extends RequestHandler<
 
   @override
   FutureOr<Either<List<DetailedException>, PostCommentResult>> handle(
-    LikePostCommentCommand request,
+    UnlikePostCommentCommand request,
   ) async {
     final post = await _postRepository.getPostByID(id: request.postID);
 
@@ -47,14 +47,16 @@ class LikePostCommentCommandHandler extends RequestHandler<
       );
     }
 
-    if (comment.likedByIDs.contains(request.userID)) {
+    final index = comment.likedByIDs.indexOf(request.userID);
+
+    if (index == -1) {
       return left(
-        [const YouAlreadyLikedComment()],
+        [const YouNotLikedCommentYet()],
       );
     }
 
     final updatedComment = comment.copyWith(
-      likedByIDs: List.of(comment.likedByIDs)..add(request.userID),
+      likedByIDs: List.of(comment.likedByIDs)..removeAt(index),
     );
 
     await _postRepository.updateComment(comment: updatedComment);
