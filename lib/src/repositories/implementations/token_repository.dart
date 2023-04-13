@@ -17,9 +17,9 @@ class _Note {
   final DeviceSession session;
 }
 
-@test
+@dev
 @Singleton(as: TokenRepository)
-class TestTokenRepository implements TokenRepository {
+class DevTokenRepository implements TokenRepository {
   final _storage = HashMap<UserID, List<_Note>>();
 
   @override

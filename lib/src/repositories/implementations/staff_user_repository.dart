@@ -5,7 +5,7 @@ import '../../features/common/domain/entities/user/user.dart';
 import '../../features/common/domain/value_objects/user_id/user_id.dart';
 import '../interfaces/interfaces.dart';
 
-@test
+@dev
 @Singleton(as: StaffUserRepository)
 class TestStaffUserRepository implements StaffUserRepository {
   final _storage = <UserID, StaffUser>{};

@@ -9,7 +9,6 @@ import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
 import '../../../../common/application/view_models/view_models.dart';
 import '../../common/common.dart';
-import '../../exceptions/exceptions.dart';
 import 'get_post_query.dart';
 
 @singleton

@@ -30,6 +30,22 @@ class PostMapsterRegistrar {
         MapperMeta.three(
           UnlikePostRequestPostIDUserIDToUnlikePostCommandMapper.new,
         ),
+      )
+      ..register(
+        MapperMeta.three(
+          GetPostCommentsRequestPostIDUserIDToGetPostCommentsQueryMapper.new,
+        ),
+      )
+      ..register(
+        MapperMeta.one(PostCommentsResultToPostCommentsResponseMapper.new),
+      )
+      ..register(
+        MapperMeta.three(
+          CommentPostRequestPostIDUseIDToCommentPostCommandMapper.new,
+        ),
+      )
+      ..register(
+        MapperMeta.one(PostCommentResultToPostCommentResponseMapper.new),
       );
   }
 }

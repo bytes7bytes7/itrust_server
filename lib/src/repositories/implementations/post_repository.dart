@@ -8,10 +8,10 @@ import '../../features/post/application/dto/dto.dart';
 import '../interfaces/media_repository.dart';
 import '../interfaces/post_repository.dart';
 
-@test
+@dev
 @Singleton(as: PostRepository)
-class TestPostRepository implements PostRepository {
-  TestPostRepository({
+class DevPostRepository implements PostRepository {
+  DevPostRepository({
     required DateTimeProvider dateTimeProvider,
     required MediaRepository mediaRepository,
   })  : _dateTimeProvider = dateTimeProvider,
@@ -90,10 +90,8 @@ class TestPostRepository implements PostRepository {
       if (byAllUsers || byUsers.contains(post.authorID)) {
         if (reachStartAster) {
           result.add(post);
-        } else {
-          if (post.id == startAfter) {
-            reachStartAster = true;
-          }
+        } else if (post.id == startAfter) {
+          reachStartAster = true;
         }
       }
 

@@ -6,10 +6,9 @@ import 'package:mapster/mapster.dart';
 import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
-import '../../../../common/application/exceptions/detailed_exception.dart';
+import '../../../../common/application/exceptions/exceptions.dart';
 import '../../../../common/application/view_models/view_models.dart';
 import '../../common/common.dart';
-import '../../exceptions/exceptions.dart';
 import 'unlike_post_command.dart';
 
 @singleton

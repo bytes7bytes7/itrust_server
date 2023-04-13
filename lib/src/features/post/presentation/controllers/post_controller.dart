@@ -165,4 +165,81 @@ class PostController extends ApiController {
       (r) => ok(_mapster.map1(r, To<PostResponse>())),
     );
   }
+
+  @Route.get('/<$_postIDParam>/comments')
+  Future<Response> getPostComments(Request request) async {
+    late final GetPostCommentsRequest getPostCommentsRequest;
+    try {
+      getPostCommentsRequest =
+          await parseRequest<GetPostCommentsRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final postID = request.params[_postIDParam];
+
+    if (postID == null) {
+      return problem([const InvalidRequest()]);
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query = _mapster.map3(
+      getPostCommentsRequest,
+      postID,
+      user.id,
+      To<GetPostCommentsQuery>(),
+    );
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<PostCommentsResponse>())),
+    );
+  }
+
+  @Route.post('/<$_postIDParam>/comment')
+  Future<Response> commentPost(Request request) async {
+    late final CommentPostRequest commentPostRequest;
+    try {
+      commentPostRequest = await parseRequest<CommentPostRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final postID = request.params[_postIDParam];
+
+    if (postID == null) {
+      return problem([const InvalidRequest()]);
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final command = _mapster.map3(
+      commentPostRequest,
+      postID,
+      user.id,
+      To<CommentPostCommand>(),
+    );
+
+    final result = await command.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<PostCommentResponse>())),
+    );
+  }
 }

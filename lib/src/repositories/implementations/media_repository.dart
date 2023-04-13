@@ -7,9 +7,9 @@ import '../../features/common/domain/domain.dart';
 import '../../features/post/application/dto/dto.dart';
 import '../interfaces/media_repository.dart';
 
-@test
+@dev
 @Singleton(as: MediaRepository)
-class TestMediaRepository implements MediaRepository {
+class DevMediaRepository implements MediaRepository {
   // Key's type is `Media?` to be able to book place for new Media
   final _storage = HashMap<MediaID, Media?>();
 

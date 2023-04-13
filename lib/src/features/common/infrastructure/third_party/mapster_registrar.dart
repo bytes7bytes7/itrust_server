@@ -17,6 +17,9 @@ class CommonMapsterRegistrar {
       )
       ..register(
         MapperMeta.one(MediaToMediaVMMapper.new),
+      )
+      ..register(
+        MapperMeta.two(CommentUserIDToCommentVMMapper.new),
       );
   }
 }

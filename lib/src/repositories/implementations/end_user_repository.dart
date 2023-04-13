@@ -4,9 +4,9 @@ import 'package:injectable/injectable.dart';
 import '../../features/common/domain/domain.dart';
 import '../interfaces/interfaces.dart';
 
-@test
+@dev
 @Singleton(as: EndUserRepository)
-class TestEndUserRepository implements EndUserRepository {
+class DevEndUserRepository implements EndUserRepository {
   final _storage = <UserID, EndUser>{};
 
   @override

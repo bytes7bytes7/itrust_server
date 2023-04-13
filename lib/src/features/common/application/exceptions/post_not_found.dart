@@ -1,4 +1,4 @@
-import '../../../common/application/exceptions/detailed_exception.dart';
+import 'detailed_exception.dart';
 
 class PostNotFound extends DetailedException {
   const PostNotFound()

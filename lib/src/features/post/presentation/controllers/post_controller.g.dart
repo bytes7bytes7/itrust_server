@@ -28,5 +28,15 @@ Router _$PostControllerRouter(PostController service) {
     r'/<postID>/unlike',
     service.unlikePost,
   );
+  router.add(
+    'GET',
+    r'/<postID>/comments',
+    service.getPostComments,
+  );
+  router.add(
+    'POST',
+    r'/<postID>/comment',
+    service.commentPost,
+  );
   return router;
 }
