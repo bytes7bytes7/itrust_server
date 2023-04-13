@@ -15,11 +15,7 @@ class GetPostCommentsRequest {
 
   @JsonKey(name: postIDKey)
   final String postID;
-
-  @JsonKey(name: lastCommentIDKey)
   final String? lastCommentID;
-
-  @JsonKey(name: repliedToCommentIDKey)
   final String? repliedToCommentID;
 
   factory GetPostCommentsRequest.fromJson(JsonMap json) =>
