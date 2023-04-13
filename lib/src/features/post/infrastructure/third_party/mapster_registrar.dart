@@ -41,6 +41,11 @@ class PostMapsterRegistrar {
       )
       ..register(
         MapperMeta.two(GetPostCommentRequestToGetPostCommentQueryMapper.new),
+      )
+      ..register(
+        MapperMeta.two(
+          LikePostCommentRequestToLikePostCommentCommandMapper.new,
+        ),
       );
   }
 }

@@ -176,6 +176,37 @@ class PostController extends ApiController {
     );
   }
 
+  @Route.post('/<$postIDKey>/comment')
+  Future<Response> commentPost(Request request) async {
+    late final CommentPostRequest commentPostRequest;
+    try {
+      commentPostRequest = await parseRequest<CommentPostRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final command = _mapster.map2(
+      commentPostRequest,
+      user.id,
+      To<CommentPostCommand>(),
+    );
+
+    final result = await command.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<PostCommentsResponse>())),
+    );
+  }
+
   @Route.get('/<$postIDKey>/comment/<$commentIDKey>')
   Future<Response> getPostComment(Request request) async {
     late final GetPostCommentRequest getPostCommentRequest;
@@ -208,11 +239,12 @@ class PostController extends ApiController {
     );
   }
 
-  @Route.post('/<$postIDKey>/comment')
-  Future<Response> commentPost(Request request) async {
-    late final CommentPostRequest commentPostRequest;
+  @Route.post('/<$postIDKey>/comment/<$commentIDKey>/like')
+  Future<Response> likePostComment(Request request) async {
+    late final LikePostCommentRequest likePostCommentRequest;
     try {
-      commentPostRequest = await parseRequest<CommentPostRequest>(request);
+      likePostCommentRequest =
+          await parseRequest<LikePostCommentRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -226,16 +258,16 @@ class PostController extends ApiController {
     }
 
     final command = _mapster.map2(
-      commentPostRequest,
+      likePostCommentRequest,
       user.id,
-      To<CommentPostCommand>(),
+      To<LikePostCommentCommand>(),
     );
 
     final result = await command.sendTo(_mediator);
 
     return result.match(
       problem,
-      (r) => ok(_mapster.map1(r, To<PostCommentsResponse>())),
+      (r) => ok(_mapster.map1(r, To<PostCommentResponse>())),
     );
   }
 }

@@ -9,222 +9,228 @@ import 'package:freezed_annotation/freezed_annotation.dart' as _i21;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:itrust_server/src/features/account/application/commands/change_personal_info/change_personal_info_command_handler.dart'
-    as _i90;
+    as _i92;
 import 'package:itrust_server/src/features/account/application/commands/change_personal_info/change_personal_info_command_validator.dart'
     as _i3;
 import 'package:itrust_server/src/features/account/application/commands/remove_device/remove_device_command_handler.dart'
-    as _i112;
+    as _i115;
 import 'package:itrust_server/src/features/account/application/commands/remove_device/remove_device_command_validator.dart'
-    as _i68;
+    as _i70;
 import 'package:itrust_server/src/features/account/application/queries/get_devices/get_devices_query_handler.dart'
-    as _i97;
+    as _i99;
 import 'package:itrust_server/src/features/account/application/queries/get_devices/get_devices_query_validator.dart'
     as _i10;
 import 'package:itrust_server/src/features/account/infrastructure/json_converters/change_personal_info_request_json_converter.dart'
-    as _i27;
+    as _i39;
 import 'package:itrust_server/src/features/account/infrastructure/json_converters/get_devices_request_json_converter.dart'
-    as _i34;
+    as _i38;
 import 'package:itrust_server/src/features/account/infrastructure/json_converters/remove_device_request_json_converter.dart'
-    as _i33;
+    as _i35;
 import 'package:itrust_server/src/features/account/infrastructure/third_party/mapster_registrar.dart'
-    as _i85;
+    as _i87;
 import 'package:itrust_server/src/features/account/infrastructure/third_party/mediator_registrar.dart'
-    as _i86;
+    as _i88;
 import 'package:itrust_server/src/features/account/presentation/contracts/contracts.dart'
-    as _i26;
+    as _i34;
 import 'package:itrust_server/src/features/account/presentation/controllers/account_controller.dart'
-    as _i84;
+    as _i86;
 import 'package:itrust_server/src/features/auth/application/application.dart'
-    as _i50;
+    as _i51;
 import 'package:itrust_server/src/features/auth/application/commands/log_out/log_out_command_handler.dart'
-    as _i108;
+    as _i111;
 import 'package:itrust_server/src/features/auth/application/commands/log_out/log_out_command_validator.dart'
-    as _i54;
+    as _i56;
 import 'package:itrust_server/src/features/auth/application/commands/refresh_token/refresh_token_command_handler.dart'
-    as _i109;
+    as _i112;
 import 'package:itrust_server/src/features/auth/application/commands/refresh_token/refresh_token_command_validator.dart'
-    as _i66;
+    as _i68;
 import 'package:itrust_server/src/features/auth/application/commands/register/register_command_handler.dart'
-    as _i110;
+    as _i113;
 import 'package:itrust_server/src/features/auth/application/commands/register/register_command_validator.dart'
-    as _i67;
+    as _i69;
 import 'package:itrust_server/src/features/auth/application/queries/get_rules/get_rules_query_handler.dart'
-    as _i102;
+    as _i104;
 import 'package:itrust_server/src/features/auth/application/queries/get_rules/get_rules_query_validator.dart'
     as _i15;
 import 'package:itrust_server/src/features/auth/application/queries/log_in/log_in_query_handler.dart'
-    as _i107;
+    as _i110;
 import 'package:itrust_server/src/features/auth/application/queries/log_in/log_in_query_validator.dart'
-    as _i53;
+    as _i55;
 import 'package:itrust_server/src/features/auth/application/queries/verify_token/verify_token_query_handler.dart'
-    as _i81;
-import 'package:itrust_server/src/features/auth/application/queries/verify_token/verify_token_query_validator.dart'
     as _i83;
+import 'package:itrust_server/src/features/auth/application/queries/verify_token/verify_token_query_validator.dart'
+    as _i85;
 import 'package:itrust_server/src/features/auth/application/services/jwt_token_service.dart'
-    as _i82;
+    as _i84;
 import 'package:itrust_server/src/features/auth/infrastructure/app_services/jwt_token_service.dart'
-    as _i51;
+    as _i52;
 import 'package:itrust_server/src/features/auth/infrastructure/json_converters/get_rules_request_json_converter.dart'
-    as _i38;
+    as _i42;
 import 'package:itrust_server/src/features/auth/infrastructure/json_converters/log_in_request_json_converter.dart'
-    as _i29;
+    as _i31;
 import 'package:itrust_server/src/features/auth/infrastructure/json_converters/log_out_request_json_converter.dart'
-    as _i40;
+    as _i30;
 import 'package:itrust_server/src/features/auth/infrastructure/json_converters/refresh_token_request_json_converter.dart'
-    as _i39;
+    as _i29;
 import 'package:itrust_server/src/features/auth/infrastructure/json_converters/register_request_json_converter.dart'
-    as _i37;
-import 'package:itrust_server/src/features/auth/infrastructure/json_converters/verify_token_request_json_converter.dart'
-    as _i35;
-import 'package:itrust_server/src/features/auth/infrastructure/third_party/mapster_registrar.dart'
-    as _i88;
-import 'package:itrust_server/src/features/auth/infrastructure/third_party/mediator_registrar.dart'
-    as _i89;
-import 'package:itrust_server/src/features/auth/presentation/contracts/contracts.dart'
     as _i28;
+import 'package:itrust_server/src/features/auth/infrastructure/json_converters/verify_token_request_json_converter.dart'
+    as _i23;
+import 'package:itrust_server/src/features/auth/infrastructure/third_party/mapster_registrar.dart'
+    as _i90;
+import 'package:itrust_server/src/features/auth/infrastructure/third_party/mediator_registrar.dart'
+    as _i91;
+import 'package:itrust_server/src/features/auth/presentation/contracts/contracts.dart'
+    as _i22;
 import 'package:itrust_server/src/features/auth/presentation/controllers/auth_controller.dart'
-    as _i87;
+    as _i89;
 import 'package:itrust_server/src/features/auth/presentation/controllers/rules_controller.dart'
-    as _i69;
+    as _i71;
 import 'package:itrust_server/src/features/common/application/application.dart'
     as _i6;
 import 'package:itrust_server/src/features/common/application/providers/date_time_provider.dart'
-    as _i65;
+    as _i67;
 import 'package:itrust_server/src/features/common/application/services/hash_service.dart'
     as _i19;
-import 'package:itrust_server/src/features/common/common.dart' as _i111;
+import 'package:itrust_server/src/features/common/common.dart' as _i114;
 import 'package:itrust_server/src/features/common/infrastructure/app_services/hash_service.dart'
     as _i20;
 import 'package:itrust_server/src/features/common/infrastructure/providers/date_time_provider.dart'
     as _i7;
 import 'package:itrust_server/src/features/common/infrastructure/third_party/mapster_registrar.dart'
-    as _i92;
+    as _i94;
 import 'package:itrust_server/src/features/feed/application/queries/get_feed/get_feed_query_handler.dart'
-    as _i98;
+    as _i100;
 import 'package:itrust_server/src/features/feed/application/queries/get_feed/get_feed_query_validator.dart'
     as _i11;
 import 'package:itrust_server/src/features/feed/application/queries/get_tags/get_tags_query_handler.dart'
-    as _i103;
+    as _i105;
 import 'package:itrust_server/src/features/feed/application/queries/get_tags/get_tags_query_validator.dart'
     as _i16;
 import 'package:itrust_server/src/features/feed/infrastructure/json_converters/get_feed_request_json_converter.dart'
     as _i25;
 import 'package:itrust_server/src/features/feed/infrastructure/json_converters/get_tags_request_json_converter.dart'
-    as _i32;
+    as _i26;
 import 'package:itrust_server/src/features/feed/infrastructure/third_party/mapster_registrar.dart'
-    as _i95;
+    as _i97;
 import 'package:itrust_server/src/features/feed/infrastructure/third_party/mediator_registrar.dart'
-    as _i96;
+    as _i98;
 import 'package:itrust_server/src/features/feed/presentation/contracts/contracts.dart'
     as _i24;
 import 'package:itrust_server/src/features/feed/presentation/controllers/feed_controller.dart'
-    as _i94;
+    as _i96;
 import 'package:itrust_server/src/features/post/application/commands/comment_post/comment_post_command_handler.dart'
-    as _i91;
+    as _i93;
 import 'package:itrust_server/src/features/post/application/commands/comment_post/comment_post_command_validator.dart'
     as _i4;
 import 'package:itrust_server/src/features/post/application/commands/create_post/create_post_command_handler.dart'
-    as _i93;
+    as _i95;
 import 'package:itrust_server/src/features/post/application/commands/create_post/create_post_command_validator.dart'
     as _i5;
 import 'package:itrust_server/src/features/post/application/commands/like_post/like_post_command_handler.dart'
-    as _i106;
+    as _i108;
 import 'package:itrust_server/src/features/post/application/commands/like_post/like_post_command_validator.dart'
-    as _i52;
+    as _i53;
+import 'package:itrust_server/src/features/post/application/commands/like_post_comment/like_post_comment_command_handler.dart'
+    as _i109;
+import 'package:itrust_server/src/features/post/application/commands/like_post_comment/like_post_comment_command_validator.dart'
+    as _i54;
 import 'package:itrust_server/src/features/post/application/commands/unlike_post/unlike_post_command_handler.dart'
-    as _i76;
+    as _i78;
 import 'package:itrust_server/src/features/post/application/commands/unlike_post/unlike_post_command_validator.dart'
-    as _i77;
+    as _i79;
 import 'package:itrust_server/src/features/post/application/queries/get_post/get_post_query_handler.dart'
-    as _i101;
+    as _i103;
 import 'package:itrust_server/src/features/post/application/queries/get_post/get_post_query_validator.dart'
     as _i14;
 import 'package:itrust_server/src/features/post/application/queries/get_post_comment/get_post_comment_query_handler.dart'
-    as _i99;
+    as _i101;
 import 'package:itrust_server/src/features/post/application/queries/get_post_comment/get_post_comment_query_validator.dart'
     as _i12;
 import 'package:itrust_server/src/features/post/application/queries/get_post_comments/get_post_comments_query_handler.dart'
-    as _i100;
+    as _i102;
 import 'package:itrust_server/src/features/post/application/queries/get_post_comments/get_post_comments_query_validator.dart'
     as _i13;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/comment_post_request_json_converter.dart'
-    as _i31;
+    as _i33;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/create_post_request_json_converter.dart'
     as _i45;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/get_post_comment_request_json_converter.dart'
-    as _i44;
+    as _i41;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/get_post_comments_request_json_converter.dart'
     as _i46;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/get_post_request_json_converter.dart'
     as _i47;
+import 'package:itrust_server/src/features/post/infrastructure/json_converters/like_post_comment_request_json_converter.dart'
+    as _i43;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/like_post_request_json_converter.dart'
     as _i48;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/unlike_post_request_json_converter.dart'
-    as _i23;
+    as _i49;
 import 'package:itrust_server/src/features/post/infrastructure/third_party/mapster_registrar.dart'
-    as _i61;
+    as _i63;
 import 'package:itrust_server/src/features/post/infrastructure/third_party/mediator_registrar.dart'
-    as _i62;
+    as _i64;
 import 'package:itrust_server/src/features/post/presentation/contracts/comment_post_request/comment_post_request.dart'
-    as _i30;
+    as _i32;
 import 'package:itrust_server/src/features/post/presentation/contracts/contracts.dart'
-    as _i22;
+    as _i40;
 import 'package:itrust_server/src/features/post/presentation/controllers/post_controller.dart'
-    as _i60;
+    as _i62;
 import 'package:itrust_server/src/features/user/application/queries/get_user_by_id/get_user_by_id_query_handler.dart'
-    as _i104;
+    as _i106;
 import 'package:itrust_server/src/features/user/application/queries/get_user_by_id/get_user_by_id_query_validator.dart'
     as _i17;
 import 'package:itrust_server/src/features/user/application/queries/get_user_by_nick/get_user_by_nick_query_handler.dart'
-    as _i105;
+    as _i107;
 import 'package:itrust_server/src/features/user/application/queries/get_user_by_nick/get_user_by_nick_query_validator.dart'
     as _i18;
 import 'package:itrust_server/src/features/user/infrastructure/json_converters/get_user_by_id_request_json_converter.dart'
-    as _i42;
+    as _i37;
 import 'package:itrust_server/src/features/user/infrastructure/json_converters/get_user_by_nick_request_json_converter.dart'
-    as _i43;
+    as _i44;
 import 'package:itrust_server/src/features/user/infrastructure/third_party/mapster_registrar.dart'
-    as _i79;
+    as _i81;
 import 'package:itrust_server/src/features/user/infrastructure/third_party/mediator_registrar.dart'
-    as _i80;
+    as _i82;
 import 'package:itrust_server/src/features/user/presentation/contracts/contracts.dart'
-    as _i41;
+    as _i36;
 import 'package:itrust_server/src/features/user/presentation/controllers/user_controller.dart'
-    as _i78;
+    as _i80;
 import 'package:itrust_server/src/repositories/implementations/end_user_repository.dart'
     as _i9;
 import 'package:itrust_server/src/repositories/implementations/media_repository.dart'
-    as _i57;
-import 'package:itrust_server/src/repositories/implementations/password_hash_repository.dart'
     as _i59;
+import 'package:itrust_server/src/repositories/implementations/password_hash_repository.dart'
+    as _i61;
 import 'package:itrust_server/src/repositories/implementations/post_repository.dart'
-    as _i64;
+    as _i66;
 import 'package:itrust_server/src/repositories/implementations/rules_repository.dart'
-    as _i71;
+    as _i73;
 import 'package:itrust_server/src/repositories/implementations/staff_user_repository.dart'
-    as _i72;
-import 'package:itrust_server/src/repositories/implementations/tag_repository.dart'
     as _i74;
+import 'package:itrust_server/src/repositories/implementations/tag_repository.dart'
+    as _i76;
 import 'package:itrust_server/src/repositories/implementations/token_repository.dart'
-    as _i75;
+    as _i77;
 import 'package:itrust_server/src/repositories/interfaces/interfaces.dart'
     as _i8;
 import 'package:itrust_server/src/repositories/interfaces/media_repository.dart'
-    as _i56;
+    as _i58;
 import 'package:itrust_server/src/repositories/interfaces/post_repository.dart'
-    as _i63;
+    as _i65;
 import 'package:itrust_server/src/repositories/interfaces/rules_repository.dart'
-    as _i70;
+    as _i72;
 import 'package:itrust_server/src/repositories/interfaces/tag_repository.dart'
-    as _i73;
-import 'package:itrust_server/src/utils/jwt_settings.dart' as _i49;
-import 'package:json_annotation/json_annotation.dart' as _i36;
-import 'package:mapster/mapster.dart' as _i55;
-import 'package:mediator/mediator.dart' as _i58;
+    as _i75;
+import 'package:itrust_server/src/utils/jwt_settings.dart' as _i50;
+import 'package:json_annotation/json_annotation.dart' as _i27;
+import 'package:mapster/mapster.dart' as _i57;
+import 'package:mediator/mediator.dart' as _i60;
 
-import '../../../env/env_module.dart' as _i113;
-import '../third_party/mapster_module.dart' as _i114;
-import '../third_party/mediator_module.dart' as _i115;
+import '../../../env/env_module.dart' as _i116;
+import '../third_party/mapster_module.dart' as _i117;
+import '../third_party/mediator_module.dart' as _i118;
 
 const String _dev = 'dev';
 
@@ -270,241 +276,252 @@ _i1.GetIt init(
       _i18.GetUserByNickQueryValidator());
   gh.singleton<_i19.HashService>(_i20.ProdHashService());
   gh.singleton<
-          _i21.JsonConverter<_i22.UnlikePostRequest, Map<String, Object?>>>(
-      _i23.UnlikePostRequestJsonConverter());
+          _i21.JsonConverter<_i22.VerifyTokenRequest, Map<String, Object?>>>(
+      _i23.VerifyTokenRequestJsonConverter());
   gh.singleton<_i21.JsonConverter<_i24.GetFeedRequest, Map<String, Object?>>>(
       _i25.GetFeedRequestJsonConverter());
-  gh.singleton<
-      _i21.JsonConverter<_i26.ChangePersonalInfoRequest,
-          Map<String, Object?>>>(_i27.ChangePersonalInfoRequestJsonConverter());
-  gh.singleton<_i21.JsonConverter<_i28.LogInRequest, Map<String, Object?>>>(
-      _i29.LogInRequestJsonConverter());
-  gh.singleton<
-          _i21.JsonConverter<_i30.CommentPostRequest, Map<String, Object?>>>(
-      _i31.CommentPostRequestJsonConverter());
   gh.singleton<_i21.JsonConverter<_i24.GetTagsRequest, Map<String, Object?>>>(
-      _i32.GetTagsRequestJsonConverter());
+      _i26.GetTagsRequestJsonConverter());
+  gh.singleton<_i27.JsonConverter<_i22.RegisterRequest, Map<String, Object?>>>(
+      _i28.RegisterRequestJsonConverter());
   gh.singleton<
-          _i21.JsonConverter<_i26.RemoveDeviceRequest, Map<String, Object?>>>(
-      _i33.RemoveDeviceRequestJsonConverter());
+          _i21.JsonConverter<_i22.RefreshTokenRequest, Map<String, Object?>>>(
+      _i29.RefreshTokenRequestJsonConverter());
+  gh.singleton<_i21.JsonConverter<_i22.LogOutRequest, Map<String, Object?>>>(
+      _i30.LogOutRequestJsonConverter());
+  gh.singleton<_i21.JsonConverter<_i22.LogInRequest, Map<String, Object?>>>(
+      _i31.LogInRequestJsonConverter());
   gh.singleton<
-          _i21.JsonConverter<_i26.GetDevicesRequest, Map<String, Object?>>>(
-      _i34.GetDevicesRequestJsonConverter());
+          _i21.JsonConverter<_i32.CommentPostRequest, Map<String, Object?>>>(
+      _i33.CommentPostRequestJsonConverter());
   gh.singleton<
-          _i21.JsonConverter<_i28.VerifyTokenRequest, Map<String, Object?>>>(
-      _i35.VerifyTokenRequestJsonConverter());
-  gh.singleton<_i36.JsonConverter<_i28.RegisterRequest, Map<String, Object?>>>(
-      _i37.RegisterRequestJsonConverter());
-  gh.singleton<_i21.JsonConverter<_i28.GetRulesRequest, Map<String, Object?>>>(
-      _i38.GetRulesRequestJsonConverter());
+          _i21.JsonConverter<_i34.RemoveDeviceRequest, Map<String, Object?>>>(
+      _i35.RemoveDeviceRequestJsonConverter());
   gh.singleton<
-          _i21.JsonConverter<_i28.RefreshTokenRequest, Map<String, Object?>>>(
-      _i39.RefreshTokenRequestJsonConverter());
-  gh.singleton<_i21.JsonConverter<_i28.LogOutRequest, Map<String, Object?>>>(
-      _i40.LogOutRequestJsonConverter());
+          _i21.JsonConverter<_i36.GetUserByIDRequest, Map<String, Object?>>>(
+      _i37.GetUserByIDRequestJsonConverter());
   gh.singleton<
-          _i21.JsonConverter<_i41.GetUserByIDRequest, Map<String, Object?>>>(
-      _i42.GetUserByIDRequestJsonConverter());
+          _i21.JsonConverter<_i34.GetDevicesRequest, Map<String, Object?>>>(
+      _i38.GetDevicesRequestJsonConverter());
   gh.singleton<
-          _i21.JsonConverter<_i41.GetUserByNickRequest, Map<String, Object?>>>(
-      _i43.GetUserByNickRequestJsonConverter());
+      _i21.JsonConverter<_i34.ChangePersonalInfoRequest,
+          Map<String, Object?>>>(_i39.ChangePersonalInfoRequestJsonConverter());
   gh.singleton<
-          _i21.JsonConverter<_i22.GetPostCommentRequest, Map<String, Object?>>>(
-      _i44.GetPostCommentRequestJsonConverter());
+          _i21.JsonConverter<_i40.GetPostCommentRequest, Map<String, Object?>>>(
+      _i41.GetPostCommentRequestJsonConverter());
+  gh.singleton<_i21.JsonConverter<_i22.GetRulesRequest, Map<String, Object?>>>(
+      _i42.GetRulesRequestJsonConverter());
   gh.singleton<
-          _i21.JsonConverter<_i22.CreatePostRequest, Map<String, Object?>>>(
+      _i21.JsonConverter<_i40.LikePostCommentRequest,
+          Map<String, Object?>>>(_i43.LikePostCommentRequestJsonConverter());
+  gh.singleton<
+          _i21.JsonConverter<_i36.GetUserByNickRequest, Map<String, Object?>>>(
+      _i44.GetUserByNickRequestJsonConverter());
+  gh.singleton<
+          _i21.JsonConverter<_i40.CreatePostRequest, Map<String, Object?>>>(
       _i45.CreatePostRequestJsonConverter());
   gh.singleton<
-      _i21.JsonConverter<_i22.GetPostCommentsRequest,
+      _i21.JsonConverter<_i40.GetPostCommentsRequest,
           Map<String, Object?>>>(_i46.GetPostCommentsRequestJsonConverter());
-  gh.singleton<_i21.JsonConverter<_i22.GetPostRequest, Map<String, Object?>>>(
+  gh.singleton<_i21.JsonConverter<_i40.GetPostRequest, Map<String, Object?>>>(
       _i47.GetPostRequestJsonConverter());
-  gh.singleton<_i21.JsonConverter<_i22.LikePostRequest, Map<String, Object?>>>(
+  gh.singleton<_i21.JsonConverter<_i40.LikePostRequest, Map<String, Object?>>>(
       _i48.LikePostRequestJsonConverter());
-  gh.singleton<_i49.JwtSettings>(envModule.jwtSettings);
-  gh.singleton<_i50.JwtTokenService>(
-      _i51.ProdJwtTokenService(gh<_i49.JwtSettings>()));
-  gh.singleton<_i52.LikePostCommandValidator>(_i52.LikePostCommandValidator());
-  gh.singleton<_i53.LogInQueryValidator>(_i53.LogInQueryValidator());
-  gh.singleton<_i54.LogOutCommandValidator>(_i54.LogOutCommandValidator());
-  gh.singleton<_i55.Mapster>(mapsterModule.mapster);
-  gh.singleton<_i56.MediaRepository>(
-    _i57.DevMediaRepository(),
+  gh.singleton<
+          _i21.JsonConverter<_i40.UnlikePostRequest, Map<String, Object?>>>(
+      _i49.UnlikePostRequestJsonConverter());
+  gh.singleton<_i50.JwtSettings>(envModule.jwtSettings);
+  gh.singleton<_i51.JwtTokenService>(
+      _i52.ProdJwtTokenService(gh<_i50.JwtSettings>()));
+  gh.singleton<_i53.LikePostCommandValidator>(_i53.LikePostCommandValidator());
+  gh.singleton<_i54.LikePostCommentCommandValidator>(
+      _i54.LikePostCommentCommandValidator());
+  gh.singleton<_i55.LogInQueryValidator>(_i55.LogInQueryValidator());
+  gh.singleton<_i56.LogOutCommandValidator>(_i56.LogOutCommandValidator());
+  gh.singleton<_i57.Mapster>(mapsterModule.mapster);
+  gh.singleton<_i58.MediaRepository>(
+    _i59.DevMediaRepository(),
     registerFor: {_dev},
   );
-  gh.singleton<_i58.Mediator>(mediatorModule.mediator);
+  gh.singleton<_i60.Mediator>(mediatorModule.mediator);
   gh.singleton<_i8.PasswordHashRepository>(
-    _i59.DevPasswordHashRepository(),
+    _i61.DevPasswordHashRepository(),
     registerFor: {_dev},
   );
-  gh.factory<_i60.PostController>(() => _i60.PostController(
-        mediator: gh<_i58.Mediator>(),
-        mapster: gh<_i55.Mapster>(),
+  gh.factory<_i62.PostController>(() => _i62.PostController(
+        mediator: gh<_i60.Mediator>(),
+        mapster: gh<_i57.Mapster>(),
       ));
-  gh.singleton<_i61.PostMapsterRegistrar>(
-      _i61.PostMapsterRegistrar(gh<_i55.Mapster>())..register());
-  gh.singleton<_i62.PostMediatorRegistrar>(
-      _i62.PostMediatorRegistrar(gh<_i58.Mediator>())..register());
-  gh.singleton<_i63.PostRepository>(
-    _i64.DevPostRepository(
-      dateTimeProvider: gh<_i65.DateTimeProvider>(),
-      mediaRepository: gh<_i56.MediaRepository>(),
+  gh.singleton<_i63.PostMapsterRegistrar>(
+      _i63.PostMapsterRegistrar(gh<_i57.Mapster>())..register());
+  gh.singleton<_i64.PostMediatorRegistrar>(
+      _i64.PostMediatorRegistrar(gh<_i60.Mediator>())..register());
+  gh.singleton<_i65.PostRepository>(
+    _i66.DevPostRepository(
+      dateTimeProvider: gh<_i67.DateTimeProvider>(),
+      mediaRepository: gh<_i58.MediaRepository>(),
     ),
     registerFor: {_dev},
   );
-  gh.singleton<_i66.RefreshTokenCommandValidator>(
-      _i66.RefreshTokenCommandValidator());
-  gh.singleton<_i67.RegisterCommandValidator>(_i67.RegisterCommandValidator());
-  gh.singleton<_i68.RemoveDeviceCommandValidator>(
-      _i68.RemoveDeviceCommandValidator());
-  gh.factory<_i69.RulesController>(() => _i69.RulesController(
-        mediator: gh<_i58.Mediator>(),
-        mapster: gh<_i55.Mapster>(),
+  gh.singleton<_i68.RefreshTokenCommandValidator>(
+      _i68.RefreshTokenCommandValidator());
+  gh.singleton<_i69.RegisterCommandValidator>(_i69.RegisterCommandValidator());
+  gh.singleton<_i70.RemoveDeviceCommandValidator>(
+      _i70.RemoveDeviceCommandValidator());
+  gh.factory<_i71.RulesController>(() => _i71.RulesController(
+        mediator: gh<_i60.Mediator>(),
+        mapster: gh<_i57.Mapster>(),
       ));
-  gh.singleton<_i70.RulesRepository>(
-    _i71.DevRulesRepository(),
+  gh.singleton<_i72.RulesRepository>(
+    _i73.DevRulesRepository(),
     registerFor: {_dev},
   );
   gh.singleton<_i8.StaffUserRepository>(
-    _i72.TestStaffUserRepository(),
+    _i74.TestStaffUserRepository(),
     registerFor: {_dev},
   );
-  gh.singleton<_i73.TagRepository>(
-    _i74.DevTagRepository(),
+  gh.singleton<_i75.TagRepository>(
+    _i76.DevTagRepository(),
     registerFor: {_dev},
   );
   gh.singleton<_i8.TokenRepository>(
-    _i75.DevTokenRepository(),
+    _i77.DevTokenRepository(),
     registerFor: {_dev},
   );
-  gh.singleton<_i76.UnlikePostCommandHandler>(_i76.UnlikePostCommandHandler(
+  gh.singleton<_i78.UnlikePostCommandHandler>(_i78.UnlikePostCommandHandler(
     postRepository: gh<_i8.PostRepository>(),
     mediaRepository: gh<_i8.MediaRepository>(),
-    mapster: gh<_i55.Mapster>(),
+    mapster: gh<_i57.Mapster>(),
   ));
-  gh.singleton<_i77.UnlikePostCommandValidator>(
-      _i77.UnlikePostCommandValidator());
-  gh.factory<_i78.UserController>(() => _i78.UserController(
-        mediator: gh<_i58.Mediator>(),
-        mapster: gh<_i55.Mapster>(),
+  gh.singleton<_i79.UnlikePostCommandValidator>(
+      _i79.UnlikePostCommandValidator());
+  gh.factory<_i80.UserController>(() => _i80.UserController(
+        mediator: gh<_i60.Mediator>(),
+        mapster: gh<_i57.Mapster>(),
       ));
-  gh.singleton<_i79.UserMapsterRegistrar>(
-      _i79.UserMapsterRegistrar(gh<_i55.Mapster>())..register());
-  gh.singleton<_i80.UserMediatorRegistrar>(
-      _i80.UserMediatorRegistrar(gh<_i58.Mediator>())..register());
-  gh.singleton<_i81.VerifyTokenQueryHandler>(_i81.VerifyTokenQueryHandler(
-    jwtTokenService: gh<_i82.JwtTokenService>(),
+  gh.singleton<_i81.UserMapsterRegistrar>(
+      _i81.UserMapsterRegistrar(gh<_i57.Mapster>())..register());
+  gh.singleton<_i82.UserMediatorRegistrar>(
+      _i82.UserMediatorRegistrar(gh<_i60.Mediator>())..register());
+  gh.singleton<_i83.VerifyTokenQueryHandler>(_i83.VerifyTokenQueryHandler(
+    jwtTokenService: gh<_i84.JwtTokenService>(),
     tokenRepository: gh<_i8.TokenRepository>(),
   ));
-  gh.singleton<_i83.VerifyTokenQueryValidator>(
-      _i83.VerifyTokenQueryValidator());
-  gh.factory<_i84.AccountController>(() => _i84.AccountController(
-        mediator: gh<_i58.Mediator>(),
-        mapster: gh<_i55.Mapster>(),
+  gh.singleton<_i85.VerifyTokenQueryValidator>(
+      _i85.VerifyTokenQueryValidator());
+  gh.factory<_i86.AccountController>(() => _i86.AccountController(
+        mediator: gh<_i60.Mediator>(),
+        mapster: gh<_i57.Mapster>(),
       ));
-  gh.singleton<_i85.AccountMapsterRegistrar>(
-      _i85.AccountMapsterRegistrar(gh<_i55.Mapster>())..register());
-  gh.singleton<_i86.AccountMediatorRegistrar>(
-      _i86.AccountMediatorRegistrar(gh<_i58.Mediator>())..register());
-  gh.factory<_i87.AuthController>(() => _i87.AuthController(
-        mediator: gh<_i58.Mediator>(),
-        mapster: gh<_i55.Mapster>(),
+  gh.singleton<_i87.AccountMapsterRegistrar>(
+      _i87.AccountMapsterRegistrar(gh<_i57.Mapster>())..register());
+  gh.singleton<_i88.AccountMediatorRegistrar>(
+      _i88.AccountMediatorRegistrar(gh<_i60.Mediator>())..register());
+  gh.factory<_i89.AuthController>(() => _i89.AuthController(
+        mediator: gh<_i60.Mediator>(),
+        mapster: gh<_i57.Mapster>(),
       ));
-  gh.singleton<_i88.AuthMapsterRegistrar>(
-      _i88.AuthMapsterRegistrar(gh<_i55.Mapster>())..register());
-  gh.singleton<_i89.AuthMediatorRegistrar>(
-      _i89.AuthMediatorRegistrar(gh<_i58.Mediator>())..register());
-  gh.singleton<_i90.ChangePersonalInfoCommandHandler>(
-      _i90.ChangePersonalInfoCommandHandler(
+  gh.singleton<_i90.AuthMapsterRegistrar>(
+      _i90.AuthMapsterRegistrar(gh<_i57.Mapster>())..register());
+  gh.singleton<_i91.AuthMediatorRegistrar>(
+      _i91.AuthMediatorRegistrar(gh<_i60.Mediator>())..register());
+  gh.singleton<_i92.ChangePersonalInfoCommandHandler>(
+      _i92.ChangePersonalInfoCommandHandler(
           endUserRepository: gh<_i8.EndUserRepository>()));
-  gh.singleton<_i91.CommentPostCommandHandler>(_i91.CommentPostCommandHandler(
+  gh.singleton<_i93.CommentPostCommandHandler>(_i93.CommentPostCommandHandler(
     postRepository: gh<_i8.PostRepository>(),
-    mapster: gh<_i55.Mapster>(),
+    mapster: gh<_i57.Mapster>(),
   ));
-  gh.singleton<_i92.CommonMapsterRegistrar>(
-      _i92.CommonMapsterRegistrar(gh<_i55.Mapster>())..register());
-  gh.singleton<_i93.CreatePostCommandHandler>(_i93.CreatePostCommandHandler(
+  gh.singleton<_i94.CommonMapsterRegistrar>(
+      _i94.CommonMapsterRegistrar(gh<_i57.Mapster>())..register());
+  gh.singleton<_i95.CreatePostCommandHandler>(_i95.CreatePostCommandHandler(
     postRepository: gh<_i8.PostRepository>(),
     mediaRepository: gh<_i8.MediaRepository>(),
-    mapster: gh<_i55.Mapster>(),
+    mapster: gh<_i57.Mapster>(),
   ));
-  gh.factory<_i94.FeedController>(() => _i94.FeedController(
-        mediator: gh<_i58.Mediator>(),
-        mapster: gh<_i55.Mapster>(),
+  gh.factory<_i96.FeedController>(() => _i96.FeedController(
+        mediator: gh<_i60.Mediator>(),
+        mapster: gh<_i57.Mapster>(),
       ));
-  gh.singleton<_i95.FeedMapsterRegistrar>(
-      _i95.FeedMapsterRegistrar(gh<_i55.Mapster>())..register());
-  gh.singleton<_i96.FeedMediatorRegistrar>(
-      _i96.FeedMediatorRegistrar(gh<_i58.Mediator>())..register());
-  gh.singleton<_i97.GetDevicesQueryHandler>(_i97.GetDevicesQueryHandler(
+  gh.singleton<_i97.FeedMapsterRegistrar>(
+      _i97.FeedMapsterRegistrar(gh<_i57.Mapster>())..register());
+  gh.singleton<_i98.FeedMediatorRegistrar>(
+      _i98.FeedMediatorRegistrar(gh<_i60.Mediator>())..register());
+  gh.singleton<_i99.GetDevicesQueryHandler>(_i99.GetDevicesQueryHandler(
     tokenRepository: gh<_i8.TokenRepository>(),
-    mapster: gh<_i55.Mapster>(),
+    mapster: gh<_i57.Mapster>(),
   ));
-  gh.singleton<_i98.GetFeedQueryHandler>(_i98.GetFeedQueryHandler(
+  gh.singleton<_i100.GetFeedQueryHandler>(_i100.GetFeedQueryHandler(
     postRepository: gh<_i8.PostRepository>(),
     mediaRepository: gh<_i8.MediaRepository>(),
-    mapster: gh<_i55.Mapster>(),
+    mapster: gh<_i57.Mapster>(),
   ));
-  gh.singleton<_i99.GetPostCommentQueryHandler>(_i99.GetPostCommentQueryHandler(
+  gh.singleton<_i101.GetPostCommentQueryHandler>(
+      _i101.GetPostCommentQueryHandler(
     postRepository: gh<_i8.PostRepository>(),
-    mapster: gh<_i55.Mapster>(),
+    mapster: gh<_i57.Mapster>(),
   ));
-  gh.singleton<_i100.GetPostCommentsQueryHandler>(
-      _i100.GetPostCommentsQueryHandler(
+  gh.singleton<_i102.GetPostCommentsQueryHandler>(
+      _i102.GetPostCommentsQueryHandler(
     postRepository: gh<_i8.PostRepository>(),
-    mapster: gh<_i55.Mapster>(),
+    mapster: gh<_i57.Mapster>(),
   ));
-  gh.singleton<_i101.GetPostQueryHandler>(_i101.GetPostQueryHandler(
+  gh.singleton<_i103.GetPostQueryHandler>(_i103.GetPostQueryHandler(
     postRepository: gh<_i8.PostRepository>(),
     mediaRepository: gh<_i8.MediaRepository>(),
-    mapster: gh<_i55.Mapster>(),
+    mapster: gh<_i57.Mapster>(),
   ));
-  gh.singleton<_i102.GetRulesQueryHandler>(
-      _i102.GetRulesQueryHandler(rulesRepository: gh<_i8.RulesRepository>()));
-  gh.singleton<_i103.GetTagsQueryHandler>(
-      _i103.GetTagsQueryHandler(tagRepository: gh<_i8.TagRepository>()));
-  gh.singleton<_i104.GetUserByIDQueryHandler>(_i104.GetUserByIDQueryHandler(
+  gh.singleton<_i104.GetRulesQueryHandler>(
+      _i104.GetRulesQueryHandler(rulesRepository: gh<_i8.RulesRepository>()));
+  gh.singleton<_i105.GetTagsQueryHandler>(
+      _i105.GetTagsQueryHandler(tagRepository: gh<_i8.TagRepository>()));
+  gh.singleton<_i106.GetUserByIDQueryHandler>(_i106.GetUserByIDQueryHandler(
     endUserRepository: gh<_i8.EndUserRepository>(),
     staffUserRepository: gh<_i8.StaffUserRepository>(),
   ));
-  gh.singleton<_i105.GetUserByNickQueryHandler>(_i105.GetUserByNickQueryHandler(
+  gh.singleton<_i107.GetUserByNickQueryHandler>(_i107.GetUserByNickQueryHandler(
     endUserRepository: gh<_i8.EndUserRepository>(),
     staffUserRepository: gh<_i8.StaffUserRepository>(),
   ));
-  gh.singleton<_i106.LikePostCommandHandler>(_i106.LikePostCommandHandler(
+  gh.singleton<_i108.LikePostCommandHandler>(_i108.LikePostCommandHandler(
     postRepository: gh<_i8.PostRepository>(),
     mediaRepository: gh<_i8.MediaRepository>(),
-    mapster: gh<_i55.Mapster>(),
+    mapster: gh<_i57.Mapster>(),
   ));
-  gh.singleton<_i107.LogInQueryHandler>(_i107.LogInQueryHandler(
-    jwtTokenService: gh<_i82.JwtTokenService>(),
+  gh.singleton<_i109.LikePostCommentCommandHandler>(
+      _i109.LikePostCommentCommandHandler(
+    postRepository: gh<_i8.PostRepository>(),
+    mapster: gh<_i57.Mapster>(),
+  ));
+  gh.singleton<_i110.LogInQueryHandler>(_i110.LogInQueryHandler(
+    jwtTokenService: gh<_i84.JwtTokenService>(),
     hashService: gh<_i19.HashService>(),
     endUserRepository: gh<_i8.EndUserRepository>(),
     passwordHashRepository: gh<_i8.PasswordHashRepository>(),
     tokenRepository: gh<_i8.TokenRepository>(),
-    dateTimeProvider: gh<_i65.DateTimeProvider>(),
+    dateTimeProvider: gh<_i67.DateTimeProvider>(),
   ));
-  gh.singleton<_i108.LogOutCommandHandler>(_i108.LogOutCommandHandler(
-    jwtTokenService: gh<_i82.JwtTokenService>(),
+  gh.singleton<_i111.LogOutCommandHandler>(_i111.LogOutCommandHandler(
+    jwtTokenService: gh<_i84.JwtTokenService>(),
     tokenRepository: gh<_i8.TokenRepository>(),
   ));
-  gh.singleton<_i109.RefreshTokenCommandHandler>(
-      _i109.RefreshTokenCommandHandler(
-    jwtTokenService: gh<_i82.JwtTokenService>(),
+  gh.singleton<_i112.RefreshTokenCommandHandler>(
+      _i112.RefreshTokenCommandHandler(
+    jwtTokenService: gh<_i84.JwtTokenService>(),
     tokenRepository: gh<_i8.TokenRepository>(),
     endUserRepository: gh<_i8.EndUserRepository>(),
-    dateTimeProvider: gh<_i65.DateTimeProvider>(),
+    dateTimeProvider: gh<_i67.DateTimeProvider>(),
   ));
-  gh.singleton<_i110.RegisterCommandHandler>(_i110.RegisterCommandHandler(
-    jwtTokenService: gh<_i82.JwtTokenService>(),
-    hashService: gh<_i111.HashService>(),
+  gh.singleton<_i113.RegisterCommandHandler>(_i113.RegisterCommandHandler(
+    jwtTokenService: gh<_i84.JwtTokenService>(),
+    hashService: gh<_i114.HashService>(),
     endUserRepository: gh<_i8.EndUserRepository>(),
     passwordHashRepository: gh<_i8.PasswordHashRepository>(),
     tokenRepository: gh<_i8.TokenRepository>(),
-    dateTimeProvider: gh<_i111.DateTimeProvider>(),
+    dateTimeProvider: gh<_i114.DateTimeProvider>(),
   ));
-  gh.singleton<_i112.RemoveDeviceCommandHandler>(
-      _i112.RemoveDeviceCommandHandler(
+  gh.singleton<_i115.RemoveDeviceCommandHandler>(
+      _i115.RemoveDeviceCommandHandler(
     tokenRepository: gh<_i8.TokenRepository>(),
     passwordHashRepository: gh<_i8.PasswordHashRepository>(),
     endUserRepository: gh<_i8.EndUserRepository>(),
@@ -513,8 +530,8 @@ _i1.GetIt init(
   return getIt;
 }
 
-class _$EnvModule extends _i113.EnvModule {}
+class _$EnvModule extends _i116.EnvModule {}
 
-class _$MapsterModule extends _i114.MapsterModule {}
+class _$MapsterModule extends _i117.MapsterModule {}
 
-class _$MediatorModule extends _i115.MediatorModule {}
+class _$MediatorModule extends _i118.MediatorModule {}

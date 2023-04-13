@@ -34,14 +34,19 @@ Router _$PostControllerRouter(PostController service) {
     service.getPostComments,
   );
   router.add(
+    'POST',
+    r'/<postID>/comment',
+    service.commentPost,
+  );
+  router.add(
     'GET',
     r'/<postID>/comment/<commentID>',
     service.getPostComment,
   );
   router.add(
     'POST',
-    r'/<postID>/comment',
-    service.commentPost,
+    r'/<postID>/comment/<commentID>/like',
+    service.likePostComment,
   );
   return router;
 }

@@ -3,6 +3,7 @@ export 'create_post_request_to_create_post_command_mapper.dart';
 export 'get_post_comment_request_to_get_post_comment_query_mapper.dart';
 export 'get_post_comments_request_to_get_post_comments_query_mapper.dart';
 export 'get_post_request_to_get_post_query_mapper.dart';
+export 'like_post_comment_request_to_like_post_comment_command_mapper.dart';
 export 'like_post_request_to_like_post_command_mapper.dart';
 export 'post_comment_result_to_post_comment_response_mapper.dart';
 export 'post_comments_result_to_post_comments_response_mapper.dart';

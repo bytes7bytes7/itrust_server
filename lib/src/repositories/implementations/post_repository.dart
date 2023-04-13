@@ -207,7 +207,7 @@ class DevPostRepository implements PostRepository {
 
     _comments[id] = comment;
 
-    final commentIDs = List.of(post.commentIDs)..add(id);
+    final commentIDs = List.of(post.commentIDs)..insert(0, id);
     _posts[postID] = post.copyWith(
       commentIDs: commentIDs,
     );
@@ -255,7 +255,7 @@ class DevPostRepository implements PostRepository {
 
     _comments[id] = reply;
 
-    final replyIDs = List.of(comment.replyIDs)..add(id);
+    final replyIDs = List.of(comment.replyIDs)..insert(0, id);
     _comments[replyToCommentID] = comment.copyWith(
       replyIDs: replyIDs,
     );
