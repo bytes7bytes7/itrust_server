@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
-import 'package:mediator/mediator.dart' as mediator;
+import 'package:mediator/mediator.dart' as mdtr;
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
@@ -16,12 +16,12 @@ class AuthController extends ApiController {
   static const path = '/auth/';
 
   const AuthController({
-    required mediator.Mediator mediator,
+    required mdtr.Mediator mediator,
     required Mapster mapster,
   })  : _mediator = mediator,
         _mapster = mapster;
 
-  final mediator.Mediator _mediator;
+  final mdtr.Mediator _mediator;
   final Mapster _mapster;
 
   Router get router => _$AuthControllerRouter(this);

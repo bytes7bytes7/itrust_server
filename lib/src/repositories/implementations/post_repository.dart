@@ -147,7 +147,6 @@ class DevPostRepository implements PostRepository {
 
       for (final id in commentIDs) {
         if (reachStartAfter) {
-          // TODO: what if comment has been deleted?
           comments.add(_comments[id]!);
         } else if (id == startAfter) {
           reachStartAfter = true;
@@ -167,7 +166,6 @@ class DevPostRepository implements PostRepository {
 
     for (final id in replyIDs) {
       if (reachStartAfter) {
-        // TODO: what if comment has been deleted?
         replies.add(_comments[id]!);
       } else if (id == startAfter) {
         reachStartAfter = true;

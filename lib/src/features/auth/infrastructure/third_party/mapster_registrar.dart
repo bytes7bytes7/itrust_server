@@ -17,9 +17,7 @@ class AuthMapsterRegistrar {
       ..register(MapperMeta.one(AuthResultToAuthResponseMapper.new))
       ..register(MapperMeta.two(LogOutRequestToLogOutCommandMapper.new))
       ..register(MapperMeta.one(LogOutResultToLogOutResponse.new))
-      ..register(
-        MapperMeta.two(VerifyTokenRequestToVerifyTokenQueryMapper.new),
-      )
+      ..register(MapperMeta.two(VerifyTokenRequestToVerifyTokenQueryMapper.new))
       ..register(
         MapperMeta.one(VerifyTokenResultToVerifyTokenResponseMapper.new),
       )
@@ -28,6 +26,8 @@ class AuthMapsterRegistrar {
       )
       ..register(
         MapperMeta.one(RefreshTokenResultToRefreshTokenResponseMapper.new),
-      );
+      )
+      ..register(MapperMeta.one(GetRulesRequestToGetRulesQueryMapper.new))
+      ..register(MapperMeta.one(RulesResultToRulesResponseMapper.new));
   }
 }

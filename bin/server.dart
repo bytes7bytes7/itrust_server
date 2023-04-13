@@ -37,6 +37,10 @@ void main(List<String> args) async {
       _getIt.get<AuthController>().router,
     )
     ..mount(
+      RulesController.path,
+      _getIt.get<RulesController>().router,
+    )
+    ..mount(
       UserController.path,
       _getIt.get<UserController>().router.addAuthorization(),
     )
