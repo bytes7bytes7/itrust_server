@@ -14,6 +14,7 @@ class RegisterRequestToRegisterCommandMapper
       lastName: _request.lastName,
       email: _request.email,
       password: _request.password,
+      agreeWithRules: _request.agreeWithRules,
       deviceInfo: _request.deviceInfo,
       ip: _ip,
     );

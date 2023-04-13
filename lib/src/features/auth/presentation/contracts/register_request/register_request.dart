@@ -12,6 +12,7 @@ class RegisterRequest {
     required this.lastName,
     required this.email,
     required this.password,
+    required this.agreeWithRules,
     required this.deviceInfo,
   });
 
@@ -19,6 +20,7 @@ class RegisterRequest {
   final String lastName;
   final String email;
   final String password;
+  final bool agreeWithRules;
   final DeviceInfo deviceInfo;
 
   factory RegisterRequest.fromJson(JsonMap json) =>

@@ -12,5 +12,6 @@ class RegisterCommandValidator
     ruleFor((e) => e.lastName, key: 'lastName').notEmpty();
     ruleFor((e) => e.email, key: 'email').notEmpty();
     ruleFor((e) => e.password, key: 'password').notEmpty();
+    ruleFor((e) => e.agreeWithRules, key: 'agreeWithRules').equal(true);
   }
 }

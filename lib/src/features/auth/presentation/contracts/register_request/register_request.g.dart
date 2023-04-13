@@ -12,6 +12,7 @@ RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
       lastName: json['lastName'] as String,
       email: json['email'] as String,
       password: json['password'] as String,
+      agreeWithRules: json['agreeWithRules'] as bool,
       deviceInfo:
           DeviceInfo.fromJson(json['deviceInfo'] as Map<String, dynamic>),
     );
@@ -22,5 +23,6 @@ Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
       'lastName': instance.lastName,
       'email': instance.email,
       'password': instance.password,
+      'agreeWithRules': instance.agreeWithRules,
       'deviceInfo': instance.deviceInfo.toJson(),
     };
