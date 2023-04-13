@@ -18,21 +18,18 @@ class GetPostCommentsQueryHandler extends RequestHandler<GetPostCommentsQuery,
     Either<List<DetailedException>, PostCommentsResult>> {
   const GetPostCommentsQueryHandler({
     required PostRepository postRepository,
-    required CommentRepository commentRepository,
     required Mapster mapster,
   })  : _postRepository = postRepository,
-        _commentRepository = commentRepository,
         _mapster = mapster;
 
   final PostRepository _postRepository;
-  final CommentRepository _commentRepository;
   final Mapster _mapster;
 
   @override
   FutureOr<Either<List<DetailedException>, PostCommentsResult>> handle(
     GetPostCommentsQuery request,
   ) async {
-    final post = await _postRepository.getByID(id: request.postID);
+    final post = await _postRepository.getPostByID(id: request.postID);
 
     if (post == null) {
       return left(
@@ -42,7 +39,7 @@ class GetPostCommentsQueryHandler extends RequestHandler<GetPostCommentsQuery,
 
     final repliedTo = request.repliedTo;
     if (repliedTo != null) {
-      final reply = await _commentRepository.getByID(id: repliedTo);
+      final reply = await _postRepository.getCommentByID(id: repliedTo);
 
       if (reply == null) {
         return left(
@@ -51,7 +48,7 @@ class GetPostCommentsQueryHandler extends RequestHandler<GetPostCommentsQuery,
       }
     }
 
-    final comments = await _commentRepository.getByFilter(
+    final comments = await _postRepository.getCommentsByFilter(
       postID: request.postID,
       limit: _limit,
       startAfter: request.lastCommentID,

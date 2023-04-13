@@ -30,7 +30,7 @@ class GetPostQueryHandler extends RequestHandler<GetPostQuery,
   FutureOr<Either<List<DetailedException>, PostResult>> handle(
     GetPostQuery request,
   ) async {
-    final post = await _postRepository.getByID(id: request.postID);
+    final post = await _postRepository.getPostByID(id: request.postID);
 
     if (post == null) {
       return left(

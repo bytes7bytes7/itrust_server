@@ -30,7 +30,7 @@ class LikePostCommandHandler extends RequestHandler<LikePostCommand,
   FutureOr<Either<List<DetailedException>, PostResult>> handle(
     LikePostCommand request,
   ) async {
-    final post = await _postRepository.getByID(id: request.postID);
+    final post = await _postRepository.getPostByID(id: request.postID);
 
     if (post == null) {
       return left(
@@ -48,7 +48,7 @@ class LikePostCommandHandler extends RequestHandler<LikePostCommand,
       likedByIDs: List.of(post.likedByIDs)..add(request.userID),
     );
 
-    await _postRepository.update(post: updatedPost);
+    await _postRepository.updatePost(post: updatedPost);
 
     final mediaList = <MediaVM>[];
     for (final id in post.mediaIDs) {

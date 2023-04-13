@@ -18,23 +18,24 @@ class DevPostRepository implements PostRepository {
         _mediaRepository = mediaRepository;
 
   // Key's type is `Post?` to be able to book ID for new Post
-  final _storage = HashMap<PostID, Post?>();
+  final _posts = HashMap<PostID, Post?>();
+  final _comments = HashMap<CommentID, Comment?>();
 
   final DateTimeProvider _dateTimeProvider;
   final MediaRepository _mediaRepository;
 
   @override
-  Future<Post> create({
+  Future<Post> createPost({
     required NewPost newPost,
     required UserID authorID,
   }) async {
     late PostID id;
     do {
       id = PostID.generate();
-    } while (_storage.keys.contains(id));
+    } while (_posts.keys.contains(id));
 
     // book ID
-    _storage[id] = null;
+    _posts[id] = null;
 
     final mediaIDs = <MediaID>[];
 
@@ -55,23 +56,23 @@ class DevPostRepository implements PostRepository {
       tags: newPost.tags,
     );
 
-    _storage[id] = post;
+    _posts[id] = post;
 
     return post;
   }
 
   @override
-  Future<void> update({required Post post}) async {
-    _storage[post.id] = post;
+  Future<void> updatePost({required Post post}) async {
+    _posts[post.id] = post;
   }
 
   @override
-  Future<Post?> getByID({required PostID id}) async {
-    return _storage[id];
+  Future<Post?> getPostByID({required PostID id}) async {
+    return _posts[id];
   }
 
   @override
-  Future<List<Post>> getByFilter({
+  Future<List<Post>> getPostsByFilter({
     required int limit,
     List<UserID> byUsers = const [],
     bool byAllUsers = false,
@@ -81,7 +82,7 @@ class DevPostRepository implements PostRepository {
 
     var reachStartAster = startAfter == null;
 
-    for (final post in _storage.values) {
+    for (final post in _posts.values) {
       // booked place
       if (post == null) {
         continue;
@@ -101,5 +102,153 @@ class DevPostRepository implements PostRepository {
     }
 
     return result;
+  }
+
+  @override
+  Future<void> updateComment({required Comment comment}) async {
+    _comments[comment.id] = comment;
+  }
+
+  @override
+  Future<Comment?> getCommentByID({required CommentID id}) async {
+    return _comments[id];
+  }
+
+  @override
+  Future<List<Comment>> getCommentsByFilter({
+    required PostID postID,
+    required int limit,
+    CommentID? repliedTo,
+    CommentID? startAfter,
+  }) async {
+    var reachStartAfter = startAfter == null;
+
+    final commentIDs = _posts[postID]?.commentIDs;
+
+    if (commentIDs == null) {
+      return [];
+    }
+
+    if (repliedTo == null) {
+      final comments = <Comment>[];
+
+      for (final id in commentIDs) {
+        if (reachStartAfter) {
+          // TODO: what if comment has been deleted?
+          comments.add(_comments[id]!);
+        } else if (id == startAfter) {
+          reachStartAfter = true;
+        }
+      }
+
+      return comments;
+    }
+
+    final replyIDs = _comments[repliedTo]?.replyIDs;
+
+    if (replyIDs == null) {
+      return [];
+    }
+
+    final replies = <Comment>[];
+
+    for (final id in replyIDs) {
+      if (reachStartAfter) {
+        // TODO: what if comment has been deleted?
+        replies.add(_comments[id]!);
+      } else if (id == startAfter) {
+        reachStartAfter = true;
+      }
+    }
+
+    return replies;
+  }
+
+  @override
+  Future<Comment> replyToPost({
+    required String text,
+    required UserID authorID,
+    required PostID postID,
+  }) async {
+    final post = _posts[postID];
+
+    if (post == null) {
+      throw Exception('Post not found');
+    }
+
+    late CommentID id;
+    do {
+      id = CommentID.generate();
+    } while (_comments.containsKey(id));
+
+    // book place
+    _comments[id] = null;
+
+    final comment = Comment(
+      id: id,
+      authorID: authorID,
+      postID: postID,
+      createdAt: _dateTimeProvider.nowUtc(),
+      text: text,
+      likedByIDs: [],
+      replyIDs: [],
+    );
+
+    _comments[id] = comment;
+
+    final commentIDs = List.of(post.commentIDs)..add(id);
+    _posts[postID] = post.copyWith(
+      commentIDs: commentIDs,
+    );
+
+    return comment;
+  }
+
+  @override
+  Future<Comment> replyToComment({
+    required String text,
+    required UserID authorID,
+    required PostID postID,
+    required CommentID replyToCommentID,
+  }) async {
+    final post = _posts[postID];
+
+    if (post == null) {
+      throw Exception('Post not found');
+    }
+
+    final comment = _comments[replyToCommentID];
+
+    if (comment == null) {
+      throw Exception('Comment not found');
+    }
+
+    late CommentID id;
+    do {
+      id = CommentID.generate();
+    } while (_comments.containsKey(id));
+
+    // book place
+    _comments[id] = null;
+
+    final reply = Comment(
+      id: id,
+      authorID: authorID,
+      postID: postID,
+      createdAt: _dateTimeProvider.nowUtc(),
+      text: text,
+      likedByIDs: [],
+      replyIDs: [],
+      replyToID: replyToCommentID,
+    );
+
+    _comments[id] = reply;
+
+    final replyIDs = List.of(comment.replyIDs)..add(id);
+    _comments[replyToCommentID] = comment.copyWith(
+      replyIDs: replyIDs,
+    );
+
+    return reply;
   }
 }

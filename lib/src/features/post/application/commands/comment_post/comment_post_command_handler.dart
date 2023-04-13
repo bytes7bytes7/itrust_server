@@ -17,21 +17,18 @@ class CommentPostCommandHandler extends RequestHandler<CommentPostCommand,
     Either<List<DetailedException>, PostCommentResult>> {
   const CommentPostCommandHandler({
     required PostRepository postRepository,
-    required CommentRepository commentRepository,
     required Mapster mapster,
   })  : _postRepository = postRepository,
-        _commentRepository = commentRepository,
         _mapster = mapster;
 
   final PostRepository _postRepository;
-  final CommentRepository _commentRepository;
   final Mapster _mapster;
 
   @override
   FutureOr<Either<List<DetailedException>, PostCommentResult>> handle(
     CommentPostCommand request,
   ) async {
-    final post = await _postRepository.getByID(id: request.postID);
+    final post = await _postRepository.getPostByID(id: request.postID);
 
     if (post == null) {
       return left(
@@ -42,7 +39,7 @@ class CommentPostCommandHandler extends RequestHandler<CommentPostCommand,
     late Comment comment;
     final repliedTo = request.repliedTo;
     if (repliedTo != null) {
-      final reply = await _commentRepository.getByID(id: repliedTo);
+      final reply = await _postRepository.getCommentByID(id: repliedTo);
 
       if (reply == null) {
         return left(
@@ -50,18 +47,30 @@ class CommentPostCommandHandler extends RequestHandler<CommentPostCommand,
         );
       }
 
-      comment = await _commentRepository.replyToComment(
-        text: request.text,
-        authorID: request.userID,
-        postID: request.postID,
-        replyToCommentID: repliedTo,
-      );
+      try {
+        comment = await _postRepository.replyToComment(
+          text: request.text,
+          authorID: request.userID,
+          postID: request.postID,
+          replyToCommentID: repliedTo,
+        );
+      } catch (e) {
+        return left(
+          [const PostOrCommentNotFound()],
+        );
+      }
     } else {
-      comment = await _commentRepository.replyToPost(
-        text: request.text,
-        authorID: request.userID,
-        postID: request.postID,
-      );
+      try {
+        comment = await _postRepository.replyToPost(
+          text: request.text,
+          authorID: request.userID,
+          postID: request.postID,
+        );
+      } catch (e) {
+        return left(
+          [const PostNotFound()],
+        );
+      }
     }
 
     return right(

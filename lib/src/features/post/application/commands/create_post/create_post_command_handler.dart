@@ -30,7 +30,7 @@ class CreatePostCommandHandler extends RequestHandler<CreatePostCommand,
   FutureOr<Either<List<DetailedException>, PostResult>> handle(
     CreatePostCommand request,
   ) async {
-    final post = await _postRepository.create(
+    final post = await _postRepository.createPost(
       newPost: request.post,
       authorID: request.userID,
     );

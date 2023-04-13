@@ -34,7 +34,7 @@ class GetFeedQueryHandler extends RequestHandler<GetFeedQuery,
   FutureOr<Either<List<DetailedException>, GetFeedResult>> handle(
     GetFeedQuery request,
   ) async {
-    final posts = await _postRepository.getByFilter(
+    final posts = await _postRepository.getPostsByFilter(
       limit: _postLimit,
       byAllUsers: true,
       startAfter: request.lastPostID,

@@ -1,4 +1,3 @@
-export 'comment_repository.dart';
 export 'end_user_repository.dart';
 export 'media_repository.dart';
 export 'password_hash_repository.dart';
