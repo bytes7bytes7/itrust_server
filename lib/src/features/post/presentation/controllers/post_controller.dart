@@ -13,6 +13,7 @@ import '../contracts/contracts.dart';
 part 'post_controller.g.dart';
 
 const _postIDParam = 'postID';
+const _commentIDParam = 'commentID';
 
 @injectable
 class PostController extends ApiController {
@@ -202,6 +203,52 @@ class PostController extends ApiController {
     return result.match(
       problem,
       (r) => ok(_mapster.map1(r, To<PostCommentsResponse>())),
+    );
+  }
+
+  @Route.get('/<$_postIDParam>/comment/<$_commentIDParam>')
+  Future<Response> getPostComment(Request request) async {
+    late final GetPostCommentRequest getPostCommentRequest;
+    try {
+      getPostCommentRequest =
+          await parseRequest<GetPostCommentRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final postID = request.params[_postIDParam];
+
+    if (postID == null) {
+      return problem([const InvalidRequest()]);
+    }
+
+    final commentID = request.params[_commentIDParam];
+
+    if (commentID == null) {
+      return problem([const InvalidRequest()]);
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query = _mapster.map4(
+      getPostCommentRequest,
+      postID,
+      commentID,
+      user.id,
+      To<GetPostCommentQuery>(),
+    );
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<PostCommentResponse>())),
     );
   }
 

@@ -110,8 +110,21 @@ class DevPostRepository implements PostRepository {
   }
 
   @override
-  Future<Comment?> getCommentByID({required CommentID id}) async {
-    return _comments[id];
+  Future<Comment?> getCommentByID({
+    required PostID postID,
+    required CommentID commentID,
+  }) async {
+    final comment = _comments[commentID];
+
+    if (comment == null) {
+      return null;
+    }
+
+    if (comment.postID != postID) {
+      return null;
+    }
+
+    return comment;
   }
 
   @override

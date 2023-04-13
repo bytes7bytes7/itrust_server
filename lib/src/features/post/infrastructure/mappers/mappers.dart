@@ -1,5 +1,6 @@
 export 'comment_post_request_post_id_user_id_to_comment_post_command_mapper.dart';
 export 'create_post_request_id_to_create_post_command_mapper.dart';
+export 'get_post_comment_request_post_id_comment_id_user_id_to_get_post_comment_query_mapper.dart';
 export 'get_post_comments_request_post_id_user_id_to_get_post_comments_query_mapper.dart';
 export 'get_post_request_post_id_user_id_to_get_post_query_mapper.dart';
 export 'like_post_request_post_id_user_id_to_like_post_command_mapper.dart';

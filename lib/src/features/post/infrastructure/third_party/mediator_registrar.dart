@@ -23,6 +23,7 @@ class PostMediatorRegistrar {
       ..registerRequestHandler(() => _getIt.get<UnlikePostCommandHandler>())
       ..registerRequestHandler(() => _getIt.get<GetPostCommentsQueryHandler>())
       ..registerRequestHandler(() => _getIt.get<CommentPostCommandHandler>())
+      ..registerRequestHandler(() => _getIt.get<GetPostCommentQueryHandler>())
 
       // PipelineBehavior
       ..registerPipelineBehavior(
@@ -42,6 +43,9 @@ class PostMediatorRegistrar {
       )
       ..registerPipelineBehavior(
         () => ValidationBehavior([_getIt.get<CommentPostCommandValidator>()]),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior([_getIt.get<GetPostCommentQueryValidator>()]),
       );
   }
 }

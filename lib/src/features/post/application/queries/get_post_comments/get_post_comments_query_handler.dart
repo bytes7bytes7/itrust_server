@@ -39,7 +39,10 @@ class GetPostCommentsQueryHandler extends RequestHandler<GetPostCommentsQuery,
 
     final repliedTo = request.repliedTo;
     if (repliedTo != null) {
-      final reply = await _postRepository.getCommentByID(id: repliedTo);
+      final reply = await _postRepository.getCommentByID(
+        postID: request.postID,
+        commentID: repliedTo,
+      );
 
       if (reply == null) {
         return left(

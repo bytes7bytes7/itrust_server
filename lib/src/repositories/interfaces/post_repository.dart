@@ -20,7 +20,10 @@ abstract class PostRepository {
 
   Future<void> updateComment({required Comment comment});
 
-  Future<Comment?> getCommentByID({required CommentID id});
+  Future<Comment?> getCommentByID({
+    required PostID postID,
+    required CommentID commentID,
+  });
 
   Future<List<Comment>> getCommentsByFilter({
     required PostID postID,

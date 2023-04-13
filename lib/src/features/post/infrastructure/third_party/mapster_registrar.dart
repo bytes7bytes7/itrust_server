@@ -46,6 +46,12 @@ class PostMapsterRegistrar {
       )
       ..register(
         MapperMeta.one(PostCommentResultToPostCommentResponseMapper.new),
+      )
+      ..register(
+        MapperMeta.four(
+          GetPostCommentRequestPostIDCommentIDUserIDToGetPostCommentQueryMapper
+              .new,
+        ),
       );
   }
 }

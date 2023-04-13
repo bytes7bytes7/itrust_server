@@ -19,6 +19,8 @@ class CommentUserIDToCommentVMMapper
       likedByMe: _comment.likedByIDs.contains(_myID),
       likesAmount: _comment.likedByIDs.length,
       repliesAmount: _comment.replyIDs.length,
+      replyToID: _comment.replyToID,
+      modifiedAt: _comment.modifiedAt,
     );
   }
 
