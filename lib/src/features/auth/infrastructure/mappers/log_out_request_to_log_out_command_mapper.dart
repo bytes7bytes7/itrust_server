@@ -3,9 +3,9 @@ import 'package:mapster/mapster.dart';
 import '../../application/commands/commands.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class LogOutRequestStringToLogOutCommandMapper
+class LogOutRequestToLogOutCommandMapper
     extends TwoSourcesMapper<LogOutRequest, String, LogOutCommand> {
-  LogOutRequestStringToLogOutCommandMapper(super.input);
+  LogOutRequestToLogOutCommandMapper(super.input);
 
   @override
   LogOutCommand map() {

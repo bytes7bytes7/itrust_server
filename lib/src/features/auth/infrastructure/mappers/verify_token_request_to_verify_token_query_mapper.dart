@@ -3,9 +3,9 @@ import 'package:mapster/mapster.dart';
 import '../../application/application.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class VerifyTokenRequestStringToVerifyTokenQueryMapper
+class VerifyTokenRequestToVerifyTokenQueryMapper
     extends TwoSourcesMapper<VerifyTokenRequest, String, VerifyTokenQuery> {
-  VerifyTokenRequestStringToVerifyTokenQueryMapper(super.input);
+  VerifyTokenRequestToVerifyTokenQueryMapper(super.input);
 
   @override
   VerifyTokenQuery map() {

@@ -14,7 +14,7 @@ class AccountMapsterRegistrar {
     _mapster
       ..register(
         MapperMeta.two(
-          ChangePersonalInfoRequestIDToChangePersonalInfoCommandMapper.new,
+          ChangePersonalInfoRequestToChangePersonalInfoCommandMapper.new,
         ),
       )
       ..register(
@@ -24,7 +24,7 @@ class AccountMapsterRegistrar {
       )
       ..register(
         MapperMeta.three(
-          GetDevicesRequestIDAccessTokenToGetDevicesQueryMapper.new,
+          GetDevicesRequestToGetDevicesQueryMapper.new,
         ),
       )
       ..register(
@@ -32,7 +32,7 @@ class AccountMapsterRegistrar {
       )
       ..register(
         MapperMeta.three(
-          RemoveDeviceRequestIDAccessTokenToRemoveDeviceCommandMapper.new,
+          RemoveDeviceRequestToRemoveDeviceCommandMapper.new,
         ),
       )
       ..register(

@@ -3,9 +3,9 @@ import 'package:mapster/mapster.dart';
 import '../../application/application.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class RefreshTokenRequestIPToRefreshTokenCommandMapper
+class RefreshTokenRequestToRefreshTokenCommandMapper
     extends TwoSourcesMapper<RefreshTokenRequest, String, RefreshTokenCommand> {
-  RefreshTokenRequestIPToRefreshTokenCommandMapper(super.input);
+  RefreshTokenRequestToRefreshTokenCommandMapper(super.input);
 
   @override
   RefreshTokenCommand map() {

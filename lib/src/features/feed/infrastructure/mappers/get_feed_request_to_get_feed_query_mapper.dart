@@ -4,9 +4,9 @@ import '../../../common/domain/domain.dart';
 import '../../application/application.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class GetFeedRequestIDToGetFeedQueryMapper
+class GetFeedRequestToGetFeedQueryMapper
     extends TwoSourcesMapper<GetFeedRequest, UserID, GetFeedQuery> {
-  GetFeedRequestIDToGetFeedQueryMapper(super.input);
+  GetFeedRequestToGetFeedQueryMapper(super.input);
 
   @override
   GetFeedQuery map() {

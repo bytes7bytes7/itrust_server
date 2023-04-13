@@ -4,9 +4,9 @@ import '../../../common/domain/domain.dart';
 import '../../application/application.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class IDToGetUserQueryMapper
+class GetUserByIDRequestToGetUserByIDQueryMapper
     extends TwoSourcesMapper<GetUserByIDRequest, String, GetUserByIDQuery> {
-  IDToGetUserQueryMapper(super.input);
+  GetUserByIDRequestToGetUserByIDQueryMapper(super.input);
 
   @override
   GetUserByIDQuery map() {

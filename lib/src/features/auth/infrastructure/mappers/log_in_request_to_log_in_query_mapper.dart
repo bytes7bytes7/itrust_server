@@ -3,9 +3,9 @@ import 'package:mapster/mapster.dart';
 import '../../application/application.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class LogInRequestIPToLogInQueryMapper
+class LogInRequestToLogInQueryMapper
     extends TwoSourcesMapper<LogInRequest, String, LogInQuery> {
-  LogInRequestIPToLogInQueryMapper(super.input);
+  LogInRequestToLogInQueryMapper(super.input);
 
   @override
   LogInQuery map() {

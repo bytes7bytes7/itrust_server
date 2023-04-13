@@ -13,13 +13,13 @@ class FeedMapsterRegistrar {
   void register() {
     _mapster
       ..register(
-        MapperMeta.two(GetFeedRequestIDToGetFeedQueryMapper.new),
+        MapperMeta.two(GetFeedRequestToGetFeedQueryMapper.new),
       )
       ..register(
         MapperMeta.one(GetFeedResultToGetFeedResponseMapper.new),
       )
       ..register(
-        MapperMeta.two(GetTagsRequestIDToGetTagsQueryMapper.new),
+        MapperMeta.two(GetTagsRequestToGetTagsQueryMapper.new),
       )
       ..register(
         MapperMeta.one(GetTagsResultToGetTagsResponseMapper.new),

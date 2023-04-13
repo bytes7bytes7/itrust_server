@@ -3,9 +3,9 @@ import 'package:mapster/mapster.dart';
 import '../../application/application.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class RegisterRequestIPToRegisterCommandMapper
+class RegisterRequestToRegisterCommandMapper
     extends TwoSourcesMapper<RegisterRequest, String, RegisterCommand> {
-  RegisterRequestIPToRegisterCommandMapper(super.input);
+  RegisterRequestToRegisterCommandMapper(super.input);
 
   @override
   RegisterCommand map() {

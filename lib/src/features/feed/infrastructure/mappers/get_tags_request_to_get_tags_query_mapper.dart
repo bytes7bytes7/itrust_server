@@ -4,9 +4,9 @@ import '../../../common/domain/domain.dart';
 import '../../application/queries/get_tags/get_tags.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class GetTagsRequestIDToGetTagsQueryMapper
+class GetTagsRequestToGetTagsQueryMapper
     extends TwoSourcesMapper<GetTagsRequest, UserID, GetTagsQuery> {
-  GetTagsRequestIDToGetTagsQueryMapper(super.input);
+  GetTagsRequestToGetTagsQueryMapper(super.input);
 
   @override
   GetTagsQuery map() {

@@ -4,10 +4,10 @@ import '../../../common/common.dart';
 import '../../application/application.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class ChangePersonalInfoRequestIDToChangePersonalInfoCommandMapper
+class ChangePersonalInfoRequestToChangePersonalInfoCommandMapper
     extends TwoSourcesMapper<ChangePersonalInfoRequest, UserID,
         ChangePersonalInfoCommand> {
-  ChangePersonalInfoRequestIDToChangePersonalInfoCommandMapper(super.input);
+  ChangePersonalInfoRequestToChangePersonalInfoCommandMapper(super.input);
 
   @override
   ChangePersonalInfoCommand map() {

@@ -4,9 +4,9 @@ import '../../application/view_models/media_vm/media_vm.dart';
 import '../../application/view_models/post_vm/post_vm.dart';
 import '../../domain/domain.dart';
 
-class PostUserIDMediaVMToPostVMMapper
+class PostToPostVMMapper
     extends ThreeSourcesMapper<Post, UserID, List<MediaVM>, PostVM> {
-  PostUserIDMediaVMToPostVMMapper(super.input);
+  PostToPostVMMapper(super.input);
 
   @override
   PostVM map() {

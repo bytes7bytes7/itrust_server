@@ -13,13 +13,13 @@ class CommonMapsterRegistrar {
   void register() {
     _mapster
       ..register(
-        MapperMeta.three(PostUserIDMediaVMToPostVMMapper.new),
+        MapperMeta.three(PostToPostVMMapper.new),
       )
       ..register(
         MapperMeta.one(MediaToMediaVMMapper.new),
       )
       ..register(
-        MapperMeta.two(CommentUserIDToCommentVMMapper.new),
+        MapperMeta.two(CommentToCommentVMMapper.new),
       );
   }
 }

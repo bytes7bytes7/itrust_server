@@ -4,9 +4,9 @@ import '../../application/view_models/comment_vm/comment_vm.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/value_objects/value_objects.dart';
 
-class CommentUserIDToCommentVMMapper
+class CommentToCommentVMMapper
     extends TwoSourcesMapper<Comment, UserID, CommentVM> {
-  CommentUserIDToCommentVMMapper(super.input);
+  CommentToCommentVMMapper(super.input);
 
   @override
   CommentVM map() {

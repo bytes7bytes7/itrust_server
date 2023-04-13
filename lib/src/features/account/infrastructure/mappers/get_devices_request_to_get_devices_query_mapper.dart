@@ -4,9 +4,9 @@ import '../../../common/domain/domain.dart';
 import '../../application/queries/queries.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class GetDevicesRequestIDAccessTokenToGetDevicesQueryMapper extends ThreeSourcesMapper<
+class GetDevicesRequestToGetDevicesQueryMapper extends ThreeSourcesMapper<
     GetDevicesRequest, UserID, String, GetDevicesQuery> {
-  GetDevicesRequestIDAccessTokenToGetDevicesQueryMapper(super.input);
+  GetDevicesRequestToGetDevicesQueryMapper(super.input);
 
   @override
   GetDevicesQuery map() {

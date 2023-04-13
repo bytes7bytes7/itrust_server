@@ -4,10 +4,9 @@ import '../../../common/domain/domain.dart';
 import '../../application/application.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class RemoveDeviceRequestIDAccessTokenToRemoveDeviceCommandMapper
-    extends ThreeSourcesMapper<RemoveDeviceRequest, UserID, String,
-        RemoveDeviceCommand> {
-  RemoveDeviceRequestIDAccessTokenToRemoveDeviceCommandMapper(super.input);
+class RemoveDeviceRequestToRemoveDeviceCommandMapper extends ThreeSourcesMapper<
+    RemoveDeviceRequest, UserID, String, RemoveDeviceCommand> {
+  RemoveDeviceRequestToRemoveDeviceCommandMapper(super.input);
 
   @override
   RemoveDeviceCommand map() {
