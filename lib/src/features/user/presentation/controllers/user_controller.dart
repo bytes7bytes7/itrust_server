@@ -203,4 +203,36 @@ class UserController extends ApiController {
       (r) => ok(_mapster.map1(r, To<UserInfoResponse>())),
     );
   }
+
+  @Route.post('/respond_friend_bid')
+  Future<Response> respondFriendBid(Request request) async {
+    late final RespondFriendBidRequest respondFriendBidRequest;
+    try {
+      respondFriendBidRequest =
+          await parseRequest<RespondFriendBidRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final command = _mapster.map2(
+      respondFriendBidRequest,
+      user.id,
+      To<RespondFriendBidCommand>(),
+    );
+
+    final result = await command.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<UserInfoResponse>())),
+    );
+  }
 }

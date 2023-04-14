@@ -44,8 +44,8 @@ class SendFriendBidCommandHandler extends RequestHandler<SendFriendBidCommand,
       );
     }
 
-    // specify type for mapper
-    final User? user =
+    // ignore: omit_local_variable_types
+    final EndUser? user =
         await _endUserRepository.getByID(id: request.sendToUserID);
 
     if (user == null) {

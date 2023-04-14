@@ -44,8 +44,8 @@ class CancelFriendBidCommandHandler extends RequestHandler<
       );
     }
 
-    // specify type for mapper
-    final User? user =
+    // ignore: omit_local_variable_types
+    final EndUser? user =
         await _endUserRepository.getByID(id: request.cancelToUserID);
 
     if (user == null) {
@@ -54,12 +54,12 @@ class CancelFriendBidCommandHandler extends RequestHandler<
       );
     }
 
-    final hasBidAlready = await _friendBidRepository.hasBidToUser(
+    final hasBid = await _friendBidRepository.hasBidToUser(
       from: request.userID,
       to: request.cancelToUserID,
     );
 
-    if (!hasBidAlready) {
+    if (!hasBid) {
       return left(
         [const BidNotFound()],
       );

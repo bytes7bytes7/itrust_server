@@ -37,11 +37,22 @@ class UserMapsterRegistrar {
         MapperMeta.three(UserToUserInfoVMMapper.new),
       )
       ..register(
+        MapperMeta.three(EndUserToUserInfoVMMapper.new),
+      )
+      ..register(
+        MapperMeta.three(StaffUserToUserInfoVMMapper.new),
+      )
+      ..register(
         MapperMeta.two(GetUserInfoRequestToGetUserInfoQueryMapper.new),
       )
       ..register(
         MapperMeta.two(
           CancelFriendBidRequestToCancelFriendBidCommandMapper.new,
+        ),
+      )
+      ..register(
+        MapperMeta.two(
+          RespondFriendBidRequestToRespondFriendBidCommandMapper.new,
         ),
       );
   }
