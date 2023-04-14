@@ -12,7 +12,7 @@ class SendFriendBidRequestToSendFriendBidCommandMapper extends TwoSourcesMapper<
   SendFriendBidCommand map() {
     return SendFriendBidCommand(
       userID: _userID,
-      sendToUserID: UserID.fromString(_request.sendTo),
+      sendToUserID: UserID.fromString(_request.sendToUserID),
     );
   }
 

@@ -37,6 +37,28 @@ class DevFriendBidRepository implements FriendBidRepository {
   }
 
   @override
+  Future<void> remove({
+    required UserID from,
+    required UserID to,
+  }) async {
+    final fromUserBids = List.of(_bidsFromUser[from] ?? <UserID>[]);
+
+    if (!fromUserBids.contains(to)) {
+      throw Exception('A bid does not exist');
+    }
+
+    _bidsFromUser[from] = fromUserBids..remove(to);
+
+    final toUserBids = List.of(_bidsToUser[to] ?? <UserID>[]);
+
+    if (!toUserBids.contains(from)) {
+      throw Exception('A bid does not exist');
+    }
+
+    _bidsToUser[to] = toUserBids..remove(from);
+  }
+
+  @override
   Future<List<UserID>> getBidsToUserWithFilter({
     required UserID userID,
     required int limit,

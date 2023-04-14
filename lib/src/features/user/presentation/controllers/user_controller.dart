@@ -110,6 +110,37 @@ class UserController extends ApiController {
     );
   }
 
+  @Route.get('/info')
+  Future<Response> getUserInfo(Request request) async {
+    late final GetUserInfoRequest getUserInfoRequest;
+    try {
+      getUserInfoRequest = await parseRequest<GetUserInfoRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query = _mapster.map2(
+      getUserInfoRequest,
+      user.id,
+      To<GetUserInfoQuery>(),
+    );
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<UserInfoResponse>())),
+    );
+  }
+
   @Route.post('/friend_bid')
   Future<Response> sendFriendBid(Request request) async {
     late final SendFriendBidRequest sendFriendBidRequest;
@@ -141,11 +172,12 @@ class UserController extends ApiController {
     );
   }
 
-  @Route.get('/info')
-  Future<Response> getUserInfo(Request request) async {
-    late final GetUserInfoRequest getUserInfoRequest;
+  @Route.post('/cancel_friend_bid')
+  Future<Response> cancelFriendBid(Request request) async {
+    late final CancelFriendBidRequest cancelFriendBidRequest;
     try {
-      getUserInfoRequest = await parseRequest<GetUserInfoRequest>(request);
+      cancelFriendBidRequest =
+          await parseRequest<CancelFriendBidRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -158,13 +190,13 @@ class UserController extends ApiController {
       return problem([const UserNotFound()]);
     }
 
-    final query = _mapster.map2(
-      getUserInfoRequest,
+    final command = _mapster.map2(
+      cancelFriendBidRequest,
       user.id,
-      To<GetUserInfoQuery>(),
+      To<CancelFriendBidCommand>(),
     );
 
-    final result = await query.sendTo(_mediator);
+    final result = await command.sendTo(_mediator);
 
     return result.match(
       problem,

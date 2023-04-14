@@ -38,6 +38,11 @@ class UserMapsterRegistrar {
       )
       ..register(
         MapperMeta.two(GetUserInfoRequestToGetUserInfoQueryMapper.new),
+      )
+      ..register(
+        MapperMeta.two(
+          CancelFriendBidRequestToCancelFriendBidCommandMapper.new,
+        ),
       );
   }
 }

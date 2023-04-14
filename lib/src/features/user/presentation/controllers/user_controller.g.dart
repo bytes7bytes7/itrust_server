@@ -24,14 +24,19 @@ Router _$UserControllerRouter(UserController service) {
     service.getFriends,
   );
   router.add(
+    'GET',
+    r'/info',
+    service.getUserInfo,
+  );
+  router.add(
     'POST',
     r'/friend_bid',
     service.sendFriendBid,
   );
   router.add(
-    'GET',
-    r'/info',
-    service.getUserInfo,
+    'POST',
+    r'/cancel_friend_bid',
+    service.cancelFriendBid,
   );
   return router;
 }

@@ -6,6 +6,11 @@ abstract class FriendBidRepository {
     required UserID to,
   });
 
+  Future<void> remove({
+    required UserID from,
+    required UserID to,
+  });
+
   Future<List<UserID>> getBidsToUserWithFilter({
     required UserID userID,
     required int limit,
