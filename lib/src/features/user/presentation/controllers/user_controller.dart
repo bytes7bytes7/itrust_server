@@ -4,14 +4,12 @@ import 'package:mediator/mediator.dart' as mdtr;
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 
+import '../../../../utils/extensions/request_x.dart';
 import '../../../common/common.dart';
 import '../../application/application.dart';
 import '../contracts/contracts.dart';
 
 part 'user_controller.g.dart';
-
-const _userIDParam = 'userID';
-const _userNickParam = 'userNick';
 
 @injectable
 class UserController extends ApiController {
@@ -28,7 +26,7 @@ class UserController extends ApiController {
 
   Router get router => _$UserControllerRouter(this);
 
-  @Route.get('/id<$_userIDParam>')
+  @Route.get('/id<$userIDKey>')
   Future<Response> getUserByID(Request request) async {
     late final GetUserByIDRequest getUserByIDRequest;
     try {
@@ -39,24 +37,52 @@ class UserController extends ApiController {
       );
     }
 
-    final userID = request.params[_userIDParam];
+    final user = request.user;
 
-    if (userID == null) {
-      return problem([const InvalidRequest()]);
+    if (user == null) {
+      return problem([const UserNotFound()]);
     }
 
     final query =
-        _mapster.map2(getUserByIDRequest, userID, To<GetUserByIDQuery>());
+        _mapster.map2(getUserByIDRequest, user.id, To<GetUserByIDQuery>());
 
     final result = await query.sendTo(_mediator);
 
     return result.match(
       problem,
-      (r) => ok(_mapster.map1(r, To<GetUserByIDResponse>())),
+      (r) => ok(_mapster.map1(r, To<UserResponse>())),
     );
   }
 
-  @Route.get('/<$_userNickParam>')
+  @Route.get('/friends')
+  Future<Response> getFriends(Request request) async {
+    late final GetFriendsRequest getFriendsRequest;
+    try {
+      getFriendsRequest = await parseRequest<GetFriendsRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query =
+        _mapster.map2(getFriendsRequest, user.id, To<GetFriendsQuery>());
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<UsersResponse>())),
+    );
+  }
+
+  @Route.get('/<$userNickKey>')
   Future<Response> getUserByNick(Request request) async {
     late final GetUserByNickRequest getUserByNickRequest;
     try {
@@ -67,20 +93,20 @@ class UserController extends ApiController {
       );
     }
 
-    final userID = request.params[_userNickParam];
+    final user = request.user;
 
-    if (userID == null) {
-      return problem([const InvalidRequest()]);
+    if (user == null) {
+      return problem([const UserNotFound()]);
     }
 
     final query =
-        _mapster.map2(getUserByNickRequest, userID, To<GetUserByNickQuery>());
+        _mapster.map2(getUserByNickRequest, user.id, To<GetUserByNickQuery>());
 
     final result = await query.sendTo(_mediator);
 
     return result.match(
       problem,
-      (r) => ok(_mapster.map1(r, To<GetUserByNickResponse>())),
+      (r) => ok(_mapster.map1(r, To<UserResponse>())),
     );
   }
 }

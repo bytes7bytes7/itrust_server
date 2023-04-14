@@ -2,48 +2,55 @@ import 'dart:async';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
+import 'package:mapster/mapster.dart';
 import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
+import '../../../../common/application/view_models/user_vm/user_vm.dart';
 import '../../common/common.dart';
 import 'get_user_by_id_query.dart';
 
 @singleton
 class GetUserByIDQueryHandler extends RequestHandler<GetUserByIDQuery,
-    Either<List<DetailedException>, GetUserByIDResult>> {
+    Either<List<DetailedException>, UserResult>> {
   const GetUserByIDQueryHandler({
     required EndUserRepository endUserRepository,
     required StaffUserRepository staffUserRepository,
+    required Mapster mapster,
   })  : _endUserRepository = endUserRepository,
-        _staffUserRepository = staffUserRepository;
+        _staffUserRepository = staffUserRepository,
+        _mapster = mapster;
 
   final EndUserRepository _endUserRepository;
   final StaffUserRepository _staffUserRepository;
+  final Mapster _mapster;
 
   @override
-  FutureOr<Either<List<DetailedException>, GetUserByIDResult>> handle(
+  FutureOr<Either<List<DetailedException>, UserResult>> handle(
     GetUserByIDQuery request,
   ) async {
-    if (request.userID.isEndUserID) {
-      final endUser = await _endUserRepository.getByID(id: request.userID);
+    if (request.requestedUserID.isStaffUserID) {
+      final staffUser =
+          await _staffUserRepository.getByID(id: request.requestedUserID);
 
-      if (endUser != null) {
+      if (staffUser != null) {
         return right(
-          GetUserByIDResult(
-            user: endUser,
+          UserResult(
+            user: _mapster.map1(staffUser, To<StaffUserVM>()),
           ),
         );
       }
     }
 
-    if (request.userID.isStaffUserID) {
-      final staffUser = await _staffUserRepository.getByID(id: request.userID);
+    if (request.requestedUserID.isEndUserID) {
+      final endUser =
+          await _endUserRepository.getByID(id: request.requestedUserID);
 
-      if (staffUser != null) {
+      if (endUser != null) {
         return right(
-          GetUserByIDResult(
-            user: staffUser,
+          UserResult(
+            user: _mapster.map1(endUser, To<EndUserVM>()),
           ),
         );
       }

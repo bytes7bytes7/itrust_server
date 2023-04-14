@@ -1,38 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'user_vm.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$EndUser _$$EndUserFromJson(Map<String, dynamic> json) => _$EndUser(
+_$EndUserVM _$$EndUserVMFromJson(Map<String, dynamic> json) => _$EndUserVM(
       id: UserID.fromJson(json['id'] as Map<String, dynamic>),
       email: json['email'] as String,
       firstName: json['firstName'] as String,
       avatarUrls: (json['avatarUrls'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
-      friends: (json['friends'] as List<dynamic>)
-          .map((e) => UserID.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      friendsAmount: json['friendsAmount'] as int,
       lastName: json['lastName'] as String?,
       nick: json['nick'] as String?,
       $type: json['type'] as String?,
     );
 
-Map<String, dynamic> _$$EndUserToJson(_$EndUser instance) => <String, dynamic>{
+Map<String, dynamic> _$$EndUserVMToJson(_$EndUserVM instance) =>
+    <String, dynamic>{
       'id': instance.id.toJson(),
       'email': instance.email,
       'firstName': instance.firstName,
       'avatarUrls': instance.avatarUrls,
-      'friends': instance.friends.map((e) => e.toJson()).toList(),
+      'friendsAmount': instance.friendsAmount,
       'lastName': instance.lastName,
       'nick': instance.nick,
       'type': instance.$type,
     };
 
-_$StaffUser _$$StaffUserFromJson(Map<String, dynamic> json) => _$StaffUser(
+_$StaffUserVM _$$StaffUserVMFromJson(Map<String, dynamic> json) =>
+    _$StaffUserVM(
       id: UserID.fromJson(json['id'] as Map<String, dynamic>),
       name: json['name'] as String,
       avatarUrls: (json['avatarUrls'] as List<dynamic>)
@@ -42,7 +42,7 @@ _$StaffUser _$$StaffUserFromJson(Map<String, dynamic> json) => _$StaffUser(
       $type: json['type'] as String?,
     );
 
-Map<String, dynamic> _$$StaffUserToJson(_$StaffUser instance) =>
+Map<String, dynamic> _$$StaffUserVMToJson(_$StaffUserVM instance) =>
     <String, dynamic>{
       'id': instance.id.toJson(),
       'name': instance.name,

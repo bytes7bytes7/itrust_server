@@ -32,4 +32,41 @@ class DevEndUserRepository implements EndUserRepository {
         .firstWhereOrNull((e) => e.value.nick == nick)
         ?.value;
   }
+
+  @override
+  Future<List<EndUser>> getFriendsByFilter({
+    required UserID friendsTo,
+    required int limit,
+    UserID? startAfter,
+  }) async {
+    final result = <EndUser>[];
+
+    var reachStartAfter = startAfter == null;
+
+    final friendsOwner = _storage[friendsTo];
+
+    if (friendsOwner == null) {
+      throw Exception('User not found');
+    }
+
+    for (final id in friendsOwner.friends) {
+      if (reachStartAfter) {
+        final user = _storage[id];
+
+        if (user == null) {
+          continue;
+        }
+
+        result.add(user);
+      } else if (id == startAfter) {
+        reachStartAfter = true;
+      }
+
+      if (result.length == limit) {
+        break;
+      }
+    }
+
+    return result;
+  }
 }

@@ -6,4 +6,4 @@ import 'get_user_by_id_query.dart';
 
 @singleton
 class GetUserByIDQueryValidator
-    extends BehaviorValidator<GetUserByIDQuery, GetUserByIDResult> {}
+    extends BehaviorValidator<GetUserByIDQuery, UserResult> {}

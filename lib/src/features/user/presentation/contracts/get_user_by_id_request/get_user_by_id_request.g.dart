@@ -7,7 +7,11 @@ part of 'get_user_by_id_request.dart';
 // **************************************************************************
 
 GetUserByIDRequest _$GetUserByIDRequestFromJson(Map<String, dynamic> json) =>
-    GetUserByIDRequest();
+    GetUserByIDRequest(
+      userID: json['userID'] as String,
+    );
 
 Map<String, dynamic> _$GetUserByIDRequestToJson(GetUserByIDRequest instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'userID': instance.userID,
+    };

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'user.dart';
+part of 'user_vm.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,21 +14,21 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-User _$UserFromJson(Map<String, dynamic> json) {
+UserVM _$UserVMFromJson(Map<String, dynamic> json) {
   switch (json['type']) {
     case 'end':
-      return EndUser.fromJson(json);
+      return EndUserVM.fromJson(json);
     case 'staff':
-      return StaffUser.fromJson(json);
+      return StaffUserVM.fromJson(json);
 
     default:
       throw CheckedFromJsonException(
-          json, 'type', 'User', 'Invalid union type "${json['type']}"!');
+          json, 'type', 'UserVM', 'Invalid union type "${json['type']}"!');
   }
 }
 
 /// @nodoc
-mixin _$User {
+mixin _$UserVM {
   UserID get id => throw _privateConstructorUsedError;
   List<String> get avatarUrls => throw _privateConstructorUsedError;
   String? get nick => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ mixin _$User {
             String email,
             String firstName,
             List<String> avatarUrls,
-            List<UserID> friends,
+            int friendsAmount,
             String? lastName,
             String? nick)
         end,
@@ -55,7 +55,7 @@ mixin _$User {
             String email,
             String firstName,
             List<String> avatarUrls,
-            List<UserID> friends,
+            int friendsAmount,
             String? lastName,
             String? nick)?
         end,
@@ -71,7 +71,7 @@ mixin _$User {
             String email,
             String firstName,
             List<String> avatarUrls,
-            List<UserID> friends,
+            int friendsAmount,
             String? lastName,
             String? nick)?
         end,
@@ -83,32 +83,32 @@ mixin _$User {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(EndUser value) end,
-    required TResult Function(StaffUser value) staff,
+    required TResult Function(EndUserVM value) end,
+    required TResult Function(StaffUserVM value) staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(EndUser value)? end,
-    TResult? Function(StaffUser value)? staff,
+    TResult? Function(EndUserVM value)? end,
+    TResult? Function(StaffUserVM value)? staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(EndUser value)? end,
-    TResult Function(StaffUser value)? staff,
+    TResult Function(EndUserVM value)? end,
+    TResult Function(StaffUserVM value)? staff,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
+  $UserVMCopyWith<UserVM> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserCopyWith<$Res> {
-  factory $UserCopyWith(User value, $Res Function(User) then) =
-      _$UserCopyWithImpl<$Res, User>;
+abstract class $UserVMCopyWith<$Res> {
+  factory $UserVMCopyWith(UserVM value, $Res Function(UserVM) then) =
+      _$UserVMCopyWithImpl<$Res, UserVM>;
   @useResult
   $Res call({UserID id, List<String> avatarUrls, String? nick});
 
@@ -116,9 +116,9 @@ abstract class $UserCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserCopyWithImpl<$Res, $Val extends User>
-    implements $UserCopyWith<$Res> {
-  _$UserCopyWithImpl(this._value, this._then);
+class _$UserVMCopyWithImpl<$Res, $Val extends UserVM>
+    implements $UserVMCopyWith<$Res> {
+  _$UserVMCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -158,9 +158,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
 }
 
 /// @nodoc
-abstract class _$$EndUserCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$$EndUserCopyWith(_$EndUser value, $Res Function(_$EndUser) then) =
-      __$$EndUserCopyWithImpl<$Res>;
+abstract class _$$EndUserVMCopyWith<$Res> implements $UserVMCopyWith<$Res> {
+  factory _$$EndUserVMCopyWith(
+          _$EndUserVM value, $Res Function(_$EndUserVM) then) =
+      __$$EndUserVMCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -168,7 +169,7 @@ abstract class _$$EndUserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String email,
       String firstName,
       List<String> avatarUrls,
-      List<UserID> friends,
+      int friendsAmount,
       String? lastName,
       String? nick});
 
@@ -177,9 +178,11 @@ abstract class _$$EndUserCopyWith<$Res> implements $UserCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
-    implements _$$EndUserCopyWith<$Res> {
-  __$$EndUserCopyWithImpl(_$EndUser _value, $Res Function(_$EndUser) _then)
+class __$$EndUserVMCopyWithImpl<$Res>
+    extends _$UserVMCopyWithImpl<$Res, _$EndUserVM>
+    implements _$$EndUserVMCopyWith<$Res> {
+  __$$EndUserVMCopyWithImpl(
+      _$EndUserVM _value, $Res Function(_$EndUserVM) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -189,11 +192,11 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
     Object? email = null,
     Object? firstName = null,
     Object? avatarUrls = null,
-    Object? friends = null,
+    Object? friendsAmount = null,
     Object? lastName = freezed,
     Object? nick = freezed,
   }) {
-    return _then(_$EndUser(
+    return _then(_$EndUserVM(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -210,10 +213,10 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
           ? _value._avatarUrls
           : avatarUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      friends: null == friends
-          ? _value._friends
-          : friends // ignore: cast_nullable_to_non_nullable
-              as List<UserID>,
+      friendsAmount: null == friendsAmount
+          ? _value.friendsAmount
+          : friendsAmount // ignore: cast_nullable_to_non_nullable
+              as int,
       lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
@@ -228,22 +231,21 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
 
 /// @nodoc
 @JsonSerializable()
-class _$EndUser implements EndUser {
-  const _$EndUser(
+class _$EndUserVM implements EndUserVM {
+  const _$EndUserVM(
       {required this.id,
       required this.email,
       required this.firstName,
       required final List<String> avatarUrls,
-      required final List<UserID> friends,
+      required this.friendsAmount,
       this.lastName,
       this.nick,
       final String? $type})
       : _avatarUrls = avatarUrls,
-        _friends = friends,
         $type = $type ?? 'end';
 
-  factory _$EndUser.fromJson(Map<String, dynamic> json) =>
-      _$$EndUserFromJson(json);
+  factory _$EndUserVM.fromJson(Map<String, dynamic> json) =>
+      _$$EndUserVMFromJson(json);
 
   @override
   final UserID id;
@@ -259,14 +261,8 @@ class _$EndUser implements EndUser {
     return EqualUnmodifiableListView(_avatarUrls);
   }
 
-  final List<UserID> _friends;
   @override
-  List<UserID> get friends {
-    if (_friends is EqualUnmodifiableListView) return _friends;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_friends);
-  }
-
+  final int friendsAmount;
   @override
   final String? lastName;
   @override
@@ -277,21 +273,22 @@ class _$EndUser implements EndUser {
 
   @override
   String toString() {
-    return 'User.end(id: $id, email: $email, firstName: $firstName, avatarUrls: $avatarUrls, friends: $friends, lastName: $lastName, nick: $nick)';
+    return 'UserVM.end(id: $id, email: $email, firstName: $firstName, avatarUrls: $avatarUrls, friendsAmount: $friendsAmount, lastName: $lastName, nick: $nick)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$EndUser &&
+            other is _$EndUserVM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             const DeepCollectionEquality()
                 .equals(other._avatarUrls, _avatarUrls) &&
-            const DeepCollectionEquality().equals(other._friends, _friends) &&
+            (identical(other.friendsAmount, friendsAmount) ||
+                other.friendsAmount == friendsAmount) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
             (identical(other.nick, nick) || other.nick == nick));
@@ -305,15 +302,15 @@ class _$EndUser implements EndUser {
       email,
       firstName,
       const DeepCollectionEquality().hash(_avatarUrls),
-      const DeepCollectionEquality().hash(_friends),
+      friendsAmount,
       lastName,
       nick);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$EndUserCopyWith<_$EndUser> get copyWith =>
-      __$$EndUserCopyWithImpl<_$EndUser>(this, _$identity);
+  _$$EndUserVMCopyWith<_$EndUserVM> get copyWith =>
+      __$$EndUserVMCopyWithImpl<_$EndUserVM>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -323,7 +320,7 @@ class _$EndUser implements EndUser {
             String email,
             String firstName,
             List<String> avatarUrls,
-            List<UserID> friends,
+            int friendsAmount,
             String? lastName,
             String? nick)
         end,
@@ -331,7 +328,7 @@ class _$EndUser implements EndUser {
             UserID id, String name, List<String> avatarUrls, String? nick)
         staff,
   }) {
-    return end(id, email, firstName, avatarUrls, friends, lastName, nick);
+    return end(id, email, firstName, avatarUrls, friendsAmount, lastName, nick);
   }
 
   @override
@@ -342,7 +339,7 @@ class _$EndUser implements EndUser {
             String email,
             String firstName,
             List<String> avatarUrls,
-            List<UserID> friends,
+            int friendsAmount,
             String? lastName,
             String? nick)?
         end,
@@ -350,7 +347,8 @@ class _$EndUser implements EndUser {
             UserID id, String name, List<String> avatarUrls, String? nick)?
         staff,
   }) {
-    return end?.call(id, email, firstName, avatarUrls, friends, lastName, nick);
+    return end?.call(
+        id, email, firstName, avatarUrls, friendsAmount, lastName, nick);
   }
 
   @override
@@ -361,7 +359,7 @@ class _$EndUser implements EndUser {
             String email,
             String firstName,
             List<String> avatarUrls,
-            List<UserID> friends,
+            int friendsAmount,
             String? lastName,
             String? nick)?
         end,
@@ -371,7 +369,8 @@ class _$EndUser implements EndUser {
     required TResult orElse(),
   }) {
     if (end != null) {
-      return end(id, email, firstName, avatarUrls, friends, lastName, nick);
+      return end(
+          id, email, firstName, avatarUrls, friendsAmount, lastName, nick);
     }
     return orElse();
   }
@@ -379,8 +378,8 @@ class _$EndUser implements EndUser {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(EndUser value) end,
-    required TResult Function(StaffUser value) staff,
+    required TResult Function(EndUserVM value) end,
+    required TResult Function(StaffUserVM value) staff,
   }) {
     return end(this);
   }
@@ -388,8 +387,8 @@ class _$EndUser implements EndUser {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(EndUser value)? end,
-    TResult? Function(StaffUser value)? staff,
+    TResult? Function(EndUserVM value)? end,
+    TResult? Function(StaffUserVM value)? staff,
   }) {
     return end?.call(this);
   }
@@ -397,8 +396,8 @@ class _$EndUser implements EndUser {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(EndUser value)? end,
-    TResult Function(StaffUser value)? staff,
+    TResult Function(EndUserVM value)? end,
+    TResult Function(StaffUserVM value)? staff,
     required TResult orElse(),
   }) {
     if (end != null) {
@@ -409,23 +408,23 @@ class _$EndUser implements EndUser {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$EndUserToJson(
+    return _$$EndUserVMToJson(
       this,
     );
   }
 }
 
-abstract class EndUser implements User {
-  const factory EndUser(
+abstract class EndUserVM implements UserVM {
+  const factory EndUserVM(
       {required final UserID id,
       required final String email,
       required final String firstName,
       required final List<String> avatarUrls,
-      required final List<UserID> friends,
+      required final int friendsAmount,
       final String? lastName,
-      final String? nick}) = _$EndUser;
+      final String? nick}) = _$EndUserVM;
 
-  factory EndUser.fromJson(Map<String, dynamic> json) = _$EndUser.fromJson;
+  factory EndUserVM.fromJson(Map<String, dynamic> json) = _$EndUserVM.fromJson;
 
   @override
   UserID get id;
@@ -433,21 +432,21 @@ abstract class EndUser implements User {
   String get firstName;
   @override
   List<String> get avatarUrls;
-  List<UserID> get friends;
+  int get friendsAmount;
   String? get lastName;
   @override
   String? get nick;
   @override
   @JsonKey(ignore: true)
-  _$$EndUserCopyWith<_$EndUser> get copyWith =>
+  _$$EndUserVMCopyWith<_$EndUserVM> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$StaffUserCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$$StaffUserCopyWith(
-          _$StaffUser value, $Res Function(_$StaffUser) then) =
-      __$$StaffUserCopyWithImpl<$Res>;
+abstract class _$$StaffUserVMCopyWith<$Res> implements $UserVMCopyWith<$Res> {
+  factory _$$StaffUserVMCopyWith(
+          _$StaffUserVM value, $Res Function(_$StaffUserVM) then) =
+      __$$StaffUserVMCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({UserID id, String name, List<String> avatarUrls, String? nick});
@@ -457,11 +456,11 @@ abstract class _$$StaffUserCopyWith<$Res> implements $UserCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$StaffUserCopyWithImpl<$Res>
-    extends _$UserCopyWithImpl<$Res, _$StaffUser>
-    implements _$$StaffUserCopyWith<$Res> {
-  __$$StaffUserCopyWithImpl(
-      _$StaffUser _value, $Res Function(_$StaffUser) _then)
+class __$$StaffUserVMCopyWithImpl<$Res>
+    extends _$UserVMCopyWithImpl<$Res, _$StaffUserVM>
+    implements _$$StaffUserVMCopyWith<$Res> {
+  __$$StaffUserVMCopyWithImpl(
+      _$StaffUserVM _value, $Res Function(_$StaffUserVM) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -472,7 +471,7 @@ class __$$StaffUserCopyWithImpl<$Res>
     Object? avatarUrls = null,
     Object? nick = freezed,
   }) {
-    return _then(_$StaffUser(
+    return _then(_$StaffUserVM(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -495,8 +494,8 @@ class __$$StaffUserCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$StaffUser implements StaffUser {
-  const _$StaffUser(
+class _$StaffUserVM implements StaffUserVM {
+  const _$StaffUserVM(
       {required this.id,
       required this.name,
       required final List<String> avatarUrls,
@@ -505,8 +504,8 @@ class _$StaffUser implements StaffUser {
       : _avatarUrls = avatarUrls,
         $type = $type ?? 'staff';
 
-  factory _$StaffUser.fromJson(Map<String, dynamic> json) =>
-      _$$StaffUserFromJson(json);
+  factory _$StaffUserVM.fromJson(Map<String, dynamic> json) =>
+      _$$StaffUserVMFromJson(json);
 
   @override
   final UserID id;
@@ -528,14 +527,14 @@ class _$StaffUser implements StaffUser {
 
   @override
   String toString() {
-    return 'User.staff(id: $id, name: $name, avatarUrls: $avatarUrls, nick: $nick)';
+    return 'UserVM.staff(id: $id, name: $name, avatarUrls: $avatarUrls, nick: $nick)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$StaffUser &&
+            other is _$StaffUserVM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality()
@@ -551,8 +550,8 @@ class _$StaffUser implements StaffUser {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$StaffUserCopyWith<_$StaffUser> get copyWith =>
-      __$$StaffUserCopyWithImpl<_$StaffUser>(this, _$identity);
+  _$$StaffUserVMCopyWith<_$StaffUserVM> get copyWith =>
+      __$$StaffUserVMCopyWithImpl<_$StaffUserVM>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -562,7 +561,7 @@ class _$StaffUser implements StaffUser {
             String email,
             String firstName,
             List<String> avatarUrls,
-            List<UserID> friends,
+            int friendsAmount,
             String? lastName,
             String? nick)
         end,
@@ -581,7 +580,7 @@ class _$StaffUser implements StaffUser {
             String email,
             String firstName,
             List<String> avatarUrls,
-            List<UserID> friends,
+            int friendsAmount,
             String? lastName,
             String? nick)?
         end,
@@ -600,7 +599,7 @@ class _$StaffUser implements StaffUser {
             String email,
             String firstName,
             List<String> avatarUrls,
-            List<UserID> friends,
+            int friendsAmount,
             String? lastName,
             String? nick)?
         end,
@@ -618,8 +617,8 @@ class _$StaffUser implements StaffUser {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(EndUser value) end,
-    required TResult Function(StaffUser value) staff,
+    required TResult Function(EndUserVM value) end,
+    required TResult Function(StaffUserVM value) staff,
   }) {
     return staff(this);
   }
@@ -627,8 +626,8 @@ class _$StaffUser implements StaffUser {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(EndUser value)? end,
-    TResult? Function(StaffUser value)? staff,
+    TResult? Function(EndUserVM value)? end,
+    TResult? Function(StaffUserVM value)? staff,
   }) {
     return staff?.call(this);
   }
@@ -636,8 +635,8 @@ class _$StaffUser implements StaffUser {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(EndUser value)? end,
-    TResult Function(StaffUser value)? staff,
+    TResult Function(EndUserVM value)? end,
+    TResult Function(StaffUserVM value)? staff,
     required TResult orElse(),
   }) {
     if (staff != null) {
@@ -648,20 +647,21 @@ class _$StaffUser implements StaffUser {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$StaffUserToJson(
+    return _$$StaffUserVMToJson(
       this,
     );
   }
 }
 
-abstract class StaffUser implements User {
-  const factory StaffUser(
+abstract class StaffUserVM implements UserVM {
+  const factory StaffUserVM(
       {required final UserID id,
       required final String name,
       required final List<String> avatarUrls,
-      final String? nick}) = _$StaffUser;
+      final String? nick}) = _$StaffUserVM;
 
-  factory StaffUser.fromJson(Map<String, dynamic> json) = _$StaffUser.fromJson;
+  factory StaffUserVM.fromJson(Map<String, dynamic> json) =
+      _$StaffUserVM.fromJson;
 
   @override
   UserID get id;
@@ -672,6 +672,6 @@ abstract class StaffUser implements User {
   String? get nick;
   @override
   @JsonKey(ignore: true)
-  _$$StaffUserCopyWith<_$StaffUser> get copyWith =>
+  _$$StaffUserVMCopyWith<_$StaffUserVM> get copyWith =>
       throw _privateConstructorUsedError;
 }

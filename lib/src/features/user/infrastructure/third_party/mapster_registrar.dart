@@ -16,13 +16,16 @@ class UserMapsterRegistrar {
         MapperMeta.two(GetUserByIDRequestToGetUserByIDQueryMapper.new),
       )
       ..register(
-        MapperMeta.one(GetUserByIDResultToGetUserByIDResponseMapper.new),
+        MapperMeta.one(UserResultToUserResponse.new),
       )
       ..register(
         MapperMeta.two(GetUserByNickRequestToGetUserByNickQueryMapper.new),
       )
       ..register(
-        MapperMeta.one(GetUserByNickResultToGetUserByNickResponseMapper.new),
+        MapperMeta.two(GetFriendsRequestToGetFriendsQueryMapper.new),
+      )
+      ..register(
+        MapperMeta.one(UsersResultToUsersResponseMapper.new),
       );
   }
 }

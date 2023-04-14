@@ -5,13 +5,15 @@ import '../../../../common/application/exceptions/detailed_exception.dart';
 import '../../../../common/domain/domain.dart';
 import '../../common/common.dart';
 
-class GetUserByNickQuery
-    extends Request<Either<List<DetailedException>, UserResult>> {
-  GetUserByNickQuery({
+class GetFriendsQuery
+    extends Request<Either<List<DetailedException>, UsersResult>> {
+  GetFriendsQuery({
     required this.userID,
-    required this.nick,
-  }) : super(GetUserByNickQuery);
+    required this.friendsTo,
+    required this.lastUserID,
+  }) : super(GetFriendsQuery);
 
   final UserID userID;
-  final String nick;
+  final UserID friendsTo;
+  final UserID? lastUserID;
 }

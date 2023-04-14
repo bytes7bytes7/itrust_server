@@ -46,7 +46,7 @@ class AuthController extends ApiController {
 
     return result.match(
       problem,
-      (r) => ok(_mapster.map1(r, To<AuthResponse>())),
+      (r) => created(_mapster.map1(r, To<AuthResponse>())),
     );
   }
 

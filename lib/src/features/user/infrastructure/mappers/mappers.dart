@@ -1,4 +1,5 @@
+export 'get_friends_request_to_get_friends_query_mapper.dart';
 export 'get_user_by_id_request_to_get_user_by_id_query_mapper.dart';
-export 'get_user_by_id_result_to_get_user_by_id_response_mapper.dart';
 export 'get_user_by_nick_request_to_get_user_by_nick_query_mapper.dart';
-export 'get_user_by_nick_result_to_get_user_by_nick_response_mapper.dart';
+export 'user_result_to_user_response.dart';
+export 'users_result_to_users_response_mapper.dart';

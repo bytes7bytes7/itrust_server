@@ -81,7 +81,7 @@ class PostController extends ApiController {
 
     return result.match(
       problem,
-      (r) => ok(_mapster.map1(r, To<PostResponse>())),
+      (r) => created(_mapster.map1(r, To<PostResponse>())),
     );
   }
 
@@ -203,7 +203,7 @@ class PostController extends ApiController {
 
     return result.match(
       problem,
-      (r) => ok(_mapster.map1(r, To<PostCommentsResponse>())),
+      (r) => created(_mapster.map1(r, To<PostCommentsResponse>())),
     );
   }
 

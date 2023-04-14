@@ -8,8 +8,12 @@ part of 'get_user_by_nick_request.dart';
 
 GetUserByNickRequest _$GetUserByNickRequestFromJson(
         Map<String, dynamic> json) =>
-    GetUserByNickRequest();
+    GetUserByNickRequest(
+      userNick: json['userNick'] as String,
+    );
 
 Map<String, dynamic> _$GetUserByNickRequestToJson(
         GetUserByNickRequest instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'userNick': instance.userNick,
+    };

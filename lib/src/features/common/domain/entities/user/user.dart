@@ -16,6 +16,7 @@ class User with _$User {
     required String email,
     required String firstName,
     required List<String> avatarUrls,
+    required List<UserID> friends,
     String? lastName,
     String? nick,
   }) = EndUser;

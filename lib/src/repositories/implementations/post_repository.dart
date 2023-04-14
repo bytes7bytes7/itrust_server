@@ -18,6 +18,7 @@ class DevPostRepository implements PostRepository {
         _mediaRepository = mediaRepository;
 
   // Key's type is `Post?` to be able to book ID for new Post
+  final _postOrder = <PostID>[];
   final _posts = HashMap<PostID, Post?>();
   final _comments = HashMap<CommentID, Comment?>();
 
@@ -57,6 +58,7 @@ class DevPostRepository implements PostRepository {
     );
 
     _posts[id] = post;
+    _postOrder.insert(0, id);
 
     return post;
   }
@@ -82,7 +84,9 @@ class DevPostRepository implements PostRepository {
 
     var reachStartAster = startAfter == null;
 
-    for (final post in _posts.values) {
+    for (final id in _postOrder) {
+      final post = _posts[id];
+
       // booked place
       if (post == null) {
         continue;
