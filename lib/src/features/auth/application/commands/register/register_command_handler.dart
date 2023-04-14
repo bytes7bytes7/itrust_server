@@ -58,6 +58,8 @@ class RegisterCommandHandler extends RequestHandler<RegisterCommand,
       email: request.email,
       avatarUrls: [],
       friends: [],
+      subscribers: [],
+      posts: [],
     );
 
     await _endUserRepository.addOrUpdate(user: user);

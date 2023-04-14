@@ -13,7 +13,6 @@ class EndUserToEndUserVMMapper extends OneSourceMapper<EndUser, EndUserVM> {
       email: _user.email,
       firstName: _user.firstName,
       avatarUrls: _user.avatarUrls,
-      friendsAmount: _user.friends.length,
       lastName: _user.lastName,
       nick: _user.nick,
     );

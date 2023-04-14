@@ -16,6 +16,12 @@ _$EndUser _$$EndUserFromJson(Map<String, dynamic> json) => _$EndUser(
       friends: (json['friends'] as List<dynamic>)
           .map((e) => UserID.fromJson(e as Map<String, dynamic>))
           .toList(),
+      subscribers: (json['subscribers'] as List<dynamic>)
+          .map((e) => UserID.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      posts: (json['posts'] as List<dynamic>)
+          .map((e) => PostID.fromJson(e as Map<String, dynamic>))
+          .toList(),
       lastName: json['lastName'] as String?,
       nick: json['nick'] as String?,
       $type: json['type'] as String?,
@@ -27,6 +33,8 @@ Map<String, dynamic> _$$EndUserToJson(_$EndUser instance) => <String, dynamic>{
       'firstName': instance.firstName,
       'avatarUrls': instance.avatarUrls,
       'friends': instance.friends.map((e) => e.toJson()).toList(),
+      'subscribers': instance.subscribers.map((e) => e.toJson()).toList(),
+      'posts': instance.posts.map((e) => e.toJson()).toList(),
       'lastName': instance.lastName,
       'nick': instance.nick,
       'type': instance.$type,

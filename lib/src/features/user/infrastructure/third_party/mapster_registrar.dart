@@ -26,6 +26,18 @@ class UserMapsterRegistrar {
       )
       ..register(
         MapperMeta.one(UsersResultToUsersResponseMapper.new),
+      )
+      ..register(
+        MapperMeta.two(SendFriendBidRequestToSendFriendBidCommandMapper.new),
+      )
+      ..register(
+        MapperMeta.one(UserInfoResultToUserInfoResponseMapper.new),
+      )
+      ..register(
+        MapperMeta.three(UserToUserInfoVMMapper.new),
+      )
+      ..register(
+        MapperMeta.two(GetUserInfoRequestToGetUserInfoQueryMapper.new),
       );
   }
 }

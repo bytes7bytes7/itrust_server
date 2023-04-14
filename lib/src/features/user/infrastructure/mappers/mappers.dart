@@ -1,5 +1,9 @@
 export 'get_friends_request_to_get_friends_query_mapper.dart';
 export 'get_user_by_id_request_to_get_user_by_id_query_mapper.dart';
 export 'get_user_by_nick_request_to_get_user_by_nick_query_mapper.dart';
+export 'get_user_info_request_to_get_user_info_query_mapper.dart';
+export 'send_friend_bid_request_to_send_friend_bid_command_mapper.dart';
+export 'user_info_result_to_user_info_response_mapper.dart';
 export 'user_result_to_user_response.dart';
+export 'user_to_user_info_vm_mapper.dart';
 export 'users_result_to_users_response_mapper.dart';

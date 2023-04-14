@@ -40,6 +40,8 @@ mixin _$User {
             String firstName,
             List<String> avatarUrls,
             List<UserID> friends,
+            List<UserID> subscribers,
+            List<PostID> posts,
             String? lastName,
             String? nick)
         end,
@@ -56,6 +58,8 @@ mixin _$User {
             String firstName,
             List<String> avatarUrls,
             List<UserID> friends,
+            List<UserID> subscribers,
+            List<PostID> posts,
             String? lastName,
             String? nick)?
         end,
@@ -72,6 +76,8 @@ mixin _$User {
             String firstName,
             List<String> avatarUrls,
             List<UserID> friends,
+            List<UserID> subscribers,
+            List<PostID> posts,
             String? lastName,
             String? nick)?
         end,
@@ -169,6 +175,8 @@ abstract class _$$EndUserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String firstName,
       List<String> avatarUrls,
       List<UserID> friends,
+      List<UserID> subscribers,
+      List<PostID> posts,
       String? lastName,
       String? nick});
 
@@ -190,6 +198,8 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
     Object? firstName = null,
     Object? avatarUrls = null,
     Object? friends = null,
+    Object? subscribers = null,
+    Object? posts = null,
     Object? lastName = freezed,
     Object? nick = freezed,
   }) {
@@ -214,6 +224,14 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
           ? _value._friends
           : friends // ignore: cast_nullable_to_non_nullable
               as List<UserID>,
+      subscribers: null == subscribers
+          ? _value._subscribers
+          : subscribers // ignore: cast_nullable_to_non_nullable
+              as List<UserID>,
+      posts: null == posts
+          ? _value._posts
+          : posts // ignore: cast_nullable_to_non_nullable
+              as List<PostID>,
       lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
@@ -235,11 +253,15 @@ class _$EndUser implements EndUser {
       required this.firstName,
       required final List<String> avatarUrls,
       required final List<UserID> friends,
+      required final List<UserID> subscribers,
+      required final List<PostID> posts,
       this.lastName,
       this.nick,
       final String? $type})
       : _avatarUrls = avatarUrls,
         _friends = friends,
+        _subscribers = subscribers,
+        _posts = posts,
         $type = $type ?? 'end';
 
   factory _$EndUser.fromJson(Map<String, dynamic> json) =>
@@ -267,6 +289,22 @@ class _$EndUser implements EndUser {
     return EqualUnmodifiableListView(_friends);
   }
 
+  final List<UserID> _subscribers;
+  @override
+  List<UserID> get subscribers {
+    if (_subscribers is EqualUnmodifiableListView) return _subscribers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_subscribers);
+  }
+
+  final List<PostID> _posts;
+  @override
+  List<PostID> get posts {
+    if (_posts is EqualUnmodifiableListView) return _posts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_posts);
+  }
+
   @override
   final String? lastName;
   @override
@@ -277,7 +315,7 @@ class _$EndUser implements EndUser {
 
   @override
   String toString() {
-    return 'User.end(id: $id, email: $email, firstName: $firstName, avatarUrls: $avatarUrls, friends: $friends, lastName: $lastName, nick: $nick)';
+    return 'User.end(id: $id, email: $email, firstName: $firstName, avatarUrls: $avatarUrls, friends: $friends, subscribers: $subscribers, posts: $posts, lastName: $lastName, nick: $nick)';
   }
 
   @override
@@ -292,6 +330,9 @@ class _$EndUser implements EndUser {
             const DeepCollectionEquality()
                 .equals(other._avatarUrls, _avatarUrls) &&
             const DeepCollectionEquality().equals(other._friends, _friends) &&
+            const DeepCollectionEquality()
+                .equals(other._subscribers, _subscribers) &&
+            const DeepCollectionEquality().equals(other._posts, _posts) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
             (identical(other.nick, nick) || other.nick == nick));
@@ -306,6 +347,8 @@ class _$EndUser implements EndUser {
       firstName,
       const DeepCollectionEquality().hash(_avatarUrls),
       const DeepCollectionEquality().hash(_friends),
+      const DeepCollectionEquality().hash(_subscribers),
+      const DeepCollectionEquality().hash(_posts),
       lastName,
       nick);
 
@@ -324,6 +367,8 @@ class _$EndUser implements EndUser {
             String firstName,
             List<String> avatarUrls,
             List<UserID> friends,
+            List<UserID> subscribers,
+            List<PostID> posts,
             String? lastName,
             String? nick)
         end,
@@ -331,7 +376,8 @@ class _$EndUser implements EndUser {
             UserID id, String name, List<String> avatarUrls, String? nick)
         staff,
   }) {
-    return end(id, email, firstName, avatarUrls, friends, lastName, nick);
+    return end(id, email, firstName, avatarUrls, friends, subscribers, posts,
+        lastName, nick);
   }
 
   @override
@@ -343,6 +389,8 @@ class _$EndUser implements EndUser {
             String firstName,
             List<String> avatarUrls,
             List<UserID> friends,
+            List<UserID> subscribers,
+            List<PostID> posts,
             String? lastName,
             String? nick)?
         end,
@@ -350,7 +398,8 @@ class _$EndUser implements EndUser {
             UserID id, String name, List<String> avatarUrls, String? nick)?
         staff,
   }) {
-    return end?.call(id, email, firstName, avatarUrls, friends, lastName, nick);
+    return end?.call(id, email, firstName, avatarUrls, friends, subscribers,
+        posts, lastName, nick);
   }
 
   @override
@@ -362,6 +411,8 @@ class _$EndUser implements EndUser {
             String firstName,
             List<String> avatarUrls,
             List<UserID> friends,
+            List<UserID> subscribers,
+            List<PostID> posts,
             String? lastName,
             String? nick)?
         end,
@@ -371,7 +422,8 @@ class _$EndUser implements EndUser {
     required TResult orElse(),
   }) {
     if (end != null) {
-      return end(id, email, firstName, avatarUrls, friends, lastName, nick);
+      return end(id, email, firstName, avatarUrls, friends, subscribers, posts,
+          lastName, nick);
     }
     return orElse();
   }
@@ -422,6 +474,8 @@ abstract class EndUser implements User {
       required final String firstName,
       required final List<String> avatarUrls,
       required final List<UserID> friends,
+      required final List<UserID> subscribers,
+      required final List<PostID> posts,
       final String? lastName,
       final String? nick}) = _$EndUser;
 
@@ -434,6 +488,8 @@ abstract class EndUser implements User {
   @override
   List<String> get avatarUrls;
   List<UserID> get friends;
+  List<UserID> get subscribers;
+  List<PostID> get posts;
   String? get lastName;
   @override
   String? get nick;
@@ -563,6 +619,8 @@ class _$StaffUser implements StaffUser {
             String firstName,
             List<String> avatarUrls,
             List<UserID> friends,
+            List<UserID> subscribers,
+            List<PostID> posts,
             String? lastName,
             String? nick)
         end,
@@ -582,6 +640,8 @@ class _$StaffUser implements StaffUser {
             String firstName,
             List<String> avatarUrls,
             List<UserID> friends,
+            List<UserID> subscribers,
+            List<PostID> posts,
             String? lastName,
             String? nick)?
         end,
@@ -601,6 +661,8 @@ class _$StaffUser implements StaffUser {
             String firstName,
             List<String> avatarUrls,
             List<UserID> friends,
+            List<UserID> subscribers,
+            List<PostID> posts,
             String? lastName,
             String? nick)?
         end,

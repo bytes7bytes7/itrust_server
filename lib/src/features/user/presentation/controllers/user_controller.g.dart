@@ -10,8 +10,13 @@ Router _$UserControllerRouter(UserController service) {
   final router = Router();
   router.add(
     'GET',
-    r'/id<userID>',
+    r'/id/<userID>',
     service.getUserByID,
+  );
+  router.add(
+    'GET',
+    r'/nick/<userNick>',
+    service.getUserByNick,
   );
   router.add(
     'GET',
@@ -19,9 +24,14 @@ Router _$UserControllerRouter(UserController service) {
     service.getFriends,
   );
   router.add(
+    'POST',
+    r'/friend_bid',
+    service.sendFriendBid,
+  );
+  router.add(
     'GET',
-    r'/<userNick>',
-    service.getUserByNick,
+    r'/info',
+    service.getUserInfo,
   );
   return router;
 }

@@ -15,7 +15,6 @@ class UserToUserVMMapper extends OneSourceMapper<User, UserVM> {
           email: user.email,
           firstName: user.firstName,
           avatarUrls: user.avatarUrls,
-          friendsAmount: user.friends.length,
           lastName: user.lastName,
           nick: user.nick,
         );

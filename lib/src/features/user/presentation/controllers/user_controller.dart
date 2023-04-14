@@ -26,7 +26,7 @@ class UserController extends ApiController {
 
   Router get router => _$UserControllerRouter(this);
 
-  @Route.get('/id<$userIDKey>')
+  @Route.get('/id/<$userIDKey>')
   Future<Response> getUserByID(Request request) async {
     late final GetUserByIDRequest getUserByIDRequest;
     try {
@@ -45,6 +45,34 @@ class UserController extends ApiController {
 
     final query =
         _mapster.map2(getUserByIDRequest, user.id, To<GetUserByIDQuery>());
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<UserResponse>())),
+    );
+  }
+
+  @Route.get('/nick/<$userNickKey>')
+  Future<Response> getUserByNick(Request request) async {
+    late final GetUserByNickRequest getUserByNickRequest;
+    try {
+      getUserByNickRequest = await parseRequest<GetUserByNickRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query =
+        _mapster.map2(getUserByNickRequest, user.id, To<GetUserByNickQuery>());
 
     final result = await query.sendTo(_mediator);
 
@@ -82,11 +110,11 @@ class UserController extends ApiController {
     );
   }
 
-  @Route.get('/<$userNickKey>')
-  Future<Response> getUserByNick(Request request) async {
-    late final GetUserByNickRequest getUserByNickRequest;
+  @Route.post('/friend_bid')
+  Future<Response> sendFriendBid(Request request) async {
+    late final SendFriendBidRequest sendFriendBidRequest;
     try {
-      getUserByNickRequest = await parseRequest<GetUserByNickRequest>(request);
+      sendFriendBidRequest = await parseRequest<SendFriendBidRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -99,14 +127,48 @@ class UserController extends ApiController {
       return problem([const UserNotFound()]);
     }
 
-    final query =
-        _mapster.map2(getUserByNickRequest, user.id, To<GetUserByNickQuery>());
+    final command = _mapster.map2(
+      sendFriendBidRequest,
+      user.id,
+      To<SendFriendBidCommand>(),
+    );
+
+    final result = await command.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<UserInfoResponse>())),
+    );
+  }
+
+  @Route.get('/info')
+  Future<Response> getUserInfo(Request request) async {
+    late final GetUserInfoRequest getUserInfoRequest;
+    try {
+      getUserInfoRequest = await parseRequest<GetUserInfoRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query = _mapster.map2(
+      getUserInfoRequest,
+      user.id,
+      To<GetUserInfoQuery>(),
+    );
 
     final result = await query.sendTo(_mediator);
 
     return result.match(
       problem,
-      (r) => ok(_mapster.map1(r, To<UserResponse>())),
+      (r) => ok(_mapster.map1(r, To<UserInfoResponse>())),
     );
   }
 }
