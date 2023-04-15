@@ -17,6 +17,7 @@ class CommonMapsterRegistrar {
       ..register(MapperMeta.two(CommentToCommentVMMapper.new))
       ..register(MapperMeta.two(UserToUserVMMapper.new))
       ..register(MapperMeta.two(EndUserToEndUserVMMapper.new))
-      ..register(MapperMeta.one(StaffUserToStaffUserVMMapper.new));
+      ..register(MapperMeta.one(StaffUserToStaffUserVMMapper.new))
+      ..register(MapperMeta.one(PostsResultToPostsResponseMapper.new));
   }
 }

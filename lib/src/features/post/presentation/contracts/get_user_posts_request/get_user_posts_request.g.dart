@@ -1,19 +1,20 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'get_feed_request.dart';
+part of 'get_user_posts_request.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-GetFeedRequest _$GetFeedRequestFromJson(Map<String, dynamic> json) =>
-    GetFeedRequest(
-      tag: json['tag'] as String?,
+GetUserPostsRequest _$GetUserPostsRequestFromJson(Map<String, dynamic> json) =>
+    GetUserPostsRequest(
+      byUserID: json['byUserID'] as String,
       lastPostID: json['lastPostID'] as String?,
     );
 
-Map<String, dynamic> _$GetFeedRequestToJson(GetFeedRequest instance) =>
+Map<String, dynamic> _$GetUserPostsRequestToJson(
+        GetUserPostsRequest instance) =>
     <String, dynamic>{
-      'tag': instance.tag,
+      'byUserID': instance.byUserID,
       'lastPostID': instance.lastPostID,
     };

@@ -10,6 +10,11 @@ Router _$PostControllerRouter(PostController service) {
   final router = Router();
   router.add(
     'GET',
+    r'/',
+    service.getUserPosts,
+  );
+  router.add(
+    'GET',
     r'/<postID>',
     service.getPost,
   );

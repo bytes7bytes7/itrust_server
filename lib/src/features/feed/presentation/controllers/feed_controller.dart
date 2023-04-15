@@ -55,7 +55,7 @@ class FeedController extends ApiController {
 
     return result.match(
       problem,
-      (r) => ok(_mapster.map1(r, To<GetFeedResponse>())),
+      (r) => ok(_mapster.map1(r, To<PostsResponse>())),
     );
   }
 

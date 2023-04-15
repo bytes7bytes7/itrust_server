@@ -6,6 +6,7 @@ import 'package:shelf_router/shelf_router.dart';
 
 import '../../../../utils/utils.dart';
 import '../../../common/application/exceptions/exceptions.dart';
+import '../../../common/presentation/contracts/posts_response/posts_response.dart';
 import '../../../common/presentation/controllers/api_controller.dart';
 import '../../application/application.dart';
 import '../contracts/contracts.dart';
@@ -26,6 +27,34 @@ class PostController extends ApiController {
   final Mapster _mapster;
 
   Router get router => _$PostControllerRouter(this);
+
+  @Route.get('/')
+  Future<Response> getUserPosts(Request request) async {
+    late final GetUserPostsRequest getUserPostsRequest;
+    try {
+      getUserPostsRequest = await parseRequest<GetUserPostsRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query =
+        _mapster.map2(getUserPostsRequest, user.id, To<GetUserPostsQuery>());
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<PostsResponse>())),
+    );
+  }
 
   @Route.get('/<$postIDKey>')
   Future<Response> getPost(Request request) async {

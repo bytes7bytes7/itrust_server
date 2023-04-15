@@ -16,9 +16,6 @@ class FeedMapsterRegistrar {
         MapperMeta.two(GetFeedRequestToGetFeedQueryMapper.new),
       )
       ..register(
-        MapperMeta.one(GetFeedResultToGetFeedResponseMapper.new),
-      )
-      ..register(
         MapperMeta.two(GetTagsRequestToGetTagsQueryMapper.new),
       )
       ..register(

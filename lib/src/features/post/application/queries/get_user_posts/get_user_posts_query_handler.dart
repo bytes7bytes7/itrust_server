@@ -8,36 +8,48 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/common/posts_result.dart';
-import '../../../../common/application/exceptions/detailed_exception.dart';
-import '../../../../common/application/view_models/view_models.dart';
+import '../../../../common/application/exceptions/exceptions.dart';
+import '../../../../common/application/view_models/media_vm/media_vm.dart';
+import '../../../../common/application/view_models/post_vm/post_vm.dart';
 import '../../../../common/domain/domain.dart';
-import 'get_feed_query.dart';
+import 'get_user_posts_query.dart';
 
-const _postLimit = 5;
+const _limit = 5;
 
 @singleton
-class GetFeedQueryHandler extends RequestHandler<GetFeedQuery,
+class GetUserPostsQueryHandler extends RequestHandler<GetUserPostsQuery,
     Either<List<DetailedException>, PostsResult>> {
-  const GetFeedQueryHandler({
+  const GetUserPostsQueryHandler({
+    required EndUserRepository endUserRepository,
     required PostRepository postRepository,
     required MediaRepository mediaRepository,
     required Mapster mapster,
-  })  : _postRepository = postRepository,
+  })  : _endUserRepository = endUserRepository,
+        _postRepository = postRepository,
         _mediaRepository = mediaRepository,
         _mapster = mapster;
 
+  final EndUserRepository _endUserRepository;
   final PostRepository _postRepository;
   final MediaRepository _mediaRepository;
   final Mapster _mapster;
 
   @override
   FutureOr<Either<List<DetailedException>, PostsResult>> handle(
-    GetFeedQuery request,
+    GetUserPostsQuery request,
   ) async {
+    final user = await _endUserRepository.getByID(id: request.byUserID);
+
+    if (user == null) {
+      return left(
+        [const UserNotFound()],
+      );
+    }
+
     final posts = await _postRepository.getPostsByFilter(
-      limit: _postLimit,
-      byAllUsers: true,
+      limit: _limit,
       startAfter: request.lastPostID,
+      byUsers: [request.byUserID],
     );
 
     final postMediaVMs = HashMap<PostID, List<MediaVM>>();

@@ -51,6 +51,11 @@ class PostMapsterRegistrar {
         MapperMeta.two(
           UnlikePostCommentRequestToUnlikePostCommentCommandMapper.new,
         ),
+      )
+      ..register(
+        MapperMeta.two(
+          GetUserPostsRequestToGetUserPostsQueryMapper.new,
+        ),
       );
   }
 }

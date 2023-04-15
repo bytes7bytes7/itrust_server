@@ -5,13 +5,15 @@ import '../../../../common/application/common/posts_result.dart';
 import '../../../../common/application/exceptions/detailed_exception.dart';
 import '../../../../common/domain/domain.dart';
 
-class GetFeedQuery
+class GetUserPostsQuery
     extends Request<Either<List<DetailedException>, PostsResult>> {
-  GetFeedQuery({
+  GetUserPostsQuery({
     required this.userID,
+    required this.byUserID,
     required this.lastPostID,
-  }) : super(GetFeedQuery);
+  }) : super(GetUserPostsQuery);
 
   final UserID userID;
+  final UserID byUserID;
   final PostID? lastPostID;
 }
