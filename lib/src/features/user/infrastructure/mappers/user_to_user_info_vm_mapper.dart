@@ -19,18 +19,20 @@ class UserToUserInfoVMMapper
     final user = _user;
 
     if (user is EndUser) {
-      return UserInfoVM.end(
-        user: _mapster.map2(user, _onlineStatus, To<EndUserVM>()),
-        friendsAmount: user.friends.length,
-        postsAmount: user.posts.length,
-        subscribersAmount: user.subscribers.length,
-        amIFriend: user.friends.contains(_userID),
-        amISubscriber: user.subscribers.contains(_userID),
-        didISentFriendBid: _didISentFriendBid,
+      return _mapster.map4(
+        user,
+        _userID,
+        _didISentFriendBid,
+        _onlineStatus,
+        To<UserInfoVM>(),
       );
     } else if (user is StaffUser) {
-      return UserInfoVM.staff(
-        user: _mapster.map1(user, To<StaffUserVM>()),
+      return _mapster.map4(
+        user,
+        _userID,
+        _didISentFriendBid,
+        _onlineStatus,
+        To<UserInfoVM>(),
       );
     }
 

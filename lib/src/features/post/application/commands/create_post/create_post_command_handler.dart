@@ -46,7 +46,11 @@ class CreatePostCommandHandler extends RequestHandler<CreatePostCommand,
       );
     }
 
-    await _endUserRepository.addOrUpdate(user: user.copyWith());
+    await _endUserRepository.addOrUpdate(
+      user: user.copyWith(
+        posts: List.of(user.posts)..add(post.id),
+      ),
+    );
 
     final mediaList = <MediaVM>[];
     for (final id in post.mediaIDs) {
