@@ -39,7 +39,8 @@ mixin _$UserInfoVM {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)
         end,
     required TResult Function(StaffUserVM user) staff,
   }) =>
@@ -53,7 +54,8 @@ mixin _$UserInfoVM {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult? Function(StaffUserVM user)? staff,
   }) =>
@@ -67,7 +69,8 @@ mixin _$UserInfoVM {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult Function(StaffUserVM user)? staff,
     required TResult orElse(),
@@ -126,7 +129,8 @@ abstract class _$$EndUserInfoVMCopyWith<$Res> {
       int subscribersAmount,
       bool amIFriend,
       bool amISubscriber,
-      bool didISentFriendBid});
+      bool didISentFriendBid,
+      bool haveIFriendBidFromThisUser});
 }
 
 /// @nodoc
@@ -147,6 +151,7 @@ class __$$EndUserInfoVMCopyWithImpl<$Res>
     Object? amIFriend = null,
     Object? amISubscriber = null,
     Object? didISentFriendBid = null,
+    Object? haveIFriendBidFromThisUser = null,
   }) {
     return _then(_$EndUserInfoVM(
       user: null == user
@@ -177,6 +182,10 @@ class __$$EndUserInfoVMCopyWithImpl<$Res>
           ? _value.didISentFriendBid
           : didISentFriendBid // ignore: cast_nullable_to_non_nullable
               as bool,
+      haveIFriendBidFromThisUser: null == haveIFriendBidFromThisUser
+          ? _value.haveIFriendBidFromThisUser
+          : haveIFriendBidFromThisUser // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -192,6 +201,7 @@ class _$EndUserInfoVM implements EndUserInfoVM {
       required this.amIFriend,
       required this.amISubscriber,
       required this.didISentFriendBid,
+      required this.haveIFriendBidFromThisUser,
       final String? $type})
       : $type = $type ?? 'end';
 
@@ -212,13 +222,15 @@ class _$EndUserInfoVM implements EndUserInfoVM {
   final bool amISubscriber;
   @override
   final bool didISentFriendBid;
+  @override
+  final bool haveIFriendBidFromThisUser;
 
   @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'UserInfoVM.end(user: $user, friendsAmount: $friendsAmount, postsAmount: $postsAmount, subscribersAmount: $subscribersAmount, amIFriend: $amIFriend, amISubscriber: $amISubscriber, didISentFriendBid: $didISentFriendBid)';
+    return 'UserInfoVM.end(user: $user, friendsAmount: $friendsAmount, postsAmount: $postsAmount, subscribersAmount: $subscribersAmount, amIFriend: $amIFriend, amISubscriber: $amISubscriber, didISentFriendBid: $didISentFriendBid, haveIFriendBidFromThisUser: $haveIFriendBidFromThisUser)';
   }
 
   @override
@@ -238,13 +250,25 @@ class _$EndUserInfoVM implements EndUserInfoVM {
             (identical(other.amISubscriber, amISubscriber) ||
                 other.amISubscriber == amISubscriber) &&
             (identical(other.didISentFriendBid, didISentFriendBid) ||
-                other.didISentFriendBid == didISentFriendBid));
+                other.didISentFriendBid == didISentFriendBid) &&
+            (identical(other.haveIFriendBidFromThisUser,
+                    haveIFriendBidFromThisUser) ||
+                other.haveIFriendBidFromThisUser ==
+                    haveIFriendBidFromThisUser));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, user, friendsAmount, postsAmount,
-      subscribersAmount, amIFriend, amISubscriber, didISentFriendBid);
+  int get hashCode => Object.hash(
+      runtimeType,
+      user,
+      friendsAmount,
+      postsAmount,
+      subscribersAmount,
+      amIFriend,
+      amISubscriber,
+      didISentFriendBid,
+      haveIFriendBidFromThisUser);
 
   @JsonKey(ignore: true)
   @override
@@ -262,12 +286,13 @@ class _$EndUserInfoVM implements EndUserInfoVM {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)
         end,
     required TResult Function(StaffUserVM user) staff,
   }) {
     return end(user, friendsAmount, postsAmount, subscribersAmount, amIFriend,
-        amISubscriber, didISentFriendBid);
+        amISubscriber, didISentFriendBid, haveIFriendBidFromThisUser);
   }
 
   @override
@@ -280,12 +305,20 @@ class _$EndUserInfoVM implements EndUserInfoVM {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult? Function(StaffUserVM user)? staff,
   }) {
-    return end?.call(user, friendsAmount, postsAmount, subscribersAmount,
-        amIFriend, amISubscriber, didISentFriendBid);
+    return end?.call(
+        user,
+        friendsAmount,
+        postsAmount,
+        subscribersAmount,
+        amIFriend,
+        amISubscriber,
+        didISentFriendBid,
+        haveIFriendBidFromThisUser);
   }
 
   @override
@@ -298,14 +331,15 @@ class _$EndUserInfoVM implements EndUserInfoVM {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult Function(StaffUserVM user)? staff,
     required TResult orElse(),
   }) {
     if (end != null) {
       return end(user, friendsAmount, postsAmount, subscribersAmount, amIFriend,
-          amISubscriber, didISentFriendBid);
+          amISubscriber, didISentFriendBid, haveIFriendBidFromThisUser);
     }
     return orElse();
   }
@@ -357,7 +391,8 @@ abstract class EndUserInfoVM implements UserInfoVM {
       required final int subscribersAmount,
       required final bool amIFriend,
       required final bool amISubscriber,
-      required final bool didISentFriendBid}) = _$EndUserInfoVM;
+      required final bool didISentFriendBid,
+      required final bool haveIFriendBidFromThisUser}) = _$EndUserInfoVM;
 
   factory EndUserInfoVM.fromJson(Map<String, dynamic> json) =
       _$EndUserInfoVM.fromJson;
@@ -370,6 +405,7 @@ abstract class EndUserInfoVM implements UserInfoVM {
   bool get amIFriend;
   bool get amISubscriber;
   bool get didISentFriendBid;
+  bool get haveIFriendBidFromThisUser;
   @JsonKey(ignore: true)
   _$$EndUserInfoVMCopyWith<_$EndUserInfoVM> get copyWith =>
       throw _privateConstructorUsedError;
@@ -454,7 +490,8 @@ class _$StaffUserInfoVM implements StaffUserInfoVM {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)
         end,
     required TResult Function(StaffUserVM user) staff,
   }) {
@@ -471,7 +508,8 @@ class _$StaffUserInfoVM implements StaffUserInfoVM {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult? Function(StaffUserVM user)? staff,
   }) {
@@ -488,7 +526,8 @@ class _$StaffUserInfoVM implements StaffUserInfoVM {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult Function(StaffUserVM user)? staff,
     required TResult orElse(),

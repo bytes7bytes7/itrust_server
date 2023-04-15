@@ -1,3 +1,4 @@
+export 'already_have_bid.dart';
 export 'bid_already_sent.dart';
 export 'bid_not_found.dart';
 export 'can_not_cancel_friend_bid_to_staff_user.dart';

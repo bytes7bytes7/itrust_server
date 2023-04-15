@@ -59,12 +59,18 @@ class GetUserInfoQueryHandler extends RequestHandler<GetUserInfoQuery,
       to: request.aboutUserID,
     );
 
+    final haveIFriendBidFromThisUser = await _friendBidRepository.hasBidToUser(
+      from: request.aboutUserID,
+      to: request.userID,
+    );
+
     return right(
       UserInfoResult(
-        userInfo: _mapster.map4(
+        userInfo: _mapster.map5(
           user,
           request.userID,
           didISentFriendBid,
+          haveIFriendBidFromThisUser,
           onlineStatus,
           To<UserInfoVM>(),
         ),

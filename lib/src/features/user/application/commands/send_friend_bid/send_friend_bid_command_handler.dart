@@ -57,14 +57,25 @@ class SendFriendBidCommandHandler extends RequestHandler<SendFriendBidCommand,
       );
     }
 
-    final hasBidAlready = await _friendBidRepository.hasBidToUser(
+    final hasAlreadySentBid = await _friendBidRepository.hasBidToUser(
       from: request.userID,
       to: request.sendToUserID,
     );
 
-    if (hasBidAlready) {
+    if (hasAlreadySentBid) {
       return left(
         [const BidAlreadySent()],
+      );
+    }
+
+    final haveIFriendBidFromThisUser = await _friendBidRepository.hasBidToUser(
+      from: request.sendToUserID,
+      to: request.userID,
+    );
+
+    if (haveIFriendBidFromThisUser) {
+      return left(
+        [const AlreadyHaveBid()],
       );
     }
 
@@ -80,10 +91,11 @@ class SendFriendBidCommandHandler extends RequestHandler<SendFriendBidCommand,
 
     return right(
       UserInfoResult(
-        userInfo: _mapster.map4(
+        userInfo: _mapster.map5(
           user,
           request.userID,
           didISentFriendBid,
+          haveIFriendBidFromThisUser,
           onlineStatus,
           To<UserInfoVM>(),
         ),

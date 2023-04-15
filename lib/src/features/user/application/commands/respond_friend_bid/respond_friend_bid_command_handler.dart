@@ -101,13 +101,15 @@ class RespondFriendBidCommandHandler extends RequestHandler<
         await _endUserActivityRepository.get(request.respondToUserID);
 
     final didISentFriendBid = false;
+    final haveIFriendBidFromThisUser = false;
 
     return right(
       UserInfoResult(
-        userInfo: _mapster.map4(
+        userInfo: _mapster.map5(
           updatedOtherUser,
           request.userID,
           didISentFriendBid,
+          haveIFriendBidFromThisUser,
           onlineStatus,
           To<UserInfoVM>(),
         ),

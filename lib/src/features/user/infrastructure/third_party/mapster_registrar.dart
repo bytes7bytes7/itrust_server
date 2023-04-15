@@ -37,7 +37,7 @@ class UserMapsterRegistrar {
         MapperMeta.one(UserInfoResultToUserInfoResponseMapper.new),
       )
       ..register(
-        MapperMeta.four(
+        MapperMeta.five(
           (input) => UserToUserInfoVMMapper(
             input,
             mapster: _mapster,
@@ -45,7 +45,7 @@ class UserMapsterRegistrar {
         ),
       )
       ..register(
-        MapperMeta.four(
+        MapperMeta.five(
           (input) => EndUserToUserInfoVMMapper(
             input,
             mapster: _mapster,
@@ -53,7 +53,7 @@ class UserMapsterRegistrar {
         ),
       )
       ..register(
-        MapperMeta.three(
+        MapperMeta.one(
           (input) => StaffUserToUserInfoVMMapper(
             input,
             mapster: _mapster,

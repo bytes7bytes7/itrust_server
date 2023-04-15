@@ -5,7 +5,7 @@ import '../../../common/domain/domain.dart';
 import '../../application/view_models/user_info_vm/user_info_vm.dart';
 
 class StaffUserToUserInfoVMMapper
-    extends ThreeSourcesMapper<StaffUser, UserID, bool, UserInfoVM> {
+    extends OneSourceMapper<StaffUser, UserInfoVM> {
   StaffUserToUserInfoVMMapper(
     super.input, {
     required Mapster mapster,
@@ -20,5 +20,5 @@ class StaffUserToUserInfoVMMapper
     );
   }
 
-  StaffUser get _user => source1;
+  StaffUser get _user => source;
 }

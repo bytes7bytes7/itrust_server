@@ -15,6 +15,7 @@ _$EndUserInfoVM _$$EndUserInfoVMFromJson(Map<String, dynamic> json) =>
       amIFriend: json['amIFriend'] as bool,
       amISubscriber: json['amISubscriber'] as bool,
       didISentFriendBid: json['didISentFriendBid'] as bool,
+      haveIFriendBidFromThisUser: json['haveIFriendBidFromThisUser'] as bool,
       $type: json['type'] as String?,
     );
 
@@ -27,6 +28,7 @@ Map<String, dynamic> _$$EndUserInfoVMToJson(_$EndUserInfoVM instance) =>
       'amIFriend': instance.amIFriend,
       'amISubscriber': instance.amISubscriber,
       'didISentFriendBid': instance.didISentFriendBid,
+      'haveIFriendBidFromThisUser': instance.haveIFriendBidFromThisUser,
       'type': instance.$type,
     };
 

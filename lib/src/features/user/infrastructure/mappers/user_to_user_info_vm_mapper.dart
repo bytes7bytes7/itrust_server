@@ -1,12 +1,11 @@
 import 'package:mapster/mapster.dart';
 
 import '../../../../repositories/interfaces/end_user_activity_repository.dart';
-import '../../../common/application/view_models/user_vm/user_vm.dart';
 import '../../../common/domain/domain.dart';
 import '../../application/view_models/user_info_vm/user_info_vm.dart';
 
-class UserToUserInfoVMMapper
-    extends FourSourcesMapper<User, UserID, bool, OnlineStatus, UserInfoVM> {
+class UserToUserInfoVMMapper extends FiveSourcesMapper<User, UserID, bool, bool,
+    OnlineStatus, UserInfoVM> {
   UserToUserInfoVMMapper(
     super.input, {
     required Mapster mapster,
@@ -19,19 +18,17 @@ class UserToUserInfoVMMapper
     final user = _user;
 
     if (user is EndUser) {
-      return _mapster.map4(
+      return _mapster.map5(
         user,
         _userID,
         _didISentFriendBid,
+        _haveIFriendBidFromThisUser,
         _onlineStatus,
         To<UserInfoVM>(),
       );
     } else if (user is StaffUser) {
-      return _mapster.map4(
+      return _mapster.map1(
         user,
-        _userID,
-        _didISentFriendBid,
-        _onlineStatus,
         To<UserInfoVM>(),
       );
     }
@@ -45,5 +42,7 @@ class UserToUserInfoVMMapper
 
   bool get _didISentFriendBid => source3;
 
-  OnlineStatus get _onlineStatus => source4;
+  bool get _haveIFriendBidFromThisUser => source4;
+
+  OnlineStatus get _onlineStatus => source5;
 }

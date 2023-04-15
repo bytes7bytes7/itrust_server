@@ -57,16 +57,21 @@ class CancelFriendBidCommandHandler extends RequestHandler<
       );
     }
 
-    final hasBid = await _friendBidRepository.hasBidToUser(
+    final hasAlreadySentBid = await _friendBidRepository.hasBidToUser(
       from: request.userID,
       to: request.cancelToUserID,
     );
 
-    if (!hasBid) {
+    if (!hasAlreadySentBid) {
       return left(
         [const BidNotFound()],
       );
     }
+
+    final haveIFriendBidFromThisUser = await _friendBidRepository.hasBidToUser(
+      from: request.cancelToUserID,
+      to: request.userID,
+    );
 
     await _friendBidRepository.remove(
       from: request.userID,
@@ -80,10 +85,11 @@ class CancelFriendBidCommandHandler extends RequestHandler<
 
     return right(
       UserInfoResult(
-        userInfo: _mapster.map4(
+        userInfo: _mapster.map5(
           user,
           request.userID,
           didISentFriendBid,
+          haveIFriendBidFromThisUser,
           onlineStatus,
           To<UserInfoVM>(),
         ),
