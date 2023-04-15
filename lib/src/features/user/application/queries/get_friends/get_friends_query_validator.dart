@@ -6,4 +6,4 @@ import 'get_friends_query.dart';
 
 @singleton
 class GetFriendsQueryValidator
-    extends BehaviorValidator<GetFriendsQuery, UsersResult> {}
+    extends BehaviorValidator<GetFriendsQuery, EndUsersResult> {}

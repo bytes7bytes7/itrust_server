@@ -17,13 +17,16 @@ class GetUserByNickQueryHandler extends RequestHandler<GetUserByNickQuery,
   const GetUserByNickQueryHandler({
     required EndUserRepository endUserRepository,
     required StaffUserRepository staffUserRepository,
+    required EndUserActivityRepository endUserActivityRepository,
     required Mapster mapster,
   })  : _endUserRepository = endUserRepository,
         _staffUserRepository = staffUserRepository,
+        _endUserActivityRepository = endUserActivityRepository,
         _mapster = mapster;
 
   final EndUserRepository _endUserRepository;
   final StaffUserRepository _staffUserRepository;
+  final EndUserActivityRepository _endUserActivityRepository;
   final Mapster _mapster;
 
   @override
@@ -43,9 +46,11 @@ class GetUserByNickQueryHandler extends RequestHandler<GetUserByNickQuery,
     final endUser = await _endUserRepository.getByNick(nick: request.nick);
 
     if (endUser != null) {
+      final onlineStatus = await _endUserActivityRepository.get(endUser.id);
+
       return right(
         UserResult(
-          user: _mapster.map1(endUser, To<EndUserVM>()),
+          user: _mapster.map2(endUser, onlineStatus, To<EndUserVM>()),
         ),
       );
     }

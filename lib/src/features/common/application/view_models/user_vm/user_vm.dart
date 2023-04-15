@@ -16,6 +16,8 @@ class UserVM with _$UserVM {
     required String email,
     required String firstName,
     required List<String> avatarUrls,
+    required bool isOnline,
+    int? lastSeenAtMSSinceEpoch,
     String? lastName,
     String? nick,
   }) = EndUserVM;

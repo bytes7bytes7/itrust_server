@@ -6,7 +6,7 @@ import '../../../../common/domain/domain.dart';
 import '../../common/common.dart';
 
 class GetFriendsQuery
-    extends Request<Either<List<DetailedException>, UsersResult>> {
+    extends Request<Either<List<DetailedException>, EndUsersResult>> {
   GetFriendsQuery({
     required this.userID,
     required this.friendsTo,

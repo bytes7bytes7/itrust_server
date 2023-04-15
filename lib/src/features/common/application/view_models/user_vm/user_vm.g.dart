@@ -13,6 +13,8 @@ _$EndUserVM _$$EndUserVMFromJson(Map<String, dynamic> json) => _$EndUserVM(
       avatarUrls: (json['avatarUrls'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      isOnline: json['isOnline'] as bool,
+      lastSeenAtMSSinceEpoch: json['lastSeenAtMSSinceEpoch'] as int?,
       lastName: json['lastName'] as String?,
       nick: json['nick'] as String?,
       $type: json['type'] as String?,
@@ -24,6 +26,8 @@ Map<String, dynamic> _$$EndUserVMToJson(_$EndUserVM instance) =>
       'email': instance.email,
       'firstName': instance.firstName,
       'avatarUrls': instance.avatarUrls,
+      'isOnline': instance.isOnline,
+      'lastSeenAtMSSinceEpoch': instance.lastSeenAtMSSinceEpoch,
       'lastName': instance.lastName,
       'nick': instance.nick,
       'type': instance.$type,

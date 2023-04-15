@@ -28,19 +28,37 @@ class UserMapsterRegistrar {
         MapperMeta.one(UsersResultToUsersResponseMapper.new),
       )
       ..register(
+        MapperMeta.one(EndUsersResultToEndUsersResponseMapper.new),
+      )
+      ..register(
         MapperMeta.two(SendFriendBidRequestToSendFriendBidCommandMapper.new),
       )
       ..register(
         MapperMeta.one(UserInfoResultToUserInfoResponseMapper.new),
       )
       ..register(
-        MapperMeta.three(UserToUserInfoVMMapper.new),
+        MapperMeta.four(
+          (input) => UserToUserInfoVMMapper(
+            input,
+            mapster: _mapster,
+          ),
+        ),
       )
       ..register(
-        MapperMeta.three(EndUserToUserInfoVMMapper.new),
+        MapperMeta.four(
+          (input) => EndUserToUserInfoVMMapper(
+            input,
+            mapster: _mapster,
+          ),
+        ),
       )
       ..register(
-        MapperMeta.three(StaffUserToUserInfoVMMapper.new),
+        MapperMeta.three(
+          (input) => StaffUserToUserInfoVMMapper(
+            input,
+            mapster: _mapster,
+          ),
+        ),
       )
       ..register(
         MapperMeta.two(GetUserInfoRequestToGetUserInfoQueryMapper.new),

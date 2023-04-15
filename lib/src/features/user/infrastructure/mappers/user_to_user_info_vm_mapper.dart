@@ -1,11 +1,18 @@
 import 'package:mapster/mapster.dart';
 
+import '../../../../repositories/interfaces/end_user_activity_repository.dart';
+import '../../../common/application/view_models/user_vm/user_vm.dart';
 import '../../../common/domain/domain.dart';
 import '../../application/view_models/user_info_vm/user_info_vm.dart';
 
 class UserToUserInfoVMMapper
-    extends ThreeSourcesMapper<User, UserID, bool, UserInfoVM> {
-  UserToUserInfoVMMapper(super.input);
+    extends FourSourcesMapper<User, UserID, bool, OnlineStatus, UserInfoVM> {
+  UserToUserInfoVMMapper(
+    super.input, {
+    required Mapster mapster,
+  }) : _mapster = mapster;
+
+  final Mapster _mapster;
 
   @override
   UserInfoVM map() {
@@ -13,25 +20,17 @@ class UserToUserInfoVMMapper
 
     if (user is EndUser) {
       return UserInfoVM.end(
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName,
-        avatarUrls: user.avatarUrls,
+        user: _mapster.map2(user, _onlineStatus, To<EndUserVM>()),
         friendsAmount: user.friends.length,
         postsAmount: user.posts.length,
         subscribersAmount: user.subscribers.length,
         amIFriend: user.friends.contains(_userID),
         amISubscriber: user.subscribers.contains(_userID),
         didISentFriendBid: _didISentFriendBid,
-        lastName: user.lastName,
-        nick: user.nick,
       );
     } else if (user is StaffUser) {
       return UserInfoVM.staff(
-        id: user.id,
-        name: user.name,
-        avatarUrls: user.avatarUrls,
-        nick: user.nick,
+        user: _mapster.map1(user, To<StaffUserVM>()),
       );
     }
 
@@ -43,4 +42,6 @@ class UserToUserInfoVMMapper
   UserID get _userID => source2;
 
   bool get _didISentFriendBid => source3;
+
+  OnlineStatus get _onlineStatus => source4;
 }

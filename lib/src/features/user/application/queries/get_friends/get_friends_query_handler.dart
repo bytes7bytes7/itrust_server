@@ -15,18 +15,21 @@ const _limit = 10;
 
 @singleton
 class GetFriendsQueryHandler extends RequestHandler<GetFriendsQuery,
-    Either<List<DetailedException>, UsersResult>> {
+    Either<List<DetailedException>, EndUsersResult>> {
   const GetFriendsQueryHandler({
     required EndUserRepository endUserRepository,
+    required EndUserActivityRepository endUserActivityRepository,
     required Mapster mapster,
   })  : _endUserRepository = endUserRepository,
+        _endUserActivityRepository = endUserActivityRepository,
         _mapster = mapster;
 
   final EndUserRepository _endUserRepository;
+  final EndUserActivityRepository _endUserActivityRepository;
   final Mapster _mapster;
 
   @override
-  FutureOr<Either<List<DetailedException>, UsersResult>> handle(
+  FutureOr<Either<List<DetailedException>, EndUsersResult>> handle(
     GetFriendsQuery request,
   ) async {
     final friendsOwner =
@@ -44,9 +47,18 @@ class GetFriendsQueryHandler extends RequestHandler<GetFriendsQuery,
       startAfter: request.lastUserID,
     );
 
+    final onlineStatuses = <OnlineStatus>[];
+    for (final friend in friends) {
+      onlineStatuses.add(await _endUserActivityRepository.get(friend.id));
+    }
+
     return right(
-      UsersResult(
-        users: friends.map((e) => _mapster.map1(e, To<EndUserVM>())).toList(),
+      EndUsersResult(
+        users: friends
+            .mapWithIndex(
+              (e, i) => _mapster.map2(e, onlineStatuses[i], To<EndUserVM>()),
+            )
+            .toList(),
       ),
     );
   }

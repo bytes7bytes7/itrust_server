@@ -1,9 +1,10 @@
 import 'package:mapster/mapster.dart';
 
+import '../../../../repositories/interfaces/end_user_activity_repository.dart';
 import '../../application/view_models/user_vm/user_vm.dart';
 import '../../domain/domain.dart';
 
-class UserToUserVMMapper extends OneSourceMapper<User, UserVM> {
+class UserToUserVMMapper extends TwoSourcesMapper<User, OnlineStatus, UserVM> {
   UserToUserVMMapper(super.input);
 
   @override
@@ -17,6 +18,8 @@ class UserToUserVMMapper extends OneSourceMapper<User, UserVM> {
           avatarUrls: user.avatarUrls,
           lastName: user.lastName,
           nick: user.nick,
+          isOnline: _onlineStatus.isOnline,
+          lastSeenAtMSSinceEpoch: _onlineStatus.lastSeenAtMSSinceEpoch,
         );
       },
       staff: (user) {
@@ -29,5 +32,7 @@ class UserToUserVMMapper extends OneSourceMapper<User, UserVM> {
     );
   }
 
-  User get _user => source;
+  User get _user => source1;
+
+  OnlineStatus get _onlineStatus => source2;
 }

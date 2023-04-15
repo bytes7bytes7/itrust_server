@@ -1,4 +1,5 @@
 export 'cancel_friend_bid_request/cancel_friend_bid_request.dart';
+export 'end_users_response/end_users_response.dart';
 export 'get_friends_request/get_friends_request.dart';
 export 'get_user_by_id_request/get_user_by_id_request.dart';
 export 'get_user_by_nick_request/get_user_by_nick_request.dart';

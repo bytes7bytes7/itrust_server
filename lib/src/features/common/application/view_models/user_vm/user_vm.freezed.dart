@@ -34,8 +34,15 @@ mixin _$UserVM {
   String? get nick => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(UserID id, String email, String firstName,
-            List<String> avatarUrls, String? lastName, String? nick)
+    required TResult Function(
+            UserID id,
+            String email,
+            String firstName,
+            List<String> avatarUrls,
+            bool isOnline,
+            int? lastSeenAtMSSinceEpoch,
+            String? lastName,
+            String? nick)
         end,
     required TResult Function(
             UserID id, String name, List<String> avatarUrls, String? nick)
@@ -44,8 +51,15 @@ mixin _$UserVM {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserID id, String email, String firstName,
-            List<String> avatarUrls, String? lastName, String? nick)?
+    TResult? Function(
+            UserID id,
+            String email,
+            String firstName,
+            List<String> avatarUrls,
+            bool isOnline,
+            int? lastSeenAtMSSinceEpoch,
+            String? lastName,
+            String? nick)?
         end,
     TResult? Function(
             UserID id, String name, List<String> avatarUrls, String? nick)?
@@ -54,8 +68,15 @@ mixin _$UserVM {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserID id, String email, String firstName,
-            List<String> avatarUrls, String? lastName, String? nick)?
+    TResult Function(
+            UserID id,
+            String email,
+            String firstName,
+            List<String> avatarUrls,
+            bool isOnline,
+            int? lastSeenAtMSSinceEpoch,
+            String? lastName,
+            String? nick)?
         end,
     TResult Function(
             UserID id, String name, List<String> avatarUrls, String? nick)?
@@ -151,6 +172,8 @@ abstract class _$$EndUserVMCopyWith<$Res> implements $UserVMCopyWith<$Res> {
       String email,
       String firstName,
       List<String> avatarUrls,
+      bool isOnline,
+      int? lastSeenAtMSSinceEpoch,
       String? lastName,
       String? nick});
 
@@ -173,6 +196,8 @@ class __$$EndUserVMCopyWithImpl<$Res>
     Object? email = null,
     Object? firstName = null,
     Object? avatarUrls = null,
+    Object? isOnline = null,
+    Object? lastSeenAtMSSinceEpoch = freezed,
     Object? lastName = freezed,
     Object? nick = freezed,
   }) {
@@ -193,6 +218,14 @@ class __$$EndUserVMCopyWithImpl<$Res>
           ? _value._avatarUrls
           : avatarUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      isOnline: null == isOnline
+          ? _value.isOnline
+          : isOnline // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastSeenAtMSSinceEpoch: freezed == lastSeenAtMSSinceEpoch
+          ? _value.lastSeenAtMSSinceEpoch
+          : lastSeenAtMSSinceEpoch // ignore: cast_nullable_to_non_nullable
+              as int?,
       lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
@@ -213,6 +246,8 @@ class _$EndUserVM implements EndUserVM {
       required this.email,
       required this.firstName,
       required final List<String> avatarUrls,
+      required this.isOnline,
+      this.lastSeenAtMSSinceEpoch,
       this.lastName,
       this.nick,
       final String? $type})
@@ -237,6 +272,10 @@ class _$EndUserVM implements EndUserVM {
   }
 
   @override
+  final bool isOnline;
+  @override
+  final int? lastSeenAtMSSinceEpoch;
+  @override
   final String? lastName;
   @override
   final String? nick;
@@ -246,7 +285,7 @@ class _$EndUserVM implements EndUserVM {
 
   @override
   String toString() {
-    return 'UserVM.end(id: $id, email: $email, firstName: $firstName, avatarUrls: $avatarUrls, lastName: $lastName, nick: $nick)';
+    return 'UserVM.end(id: $id, email: $email, firstName: $firstName, avatarUrls: $avatarUrls, isOnline: $isOnline, lastSeenAtMSSinceEpoch: $lastSeenAtMSSinceEpoch, lastName: $lastName, nick: $nick)';
   }
 
   @override
@@ -260,6 +299,10 @@ class _$EndUserVM implements EndUserVM {
                 other.firstName == firstName) &&
             const DeepCollectionEquality()
                 .equals(other._avatarUrls, _avatarUrls) &&
+            (identical(other.isOnline, isOnline) ||
+                other.isOnline == isOnline) &&
+            (identical(other.lastSeenAtMSSinceEpoch, lastSeenAtMSSinceEpoch) ||
+                other.lastSeenAtMSSinceEpoch == lastSeenAtMSSinceEpoch) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
             (identical(other.nick, nick) || other.nick == nick));
@@ -267,8 +310,16 @@ class _$EndUserVM implements EndUserVM {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, email, firstName,
-      const DeepCollectionEquality().hash(_avatarUrls), lastName, nick);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      email,
+      firstName,
+      const DeepCollectionEquality().hash(_avatarUrls),
+      isOnline,
+      lastSeenAtMSSinceEpoch,
+      lastName,
+      nick);
 
   @JsonKey(ignore: true)
   @override
@@ -279,34 +330,57 @@ class _$EndUserVM implements EndUserVM {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(UserID id, String email, String firstName,
-            List<String> avatarUrls, String? lastName, String? nick)
+    required TResult Function(
+            UserID id,
+            String email,
+            String firstName,
+            List<String> avatarUrls,
+            bool isOnline,
+            int? lastSeenAtMSSinceEpoch,
+            String? lastName,
+            String? nick)
         end,
     required TResult Function(
             UserID id, String name, List<String> avatarUrls, String? nick)
         staff,
   }) {
-    return end(id, email, firstName, avatarUrls, lastName, nick);
+    return end(id, email, firstName, avatarUrls, isOnline,
+        lastSeenAtMSSinceEpoch, lastName, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserID id, String email, String firstName,
-            List<String> avatarUrls, String? lastName, String? nick)?
+    TResult? Function(
+            UserID id,
+            String email,
+            String firstName,
+            List<String> avatarUrls,
+            bool isOnline,
+            int? lastSeenAtMSSinceEpoch,
+            String? lastName,
+            String? nick)?
         end,
     TResult? Function(
             UserID id, String name, List<String> avatarUrls, String? nick)?
         staff,
   }) {
-    return end?.call(id, email, firstName, avatarUrls, lastName, nick);
+    return end?.call(id, email, firstName, avatarUrls, isOnline,
+        lastSeenAtMSSinceEpoch, lastName, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserID id, String email, String firstName,
-            List<String> avatarUrls, String? lastName, String? nick)?
+    TResult Function(
+            UserID id,
+            String email,
+            String firstName,
+            List<String> avatarUrls,
+            bool isOnline,
+            int? lastSeenAtMSSinceEpoch,
+            String? lastName,
+            String? nick)?
         end,
     TResult Function(
             UserID id, String name, List<String> avatarUrls, String? nick)?
@@ -314,7 +388,8 @@ class _$EndUserVM implements EndUserVM {
     required TResult orElse(),
   }) {
     if (end != null) {
-      return end(id, email, firstName, avatarUrls, lastName, nick);
+      return end(id, email, firstName, avatarUrls, isOnline,
+          lastSeenAtMSSinceEpoch, lastName, nick);
     }
     return orElse();
   }
@@ -364,6 +439,8 @@ abstract class EndUserVM implements UserVM {
       required final String email,
       required final String firstName,
       required final List<String> avatarUrls,
+      required final bool isOnline,
+      final int? lastSeenAtMSSinceEpoch,
       final String? lastName,
       final String? nick}) = _$EndUserVM;
 
@@ -375,6 +452,8 @@ abstract class EndUserVM implements UserVM {
   String get firstName;
   @override
   List<String> get avatarUrls;
+  bool get isOnline;
+  int? get lastSeenAtMSSinceEpoch;
   String? get lastName;
   @override
   String? get nick;
@@ -498,8 +577,15 @@ class _$StaffUserVM implements StaffUserVM {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(UserID id, String email, String firstName,
-            List<String> avatarUrls, String? lastName, String? nick)
+    required TResult Function(
+            UserID id,
+            String email,
+            String firstName,
+            List<String> avatarUrls,
+            bool isOnline,
+            int? lastSeenAtMSSinceEpoch,
+            String? lastName,
+            String? nick)
         end,
     required TResult Function(
             UserID id, String name, List<String> avatarUrls, String? nick)
@@ -511,8 +597,15 @@ class _$StaffUserVM implements StaffUserVM {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserID id, String email, String firstName,
-            List<String> avatarUrls, String? lastName, String? nick)?
+    TResult? Function(
+            UserID id,
+            String email,
+            String firstName,
+            List<String> avatarUrls,
+            bool isOnline,
+            int? lastSeenAtMSSinceEpoch,
+            String? lastName,
+            String? nick)?
         end,
     TResult? Function(
             UserID id, String name, List<String> avatarUrls, String? nick)?
@@ -524,8 +617,15 @@ class _$StaffUserVM implements StaffUserVM {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserID id, String email, String firstName,
-            List<String> avatarUrls, String? lastName, String? nick)?
+    TResult Function(
+            UserID id,
+            String email,
+            String firstName,
+            List<String> avatarUrls,
+            bool isOnline,
+            int? lastSeenAtMSSinceEpoch,
+            String? lastName,
+            String? nick)?
         end,
     TResult Function(
             UserID id, String name, List<String> avatarUrls, String? nick)?

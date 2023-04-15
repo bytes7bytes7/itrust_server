@@ -19,13 +19,16 @@ class RespondFriendBidCommandHandler extends RequestHandler<
   const RespondFriendBidCommandHandler({
     required FriendBidRepository friendBidRepository,
     required EndUserRepository endUserRepository,
+    required EndUserActivityRepository endUserActivityRepository,
     required Mapster mapster,
   })  : _friendBidRepository = friendBidRepository,
         _endUserRepository = endUserRepository,
+        _endUserActivityRepository = endUserActivityRepository,
         _mapster = mapster;
 
   final FriendBidRepository _friendBidRepository;
   final EndUserRepository _endUserRepository;
+  final EndUserActivityRepository _endUserActivityRepository;
   final Mapster _mapster;
 
   @override
@@ -94,14 +97,18 @@ class RespondFriendBidCommandHandler extends RequestHandler<
     await _endUserRepository.addOrUpdate(user: updatedThisUser);
     await _endUserRepository.addOrUpdate(user: updatedOtherUser);
 
+    final onlineStatus =
+        await _endUserActivityRepository.get(request.respondToUserID);
+
     final didISentFriendBid = false;
 
     return right(
       UserInfoResult(
-        userInfo: _mapster.map3(
+        userInfo: _mapster.map4(
           updatedOtherUser,
           request.userID,
           didISentFriendBid,
+          onlineStatus,
           To<UserInfoVM>(),
         ),
       ),

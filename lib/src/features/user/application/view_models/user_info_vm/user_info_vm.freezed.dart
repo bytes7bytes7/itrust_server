@@ -29,70 +29,47 @@ UserInfoVM _$UserInfoVMFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserInfoVM {
-  UserID get id => throw _privateConstructorUsedError;
-  List<String> get avatarUrls => throw _privateConstructorUsedError;
-  String? get nick => throw _privateConstructorUsedError;
+  UserVM get user => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
+            EndUserVM user,
             int friendsAmount,
             int postsAmount,
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid,
-            String? lastName,
-            String? nick)
+            bool didISentFriendBid)
         end,
-    required TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)
-        staff,
+    required TResult Function(StaffUserVM user) staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
+            EndUserVM user,
             int friendsAmount,
             int postsAmount,
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid,
-            String? lastName,
-            String? nick)?
+            bool didISentFriendBid)?
         end,
-    TResult? Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
-        staff,
+    TResult? Function(StaffUserVM user)? staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
+            EndUserVM user,
             int friendsAmount,
             int postsAmount,
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid,
-            String? lastName,
-            String? nick)?
+            bool didISentFriendBid)?
         end,
-    TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
-        staff,
+    TResult Function(StaffUserVM user)? staff,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -116,9 +93,6 @@ mixin _$UserInfoVM {
   }) =>
       throw _privateConstructorUsedError;
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $UserInfoVMCopyWith<UserInfoVM> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -126,10 +100,6 @@ abstract class $UserInfoVMCopyWith<$Res> {
   factory $UserInfoVMCopyWith(
           UserInfoVM value, $Res Function(UserInfoVM) then) =
       _$UserInfoVMCopyWithImpl<$Res, UserInfoVM>;
-  @useResult
-  $Res call({UserID id, List<String> avatarUrls, String? nick});
-
-  $UserIDCopyWith<$Res> get id;
 }
 
 /// @nodoc
@@ -141,63 +111,22 @@ class _$UserInfoVMCopyWithImpl<$Res, $Val extends UserInfoVM>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? avatarUrls = null,
-    Object? nick = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as UserID,
-      avatarUrls: null == avatarUrls
-          ? _value.avatarUrls
-          : avatarUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      nick: freezed == nick
-          ? _value.nick
-          : nick // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserIDCopyWith<$Res> get id {
-    return $UserIDCopyWith<$Res>(_value.id, (value) {
-      return _then(_value.copyWith(id: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$EndUserInfoVMCopyWith<$Res>
-    implements $UserInfoVMCopyWith<$Res> {
+abstract class _$$EndUserInfoVMCopyWith<$Res> {
   factory _$$EndUserInfoVMCopyWith(
           _$EndUserInfoVM value, $Res Function(_$EndUserInfoVM) then) =
       __$$EndUserInfoVMCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call(
-      {UserID id,
-      String email,
-      String firstName,
-      List<String> avatarUrls,
+      {EndUserVM user,
       int friendsAmount,
       int postsAmount,
       int subscribersAmount,
       bool amIFriend,
       bool amISubscriber,
-      bool didISentFriendBid,
-      String? lastName,
-      String? nick});
-
-  @override
-  $UserIDCopyWith<$Res> get id;
+      bool didISentFriendBid});
 }
 
 /// @nodoc
@@ -211,36 +140,19 @@ class __$$EndUserInfoVMCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? email = null,
-    Object? firstName = null,
-    Object? avatarUrls = null,
+    Object? user = null,
     Object? friendsAmount = null,
     Object? postsAmount = null,
     Object? subscribersAmount = null,
     Object? amIFriend = null,
     Object? amISubscriber = null,
     Object? didISentFriendBid = null,
-    Object? lastName = freezed,
-    Object? nick = freezed,
   }) {
     return _then(_$EndUserInfoVM(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as UserID,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatarUrls: null == avatarUrls
-          ? _value._avatarUrls
-          : avatarUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as EndUserVM,
       friendsAmount: null == friendsAmount
           ? _value.friendsAmount
           : friendsAmount // ignore: cast_nullable_to_non_nullable
@@ -265,14 +177,6 @@ class __$$EndUserInfoVMCopyWithImpl<$Res>
           ? _value.didISentFriendBid
           : didISentFriendBid // ignore: cast_nullable_to_non_nullable
               as bool,
-      lastName: freezed == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      nick: freezed == nick
-          ? _value.nick
-          : nick // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -281,39 +185,21 @@ class __$$EndUserInfoVMCopyWithImpl<$Res>
 @JsonSerializable()
 class _$EndUserInfoVM implements EndUserInfoVM {
   const _$EndUserInfoVM(
-      {required this.id,
-      required this.email,
-      required this.firstName,
-      required final List<String> avatarUrls,
+      {required this.user,
       required this.friendsAmount,
       required this.postsAmount,
       required this.subscribersAmount,
       required this.amIFriend,
       required this.amISubscriber,
       required this.didISentFriendBid,
-      this.lastName,
-      this.nick,
       final String? $type})
-      : _avatarUrls = avatarUrls,
-        $type = $type ?? 'end';
+      : $type = $type ?? 'end';
 
   factory _$EndUserInfoVM.fromJson(Map<String, dynamic> json) =>
       _$$EndUserInfoVMFromJson(json);
 
   @override
-  final UserID id;
-  @override
-  final String email;
-  @override
-  final String firstName;
-  final List<String> _avatarUrls;
-  @override
-  List<String> get avatarUrls {
-    if (_avatarUrls is EqualUnmodifiableListView) return _avatarUrls;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_avatarUrls);
-  }
-
+  final EndUserVM user;
   @override
   final int friendsAmount;
   @override
@@ -326,17 +212,13 @@ class _$EndUserInfoVM implements EndUserInfoVM {
   final bool amISubscriber;
   @override
   final bool didISentFriendBid;
-  @override
-  final String? lastName;
-  @override
-  final String? nick;
 
   @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'UserInfoVM.end(id: $id, email: $email, firstName: $firstName, avatarUrls: $avatarUrls, friendsAmount: $friendsAmount, postsAmount: $postsAmount, subscribersAmount: $subscribersAmount, amIFriend: $amIFriend, amISubscriber: $amISubscriber, didISentFriendBid: $didISentFriendBid, lastName: $lastName, nick: $nick)';
+    return 'UserInfoVM.end(user: $user, friendsAmount: $friendsAmount, postsAmount: $postsAmount, subscribersAmount: $subscribersAmount, amIFriend: $amIFriend, amISubscriber: $amISubscriber, didISentFriendBid: $didISentFriendBid)';
   }
 
   @override
@@ -344,12 +226,7 @@ class _$EndUserInfoVM implements EndUserInfoVM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EndUserInfoVM &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            const DeepCollectionEquality()
-                .equals(other._avatarUrls, _avatarUrls) &&
+            (identical(other.user, user) || other.user == user) &&
             (identical(other.friendsAmount, friendsAmount) ||
                 other.friendsAmount == friendsAmount) &&
             (identical(other.postsAmount, postsAmount) ||
@@ -361,28 +238,13 @@ class _$EndUserInfoVM implements EndUserInfoVM {
             (identical(other.amISubscriber, amISubscriber) ||
                 other.amISubscriber == amISubscriber) &&
             (identical(other.didISentFriendBid, didISentFriendBid) ||
-                other.didISentFriendBid == didISentFriendBid) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
-            (identical(other.nick, nick) || other.nick == nick));
+                other.didISentFriendBid == didISentFriendBid));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      email,
-      firstName,
-      const DeepCollectionEquality().hash(_avatarUrls),
-      friendsAmount,
-      postsAmount,
-      subscribersAmount,
-      amIFriend,
-      amISubscriber,
-      didISentFriendBid,
-      lastName,
-      nick);
+  int get hashCode => Object.hash(runtimeType, user, friendsAmount, postsAmount,
+      subscribersAmount, amIFriend, amISubscriber, didISentFriendBid);
 
   @JsonKey(ignore: true)
   @override
@@ -394,110 +256,56 @@ class _$EndUserInfoVM implements EndUserInfoVM {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
+            EndUserVM user,
             int friendsAmount,
             int postsAmount,
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid,
-            String? lastName,
-            String? nick)
+            bool didISentFriendBid)
         end,
-    required TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)
-        staff,
+    required TResult Function(StaffUserVM user) staff,
   }) {
-    return end(
-        id,
-        email,
-        firstName,
-        avatarUrls,
-        friendsAmount,
-        postsAmount,
-        subscribersAmount,
-        amIFriend,
-        amISubscriber,
-        didISentFriendBid,
-        lastName,
-        nick);
+    return end(user, friendsAmount, postsAmount, subscribersAmount, amIFriend,
+        amISubscriber, didISentFriendBid);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
+            EndUserVM user,
             int friendsAmount,
             int postsAmount,
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid,
-            String? lastName,
-            String? nick)?
+            bool didISentFriendBid)?
         end,
-    TResult? Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
-        staff,
+    TResult? Function(StaffUserVM user)? staff,
   }) {
-    return end?.call(
-        id,
-        email,
-        firstName,
-        avatarUrls,
-        friendsAmount,
-        postsAmount,
-        subscribersAmount,
-        amIFriend,
-        amISubscriber,
-        didISentFriendBid,
-        lastName,
-        nick);
+    return end?.call(user, friendsAmount, postsAmount, subscribersAmount,
+        amIFriend, amISubscriber, didISentFriendBid);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
+            EndUserVM user,
             int friendsAmount,
             int postsAmount,
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid,
-            String? lastName,
-            String? nick)?
+            bool didISentFriendBid)?
         end,
-    TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
-        staff,
+    TResult Function(StaffUserVM user)? staff,
     required TResult orElse(),
   }) {
     if (end != null) {
-      return end(
-          id,
-          email,
-          firstName,
-          avatarUrls,
-          friendsAmount,
-          postsAmount,
-          subscribersAmount,
-          amIFriend,
-          amISubscriber,
-          didISentFriendBid,
-          lastName,
-          nick);
+      return end(user, friendsAmount, postsAmount, subscribersAmount, amIFriend,
+          amISubscriber, didISentFriendBid);
     }
     return orElse();
   }
@@ -543,55 +351,37 @@ class _$EndUserInfoVM implements EndUserInfoVM {
 
 abstract class EndUserInfoVM implements UserInfoVM {
   const factory EndUserInfoVM(
-      {required final UserID id,
-      required final String email,
-      required final String firstName,
-      required final List<String> avatarUrls,
+      {required final EndUserVM user,
       required final int friendsAmount,
       required final int postsAmount,
       required final int subscribersAmount,
       required final bool amIFriend,
       required final bool amISubscriber,
-      required final bool didISentFriendBid,
-      final String? lastName,
-      final String? nick}) = _$EndUserInfoVM;
+      required final bool didISentFriendBid}) = _$EndUserInfoVM;
 
   factory EndUserInfoVM.fromJson(Map<String, dynamic> json) =
       _$EndUserInfoVM.fromJson;
 
   @override
-  UserID get id;
-  String get email;
-  String get firstName;
-  @override
-  List<String> get avatarUrls;
+  EndUserVM get user;
   int get friendsAmount;
   int get postsAmount;
   int get subscribersAmount;
   bool get amIFriend;
   bool get amISubscriber;
   bool get didISentFriendBid;
-  String? get lastName;
-  @override
-  String? get nick;
-  @override
   @JsonKey(ignore: true)
   _$$EndUserInfoVMCopyWith<_$EndUserInfoVM> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$StaffUserInfoVMCopyWith<$Res>
-    implements $UserInfoVMCopyWith<$Res> {
+abstract class _$$StaffUserInfoVMCopyWith<$Res> {
   factory _$$StaffUserInfoVMCopyWith(
           _$StaffUserInfoVM value, $Res Function(_$StaffUserInfoVM) then) =
       __$$StaffUserInfoVMCopyWithImpl<$Res>;
-  @override
   @useResult
-  $Res call({UserID id, String name, List<String> avatarUrls, String? nick});
-
-  @override
-  $UserIDCopyWith<$Res> get id;
+  $Res call({StaffUserVM user});
 }
 
 /// @nodoc
@@ -605,28 +395,13 @@ class __$$StaffUserInfoVMCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? avatarUrls = null,
-    Object? nick = freezed,
+    Object? user = null,
   }) {
     return _then(_$StaffUserInfoVM(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as UserID,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      avatarUrls: null == avatarUrls
-          ? _value._avatarUrls
-          : avatarUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      nick: freezed == nick
-          ? _value.nick
-          : nick // ignore: cast_nullable_to_non_nullable
-              as String?,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as StaffUserVM,
     ));
   }
 }
@@ -634,39 +409,21 @@ class __$$StaffUserInfoVMCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$StaffUserInfoVM implements StaffUserInfoVM {
-  const _$StaffUserInfoVM(
-      {required this.id,
-      required this.name,
-      required final List<String> avatarUrls,
-      this.nick,
-      final String? $type})
-      : _avatarUrls = avatarUrls,
-        $type = $type ?? 'staff';
+  const _$StaffUserInfoVM({required this.user, final String? $type})
+      : $type = $type ?? 'staff';
 
   factory _$StaffUserInfoVM.fromJson(Map<String, dynamic> json) =>
       _$$StaffUserInfoVMFromJson(json);
 
   @override
-  final UserID id;
-  @override
-  final String name;
-  final List<String> _avatarUrls;
-  @override
-  List<String> get avatarUrls {
-    if (_avatarUrls is EqualUnmodifiableListView) return _avatarUrls;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_avatarUrls);
-  }
-
-  @override
-  final String? nick;
+  final StaffUserVM user;
 
   @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'UserInfoVM.staff(id: $id, name: $name, avatarUrls: $avatarUrls, nick: $nick)';
+    return 'UserInfoVM.staff(user: $user)';
   }
 
   @override
@@ -674,17 +431,12 @@ class _$StaffUserInfoVM implements StaffUserInfoVM {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$StaffUserInfoVM &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality()
-                .equals(other._avatarUrls, _avatarUrls) &&
-            (identical(other.nick, nick) || other.nick == nick));
+            (identical(other.user, user) || other.user == user));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name,
-      const DeepCollectionEquality().hash(_avatarUrls), nick);
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
@@ -696,74 +448,53 @@ class _$StaffUserInfoVM implements StaffUserInfoVM {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
+            EndUserVM user,
             int friendsAmount,
             int postsAmount,
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid,
-            String? lastName,
-            String? nick)
+            bool didISentFriendBid)
         end,
-    required TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)
-        staff,
+    required TResult Function(StaffUserVM user) staff,
   }) {
-    return staff(id, name, avatarUrls, nick);
+    return staff(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
+            EndUserVM user,
             int friendsAmount,
             int postsAmount,
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid,
-            String? lastName,
-            String? nick)?
+            bool didISentFriendBid)?
         end,
-    TResult? Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
-        staff,
+    TResult? Function(StaffUserVM user)? staff,
   }) {
-    return staff?.call(id, name, avatarUrls, nick);
+    return staff?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
+            EndUserVM user,
             int friendsAmount,
             int postsAmount,
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid,
-            String? lastName,
-            String? nick)?
+            bool didISentFriendBid)?
         end,
-    TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
-        staff,
+    TResult Function(StaffUserVM user)? staff,
     required TResult orElse(),
   }) {
     if (staff != null) {
-      return staff(id, name, avatarUrls, nick);
+      return staff(user);
     }
     return orElse();
   }
@@ -808,23 +539,14 @@ class _$StaffUserInfoVM implements StaffUserInfoVM {
 }
 
 abstract class StaffUserInfoVM implements UserInfoVM {
-  const factory StaffUserInfoVM(
-      {required final UserID id,
-      required final String name,
-      required final List<String> avatarUrls,
-      final String? nick}) = _$StaffUserInfoVM;
+  const factory StaffUserInfoVM({required final StaffUserVM user}) =
+      _$StaffUserInfoVM;
 
   factory StaffUserInfoVM.fromJson(Map<String, dynamic> json) =
       _$StaffUserInfoVM.fromJson;
 
   @override
-  UserID get id;
-  String get name;
-  @override
-  List<String> get avatarUrls;
-  @override
-  String? get nick;
-  @override
+  StaffUserVM get user;
   @JsonKey(ignore: true)
   _$$StaffUserInfoVMCopyWith<_$StaffUserInfoVM> get copyWith =>
       throw _privateConstructorUsedError;
