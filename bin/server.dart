@@ -55,6 +55,10 @@ void main(List<String> args) async {
     ..mount(
       PostController.path,
       _getIt.get<PostController>().router.addAuthorization(),
+    )
+    ..mount(
+      MediaController.path,
+      _getIt.get<MediaController>().router.addAuthorization(),
     );
 
   final handler = Pipeline()

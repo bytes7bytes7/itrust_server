@@ -1,22 +1,17 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'feed_controller.dart';
+part of 'media_controller.dart';
 
 // **************************************************************************
 // ShelfRouterGenerator
 // **************************************************************************
 
-Router _$FeedControllerRouter(FeedController service) {
+Router _$MediaControllerRouter(MediaController service) {
   final router = Router();
   router.add(
     'GET',
-    r'/',
-    service.getFeed,
-  );
-  router.add(
-    'GET',
-    r'/tags',
-    service.getTags,
+    r'/<mediaID>',
+    service.getMedia,
   );
   return router;
 }

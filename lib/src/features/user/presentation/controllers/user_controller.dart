@@ -8,6 +8,7 @@ import '../../../../utils/extensions/request_x.dart';
 import '../../../common/common.dart';
 import '../../application/application.dart';
 import '../contracts/contracts.dart';
+import '../contracts/json_keys.dart';
 
 part 'user_controller.g.dart';
 

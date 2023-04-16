@@ -10,6 +10,7 @@ import '../../../common/presentation/contracts/posts_response/posts_response.dar
 import '../../../common/presentation/controllers/api_controller.dart';
 import '../../application/application.dart';
 import '../contracts/contracts.dart';
+import '../contracts/json_keys.dart';
 
 part 'post_controller.g.dart';
 
