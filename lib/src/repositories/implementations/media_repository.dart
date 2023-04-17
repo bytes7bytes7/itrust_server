@@ -26,7 +26,7 @@ class DevMediaRepository implements MediaRepository {
     final media = Media(
       id: id,
       type: _getMediaType(newMedia.filename),
-      encodedBytes: newMedia.encodedBytes,
+      bytes: newMedia.bytes,
     );
 
     _storage[id] = media;

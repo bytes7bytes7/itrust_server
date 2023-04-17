@@ -32,7 +32,7 @@ class GetMediaQueryHandler extends RequestHandler<GetMediaQuery,
 
     return right(
       MediaResult(
-        encodedBytes: media.encodedBytes,
+        bytes: media.bytes,
       ),
     );
   }

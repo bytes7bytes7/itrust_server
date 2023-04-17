@@ -17,16 +17,13 @@ import 'send_friend_bid_command.dart';
 class SendFriendBidCommandHandler extends RequestHandler<SendFriendBidCommand,
     Either<List<DetailedException>, UserInfoResult>> {
   const SendFriendBidCommandHandler({
-    required FriendBidRepository friendBidRepository,
     required EndUserRepository endUserRepository,
     required EndUserActivityRepository endUserActivityRepository,
     required Mapster mapster,
-  })  : _friendBidRepository = friendBidRepository,
-        _endUserRepository = endUserRepository,
+  })  : _endUserRepository = endUserRepository,
         _endUserActivityRepository = endUserActivityRepository,
         _mapster = mapster;
 
-  final FriendBidRepository _friendBidRepository;
   final EndUserRepository _endUserRepository;
   final EndUserActivityRepository _endUserActivityRepository;
   final Mapster _mapster;
@@ -57,7 +54,7 @@ class SendFriendBidCommandHandler extends RequestHandler<SendFriendBidCommand,
       );
     }
 
-    final hasAlreadySentBid = await _friendBidRepository.hasBidToUser(
+    final hasAlreadySentBid = await _endUserRepository.hasBidToUser(
       from: request.userID,
       to: request.sendToUserID,
     );
@@ -68,7 +65,7 @@ class SendFriendBidCommandHandler extends RequestHandler<SendFriendBidCommand,
       );
     }
 
-    final haveIFriendBidFromThisUser = await _friendBidRepository.hasBidToUser(
+    final haveIFriendBidFromThisUser = await _endUserRepository.hasBidToUser(
       from: request.sendToUserID,
       to: request.userID,
     );
@@ -79,7 +76,7 @@ class SendFriendBidCommandHandler extends RequestHandler<SendFriendBidCommand,
       );
     }
 
-    await _friendBidRepository.add(
+    await _endUserRepository.addFriendBid(
       from: request.userID,
       to: request.sendToUserID,
     );

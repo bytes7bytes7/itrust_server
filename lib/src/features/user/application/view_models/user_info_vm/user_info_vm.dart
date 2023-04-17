@@ -14,10 +14,11 @@ class UserInfoVM with _$UserInfoVM {
   const factory UserInfoVM.end({
     required EndUserVM user,
     required int friendsAmount,
-    required int postsAmount,
     required int subscribersAmount,
+    required int postsAmount,
     required bool amIFriend,
     required bool amISubscriber,
+    required bool areTheySubscribedToMe,
     required bool didISentFriendBid,
     required bool haveIFriendBidFromThisUser,
   }) = EndUserInfoVM;

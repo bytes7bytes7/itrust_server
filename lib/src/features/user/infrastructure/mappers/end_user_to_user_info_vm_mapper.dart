@@ -19,10 +19,11 @@ class EndUserToUserInfoVMMapper extends FiveSourcesMapper<EndUser, UserID, bool,
     return UserInfoVM.end(
       user: _mapster.map2(_user, _onlineStatus, To<EndUserVM>()),
       friendsAmount: _user.friends.length,
-      postsAmount: _user.posts.length,
       subscribersAmount: _user.subscribers.length,
+      postsAmount: _user.posts.length,
       amIFriend: _user.friends.contains(_userID),
       amISubscriber: _user.subscribers.contains(_userID),
+      areTheySubscribedToMe: _user.subscriptions.contains(_userID),
       didISentFriendBid: _didISentFriendBid,
       haveIFriendBidFromThisUser: _haveIFriendBidFromThisUser,
     );

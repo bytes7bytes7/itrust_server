@@ -8,11 +8,11 @@ part 'new_media.g.dart';
 class NewMedia {
   const NewMedia({
     required this.filename,
-    required this.encodedBytes,
+    required this.bytes,
   });
 
   final String filename;
-  final String encodedBytes;
+  final List<int> bytes;
 
   factory NewMedia.fromJson(JsonMap json) => _$NewMediaFromJson(json);
 

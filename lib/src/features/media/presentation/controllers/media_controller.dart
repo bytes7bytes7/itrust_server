@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
 import 'package:mediator/mediator.dart' as mdtr;
@@ -55,7 +57,10 @@ class MediaController extends ApiController {
 
     return result.match(
       problem,
-      (r) => ok(_mapster.map1(r, To<MediaResponse>())),
+      (r) => ok(
+        r.bytes,
+        contentType: ContentType.binary,
+      ),
     );
   }
 }

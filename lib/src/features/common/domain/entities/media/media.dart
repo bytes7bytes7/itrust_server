@@ -19,7 +19,7 @@ class Media with _$Media {
   const factory Media({
     required MediaID id,
     required MediaType type,
-    required String encodedBytes,
+    required List<int> bytes,
   }) = _Media;
 
   factory Media.fromJson(JsonMap json) => _$MediaFromJson(json);

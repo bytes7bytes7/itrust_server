@@ -59,7 +59,11 @@ class RegisterCommandHandler extends RequestHandler<RegisterCommand,
       avatarUrls: [],
       friends: [],
       subscribers: [],
+      subscriptions: [],
       posts: [],
+      friendsBidsToMe: [],
+      myFriendBids: [],
+      nick: null,
     );
 
     await _endUserRepository.addOrUpdate(user: user);

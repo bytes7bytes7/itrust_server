@@ -16,18 +16,15 @@ import 'get_user_info_query.dart';
 class GetUserInfoQueryHandler extends RequestHandler<GetUserInfoQuery,
     Either<List<DetailedException>, UserInfoResult>> {
   const GetUserInfoQueryHandler({
-    required FriendBidRepository friendBidRepository,
     required EndUserRepository endUserRepository,
     required StaffUserRepository staffUserRepository,
     required EndUserActivityRepository endUserActivityRepository,
     required Mapster mapster,
-  })  : _friendBidRepository = friendBidRepository,
-        _endUserRepository = endUserRepository,
+  })  : _endUserRepository = endUserRepository,
         _staffUserRepository = staffUserRepository,
         _endUserActivityRepository = endUserActivityRepository,
         _mapster = mapster;
 
-  final FriendBidRepository _friendBidRepository;
   final EndUserRepository _endUserRepository;
   final StaffUserRepository _staffUserRepository;
   final EndUserActivityRepository _endUserActivityRepository;
@@ -54,12 +51,12 @@ class GetUserInfoQueryHandler extends RequestHandler<GetUserInfoQuery,
     final onlineStatus =
         await _endUserActivityRepository.get(request.aboutUserID);
 
-    final didISentFriendBid = await _friendBidRepository.hasBidToUser(
+    final didISentFriendBid = await _endUserRepository.hasBidToUser(
       from: request.userID,
       to: request.aboutUserID,
     );
 
-    final haveIFriendBidFromThisUser = await _friendBidRepository.hasBidToUser(
+    final haveIFriendBidFromThisUser = await _endUserRepository.hasBidToUser(
       from: request.aboutUserID,
       to: request.userID,
     );

@@ -11,12 +11,8 @@ class MediaMapsterRegistrar {
 
   @postConstruct
   void register() {
-    _mapster
-      ..register(
-        MapperMeta.two(GetMediaRequestToGetMediaQueryMapper.new),
-      )
-      ..register(
-        MapperMeta.one(MediaResultToMediaResponseMapper.new),
-      );
+    _mapster.register(
+      MapperMeta.two(GetMediaRequestToGetMediaQueryMapper.new),
+    );
   }
 }

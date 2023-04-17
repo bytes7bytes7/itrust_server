@@ -22,7 +22,7 @@ Media _$MediaFromJson(Map<String, dynamic> json) {
 mixin _$Media {
   MediaID get id => throw _privateConstructorUsedError;
   MediaType get type => throw _privateConstructorUsedError;
-  String get encodedBytes => throw _privateConstructorUsedError;
+  List<int> get bytes => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +34,7 @@ abstract class $MediaCopyWith<$Res> {
   factory $MediaCopyWith(Media value, $Res Function(Media) then) =
       _$MediaCopyWithImpl<$Res, Media>;
   @useResult
-  $Res call({MediaID id, MediaType type, String encodedBytes});
+  $Res call({MediaID id, MediaType type, List<int> bytes});
 
   $MediaIDCopyWith<$Res> get id;
 }
@@ -54,7 +54,7 @@ class _$MediaCopyWithImpl<$Res, $Val extends Media>
   $Res call({
     Object? id = null,
     Object? type = null,
-    Object? encodedBytes = null,
+    Object? bytes = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -65,10 +65,10 @@ class _$MediaCopyWithImpl<$Res, $Val extends Media>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as MediaType,
-      encodedBytes: null == encodedBytes
-          ? _value.encodedBytes
-          : encodedBytes // ignore: cast_nullable_to_non_nullable
-              as String,
+      bytes: null == bytes
+          ? _value.bytes
+          : bytes // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ) as $Val);
   }
 
@@ -87,7 +87,7 @@ abstract class _$$_MediaCopyWith<$Res> implements $MediaCopyWith<$Res> {
       __$$_MediaCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({MediaID id, MediaType type, String encodedBytes});
+  $Res call({MediaID id, MediaType type, List<int> bytes});
 
   @override
   $MediaIDCopyWith<$Res> get id;
@@ -104,7 +104,7 @@ class __$$_MediaCopyWithImpl<$Res> extends _$MediaCopyWithImpl<$Res, _$_Media>
   $Res call({
     Object? id = null,
     Object? type = null,
-    Object? encodedBytes = null,
+    Object? bytes = null,
   }) {
     return _then(_$_Media(
       id: null == id
@@ -115,10 +115,10 @@ class __$$_MediaCopyWithImpl<$Res> extends _$MediaCopyWithImpl<$Res, _$_Media>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as MediaType,
-      encodedBytes: null == encodedBytes
-          ? _value.encodedBytes
-          : encodedBytes // ignore: cast_nullable_to_non_nullable
-              as String,
+      bytes: null == bytes
+          ? _value._bytes
+          : bytes // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 }
@@ -127,7 +127,8 @@ class __$$_MediaCopyWithImpl<$Res> extends _$MediaCopyWithImpl<$Res, _$_Media>
 @JsonSerializable()
 class _$_Media implements _Media {
   const _$_Media(
-      {required this.id, required this.type, required this.encodedBytes});
+      {required this.id, required this.type, required final List<int> bytes})
+      : _bytes = bytes;
 
   factory _$_Media.fromJson(Map<String, dynamic> json) =>
       _$$_MediaFromJson(json);
@@ -136,12 +137,17 @@ class _$_Media implements _Media {
   final MediaID id;
   @override
   final MediaType type;
+  final List<int> _bytes;
   @override
-  final String encodedBytes;
+  List<int> get bytes {
+    if (_bytes is EqualUnmodifiableListView) return _bytes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_bytes);
+  }
 
   @override
   String toString() {
-    return 'Media(id: $id, type: $type, encodedBytes: $encodedBytes)';
+    return 'Media(id: $id, type: $type, bytes: $bytes)';
   }
 
   @override
@@ -151,13 +157,13 @@ class _$_Media implements _Media {
             other is _$_Media &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.encodedBytes, encodedBytes) ||
-                other.encodedBytes == encodedBytes));
+            const DeepCollectionEquality().equals(other._bytes, _bytes));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, type, encodedBytes);
+  int get hashCode => Object.hash(
+      runtimeType, id, type, const DeepCollectionEquality().hash(_bytes));
 
   @JsonKey(ignore: true)
   @override
@@ -177,7 +183,7 @@ abstract class _Media implements Media {
   const factory _Media(
       {required final MediaID id,
       required final MediaType type,
-      required final String encodedBytes}) = _$_Media;
+      required final List<int> bytes}) = _$_Media;
 
   factory _Media.fromJson(Map<String, dynamic> json) = _$_Media.fromJson;
 
@@ -186,7 +192,7 @@ abstract class _Media implements Media {
   @override
   MediaType get type;
   @override
-  String get encodedBytes;
+  List<int> get bytes;
   @override
   @JsonKey(ignore: true)
   _$$_MediaCopyWith<_$_Media> get copyWith =>

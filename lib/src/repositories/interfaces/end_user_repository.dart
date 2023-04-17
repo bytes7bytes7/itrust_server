@@ -14,4 +14,31 @@ abstract class EndUserRepository {
     required int limit,
     UserID? startAfter,
   });
+
+  Future<void> addFriendBid({
+    required UserID from,
+    required UserID to,
+  });
+
+  Future<void> removeFriendBid({
+    required UserID from,
+    required UserID to,
+  });
+
+  Future<bool> hasBidToUser({
+    required UserID from,
+    required UserID to,
+  });
+
+  Future<List<UserID>> getBidsToUserWithFilter({
+    required UserID userID,
+    required int limit,
+    UserID? startAfter,
+  });
+
+  Future<List<UserID>> getBidsFromUserWithFilter({
+    required UserID userID,
+    required int limit,
+    UserID? startAfter,
+  });
 }

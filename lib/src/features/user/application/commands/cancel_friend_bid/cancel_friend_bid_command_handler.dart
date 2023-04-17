@@ -17,16 +17,13 @@ import 'cancel_friend_bid_command.dart';
 class CancelFriendBidCommandHandler extends RequestHandler<
     CancelFriendBidCommand, Either<List<DetailedException>, UserInfoResult>> {
   const CancelFriendBidCommandHandler({
-    required FriendBidRepository friendBidRepository,
     required EndUserRepository endUserRepository,
     required EndUserActivityRepository endUserActivityRepository,
     required Mapster mapster,
-  })  : _friendBidRepository = friendBidRepository,
-        _endUserRepository = endUserRepository,
+  })  : _endUserRepository = endUserRepository,
         _endUserActivityRepository = endUserActivityRepository,
         _mapster = mapster;
 
-  final FriendBidRepository _friendBidRepository;
   final EndUserRepository _endUserRepository;
   final EndUserActivityRepository _endUserActivityRepository;
   final Mapster _mapster;
@@ -57,7 +54,7 @@ class CancelFriendBidCommandHandler extends RequestHandler<
       );
     }
 
-    final hasAlreadySentBid = await _friendBidRepository.hasBidToUser(
+    final hasAlreadySentBid = await _endUserRepository.hasBidToUser(
       from: request.userID,
       to: request.cancelToUserID,
     );
@@ -68,12 +65,12 @@ class CancelFriendBidCommandHandler extends RequestHandler<
       );
     }
 
-    final haveIFriendBidFromThisUser = await _friendBidRepository.hasBidToUser(
+    final haveIFriendBidFromThisUser = await _endUserRepository.hasBidToUser(
       from: request.cancelToUserID,
       to: request.userID,
     );
 
-    await _friendBidRepository.remove(
+    await _endUserRepository.removeFriendBid(
       from: request.userID,
       to: request.cancelToUserID,
     );

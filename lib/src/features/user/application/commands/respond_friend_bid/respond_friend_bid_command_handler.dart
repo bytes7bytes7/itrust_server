@@ -17,16 +17,13 @@ import 'respond_friend_bid_command.dart';
 class RespondFriendBidCommandHandler extends RequestHandler<
     RespondFriendBidCommand, Either<List<DetailedException>, UserInfoResult>> {
   const RespondFriendBidCommandHandler({
-    required FriendBidRepository friendBidRepository,
     required EndUserRepository endUserRepository,
     required EndUserActivityRepository endUserActivityRepository,
     required Mapster mapster,
-  })  : _friendBidRepository = friendBidRepository,
-        _endUserRepository = endUserRepository,
+  })  : _endUserRepository = endUserRepository,
         _endUserActivityRepository = endUserActivityRepository,
         _mapster = mapster;
 
-  final FriendBidRepository _friendBidRepository;
   final EndUserRepository _endUserRepository;
   final EndUserActivityRepository _endUserActivityRepository;
   final Mapster _mapster;
@@ -56,7 +53,7 @@ class RespondFriendBidCommandHandler extends RequestHandler<
       );
     }
 
-    final hasBid = await _friendBidRepository.hasBidToUser(
+    final hasBid = await _endUserRepository.hasBidToUser(
       from: request.respondToUserID,
       to: request.userID,
     );
@@ -67,7 +64,7 @@ class RespondFriendBidCommandHandler extends RequestHandler<
       );
     }
 
-    await _friendBidRepository.remove(
+    await _endUserRepository.removeFriendBid(
       from: request.respondToUserID,
       to: request.userID,
     );

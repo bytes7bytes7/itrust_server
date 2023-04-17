@@ -18,7 +18,10 @@ class User with _$User {
     required List<String> avatarUrls,
     required List<UserID> friends,
     required List<UserID> subscribers,
+    required List<UserID> subscriptions,
     required List<PostID> posts,
+    required List<UserID> myFriendBids,
+    required List<UserID> friendsBidsToMe,
     String? lastName,
     String? nick,
   }) = EndUser;

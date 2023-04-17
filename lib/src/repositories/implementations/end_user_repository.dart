@@ -69,4 +69,162 @@ class DevEndUserRepository implements EndUserRepository {
 
     return result;
   }
+
+  @override
+  Future<void> addFriendBid({
+    required UserID from,
+    required UserID to,
+  }) async {
+    final fromUser = _storage[from];
+
+    if (fromUser == null) {
+      throw Exception('User not found');
+    }
+
+    final fromUserBids = List.of(fromUser.myFriendBids);
+
+    if (fromUserBids.contains(to)) {
+      throw Exception('A bid has been already sent');
+    }
+
+    _storage[from] = fromUser.copyWith(
+      myFriendBids: fromUserBids..add(to),
+    );
+
+    final toUser = _storage[to];
+
+    if (toUser == null) {
+      throw Exception('User not found');
+    }
+
+    final toUserBids = List.of(toUser.friendsBidsToMe);
+
+    if (toUserBids.contains(from)) {
+      throw Exception('A bid has been already sent');
+    }
+
+    _storage[to] = toUser.copyWith(
+      friendsBidsToMe: toUserBids..add(from),
+    );
+  }
+
+  @override
+  Future<void> removeFriendBid({
+    required UserID from,
+    required UserID to,
+  }) async {
+    final fromUser = _storage[from];
+
+    if (fromUser == null) {
+      throw Exception('User not found');
+    }
+
+    final fromUserBids = List.of(fromUser.myFriendBids);
+
+    if (!fromUserBids.contains(to)) {
+      throw Exception('A bid does not exist');
+    }
+
+    _storage[from] = fromUser.copyWith(
+      myFriendBids: fromUserBids..remove(to),
+    );
+
+    final toUser = _storage[to];
+
+    if (toUser == null) {
+      throw Exception('User not found');
+    }
+
+    final toUserBids = List.of(toUser.friendsBidsToMe);
+
+    if (!toUserBids.contains(from)) {
+      throw Exception('A bid does not exist');
+    }
+
+    _storage[to] = toUser.copyWith(
+      friendsBidsToMe: toUserBids..remove(from),
+    );
+  }
+
+  @override
+  Future<bool> hasBidToUser({
+    required UserID from,
+    required UserID to,
+  }) async {
+    final fromUser = _storage[from];
+
+    if (fromUser == null) {
+      throw Exception('User not found');
+    }
+
+    final bids = fromUser.myFriendBids;
+
+    return bids.contains(to);
+  }
+
+  @override
+  Future<List<UserID>> getBidsToUserWithFilter({
+    required UserID userID,
+    required int limit,
+    UserID? startAfter,
+  }) async {
+    final result = <UserID>[];
+
+    var reachStartAfter = startAfter == null;
+
+    final user = _storage[userID];
+
+    if (user == null) {
+      throw Exception('User not found');
+    }
+
+    final bids = user.friendsBidsToMe;
+
+    for (final bid in bids) {
+      if (reachStartAfter) {
+        result.add(bid);
+      } else if (bid == startAfter) {
+        reachStartAfter = true;
+      }
+
+      if (result.length == limit) {
+        break;
+      }
+    }
+
+    return result;
+  }
+
+  @override
+  Future<List<UserID>> getBidsFromUserWithFilter({
+    required UserID userID,
+    required int limit,
+    UserID? startAfter,
+  }) async {
+    final result = <UserID>[];
+
+    var reachStartAfter = startAfter == null;
+
+    final user = _storage[userID];
+
+    if (user == null) {
+      throw Exception('User not found');
+    }
+
+    final bids = user.myFriendBids;
+
+    for (final bid in bids) {
+      if (reachStartAfter) {
+        result.add(bid);
+      } else if (bid == startAfter) {
+        reachStartAfter = true;
+      }
+
+      if (result.length == limit) {
+        break;
+      }
+    }
+
+    return result;
+  }
 }

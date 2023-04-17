@@ -1,7 +1,7 @@
 class MediaResult {
   const MediaResult({
-    required this.encodedBytes,
+    required this.bytes,
   });
 
-  final String encodedBytes;
+  final List<int> bytes;
 }

@@ -19,8 +19,17 @@ _$EndUser _$$EndUserFromJson(Map<String, dynamic> json) => _$EndUser(
       subscribers: (json['subscribers'] as List<dynamic>)
           .map((e) => UserID.fromJson(e as Map<String, dynamic>))
           .toList(),
+      subscriptions: (json['subscriptions'] as List<dynamic>)
+          .map((e) => UserID.fromJson(e as Map<String, dynamic>))
+          .toList(),
       posts: (json['posts'] as List<dynamic>)
           .map((e) => PostID.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      myFriendBids: (json['myFriendBids'] as List<dynamic>)
+          .map((e) => UserID.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      friendsBidsToMe: (json['friendsBidsToMe'] as List<dynamic>)
+          .map((e) => UserID.fromJson(e as Map<String, dynamic>))
           .toList(),
       lastName: json['lastName'] as String?,
       nick: json['nick'] as String?,
@@ -34,7 +43,11 @@ Map<String, dynamic> _$$EndUserToJson(_$EndUser instance) => <String, dynamic>{
       'avatarUrls': instance.avatarUrls,
       'friends': instance.friends.map((e) => e.toJson()).toList(),
       'subscribers': instance.subscribers.map((e) => e.toJson()).toList(),
+      'subscriptions': instance.subscriptions.map((e) => e.toJson()).toList(),
       'posts': instance.posts.map((e) => e.toJson()).toList(),
+      'myFriendBids': instance.myFriendBids.map((e) => e.toJson()).toList(),
+      'friendsBidsToMe':
+          instance.friendsBidsToMe.map((e) => e.toJson()).toList(),
       'lastName': instance.lastName,
       'nick': instance.nick,
       'type': instance.$type,
