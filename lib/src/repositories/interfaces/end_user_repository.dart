@@ -42,7 +42,7 @@ abstract class EndUserRepository {
     UserID? startAfter,
   });
 
-  Future<bool> isFriends({
+  Future<bool> isFriend({
     required UserID firstUserID,
     required UserID secondUserID,
   });
@@ -58,6 +58,16 @@ abstract class EndUserRepository {
   });
 
   Future<void> subscribe({
+    required UserID subscriberID,
+    required UserID publisherID,
+  });
+
+  Future<bool> isSubscriber({
+    required UserID subscriberID,
+    required UserID publisherID,
+  });
+
+  Future<void> unsubscribe({
     required UserID subscriberID,
     required UserID publisherID,
   });

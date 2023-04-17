@@ -229,7 +229,7 @@ class DevEndUserRepository implements EndUserRepository {
   }
 
   @override
-  Future<bool> isFriends({
+  Future<bool> isFriend({
     required UserID firstUserID,
     required UserID secondUserID,
   }) async {
@@ -306,6 +306,44 @@ class DevEndUserRepository implements EndUserRepository {
     );
     final updatedPublisher = publisher.copyWith(
       subscribers: List.of(publisher.subscribers)..add(subscriberID),
+    );
+
+    _storage[subscriberID] = updatedSubscriber;
+    _storage[publisherID] = updatedPublisher;
+  }
+
+  @override
+  Future<bool> isSubscriber({
+    required UserID subscriberID,
+    required UserID publisherID,
+  }) async {
+    final subscriber = _storage[subscriberID];
+    final publisher = _storage[publisherID];
+
+    if (subscriber == null || publisher == null) {
+      throw Exception('User not found');
+    }
+
+    return subscriber.subscriptions.contains(publisherID);
+  }
+
+  @override
+  Future<void> unsubscribe({
+    required UserID subscriberID,
+    required UserID publisherID,
+  }) async {
+    final subscriber = _storage[subscriberID];
+    final publisher = _storage[publisherID];
+
+    if (subscriber == null || publisher == null) {
+      throw Exception('User not found');
+    }
+
+    final updatedSubscriber = subscriber.copyWith(
+      subscriptions: List.of(subscriber.subscriptions)..remove(publisherID),
+    );
+    final updatedPublisher = publisher.copyWith(
+      subscribers: List.of(publisher.subscribers)..remove(subscriberID),
     );
 
     _storage[subscriberID] = updatedSubscriber;

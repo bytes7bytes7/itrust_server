@@ -1,10 +1,10 @@
 export 'already_have_bid.dart';
 export 'bid_already_sent.dart';
 export 'bid_not_found.dart';
-export 'can_not_cancel_friend_bid_to_staff_user.dart';
-export 'can_not_cancel_friend_bid_to_yourself.dart';
-export 'can_not_respond_friend_bid_to_staff_user.dart';
-export 'can_not_respond_friend_bid_to_yourself.dart';
-export 'can_not_send_friend_bid_to_staff_user.dart';
-export 'can_not_send_friend_bid_to_yourself.dart';
+export 'can_not_do_this_to_staff_user.dart';
+export 'can_not_do_this_to_yourself.dart';
+export 'is_your_subscriber.dart';
+export 'not_your_subscriber.dart';
+export 'you_already_friends.dart';
 export 'you_are_not_friends.dart';
+export 'you_are_subscriber.dart';

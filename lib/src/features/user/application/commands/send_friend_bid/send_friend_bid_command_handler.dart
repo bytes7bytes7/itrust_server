@@ -7,7 +7,6 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
-import '../../../../common/domain/domain.dart';
 import '../../common/common.dart';
 import '../../exceptions/exceptions.dart';
 import '../../view_models/user_info_vm/user_info_vm.dart';
@@ -34,21 +33,20 @@ class SendFriendBidCommandHandler extends RequestHandler<SendFriendBidCommand,
   ) async {
     if (request.sendToUserID.isStaffUserID) {
       return left(
-        [const CanNotSendFriendBidToStaffUser()],
+        [const CanNotDoThisToStaffUser()],
       );
     }
 
     if (request.userID == request.sendToUserID) {
       return left(
-        [const CanNotSendFriendBidToYourself()],
+        [const CanNotDoThisToYourself()],
       );
     }
 
-    // ignore: omit_local_variable_types
-    final EndUser? user =
+    final otherUser =
         await _endUserRepository.getByID(id: request.sendToUserID);
 
-    if (user == null) {
+    if (otherUser == null) {
       return left(
         [const UserNotFound()],
       );
@@ -76,10 +74,52 @@ class SendFriendBidCommandHandler extends RequestHandler<SendFriendBidCommand,
       );
     }
 
+    final isFriend = await _endUserRepository.isFriend(
+      firstUserID: request.sendToUserID,
+      secondUserID: request.userID,
+    );
+
+    if (isFriend) {
+      return left(
+        [const YouAlreadyFriends()],
+      );
+    }
+
+    final isOtherUserSubscriber = await _endUserRepository.isSubscriber(
+      subscriberID: request.userID,
+      publisherID: request.sendToUserID,
+    );
+
+    if (isOtherUserSubscriber) {
+      return left(
+        [const YouAreSubscriber()],
+      );
+    }
+
+    final isThisUserSubscriber = await _endUserRepository.isSubscriber(
+      subscriberID: request.sendToUserID,
+      publisherID: request.userID,
+    );
+
+    if (isThisUserSubscriber) {
+      return left(
+        [const IsYourSubscriber()],
+      );
+    }
+
     await _endUserRepository.addFriendBid(
       from: request.userID,
       to: request.sendToUserID,
     );
+
+    final updatedOtherUser =
+        await _endUserRepository.getByID(id: request.sendToUserID);
+
+    if (updatedOtherUser == null) {
+      return left(
+        [const UserNotFound()],
+      );
+    }
 
     final onlineStatus =
         await _endUserActivityRepository.get(request.sendToUserID);
@@ -89,7 +129,7 @@ class SendFriendBidCommandHandler extends RequestHandler<SendFriendBidCommand,
     return right(
       UserInfoResult(
         userInfo: _mapster.map5(
-          user,
+          updatedOtherUser,
           request.userID,
           didISentFriendBid,
           haveIFriendBidFromThisUser,

@@ -29,6 +29,9 @@ class UserMediatorRegistrar {
         () => _getIt.get<RespondFriendBidCommandHandler>(),
       )
       ..registerRequestHandler(() => _getIt.get<RemoveFriendCommandHandler>())
+      ..registerRequestHandler(
+        () => _getIt.get<RemoveSubscriberCommandHandler>(),
+      )
 
       // PipelineBehavior
       ..registerPipelineBehavior(
@@ -57,6 +60,11 @@ class UserMediatorRegistrar {
       )
       ..registerPipelineBehavior(
         () => ValidationBehavior([_getIt.get<RemoveFriendCommandValidator>()]),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior(
+          [_getIt.get<RemoveSubscriberCommandValidator>()],
+        ),
       );
   }
 }

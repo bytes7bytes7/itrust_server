@@ -113,9 +113,9 @@ class UserController extends ApiController {
 
   @Route.get('/info')
   Future<Response> getUserInfo(Request request) async {
-    late final GetUserInfoRequest getUserInfoRequest;
+    late final UserActionRequest userActionRequest;
     try {
-      getUserInfoRequest = await parseRequest<GetUserInfoRequest>(request);
+      userActionRequest = await parseRequest<UserActionRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -129,7 +129,7 @@ class UserController extends ApiController {
     }
 
     final query = _mapster.map2(
-      getUserInfoRequest,
+      userActionRequest,
       user.id,
       To<GetUserInfoQuery>(),
     );
@@ -144,9 +144,9 @@ class UserController extends ApiController {
 
   @Route.post('/friend_bid')
   Future<Response> sendFriendBid(Request request) async {
-    late final SendFriendBidRequest sendFriendBidRequest;
+    late final UserActionRequest userActionRequest;
     try {
-      sendFriendBidRequest = await parseRequest<SendFriendBidRequest>(request);
+      userActionRequest = await parseRequest<UserActionRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -160,7 +160,7 @@ class UserController extends ApiController {
     }
 
     final command = _mapster.map2(
-      sendFriendBidRequest,
+      userActionRequest,
       user.id,
       To<SendFriendBidCommand>(),
     );
@@ -175,10 +175,9 @@ class UserController extends ApiController {
 
   @Route.post('/cancel_friend_bid')
   Future<Response> cancelFriendBid(Request request) async {
-    late final CancelFriendBidRequest cancelFriendBidRequest;
+    late final UserActionRequest userActionRequest;
     try {
-      cancelFriendBidRequest =
-          await parseRequest<CancelFriendBidRequest>(request);
+      userActionRequest = await parseRequest<UserActionRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -192,7 +191,7 @@ class UserController extends ApiController {
     }
 
     final command = _mapster.map2(
-      cancelFriendBidRequest,
+      userActionRequest,
       user.id,
       To<CancelFriendBidCommand>(),
     );
@@ -239,9 +238,9 @@ class UserController extends ApiController {
 
   @Route.post('/remove_friend')
   Future<Response> removeFriend(Request request) async {
-    late final RemoveFriendRequest removeFriendRequest;
+    late final UserActionRequest userActionRequest;
     try {
-      removeFriendRequest = await parseRequest<RemoveFriendRequest>(request);
+      userActionRequest = await parseRequest<UserActionRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -255,9 +254,40 @@ class UserController extends ApiController {
     }
 
     final command = _mapster.map2(
-      removeFriendRequest,
+      userActionRequest,
       user.id,
       To<RemoveFriendCommand>(),
+    );
+
+    final result = await command.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<UserInfoResponse>())),
+    );
+  }
+
+  @Route.post('/remove_subscriber')
+  Future<Response> removeSubscriber(Request request) async {
+    late final UserActionRequest userActionRequest;
+    try {
+      userActionRequest = await parseRequest<UserActionRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final command = _mapster.map2(
+      userActionRequest,
+      user.id,
+      To<RemoveSubscriberCommand>(),
     );
 
     final result = await command.sendTo(_mediator);

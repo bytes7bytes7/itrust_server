@@ -31,22 +31,33 @@ class RemoveFriendCommandHandler extends RequestHandler<RemoveFriendCommand,
   FutureOr<Either<List<DetailedException>, UserInfoResult>> handle(
     RemoveFriendCommand request,
   ) async {
-    final thisUser = await _endUserRepository.getByID(id: request.userID);
+    if (request.removeUserID.isStaffUserID) {
+      return left(
+        [const CanNotDoThisToStaffUser()],
+      );
+    }
+
+    if (request.userID == request.removeUserID) {
+      return left(
+        [const CanNotDoThisToYourself()],
+      );
+    }
+
     final userToRemove =
         await _endUserRepository.getByID(id: request.removeUserID);
 
-    if (thisUser == null || userToRemove == null) {
+    if (userToRemove == null) {
       return left(
         [const UserNotFound()],
       );
     }
 
-    final isFriends = await _endUserRepository.isFriends(
+    final isFriend = await _endUserRepository.isFriend(
       firstUserID: request.userID,
       secondUserID: request.removeUserID,
     );
 
-    if (!isFriends) {
+    if (!isFriend) {
       return left(
         [const YouAreNotFriends()],
       );

@@ -10,12 +10,12 @@ import '../../../../common/application/exceptions/exceptions.dart';
 import '../../common/common.dart';
 import '../../exceptions/exceptions.dart';
 import '../../view_models/user_info_vm/user_info_vm.dart';
-import 'respond_friend_bid_command.dart';
+import 'remove_subscriber_command.dart';
 
 @singleton
-class RespondFriendBidCommandHandler extends RequestHandler<
-    RespondFriendBidCommand, Either<List<DetailedException>, UserInfoResult>> {
-  const RespondFriendBidCommandHandler({
+class RemoveSubscriberCommandHandler extends RequestHandler<
+    RemoveSubscriberCommand, Either<List<DetailedException>, UserInfoResult>> {
+  const RemoveSubscriberCommandHandler({
     required EndUserRepository endUserRepository,
     required EndUserActivityRepository endUserActivityRepository,
     required Mapster mapster,
@@ -29,68 +29,56 @@ class RespondFriendBidCommandHandler extends RequestHandler<
 
   @override
   FutureOr<Either<List<DetailedException>, UserInfoResult>> handle(
-    RespondFriendBidCommand request,
+    RemoveSubscriberCommand request,
   ) async {
-    if (request.respondToUserID.isStaffUserID) {
+    if (request.removeUserID.isStaffUserID) {
       return left(
         [const CanNotDoThisToStaffUser()],
       );
     }
 
-    if (request.userID == request.respondToUserID) {
+    if (request.userID == request.removeUserID) {
       return left(
         [const CanNotDoThisToYourself()],
       );
     }
 
-    final otherUser =
-        await _endUserRepository.getByID(id: request.respondToUserID);
+    final userToRemove =
+        await _endUserRepository.getByID(id: request.removeUserID);
 
-    if (otherUser == null) {
+    if (userToRemove == null) {
       return left(
         [const UserNotFound()],
       );
     }
 
-    final hasBid = await _endUserRepository.hasBidToUser(
-      from: request.respondToUserID,
-      to: request.userID,
+    final isSubscriber = await _endUserRepository.isSubscriber(
+      subscriberID: request.removeUserID,
+      publisherID: request.userID,
     );
 
-    if (!hasBid) {
+    if (!isSubscriber) {
       return left(
-        [const BidNotFound()],
+        [const NotYourSubscriber()],
       );
     }
 
-    await _endUserRepository.removeFriendBid(
-      from: request.respondToUserID,
-      to: request.userID,
+    await _endUserRepository.unsubscribe(
+      subscriberID: request.removeUserID,
+      publisherID: request.userID,
     );
 
-    if (request.accept) {
-      await _endUserRepository.addFriend(
-        firstUserID: request.userID,
-        secondUserID: request.respondToUserID,
-      );
-    } else {
-      await _endUserRepository.subscribe(
-        subscriberID: request.respondToUserID,
-        publisherID: request.userID,
-      );
-    }
+    final updatedUserToRemove =
+        await _endUserRepository.getByID(id: request.removeUserID);
 
-    final updatedOtherUser =
-        await _endUserRepository.getByID(id: request.respondToUserID);
-
-    if (updatedOtherUser == null) {
+    if (updatedUserToRemove == null) {
       return left(
         [const UserNotFound()],
       );
     }
 
     final onlineStatus =
-        await _endUserActivityRepository.get(request.respondToUserID);
+        await _endUserActivityRepository.get(request.removeUserID);
 
     final didISentFriendBid = false;
     final haveIFriendBidFromThisUser = false;
@@ -98,7 +86,7 @@ class RespondFriendBidCommandHandler extends RequestHandler<
     return right(
       UserInfoResult(
         userInfo: _mapster.map5(
-          updatedOtherUser,
+          updatedUserToRemove,
           request.userID,
           didISentFriendBid,
           haveIFriendBidFromThisUser,

@@ -7,7 +7,6 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
-import '../../../../common/domain/domain.dart';
 import '../../common/common.dart';
 import '../../exceptions/exceptions.dart';
 import '../../view_models/user_info_vm/user_info_vm.dart';
@@ -34,19 +33,17 @@ class CancelFriendBidCommandHandler extends RequestHandler<
   ) async {
     if (request.cancelToUserID.isStaffUserID) {
       return left(
-        [const CanNotCancelFriendBidToStaffUser()],
+        [const CanNotDoThisToStaffUser()],
       );
     }
 
     if (request.userID == request.cancelToUserID) {
       return left(
-        [const CanNotCancelFriendBidToYourself()],
+        [const CanNotDoThisToYourself()],
       );
     }
 
-    // ignore: omit_local_variable_types
-    final EndUser? user =
-        await _endUserRepository.getByID(id: request.cancelToUserID);
+    final user = await _endUserRepository.getByID(id: request.cancelToUserID);
 
     if (user == null) {
       return left(
@@ -64,11 +61,6 @@ class CancelFriendBidCommandHandler extends RequestHandler<
         [const BidNotFound()],
       );
     }
-
-    final haveIFriendBidFromThisUser = await _endUserRepository.hasBidToUser(
-      from: request.cancelToUserID,
-      to: request.userID,
-    );
 
     await _endUserRepository.removeFriendBid(
       from: request.userID,
@@ -88,6 +80,7 @@ class CancelFriendBidCommandHandler extends RequestHandler<
         await _endUserActivityRepository.get(request.cancelToUserID);
 
     final didISentFriendBid = false;
+    final haveIFriendBidFromThisUser = false;
 
     return right(
       UserInfoResult(

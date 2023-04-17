@@ -31,7 +31,7 @@ class UserMapsterRegistrar {
         MapperMeta.one(EndUsersResultToEndUsersResponseMapper.new),
       )
       ..register(
-        MapperMeta.two(SendFriendBidRequestToSendFriendBidCommandMapper.new),
+        MapperMeta.two(UserActionRequestToSendFriendBidCommandMapper.new),
       )
       ..register(
         MapperMeta.one(UserInfoResultToUserInfoResponseMapper.new),
@@ -61,11 +61,11 @@ class UserMapsterRegistrar {
         ),
       )
       ..register(
-        MapperMeta.two(GetUserInfoRequestToGetUserInfoQueryMapper.new),
+        MapperMeta.two(UserActionRequestToGetUserInfoQueryMapper.new),
       )
       ..register(
         MapperMeta.two(
-          CancelFriendBidRequestToCancelFriendBidCommandMapper.new,
+          UserActionRequestToCancelFriendBidCommandMapper.new,
         ),
       )
       ..register(
@@ -75,7 +75,12 @@ class UserMapsterRegistrar {
       )
       ..register(
         MapperMeta.two(
-          RemoveFriendRequestToRemoveFriendCommandMapper.new,
+          UserActionRequestToRemoveFriendCommandMapper.new,
+        ),
+      )
+      ..register(
+        MapperMeta.two(
+          UserActionRequestToRemoveSubscriberCommandMapper.new,
         ),
       );
   }

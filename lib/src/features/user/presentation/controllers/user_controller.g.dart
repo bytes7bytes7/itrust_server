@@ -48,5 +48,10 @@ Router _$UserControllerRouter(UserController service) {
     r'/remove_friend',
     service.removeFriend,
   );
+  router.add(
+    'POST',
+    r'/remove_subscriber',
+    service.removeSubscriber,
+  );
   return router;
 }
