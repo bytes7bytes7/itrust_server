@@ -2,16 +2,19 @@ import 'package:itrust_server/itrust_server.dart';
 
 import 'router_authorization_x.dart';
 
+const _portKey = 'port';
 const _printLogsKey = 'print_logs';
 const _envKey = 'env';
-
-const _defaultPort = 8080;
 
 final _getIt = GetIt.instance;
 final _logger = Logger('main');
 
 void main(List<String> args) async {
   final parser = ArgParser()
+    ..addOption(
+      _portKey,
+      defaultsTo: '8080',
+    )
     ..addOption(
       _envKey,
       defaultsTo: 'prod',
@@ -22,6 +25,8 @@ void main(List<String> args) async {
     );
 
   final result = parser.parse(args);
+
+  final portStr = result[_portKey];
   final env = result[_envKey];
   final printLogs = result[_printLogsKey];
 
@@ -71,7 +76,7 @@ void main(List<String> args) async {
       .addHandler(app);
 
   final ip = InternetAddress.anyIPv4;
-  final port = int.parse(Platform.environment['PORT'] ?? '$_defaultPort');
+  final port = int.parse(portStr);
   final server = await serve(handler, ip, port);
 
   _logger.info('Server listening on port ${server.port}');

@@ -60,6 +60,7 @@ class MediaController extends ApiController {
       (r) => ok(
         r.bytes,
         contentType: ContentType.binary,
+        convertToJson: false,
       ),
     );
   }
