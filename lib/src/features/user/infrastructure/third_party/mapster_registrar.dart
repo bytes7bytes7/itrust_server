@@ -82,6 +82,11 @@ class UserMapsterRegistrar {
         MapperMeta.two(
           UserActionRequestToRemoveSubscriberCommandMapper.new,
         ),
+      )
+      ..register(
+        MapperMeta.two(
+          UserActionRequestToUnsubscribeCommandMapper.new,
+        ),
       );
   }
 }

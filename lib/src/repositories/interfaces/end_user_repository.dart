@@ -62,12 +62,17 @@ abstract class EndUserRepository {
     required UserID publisherID,
   });
 
+  Future<void> unsubscribe({
+    required UserID subscriberID,
+    required UserID publisherID,
+  });
+
   Future<bool> isSubscriber({
     required UserID subscriberID,
     required UserID publisherID,
   });
 
-  Future<void> unsubscribe({
+  Future<bool> isPublisher({
     required UserID subscriberID,
     required UserID publisherID,
   });

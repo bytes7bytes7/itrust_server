@@ -7,4 +7,5 @@ export 'is_your_subscriber.dart';
 export 'not_your_subscriber.dart';
 export 'you_already_friends.dart';
 export 'you_are_not_friends.dart';
+export 'you_are_not_subscriber.dart';
 export 'you_are_subscriber.dart';

@@ -53,5 +53,10 @@ Router _$UserControllerRouter(UserController service) {
     r'/remove_subscriber',
     service.removeSubscriber,
   );
+  router.add(
+    'POST',
+    r'/unsubscribe',
+    service.unsubscribe,
+  );
   return router;
 }

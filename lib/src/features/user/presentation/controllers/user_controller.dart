@@ -297,4 +297,35 @@ class UserController extends ApiController {
       (r) => ok(_mapster.map1(r, To<UserInfoResponse>())),
     );
   }
+
+  @Route.post('/unsubscribe')
+  Future<Response> unsubscribe(Request request) async {
+    late final UserActionRequest userActionRequest;
+    try {
+      userActionRequest = await parseRequest<UserActionRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final command = _mapster.map2(
+      userActionRequest,
+      user.id,
+      To<UnsubscribeCommand>(),
+    );
+
+    final result = await command.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<UserInfoResponse>())),
+    );
+  }
 }

@@ -313,21 +313,6 @@ class DevEndUserRepository implements EndUserRepository {
   }
 
   @override
-  Future<bool> isSubscriber({
-    required UserID subscriberID,
-    required UserID publisherID,
-  }) async {
-    final subscriber = _storage[subscriberID];
-    final publisher = _storage[publisherID];
-
-    if (subscriber == null || publisher == null) {
-      throw Exception('User not found');
-    }
-
-    return subscriber.subscriptions.contains(publisherID);
-  }
-
-  @override
   Future<void> unsubscribe({
     required UserID subscriberID,
     required UserID publisherID,
@@ -348,5 +333,35 @@ class DevEndUserRepository implements EndUserRepository {
 
     _storage[subscriberID] = updatedSubscriber;
     _storage[publisherID] = updatedPublisher;
+  }
+
+  @override
+  Future<bool> isSubscriber({
+    required UserID subscriberID,
+    required UserID publisherID,
+  }) async {
+    final subscriber = _storage[subscriberID];
+    final publisher = _storage[publisherID];
+
+    if (subscriber == null || publisher == null) {
+      throw Exception('User not found');
+    }
+
+    return subscriber.subscriptions.contains(publisherID);
+  }
+
+  @override
+  Future<bool> isPublisher({
+    required UserID subscriberID,
+    required UserID publisherID,
+  }) async {
+    final subscriber = _storage[subscriberID];
+    final publisher = _storage[publisherID];
+
+    if (subscriber == null || publisher == null) {
+      throw Exception('User not found');
+    }
+
+    return publisher.subscribers.contains(subscriberID);
   }
 }

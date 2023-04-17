@@ -10,6 +10,7 @@ export 'user_action_request_to_get_user_info_query_mapper.dart';
 export 'user_action_request_to_remove_friend_command_mapper.dart';
 export 'user_action_request_to_remove_subscriber_command_mapper.dart';
 export 'user_action_request_to_send_friend_bid_command_mapper.dart';
+export 'user_action_request_to_unsubscribe_command_mapper.dart';
 export 'user_info_result_to_user_info_response_mapper.dart';
 export 'user_result_to_user_response.dart';
 export 'user_to_user_info_vm_mapper.dart';
