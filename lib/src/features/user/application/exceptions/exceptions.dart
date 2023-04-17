@@ -7,3 +7,4 @@ export 'can_not_respond_friend_bid_to_staff_user.dart';
 export 'can_not_respond_friend_bid_to_yourself.dart';
 export 'can_not_send_friend_bid_to_staff_user.dart';
 export 'can_not_send_friend_bid_to_yourself.dart';
+export 'you_are_not_friends.dart';

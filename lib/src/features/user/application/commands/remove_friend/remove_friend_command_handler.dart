@@ -7,16 +7,15 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
-import '../../../../common/domain/domain.dart';
 import '../../common/common.dart';
 import '../../exceptions/exceptions.dart';
 import '../../view_models/user_info_vm/user_info_vm.dart';
-import 'cancel_friend_bid_command.dart';
+import 'remove_friend_command.dart';
 
 @singleton
-class CancelFriendBidCommandHandler extends RequestHandler<
-    CancelFriendBidCommand, Either<List<DetailedException>, UserInfoResult>> {
-  const CancelFriendBidCommandHandler({
+class RemoveFriendCommandHandler extends RequestHandler<RemoveFriendCommand,
+    Either<List<DetailedException>, UserInfoResult>> {
+  const RemoveFriendCommandHandler({
     required EndUserRepository endUserRepository,
     required EndUserActivityRepository endUserActivityRepository,
     required Mapster mapster,
@@ -30,69 +29,53 @@ class CancelFriendBidCommandHandler extends RequestHandler<
 
   @override
   FutureOr<Either<List<DetailedException>, UserInfoResult>> handle(
-    CancelFriendBidCommand request,
+    RemoveFriendCommand request,
   ) async {
-    if (request.cancelToUserID.isStaffUserID) {
-      return left(
-        [const CanNotCancelFriendBidToStaffUser()],
-      );
-    }
+    final thisUser = await _endUserRepository.getByID(id: request.userID);
+    final userToRemove =
+        await _endUserRepository.getByID(id: request.removeUserID);
 
-    if (request.userID == request.cancelToUserID) {
-      return left(
-        [const CanNotCancelFriendBidToYourself()],
-      );
-    }
-
-    // ignore: omit_local_variable_types
-    final EndUser? user =
-        await _endUserRepository.getByID(id: request.cancelToUserID);
-
-    if (user == null) {
+    if (thisUser == null || userToRemove == null) {
       return left(
         [const UserNotFound()],
       );
     }
 
-    final hasAlreadySentBid = await _endUserRepository.hasBidToUser(
-      from: request.userID,
-      to: request.cancelToUserID,
+    final isFriends = await _endUserRepository.isFriends(
+      firstUserID: request.userID,
+      secondUserID: request.removeUserID,
     );
 
-    if (!hasAlreadySentBid) {
+    if (!isFriends) {
       return left(
-        [const BidNotFound()],
+        [const YouAreNotFriends()],
       );
     }
 
-    final haveIFriendBidFromThisUser = await _endUserRepository.hasBidToUser(
-      from: request.cancelToUserID,
-      to: request.userID,
+    await _endUserRepository.removeFriend(
+      firstUserID: request.userID,
+      secondUserID: request.removeUserID,
     );
 
-    await _endUserRepository.removeFriendBid(
-      from: request.userID,
-      to: request.cancelToUserID,
-    );
+    final updatedUserToRemove =
+        await _endUserRepository.getByID(id: request.removeUserID);
 
-    final updatedUser =
-        await _endUserRepository.getByID(id: request.cancelToUserID);
-
-    if (updatedUser == null) {
+    if (updatedUserToRemove == null) {
       return left(
         [const UserNotFound()],
       );
     }
 
     final onlineStatus =
-        await _endUserActivityRepository.get(request.cancelToUserID);
+        await _endUserActivityRepository.get(request.removeUserID);
 
     final didISentFriendBid = false;
+    final haveIFriendBidFromThisUser = false;
 
     return right(
       UserInfoResult(
         userInfo: _mapster.map5(
-          updatedUser,
+          updatedUserToRemove,
           request.userID,
           didISentFriendBid,
           haveIFriendBidFromThisUser,

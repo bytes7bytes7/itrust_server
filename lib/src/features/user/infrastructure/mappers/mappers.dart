@@ -5,6 +5,7 @@ export 'get_friends_request_to_get_friends_query_mapper.dart';
 export 'get_user_by_id_request_to_get_user_by_id_query_mapper.dart';
 export 'get_user_by_nick_request_to_get_user_by_nick_query_mapper.dart';
 export 'get_user_info_request_to_get_user_info_query_mapper.dart';
+export 'remove_friend_request_to_remove_friend_command_mapper.dart';
 export 'respond_friend_bid_request_to_respond_friend_bid_command_mapper.dart';
 export 'send_friend_bid_request_to_send_friend_bid_command_mapper.dart';
 export 'staff_user_to_user_info_vm_mapper.dart';

@@ -43,5 +43,10 @@ Router _$UserControllerRouter(UserController service) {
     r'/respond_friend_bid',
     service.respondFriendBid,
   );
+  router.add(
+    'POST',
+    r'/remove_friend',
+    service.removeFriend,
+  );
   return router;
 }

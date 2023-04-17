@@ -41,4 +41,24 @@ abstract class EndUserRepository {
     required int limit,
     UserID? startAfter,
   });
+
+  Future<bool> isFriends({
+    required UserID firstUserID,
+    required UserID secondUserID,
+  });
+
+  Future<void> addFriend({
+    required UserID firstUserID,
+    required UserID secondUserID,
+  });
+
+  Future<void> removeFriend({
+    required UserID firstUserID,
+    required UserID secondUserID,
+  });
+
+  Future<void> subscribe({
+    required UserID subscriberID,
+    required UserID publisherID,
+  });
 }

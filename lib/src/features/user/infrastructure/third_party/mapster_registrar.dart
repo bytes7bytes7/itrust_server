@@ -72,6 +72,11 @@ class UserMapsterRegistrar {
         MapperMeta.two(
           RespondFriendBidRequestToRespondFriendBidCommandMapper.new,
         ),
+      )
+      ..register(
+        MapperMeta.two(
+          RemoveFriendRequestToRemoveFriendCommandMapper.new,
+        ),
       );
   }
 }

@@ -236,4 +236,35 @@ class UserController extends ApiController {
       (r) => ok(_mapster.map1(r, To<UserInfoResponse>())),
     );
   }
+
+  @Route.post('/remove_friend')
+  Future<Response> removeFriend(Request request) async {
+    late final RemoveFriendRequest removeFriendRequest;
+    try {
+      removeFriendRequest = await parseRequest<RemoveFriendRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final command = _mapster.map2(
+      removeFriendRequest,
+      user.id,
+      To<RemoveFriendCommand>(),
+    );
+
+    final result = await command.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<UserInfoResponse>())),
+    );
+  }
 }

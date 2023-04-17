@@ -227,4 +227,88 @@ class DevEndUserRepository implements EndUserRepository {
 
     return result;
   }
+
+  @override
+  Future<bool> isFriends({
+    required UserID firstUserID,
+    required UserID secondUserID,
+  }) async {
+    final firstUser = _storage[firstUserID];
+    final secondUser = _storage[secondUserID];
+
+    if (firstUser == null || secondUser == null) {
+      throw Exception('User not found');
+    }
+
+    return firstUser.friends.contains(secondUserID);
+  }
+
+  @override
+  Future<void> addFriend({
+    required UserID firstUserID,
+    required UserID secondUserID,
+  }) async {
+    final firstUser = _storage[firstUserID];
+    final secondUser = _storage[secondUserID];
+
+    if (firstUser == null || secondUser == null) {
+      throw Exception('User not found');
+    }
+
+    final updatedFirstUser = firstUser.copyWith(
+      friends: List.of(firstUser.friends)..add(secondUserID),
+    );
+    final updatedSecondUser = secondUser.copyWith(
+      friends: List.of(secondUser.friends)..add(firstUserID),
+    );
+
+    _storage[firstUserID] = updatedFirstUser;
+    _storage[secondUserID] = updatedSecondUser;
+  }
+
+  @override
+  Future<void> removeFriend({
+    required UserID firstUserID,
+    required UserID secondUserID,
+  }) async {
+    final firstUser = _storage[firstUserID];
+    final secondUser = _storage[secondUserID];
+
+    if (firstUser == null || secondUser == null) {
+      throw Exception('User not found');
+    }
+
+    final updatedFirstUser = firstUser.copyWith(
+      friends: List.of(firstUser.friends)..remove(secondUserID),
+    );
+    final updatedSecondUser = secondUser.copyWith(
+      friends: List.of(secondUser.friends)..remove(firstUserID),
+    );
+
+    _storage[firstUserID] = updatedFirstUser;
+    _storage[secondUserID] = updatedSecondUser;
+  }
+
+  @override
+  Future<void> subscribe({
+    required UserID subscriberID,
+    required UserID publisherID,
+  }) async {
+    final subscriber = _storage[subscriberID];
+    final publisher = _storage[publisherID];
+
+    if (subscriber == null || publisher == null) {
+      throw Exception('User not found');
+    }
+
+    final updatedSubscriber = subscriber.copyWith(
+      subscriptions: List.of(subscriber.subscriptions)..add(publisherID),
+    );
+    final updatedPublisher = publisher.copyWith(
+      subscribers: List.of(publisher.subscribers)..add(subscriberID),
+    );
+
+    _storage[subscriberID] = updatedSubscriber;
+    _storage[publisherID] = updatedPublisher;
+  }
 }

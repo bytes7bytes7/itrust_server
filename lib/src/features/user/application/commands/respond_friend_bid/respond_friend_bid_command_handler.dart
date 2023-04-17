@@ -7,7 +7,6 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
-import '../../../../common/domain/domain.dart';
 import '../../common/common.dart';
 import '../../exceptions/exceptions.dart';
 import '../../view_models/user_info_vm/user_info_vm.dart';
@@ -44,10 +43,11 @@ class RespondFriendBidCommandHandler extends RequestHandler<
       );
     }
 
-    final user = await _endUserRepository.getByID(id: request.respondToUserID);
     final thisUser = await _endUserRepository.getByID(id: request.userID);
+    final otherUser =
+        await _endUserRepository.getByID(id: request.respondToUserID);
 
-    if (user == null || thisUser == null) {
+    if (thisUser == null || otherUser == null) {
       return left(
         [const UserNotFound()],
       );
@@ -69,30 +69,26 @@ class RespondFriendBidCommandHandler extends RequestHandler<
       to: request.userID,
     );
 
-    late EndUser updatedThisUser;
-    late EndUser updatedOtherUser;
-
     if (request.accept) {
-      updatedThisUser = thisUser.copyWith(
-        friends: List.of(thisUser.friends)..add(request.respondToUserID),
-      );
-
-      updatedOtherUser = user.copyWith(
-        friends: List.of(user.friends)..add(request.userID),
+      await _endUserRepository.addFriend(
+        firstUserID: request.userID,
+        secondUserID: request.respondToUserID,
       );
     } else {
-      updatedThisUser = thisUser.copyWith(
-        subscribers: List.of(thisUser.subscribers)
-          ..add(request.respondToUserID),
-      );
-
-      updatedOtherUser = user.copyWith(
-        subscribers: List.of(user.subscribers)..add(request.userID),
+      await _endUserRepository.subscribe(
+        subscriberID: request.respondToUserID,
+        publisherID: request.userID,
       );
     }
 
-    await _endUserRepository.addOrUpdate(user: updatedThisUser);
-    await _endUserRepository.addOrUpdate(user: updatedOtherUser);
+    final updatedOtherUser =
+        await _endUserRepository.getByID(id: request.respondToUserID);
+
+    if (updatedOtherUser == null) {
+      return left(
+        [const UserNotFound()],
+      );
+    }
 
     final onlineStatus =
         await _endUserActivityRepository.get(request.respondToUserID);
