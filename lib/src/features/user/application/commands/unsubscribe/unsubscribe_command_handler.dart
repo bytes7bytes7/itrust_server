@@ -37,7 +37,7 @@ class UnsubscribeCommandHandler extends RequestHandler<UnsubscribeCommand,
       );
     }
 
-    if (request.userID == request.userID) {
+    if (request.userID == request.unsubscribeUserID) {
       return left(
         [const CanNotDoThisToYourself()],
       );
