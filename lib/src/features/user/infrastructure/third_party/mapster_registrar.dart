@@ -107,6 +107,11 @@ class UserMapsterRegistrar {
         MapperMeta.two(
           GetUsersRequestToGetInboxFriendBidsQueryMapper.new,
         ),
+      )
+      ..register(
+        MapperMeta.two(
+          GetUsersRequestToGetOutboxFriendBidsQueryMapper.new,
+        ),
       );
   }
 }

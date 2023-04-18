@@ -6,6 +6,7 @@ export 'get_user_by_id_request_to_get_user_by_id_query_mapper.dart';
 export 'get_user_by_nick_request_to_get_user_by_nick_query_mapper.dart';
 export 'get_users_request_to_get_all_users_query_mapper.dart';
 export 'get_users_request_to_get_inbox_friend_bids_query_mapper.dart';
+export 'get_users_request_to_get_outbox_friend_bids_query_mapper.dart';
 export 'get_users_request_to_get_subscriptions_query_mapper.dart';
 export 'respond_friend_bid_request_to_respond_friend_bid_command_mapper.dart';
 export 'staff_user_to_user_info_vm_mapper.dart';

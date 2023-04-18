@@ -226,6 +226,37 @@ class UserController extends ApiController {
     );
   }
 
+  @Route.get('/outbox_friend_bids')
+  Future<Response> getOutboxFriendBids(Request request) async {
+    late final GetUsersRequest getUsersRequest;
+    try {
+      getUsersRequest = await parseRequest<GetUsersRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query = _mapster.map2(
+      getUsersRequest,
+      user.id,
+      To<GetOutboxFriendBidsQuery>(),
+    );
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<EndUsersResponse>())),
+    );
+  }
+
   @Route.get('/info')
   Future<Response> getUserInfo(Request request) async {
     late final UserActionRequest userActionRequest;

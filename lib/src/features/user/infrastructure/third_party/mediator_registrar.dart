@@ -39,6 +39,9 @@ class UserMediatorRegistrar {
       ..registerRequestHandler(
         () => _getIt.get<GetInboxFriendBidsQueryHandler>(),
       )
+      ..registerRequestHandler(
+        () => _getIt.get<GetOutboxFriendBidsQueryHandler>(),
+      )
 
       // PipelineBehavior
       ..registerPipelineBehavior(
@@ -89,6 +92,11 @@ class UserMediatorRegistrar {
       ..registerPipelineBehavior(
         () => ValidationBehavior(
           [_getIt.get<GetInboxFriendBidsQueryValidator>()],
+        ),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior(
+          [_getIt.get<GetOutboxFriendBidsQueryValidator>()],
         ),
       );
   }
