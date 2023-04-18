@@ -113,9 +113,9 @@ class UserController extends ApiController {
 
   @Route.get('/friends')
   Future<Response> getFriends(Request request) async {
-    late final GetFriendsRequest getFriendsRequest;
+    late final GetForUserRequest getForUserRequest;
     try {
-      getFriendsRequest = await parseRequest<GetFriendsRequest>(request);
+      getForUserRequest = await parseRequest<GetForUserRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -129,7 +129,63 @@ class UserController extends ApiController {
     }
 
     final query =
-        _mapster.map2(getFriendsRequest, user.id, To<GetFriendsQuery>());
+        _mapster.map2(getForUserRequest, user.id, To<GetFriendsQuery>());
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<EndUsersResponse>())),
+    );
+  }
+
+  @Route.get('/subscribers')
+  Future<Response> getSubscribers(Request request) async {
+    late final GetForUserRequest getForUserRequest;
+    try {
+      getForUserRequest = await parseRequest<GetForUserRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query =
+        _mapster.map2(getForUserRequest, user.id, To<GetSubscribersQuery>());
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<EndUsersResponse>())),
+    );
+  }
+
+  @Route.get('/subscriptions')
+  Future<Response> getSubscriptions(Request request) async {
+    late final GetForUserRequest getForUserRequest;
+    try {
+      getForUserRequest = await parseRequest<GetForUserRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query =
+        _mapster.map2(getForUserRequest, user.id, To<GetSubscriptionsQuery>());
 
     final result = await query.sendTo(_mediator);
 

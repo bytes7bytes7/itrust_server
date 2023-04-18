@@ -22,7 +22,7 @@ class UserMapsterRegistrar {
         MapperMeta.two(GetUserByNickRequestToGetUserByNickQueryMapper.new),
       )
       ..register(
-        MapperMeta.two(GetFriendsRequestToGetFriendsQueryMapper.new),
+        MapperMeta.two(GetForUserRequestToGetFriendsQueryMapper.new),
       )
       ..register(
         MapperMeta.one(UsersResultToUsersResponseMapper.new),
@@ -91,6 +91,16 @@ class UserMapsterRegistrar {
       ..register(
         MapperMeta.two(
           GetUsersRequestToGetAllUsersQueryMapper.new,
+        ),
+      )
+      ..register(
+        MapperMeta.two(
+          GetForUserRequestToGetSubscribersQueryMapper.new,
+        ),
+      )
+      ..register(
+        MapperMeta.two(
+          GetForUserRequestToGetSubscriptionsQueryMapper.new,
         ),
       );
   }

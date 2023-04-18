@@ -30,6 +30,16 @@ Router _$UserControllerRouter(UserController service) {
   );
   router.add(
     'GET',
+    r'/subscribers',
+    service.getSubscribers,
+  );
+  router.add(
+    'GET',
+    r'/subscriptions',
+    service.getSubscriptions,
+  );
+  router.add(
+    'GET',
     r'/info',
     service.getUserInfo,
   );

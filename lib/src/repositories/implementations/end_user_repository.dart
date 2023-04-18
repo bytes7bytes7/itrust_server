@@ -104,6 +104,80 @@ class DevEndUserRepository implements EndUserRepository {
   }
 
   @override
+  Future<List<EndUser>> getSubscribersByFilter({
+    required UserID subscribersOf,
+    required int limit,
+    UserID? startAfter,
+  }) async {
+    final result = <EndUser>[];
+
+    var reachStartAfter = startAfter == null;
+
+    final publisher = _storage[subscribersOf];
+
+    if (publisher == null) {
+      throw Exception('User not found');
+    }
+
+    for (final id in publisher.subscribers) {
+      if (reachStartAfter) {
+        final user = _storage[id];
+
+        if (user == null) {
+          continue;
+        }
+
+        result.add(user);
+      } else if (id == startAfter) {
+        reachStartAfter = true;
+      }
+
+      if (result.length == limit) {
+        break;
+      }
+    }
+
+    return result;
+  }
+
+  @override
+  Future<List<EndUser>> getSubscriptionsByFilter({
+    required UserID subscriptionsOf,
+    required int limit,
+    UserID? startAfter,
+  }) async {
+    final result = <EndUser>[];
+
+    var reachStartAfter = startAfter == null;
+
+    final publisher = _storage[subscriptionsOf];
+
+    if (publisher == null) {
+      throw Exception('User not found');
+    }
+
+    for (final id in publisher.subscriptions) {
+      if (reachStartAfter) {
+        final user = _storage[id];
+
+        if (user == null) {
+          continue;
+        }
+
+        result.add(user);
+      } else if (id == startAfter) {
+        reachStartAfter = true;
+      }
+
+      if (result.length == limit) {
+        break;
+      }
+    }
+
+    return result;
+  }
+
+  @override
   Future<void> addFriendBid({
     required UserID from,
     required UserID to,

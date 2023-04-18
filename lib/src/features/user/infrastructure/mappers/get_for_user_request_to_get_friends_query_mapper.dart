@@ -4,9 +4,9 @@ import '../../../common/domain/domain.dart';
 import '../../application/queries/get_friends/get_friends.dart';
 import '../../presentation/contracts/contracts.dart';
 
-class GetFriendsRequestToGetFriendsQueryMapper
-    extends TwoSourcesMapper<GetFriendsRequest, UserID, GetFriendsQuery> {
-  GetFriendsRequestToGetFriendsQueryMapper(super.input);
+class GetForUserRequestToGetFriendsQueryMapper
+    extends TwoSourcesMapper<GetForUserRequest, UserID, GetFriendsQuery> {
+  GetForUserRequestToGetFriendsQueryMapper(super.input);
 
   @override
   GetFriendsQuery map() {
@@ -14,12 +14,12 @@ class GetFriendsRequestToGetFriendsQueryMapper
 
     return GetFriendsQuery(
       userID: _userID,
-      friendsTo: UserID.fromString(_request.friendsTo),
+      friendsTo: UserID.fromString(_request.userID),
       lastUserID: lastUserID != null ? UserID.fromString(lastUserID) : null,
     );
   }
 
-  GetFriendsRequest get _request => source1;
+  GetForUserRequest get _request => source1;
 
   UserID get _userID => source2;
 }

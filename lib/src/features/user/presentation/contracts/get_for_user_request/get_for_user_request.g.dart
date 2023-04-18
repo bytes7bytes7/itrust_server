@@ -1,19 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'get_friends_request.dart';
+part of 'get_for_user_request.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-GetFriendsRequest _$GetFriendsRequestFromJson(Map<String, dynamic> json) =>
-    GetFriendsRequest(
-      friendsTo: json['friendsTo'] as String,
+GetForUserRequest _$GetForUserRequestFromJson(Map<String, dynamic> json) =>
+    GetForUserRequest(
+      userID: json['userID'] as String,
       lastUserID: json['lastUserID'] as String?,
     );
 
-Map<String, dynamic> _$GetFriendsRequestToJson(GetFriendsRequest instance) =>
+Map<String, dynamic> _$GetForUserRequestToJson(GetForUserRequest instance) =>
     <String, dynamic>{
-      'friendsTo': instance.friendsTo,
+      'userID': instance.userID,
       'lastUserID': instance.lastUserID,
     };

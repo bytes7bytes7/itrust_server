@@ -21,6 +21,18 @@ abstract class EndUserRepository {
     UserID? startAfter,
   });
 
+  Future<List<EndUser>> getSubscribersByFilter({
+    required UserID subscribersOf,
+    required int limit,
+    UserID? startAfter,
+  });
+
+  Future<List<EndUser>> getSubscriptionsByFilter({
+    required UserID subscriptionsOf,
+    required int limit,
+    UserID? startAfter,
+  });
+
   Future<void> addFriendBid({
     required UserID from,
     required UserID to,
