@@ -112,6 +112,16 @@ class UserMapsterRegistrar {
         MapperMeta.two(
           GetUsersRequestToGetOutboxFriendBidsQueryMapper.new,
         ),
+      )
+      ..register(
+        MapperMeta.two(
+          GetPeopleAmountRequestToGetPeopleAmountQueryMapper.new,
+        ),
+      )
+      ..register(
+        MapperMeta.one(
+          PeopleAmountResultToPeopleAmountResponseMapper.new,
+        ),
       );
   }
 }

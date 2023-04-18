@@ -35,6 +35,11 @@ class TestStaffUserRepository implements StaffUserRepository {
   }
 
   @override
+  Future<int> getAmountOfUsers() async {
+    return _storage.keys.length;
+  }
+
+  @override
   Future<List<StaffUser>> getUsersByFilter({
     required int limit,
     UserID? startAfter,

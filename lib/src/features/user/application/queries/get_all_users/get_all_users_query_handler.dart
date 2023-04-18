@@ -15,9 +15,9 @@ import 'get_all_users_query.dart';
 const _limit = 10;
 
 @singleton
-class GetAllUserQueryHandler extends RequestHandler<GetAllUsersQuery,
+class GetAllUsersQueryHandler extends RequestHandler<GetAllUsersQuery,
     Either<List<DetailedException>, UsersResult>> {
-  const GetAllUserQueryHandler({
+  const GetAllUsersQueryHandler({
     required EndUserRepository endUserRepository,
     required StaffUserRepository staffUserRepository,
     required EndUserActivityRepository endUserActivityRepository,
@@ -84,7 +84,6 @@ class GetAllUserQueryHandler extends RequestHandler<GetAllUsersQuery,
     }
 
     final endUsers = await _endUserRepository.getUsersByFilter(
-      forUserID: request.userID,
       limit: _limit - users.length,
       startAfter: lastUserID?.isEndUserID == true ? lastUserID : null,
     );

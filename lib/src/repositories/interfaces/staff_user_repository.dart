@@ -9,6 +9,8 @@ abstract class StaffUserRepository {
 
   Future<StaffUser?> getByNick({required String nick});
 
+  Future<int> getAmountOfUsers();
+
   Future<List<StaffUser>> getUsersByFilter({
     required int limit,
     UserID? startAfter,

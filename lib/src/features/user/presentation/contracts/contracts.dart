@@ -1,8 +1,10 @@
 export 'end_users_response/end_users_response.dart';
 export 'get_for_user_request/get_for_user_request.dart';
+export 'get_people_amount_request/get_people_amount_request.dart';
 export 'get_user_by_id_request/get_user_by_id_request.dart';
 export 'get_user_by_nick_request/get_user_by_nick_request.dart';
 export 'get_users_request/get_users_request.dart';
+export 'people_amount_response/people_amount_response.dart';
 export 'respond_friend_bid_request/respond_friend_bid_request.dart';
 export 'user_action_request/user_action_request.dart';
 export 'user_info_response/user_info_response.dart';

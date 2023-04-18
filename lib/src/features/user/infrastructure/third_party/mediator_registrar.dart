@@ -33,7 +33,7 @@ class UserMediatorRegistrar {
         () => _getIt.get<RemoveSubscriberCommandHandler>(),
       )
       ..registerRequestHandler(() => _getIt.get<UnsubscribeCommandHandler>())
-      ..registerRequestHandler(() => _getIt.get<GetAllUserQueryHandler>())
+      ..registerRequestHandler(() => _getIt.get<GetAllUsersQueryHandler>())
       ..registerRequestHandler(() => _getIt.get<GetSubscribersQueryHandler>())
       ..registerRequestHandler(() => _getIt.get<GetSubscriptionsQueryHandler>())
       ..registerRequestHandler(
@@ -42,6 +42,7 @@ class UserMediatorRegistrar {
       ..registerRequestHandler(
         () => _getIt.get<GetOutboxFriendBidsQueryHandler>(),
       )
+      ..registerRequestHandler(() => _getIt.get<GetPeopleAmountQueryHandler>())
 
       // PipelineBehavior
       ..registerPipelineBehavior(
@@ -98,6 +99,9 @@ class UserMediatorRegistrar {
         () => ValidationBehavior(
           [_getIt.get<GetOutboxFriendBidsQueryValidator>()],
         ),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior([_getIt.get<GetPeopleAmountQueryValidator>()]),
       );
   }
 }

@@ -34,8 +34,12 @@ class DevEndUserRepository implements EndUserRepository {
   }
 
   @override
+  Future<int> getAmountOfUsers() async {
+    return _storage.keys.length;
+  }
+
+  @override
   Future<List<EndUser>> getUsersByFilter({
-    required UserID forUserID,
     required int limit,
     UserID? startAfter,
   }) async {
@@ -51,9 +55,7 @@ class DevEndUserRepository implements EndUserRepository {
           continue;
         }
 
-        if (id != forUserID) {
-          result.add(user);
-        }
+        result.add(user);
       } else if (id == startAfter) {
         reachStartAfter = true;
       }

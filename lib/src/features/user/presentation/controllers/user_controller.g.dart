@@ -20,6 +20,11 @@ Router _$UserControllerRouter(UserController service) {
   );
   router.add(
     'GET',
+    r'/people_amount',
+    service.getPeopleAmount,
+  );
+  router.add(
+    'GET',
     r'/all',
     service.getAllUsers,
   );

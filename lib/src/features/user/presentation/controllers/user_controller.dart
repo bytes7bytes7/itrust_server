@@ -83,6 +83,38 @@ class UserController extends ApiController {
     );
   }
 
+  @Route.get('/people_amount')
+  Future<Response> getPeopleAmount(Request request) async {
+    late final GetPeopleAmountRequest getPeopleAmountRequest;
+    try {
+      getPeopleAmountRequest =
+          await parseRequest<GetPeopleAmountRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query = _mapster.map2(
+      getPeopleAmountRequest,
+      user.id,
+      To<GetPeopleAmountQuery>(),
+    );
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<PeopleAmountResponse>())),
+    );
+  }
+
   @Route.get('/all')
   Future<Response> getAllUsers(Request request) async {
     late final GetUsersRequest getUsersRequest;
