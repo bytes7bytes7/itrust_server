@@ -33,6 +33,7 @@ class UserMediatorRegistrar {
         () => _getIt.get<RemoveSubscriberCommandHandler>(),
       )
       ..registerRequestHandler(() => _getIt.get<UnsubscribeCommandHandler>())
+      ..registerRequestHandler(() => _getIt.get<GetAllUserQueryHandler>())
 
       // PipelineBehavior
       ..registerPipelineBehavior(
@@ -69,6 +70,9 @@ class UserMediatorRegistrar {
       )
       ..registerPipelineBehavior(
         () => ValidationBehavior([_getIt.get<UnsubscribeCommandValidator>()]),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior([_getIt.get<GetAllUsersQueryValidator>()]),
       );
   }
 }

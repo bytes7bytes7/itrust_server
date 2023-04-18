@@ -33,4 +33,34 @@ class TestStaffUserRepository implements StaffUserRepository {
         .firstWhereOrNull((e) => e.value.nick == nick)
         ?.value;
   }
+
+  @override
+  Future<List<StaffUser>> getUsersByFilter({
+    required int limit,
+    UserID? startAfter,
+  }) async {
+    final result = <StaffUser>[];
+
+    var reachStartAfter = startAfter == null;
+
+    for (final id in _storage.keys) {
+      if (reachStartAfter) {
+        final user = _storage[id];
+
+        if (user == null) {
+          continue;
+        }
+
+        result.add(user);
+      } else if (id == startAfter) {
+        reachStartAfter = true;
+      }
+
+      if (result.length == limit) {
+        break;
+      }
+    }
+
+    return result;
+  }
 }

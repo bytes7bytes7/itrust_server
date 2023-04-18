@@ -9,6 +9,12 @@ abstract class EndUserRepository {
 
   Future<EndUser?> getByNick({required String nick});
 
+  Future<List<EndUser>> getUsersByFilter({
+    required UserID forUserID,
+    required int limit,
+    UserID? startAfter,
+  });
+
   Future<List<EndUser>> getFriendsByFilter({
     required UserID friendsTo,
     required int limit,

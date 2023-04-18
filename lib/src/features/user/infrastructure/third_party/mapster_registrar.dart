@@ -87,6 +87,11 @@ class UserMapsterRegistrar {
         MapperMeta.two(
           UserActionRequestToUnsubscribeCommandMapper.new,
         ),
+      )
+      ..register(
+        MapperMeta.two(
+          GetUsersRequestToGetAllUsersQueryMapper.new,
+        ),
       );
   }
 }

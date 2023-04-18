@@ -34,6 +34,39 @@ class DevEndUserRepository implements EndUserRepository {
   }
 
   @override
+  Future<List<EndUser>> getUsersByFilter({
+    required UserID forUserID,
+    required int limit,
+    UserID? startAfter,
+  }) async {
+    final result = <EndUser>[];
+
+    var reachStartAfter = startAfter == null;
+
+    for (final id in _storage.keys) {
+      if (reachStartAfter) {
+        final user = _storage[id];
+
+        if (user == null) {
+          continue;
+        }
+
+        if (id != forUserID) {
+          result.add(user);
+        }
+      } else if (id == startAfter) {
+        reachStartAfter = true;
+      }
+
+      if (result.length == limit) {
+        break;
+      }
+    }
+
+    return result;
+  }
+
+  @override
   Future<List<EndUser>> getFriendsByFilter({
     required UserID friendsTo,
     required int limit,

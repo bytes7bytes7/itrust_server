@@ -9,6 +9,7 @@ import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
 import '../../../../common/application/view_models/user_vm/user_vm.dart';
 import '../../common/common.dart';
+import '../../exceptions/exceptions.dart';
 import 'get_friends_query.dart';
 
 const _limit = 10;
@@ -39,6 +40,23 @@ class GetFriendsQueryHandler extends RequestHandler<GetFriendsQuery,
       return left(
         [const UserNotFound()],
       );
+    }
+
+    final lastUserID = request.lastUserID;
+    if (lastUserID != null) {
+      if (lastUserID.isStaffUserID) {
+        return left(
+          [const CanNotDoThisToStaffUser()],
+        );
+      }
+
+      final lastUser = await _endUserRepository.getByID(id: lastUserID);
+
+      if (lastUser == null) {
+        return left(
+          [const UserNotFound()],
+        );
+      }
     }
 
     final friends = await _endUserRepository.getFriendsByFilter(
