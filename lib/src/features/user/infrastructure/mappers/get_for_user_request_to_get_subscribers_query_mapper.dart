@@ -14,6 +14,7 @@ class GetForUserRequestToGetSubscribersQueryMapper
 
     return GetSubscribersQuery(
       userID: _userID,
+      subscribersOfUserID: UserID.fromString(_request.userID),
       lastUserID: lastUserID != null ? UserID.fromString(lastUserID) : null,
     );
   }

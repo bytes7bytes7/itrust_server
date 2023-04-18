@@ -1,5 +1,6 @@
 export 'get_all_users/get_all_users.dart';
 export 'get_friends/get_friends.dart';
+export 'get_inbox_friend_bids/get_inbox_friend_bids.dart';
 export 'get_subscribers/get_subscribers.dart';
 export 'get_subscriptions/get_subscriptions.dart';
 export 'get_user_by_id/get_user_by_id.dart';

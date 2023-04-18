@@ -5,15 +5,13 @@ import '../../../../common/application/exceptions/detailed_exception.dart';
 import '../../../../common/domain/domain.dart';
 import '../../common/common.dart';
 
-class GetSubscribersQuery
+class GetInboxFriendBidsQuery
     extends Request<Either<List<DetailedException>, EndUsersResult>> {
-  GetSubscribersQuery({
+  GetInboxFriendBidsQuery({
     required this.userID,
-    required this.subscribersOfUserID,
     required this.lastUserID,
-  }) : super(GetSubscribersQuery);
+  }) : super(GetInboxFriendBidsQuery);
 
   final UserID userID;
-  final UserID subscribersOfUserID;
   final UserID? lastUserID;
 }

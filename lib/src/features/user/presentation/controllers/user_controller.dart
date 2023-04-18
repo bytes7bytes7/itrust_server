@@ -169,9 +169,9 @@ class UserController extends ApiController {
 
   @Route.get('/subscriptions')
   Future<Response> getSubscriptions(Request request) async {
-    late final GetForUserRequest getForUserRequest;
+    late final GetUsersRequest getUsersRequest;
     try {
-      getForUserRequest = await parseRequest<GetForUserRequest>(request);
+      getUsersRequest = await parseRequest<GetUsersRequest>(request);
     } catch (e) {
       return problem(
         [const InvalidBodyException()],
@@ -185,7 +185,38 @@ class UserController extends ApiController {
     }
 
     final query =
-        _mapster.map2(getForUserRequest, user.id, To<GetSubscriptionsQuery>());
+        _mapster.map2(getUsersRequest, user.id, To<GetSubscriptionsQuery>());
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<EndUsersResponse>())),
+    );
+  }
+
+  @Route.get('/inbox_friend_bids')
+  Future<Response> getInboxFriendBids(Request request) async {
+    late final GetUsersRequest getUsersRequest;
+    try {
+      getUsersRequest = await parseRequest<GetUsersRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query = _mapster.map2(
+      getUsersRequest,
+      user.id,
+      To<GetInboxFriendBidsQuery>(),
+    );
 
     final result = await query.sendTo(_mediator);
 

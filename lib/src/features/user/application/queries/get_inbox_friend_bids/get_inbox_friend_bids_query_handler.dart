@@ -10,14 +10,14 @@ import '../../../../common/application/exceptions/exceptions.dart';
 import '../../../../common/application/view_models/user_vm/user_vm.dart';
 import '../../common/common.dart';
 import '../../exceptions/exceptions.dart';
-import 'get_subscribers_query.dart';
+import 'get_inbox_friend_bids_query.dart';
 
 const _limit = 10;
 
 @singleton
-class GetSubscribersQueryHandler extends RequestHandler<GetSubscribersQuery,
-    Either<List<DetailedException>, EndUsersResult>> {
-  const GetSubscribersQueryHandler({
+class GetInboxFriendBidsQueryHandler extends RequestHandler<
+    GetInboxFriendBidsQuery, Either<List<DetailedException>, EndUsersResult>> {
+  const GetInboxFriendBidsQueryHandler({
     required EndUserRepository endUserRepository,
     required EndUserActivityRepository endUserActivityRepository,
     required Mapster mapster,
@@ -31,10 +31,9 @@ class GetSubscribersQueryHandler extends RequestHandler<GetSubscribersQuery,
 
   @override
   FutureOr<Either<List<DetailedException>, EndUsersResult>> handle(
-    GetSubscribersQuery request,
+    GetInboxFriendBidsQuery request,
   ) async {
-    final user =
-        await _endUserRepository.getByID(id: request.subscribersOfUserID);
+    final user = await _endUserRepository.getByID(id: request.userID);
 
     if (user == null) {
       return left(
@@ -59,20 +58,20 @@ class GetSubscribersQueryHandler extends RequestHandler<GetSubscribersQuery,
       }
     }
 
-    final subscribers = await _endUserRepository.getSubscribersByFilter(
-      subscribersOf: request.subscribersOfUserID,
+    final inboxFriendBids = await _endUserRepository.getBidsToUserWithFilter(
+      userID: request.userID,
       limit: _limit,
       startAfter: request.lastUserID,
     );
 
     final onlineStatuses = <OnlineStatus>[];
-    for (final friend in subscribers) {
-      onlineStatuses.add(await _endUserActivityRepository.get(friend.id));
+    for (final id in inboxFriendBids) {
+      onlineStatuses.add(await _endUserActivityRepository.get(id));
     }
 
     return right(
       EndUsersResult(
-        users: subscribers
+        users: inboxFriendBids
             .mapWithIndex(
               (e, i) => _mapster.map2(e, onlineStatuses[i], To<EndUserVM>()),
             )

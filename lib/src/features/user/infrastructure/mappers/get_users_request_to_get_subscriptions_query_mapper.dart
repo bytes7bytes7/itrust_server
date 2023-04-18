@@ -2,11 +2,11 @@ import 'package:mapster/mapster.dart';
 
 import '../../../common/domain/domain.dart';
 import '../../application/queries/get_subscriptions/get_subscriptions.dart';
-import '../../presentation/contracts/get_for_user_request/get_for_user_request.dart';
+import '../../presentation/contracts/get_users_request/get_users_request.dart';
 
-class GetForUserRequestToGetSubscriptionsQueryMapper
-    extends TwoSourcesMapper<GetForUserRequest, UserID, GetSubscriptionsQuery> {
-  GetForUserRequestToGetSubscriptionsQueryMapper(super.input);
+class GetUsersRequestToGetSubscriptionsQueryMapper
+    extends TwoSourcesMapper<GetUsersRequest, UserID, GetSubscriptionsQuery> {
+  GetUsersRequestToGetSubscriptionsQueryMapper(super.input);
 
   @override
   GetSubscriptionsQuery map() {
@@ -18,7 +18,7 @@ class GetForUserRequestToGetSubscriptionsQueryMapper
     );
   }
 
-  GetForUserRequest get _request => source1;
+  GetUsersRequest get _request => source1;
 
   UserID get _userID => source2;
 }

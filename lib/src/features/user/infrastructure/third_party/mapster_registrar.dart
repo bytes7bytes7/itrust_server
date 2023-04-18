@@ -100,7 +100,12 @@ class UserMapsterRegistrar {
       )
       ..register(
         MapperMeta.two(
-          GetForUserRequestToGetSubscriptionsQueryMapper.new,
+          GetUsersRequestToGetSubscriptionsQueryMapper.new,
+        ),
+      )
+      ..register(
+        MapperMeta.two(
+          GetUsersRequestToGetInboxFriendBidsQueryMapper.new,
         ),
       );
   }
