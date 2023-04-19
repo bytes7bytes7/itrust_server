@@ -58,20 +58,21 @@ class GetOutboxFriendBidsQueryHandler extends RequestHandler<
       }
     }
 
-    final outboxFriendBids = await _endUserRepository.getBidsFromUserWithFilter(
+    final outboxBidUsers =
+        await _endUserRepository.getUsersWithBidsFromUserWithFilter(
       userID: request.userID,
       limit: _limit,
       startAfter: request.lastUserID,
     );
 
     final onlineStatuses = <OnlineStatus>[];
-    for (final id in outboxFriendBids) {
-      onlineStatuses.add(await _endUserActivityRepository.get(id));
+    for (final user in outboxBidUsers) {
+      onlineStatuses.add(await _endUserActivityRepository.get(user.id));
     }
 
     return right(
       EndUsersResult(
-        users: outboxFriendBids
+        users: outboxBidUsers
             .mapWithIndex(
               (e, i) => _mapster.map2(e, onlineStatuses[i], To<EndUserVM>()),
             )

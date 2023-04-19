@@ -49,13 +49,13 @@ abstract class EndUserRepository {
     required UserID to,
   });
 
-  Future<List<UserID>> getBidsToUserWithFilter({
+  Future<List<EndUser>> getUsersWithBidsToUserWithFilter({
     required UserID userID,
     required int limit,
     UserID? startAfter,
   });
 
-  Future<List<UserID>> getBidsFromUserWithFilter({
+  Future<List<EndUser>> getUsersWithBidsFromUserWithFilter({
     required UserID userID,
     required int limit,
     UserID? startAfter,

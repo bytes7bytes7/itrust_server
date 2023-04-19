@@ -272,12 +272,12 @@ class DevEndUserRepository implements EndUserRepository {
   }
 
   @override
-  Future<List<UserID>> getBidsToUserWithFilter({
+  Future<List<EndUser>> getUsersWithBidsToUserWithFilter({
     required UserID userID,
     required int limit,
     UserID? startAfter,
   }) async {
-    final result = <UserID>[];
+    final result = <EndUser>[];
 
     var reachStartAfter = startAfter == null;
 
@@ -291,7 +291,13 @@ class DevEndUserRepository implements EndUserRepository {
 
     for (final bid in bids) {
       if (reachStartAfter) {
-        result.add(bid);
+        final user = _storage[bid];
+
+        if (user == null) {
+          continue;
+        }
+
+        result.add(user);
       } else if (bid == startAfter) {
         reachStartAfter = true;
       }
@@ -305,12 +311,12 @@ class DevEndUserRepository implements EndUserRepository {
   }
 
   @override
-  Future<List<UserID>> getBidsFromUserWithFilter({
+  Future<List<EndUser>> getUsersWithBidsFromUserWithFilter({
     required UserID userID,
     required int limit,
     UserID? startAfter,
   }) async {
-    final result = <UserID>[];
+    final result = <EndUser>[];
 
     var reachStartAfter = startAfter == null;
 
@@ -324,7 +330,13 @@ class DevEndUserRepository implements EndUserRepository {
 
     for (final bid in bids) {
       if (reachStartAfter) {
-        result.add(bid);
+        final user = _storage[bid];
+
+        if (user == null) {
+          continue;
+        }
+
+        result.add(user);
       } else if (bid == startAfter) {
         reachStartAfter = true;
       }
