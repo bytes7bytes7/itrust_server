@@ -1,5 +1,7 @@
 export 'end_users_response/end_users_response.dart';
+export 'friend_bids_amount_response/friend_bids_amount_response.dart';
 export 'get_for_user_request/get_for_user_request.dart';
+export 'get_friend_bids_amount_request/get_friend_bids_amount_request.dart';
 export 'get_people_amount_request/get_people_amount_request.dart';
 export 'get_user_by_id_request/get_user_by_id_request.dart';
 export 'get_user_by_nick_request/get_user_by_nick_request.dart';

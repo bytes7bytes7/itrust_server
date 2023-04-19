@@ -122,6 +122,16 @@ class UserMapsterRegistrar {
         MapperMeta.one(
           PeopleAmountResultToPeopleAmountResponseMapper.new,
         ),
+      )
+      ..register(
+        MapperMeta.two(
+          GetFriendBidsAmountRequestToGetFriendBidsAmountQueryMapper.new,
+        ),
+      )
+      ..register(
+        MapperMeta.one(
+          FriendBidsAmountResultToFriendBidsAmountResponseMapper.new,
+        ),
       );
   }
 }

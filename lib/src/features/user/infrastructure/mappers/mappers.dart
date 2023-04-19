@@ -1,7 +1,9 @@
 export 'end_user_to_user_info_vm_mapper.dart';
 export 'end_users_result_to_end_users_response_mapper.dart';
+export 'friend_bids_amount_result_to_friend_bids_amount_response_mapper.dart';
 export 'get_for_user_request_to_get_friends_query_mapper.dart';
 export 'get_for_user_request_to_get_subscribers_query_mapper.dart';
+export 'get_friend_bids_amount_request_to_get_friend_bids_amount_query_mapper.dart';
 export 'get_people_amount_request_to_get_people_amount_query_mapper.dart';
 export 'get_user_by_id_request_to_get_user_by_id_query_mapper.dart';
 export 'get_user_by_nick_request_to_get_user_by_nick_query_mapper.dart';

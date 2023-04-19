@@ -45,6 +45,11 @@ Router _$UserControllerRouter(UserController service) {
   );
   router.add(
     'GET',
+    r'/friend_bids_amount',
+    service.getFriendBidsAmount,
+  );
+  router.add(
+    'GET',
     r'/inbox_friend_bids',
     service.getInboxFriendBids,
   );

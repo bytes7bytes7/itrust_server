@@ -227,6 +227,38 @@ class UserController extends ApiController {
     );
   }
 
+  @Route.get('/friend_bids_amount')
+  Future<Response> getFriendBidsAmount(Request request) async {
+    late final GetFriendBidsAmountRequest getFriendBidsAmountRequest;
+    try {
+      getFriendBidsAmountRequest =
+          await parseRequest<GetFriendBidsAmountRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query = _mapster.map2(
+      getFriendBidsAmountRequest,
+      user.id,
+      To<GetFriendBidsAmountQuery>(),
+    );
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<FriendBidsAmountResponse>())),
+    );
+  }
+
   @Route.get('/inbox_friend_bids')
   Future<Response> getInboxFriendBids(Request request) async {
     late final GetUsersRequest getUsersRequest;
