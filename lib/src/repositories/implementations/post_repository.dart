@@ -21,6 +21,11 @@ class DevPostRepository implements PostRepository {
   final _postOrder = <PostID>[];
   final _posts = HashMap<PostID, Post?>();
   final _comments = HashMap<CommentID, Comment?>();
+  final _postLikedByIDs = HashMap<PostID, List<UserID>>();
+  final _postCommentIDs = HashMap<PostID, List<CommentID>>();
+  final _commentLikedByIDs = HashMap<CommentID, List<UserID>>();
+  final _commentReplyIDs = HashMap<CommentID, List<CommentID>>();
+  final _userPosts = HashMap<UserID, List<PostID>>();
 
   final DateTimeProvider _dateTimeProvider;
   final MediaRepository _mediaRepository;
@@ -51,14 +56,15 @@ class DevPostRepository implements PostRepository {
       authorID: authorID,
       text: newPost.text,
       createdAt: _dateTimeProvider.nowUtc(),
-      commentIDs: const [],
-      likedByIDs: const [],
       mediaIDs: mediaIDs,
       tags: newPost.tags,
     );
 
     _posts[id] = post;
     _postOrder.insert(0, id);
+
+    final posts = List.of(_userPosts[authorID] ?? <PostID>[])..add(id);
+    _userPosts[authorID] = posts;
 
     return post;
   }
@@ -71,6 +77,101 @@ class DevPostRepository implements PostRepository {
   @override
   Future<Post?> getPostByID({required PostID id}) async {
     return _posts[id];
+  }
+
+  @override
+  Future<int> getUserPostsAmount({required UserID userID}) async {
+    final posts = _userPosts[userID] ?? [];
+
+    return posts.length;
+  }
+
+  @override
+  Future<int> getPostLikesAmount({required PostID id}) async {
+    final post = _posts[id];
+
+    if (post == null) {
+      throw Exception('Post not found');
+    }
+
+    final likes = _postLikedByIDs[id] ?? [];
+
+    return likes.length;
+  }
+
+  @override
+  Future<void> likePost({
+    required PostID postID,
+    required UserID userID,
+  }) async {
+    final post = _posts[postID];
+
+    if (post == null) {
+      throw Exception('Post not found');
+    }
+
+    final likes = List.of(_postLikedByIDs[postID] ?? <UserID>[]);
+
+    final isLiked = likes.contains(userID);
+
+    if (isLiked) {
+      throw Exception('Post is already liked');
+    }
+
+    likes.add(userID);
+    _postLikedByIDs[postID] = likes;
+  }
+
+  @override
+  Future<void> unlikePost({
+    required PostID postID,
+    required UserID userID,
+  }) async {
+    final post = _posts[postID];
+
+    if (post == null) {
+      throw Exception('Post not found');
+    }
+
+    final likes = List.of(_postLikedByIDs[postID] ?? <UserID>[]);
+
+    final isLiked = likes.contains(userID);
+
+    if (!isLiked) {
+      throw Exception('Post is already unliked');
+    }
+
+    likes.remove(userID);
+    _postLikedByIDs[postID] = likes;
+  }
+
+  @override
+  Future<bool> isPostLikedByUser({
+    required PostID postID,
+    required UserID userID,
+  }) async {
+    final post = _posts[postID];
+
+    if (post == null) {
+      throw Exception('Post not found');
+    }
+
+    final likes = _postLikedByIDs[postID] ?? [];
+
+    return likes.contains(userID);
+  }
+
+  @override
+  Future<int> getPostCommentsAmount({required PostID id}) async {
+    final post = _posts[id];
+
+    if (post == null) {
+      throw Exception('Post not found');
+    }
+
+    final comments = _postCommentIDs[id] ?? [];
+
+    return comments.length;
   }
 
   @override
@@ -132,6 +233,153 @@ class DevPostRepository implements PostRepository {
   }
 
   @override
+  Future<int> getCommentLikesAmount({
+    required PostID postID,
+    required CommentID commentID,
+  }) async {
+    final post = _posts[postID];
+
+    if (post == null) {
+      throw Exception('Post not found');
+    }
+
+    final comment = _comments[commentID];
+
+    if (comment == null) {
+      throw Exception('Comment not found');
+    }
+
+    if (comment.postID != post.id) {
+      throw Exception('Comment not found');
+    }
+
+    final likes = _commentLikedByIDs[commentID] ?? [];
+
+    return likes.length;
+  }
+
+  @override
+  Future<bool> isCommentLikedByUser({
+    required PostID postID,
+    required CommentID commentID,
+    required UserID userID,
+  }) async {
+    final post = _posts[postID];
+
+    if (post == null) {
+      throw Exception('Post not found');
+    }
+
+    final comment = _comments[commentID];
+
+    if (comment == null) {
+      throw Exception('Comment not found');
+    }
+
+    if (comment.postID != post.id) {
+      throw Exception('Comment not found');
+    }
+
+    final likes = _commentLikedByIDs[commentID] ?? [];
+
+    return likes.contains(userID);
+  }
+
+  @override
+  Future<void> likeComment({
+    required PostID postID,
+    required CommentID commentID,
+    required UserID userID,
+  }) async {
+    final post = _posts[postID];
+
+    if (post == null) {
+      throw Exception('Post not found');
+    }
+
+    final comment = _comments[commentID];
+
+    if (comment == null) {
+      throw Exception('Comment not found');
+    }
+
+    if (comment.postID != post.id) {
+      throw Exception('Comment not found');
+    }
+
+    final likes = List.of(_commentLikedByIDs[commentID] ?? <UserID>[]);
+
+    final isLiked = likes.contains(userID);
+
+    if (isLiked) {
+      throw Exception('Post is already liked');
+    }
+
+    likes.add(userID);
+    _commentLikedByIDs[commentID] = likes;
+  }
+
+  @override
+  Future<void> unlikeComment({
+    required PostID postID,
+    required CommentID commentID,
+    required UserID userID,
+  }) async {
+    final post = _posts[postID];
+
+    if (post == null) {
+      throw Exception('Post not found');
+    }
+
+    final comment = _comments[commentID];
+
+    if (comment == null) {
+      throw Exception('Comment not found');
+    }
+
+    if (comment.postID != post.id) {
+      throw Exception('Comment not found');
+    }
+
+    final likes = List.of(_commentLikedByIDs[commentID] ?? <UserID>[]);
+
+    final isLiked = likes.contains(userID);
+
+    if (!isLiked) {
+      throw Exception('Post is already unliked');
+    }
+
+    likes.remove(userID);
+    _commentLikedByIDs[commentID] = likes;
+  }
+
+  @override
+  Future<int> getCommentRepliesAmount({
+    required PostID postID,
+    required CommentID commentID,
+  }) async {
+    final post = _posts[postID];
+
+    if (post == null) {
+      throw Exception('Post not found');
+    }
+
+    final comment = _comments[commentID];
+
+    if (comment == null) {
+      throw Exception('Comment not found');
+    }
+
+    if (comment.postID != post.id) {
+      throw Exception('Comment not found');
+    }
+
+    final replies = _commentReplyIDs[commentID] ?? [];
+
+    return replies.length;
+  }
+
+  @override
   Future<List<Comment>> getCommentsByFilter({
     required PostID postID,
     required int limit,
@@ -140,11 +388,13 @@ class DevPostRepository implements PostRepository {
   }) async {
     var reachStartAfter = startAfter == null;
 
-    final commentIDs = _posts[postID]?.commentIDs;
+    final post = _posts[postID];
 
-    if (commentIDs == null) {
-      return [];
+    if (post == null) {
+      throw Exception('Post not found');
     }
+
+    final commentIDs = _postCommentIDs[postID] ?? [];
 
     if (repliedTo == null) {
       final comments = <Comment>[];
@@ -160,11 +410,13 @@ class DevPostRepository implements PostRepository {
       return comments;
     }
 
-    final replyIDs = _comments[repliedTo]?.replyIDs;
+    final comment = _comments[repliedTo];
 
-    if (replyIDs == null) {
-      return [];
+    if (comment == null) {
+      throw Exception('`repliedTo` comment not found');
     }
+
+    final replyIDs = _commentReplyIDs[repliedTo] ?? [];
 
     final replies = <Comment>[];
 
@@ -205,16 +457,13 @@ class DevPostRepository implements PostRepository {
       postID: postID,
       createdAt: _dateTimeProvider.nowUtc(),
       text: text,
-      likedByIDs: [],
-      replyIDs: [],
     );
 
     _comments[id] = comment;
 
-    final commentIDs = List.of(post.commentIDs)..insert(0, id);
-    _posts[postID] = post.copyWith(
-      commentIDs: commentIDs,
-    );
+    final commentIDs = List.of(_postCommentIDs[postID] ?? <CommentID>[])
+      ..insert(0, id);
+    _postCommentIDs[postID] = commentIDs;
 
     return comment;
   }
@@ -252,17 +501,15 @@ class DevPostRepository implements PostRepository {
       postID: postID,
       createdAt: _dateTimeProvider.nowUtc(),
       text: text,
-      likedByIDs: [],
-      replyIDs: [],
       replyToID: replyToCommentID,
     );
 
     _comments[id] = reply;
 
-    final replyIDs = List.of(comment.replyIDs)..insert(0, id);
-    _comments[replyToCommentID] = comment.copyWith(
-      replyIDs: replyIDs,
-    );
+    final replyIDs =
+        List.of(_commentReplyIDs[replyToCommentID] ?? <CommentID>[])
+          ..insert(0, id);
+    _commentReplyIDs[replyToCommentID] = replyIDs;
 
     return reply;
   }

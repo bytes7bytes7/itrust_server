@@ -5,5 +5,5 @@ class ChangePersonalInfoResult {
     required this.user,
   });
 
-  final EndUser user;
+  final EndUserVM user;
 }

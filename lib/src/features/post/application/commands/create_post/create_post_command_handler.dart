@@ -7,6 +7,7 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
+import '../../../../common/application/mapper_dto/to_post_vm.dart';
 import '../../../../common/application/view_models/view_models.dart';
 import '../../common/common.dart';
 import 'create_post_command.dart';
@@ -46,12 +47,6 @@ class CreatePostCommandHandler extends RequestHandler<CreatePostCommand,
       );
     }
 
-    await _endUserRepository.addOrUpdate(
-      user: user.copyWith(
-        posts: List.of(user.posts)..add(post.id),
-      ),
-    );
-
     final mediaList = <MediaVM>[];
     for (final id in post.mediaIDs) {
       final media = await _mediaRepository.get(id);
@@ -65,7 +60,16 @@ class CreatePostCommandHandler extends RequestHandler<CreatePostCommand,
 
     return right(
       PostResult(
-        post: _mapster.map3(post, request.userID, mediaList, To<PostVM>()),
+        post: _mapster.map2(
+          post,
+          ToPostVM(
+            media: mediaList,
+            likedByMe: false,
+            likesAmount: 0,
+            commentsAmount: 0,
+          ),
+          To<PostVM>(),
+        ),
       ),
     );
   }

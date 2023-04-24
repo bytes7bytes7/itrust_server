@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
 
@@ -7,7 +9,15 @@ import '../interfaces/interfaces.dart';
 @dev
 @Singleton(as: EndUserRepository)
 class DevEndUserRepository implements EndUserRepository {
-  final _storage = <UserID, EndUser>{};
+  final _storage = HashMap<UserID, EndUser>();
+
+  // TODO: replace url with Media
+  final _avatarUrls = HashMap<UserID, List<String>>();
+  final _friends = HashMap<UserID, List<UserID>>();
+  final _subscribers = HashMap<UserID, List<UserID>>();
+  final _subscriptions = HashMap<UserID, List<UserID>>();
+  final _myFriendBids = HashMap<UserID, List<UserID>>();
+  final _friendsBidsToMe = HashMap<UserID, List<UserID>>();
 
   @override
   Future<void> addOrUpdate({required EndUser user}) async {
@@ -36,6 +46,32 @@ class DevEndUserRepository implements EndUserRepository {
   @override
   Future<int> getAmountOfUsers() async {
     return _storage.keys.length;
+  }
+
+  @override
+  Future<int> getAvatarsAmount({required UserID id}) async {
+    final user = _storage[id];
+
+    if (user == null) {
+      throw Exception('User not found');
+    }
+
+    final avatars = _avatarUrls[id] ?? [];
+
+    return avatars.length;
+  }
+
+  @override
+  Future<String?> getAvatar({required UserID id}) async {
+    final user = _storage[id];
+
+    if (user == null) {
+      throw Exception('User not found');
+    }
+
+    final avatars = _avatarUrls[id] ?? [];
+
+    return avatars.firstOrNull;
   }
 
   @override
@@ -69,6 +105,21 @@ class DevEndUserRepository implements EndUserRepository {
   }
 
   @override
+  Future<int> getFriendsAmount({
+    required UserID userID,
+  }) async {
+    final friendsOwner = _storage[userID];
+
+    if (friendsOwner == null) {
+      throw Exception('User not found');
+    }
+
+    final friends = _friends[userID] ?? [];
+
+    return friends.length;
+  }
+
+  @override
   Future<List<EndUser>> getFriendsByFilter({
     required UserID friendsTo,
     required int limit,
@@ -84,7 +135,9 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    for (final id in friendsOwner.friends) {
+    final friends = _friends[friendsTo] ?? [];
+
+    for (final id in friends) {
       if (reachStartAfter) {
         final user = _storage[id];
 
@@ -103,6 +156,21 @@ class DevEndUserRepository implements EndUserRepository {
     }
 
     return result;
+  }
+
+  @override
+  Future<int> getSubscribersAmount({
+    required UserID userID,
+  }) async {
+    final publisher = _storage[userID];
+
+    if (publisher == null) {
+      throw Exception('User not found');
+    }
+
+    final subscribers = _subscribers[userID] ?? [];
+
+    return subscribers.length;
   }
 
   @override
@@ -121,7 +189,9 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    for (final id in publisher.subscribers) {
+    final subscribers = _subscribers[subscribersOf] ?? [];
+
+    for (final id in subscribers) {
       if (reachStartAfter) {
         final user = _storage[id];
 
@@ -143,6 +213,21 @@ class DevEndUserRepository implements EndUserRepository {
   }
 
   @override
+  Future<int> getSubscriptionsAmount({
+    required UserID userID,
+  }) async {
+    final subscriber = _storage[userID];
+
+    if (subscriber == null) {
+      throw Exception('User not found');
+    }
+
+    final subscriptions = _subscriptions[userID] ?? [];
+
+    return subscriptions.length;
+  }
+
+  @override
   Future<List<EndUser>> getSubscriptionsByFilter({
     required UserID subscriptionsOf,
     required int limit,
@@ -152,13 +237,15 @@ class DevEndUserRepository implements EndUserRepository {
 
     var reachStartAfter = startAfter == null;
 
-    final publisher = _storage[subscriptionsOf];
+    final subscriber = _storage[subscriptionsOf];
 
-    if (publisher == null) {
+    if (subscriber == null) {
       throw Exception('User not found');
     }
 
-    for (final id in publisher.subscriptions) {
+    final subscriptions = _subscriptions[subscriptionsOf] ?? [];
+
+    for (final id in subscriptions) {
       if (reachStartAfter) {
         final user = _storage[id];
 
@@ -190,15 +277,13 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    final fromUserBids = List.of(fromUser.myFriendBids);
+    final fromUserBids = List.of(_myFriendBids[from] ?? <UserID>[]);
 
     if (fromUserBids.contains(to)) {
       throw Exception('A bid has been already sent');
     }
 
-    _storage[from] = fromUser.copyWith(
-      myFriendBids: fromUserBids..add(to),
-    );
+    _myFriendBids[from] = fromUserBids..add(to);
 
     final toUser = _storage[to];
 
@@ -206,15 +291,13 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    final toUserBids = List.of(toUser.friendsBidsToMe);
+    final toUserBids = List.of(_friendsBidsToMe[to] ?? <UserID>[]);
 
     if (toUserBids.contains(from)) {
       throw Exception('A bid has been already sent');
     }
 
-    _storage[to] = toUser.copyWith(
-      friendsBidsToMe: toUserBids..add(from),
-    );
+    _friendsBidsToMe[to] = toUserBids..add(from);
   }
 
   @override
@@ -228,15 +311,13 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    final fromUserBids = List.of(fromUser.myFriendBids);
+    final fromUserBids = List.of(_myFriendBids[from] ?? <UserID>[]);
 
     if (!fromUserBids.contains(to)) {
       throw Exception('A bid does not exist');
     }
 
-    _storage[from] = fromUser.copyWith(
-      myFriendBids: fromUserBids..remove(to),
-    );
+    _myFriendBids[from] = fromUserBids..remove(to);
 
     final toUser = _storage[to];
 
@@ -244,15 +325,13 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    final toUserBids = List.of(toUser.friendsBidsToMe);
+    final toUserBids = List.of(_friendsBidsToMe[to] ?? <UserID>[]);
 
     if (!toUserBids.contains(from)) {
       throw Exception('A bid does not exist');
     }
 
-    _storage[to] = toUser.copyWith(
-      friendsBidsToMe: toUserBids..remove(from),
-    );
+    _friendsBidsToMe[to] = toUserBids..remove(from);
   }
 
   @override
@@ -266,9 +345,39 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    final bids = fromUser.myFriendBids;
+    final bids = _myFriendBids[from] ?? [];
 
     return bids.contains(to);
+  }
+
+  @override
+  Future<int> getFriendBidsToUserAmount({
+    required UserID userID,
+  }) async {
+    final user = _storage[userID];
+
+    if (user == null) {
+      throw Exception('User not found');
+    }
+
+    final bids = _friendsBidsToMe[userID] ?? [];
+
+    return bids.length;
+  }
+
+  @override
+  Future<int> getFriendBidsFromUserAmount({
+    required UserID userID,
+  }) async {
+    final user = _storage[userID];
+
+    if (user == null) {
+      throw Exception('User not found');
+    }
+
+    final bids = _myFriendBids[userID] ?? [];
+
+    return bids.length;
   }
 
   @override
@@ -287,7 +396,7 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    final bids = user.friendsBidsToMe;
+    final bids = _friendsBidsToMe[userID] ?? [];
 
     for (final bid in bids) {
       if (reachStartAfter) {
@@ -326,7 +435,7 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    final bids = user.myFriendBids;
+    final bids = _myFriendBids[userID] ?? [];
 
     for (final bid in bids) {
       if (reachStartAfter) {
@@ -361,7 +470,9 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    return firstUser.friends.contains(secondUserID);
+    final firstUserFriends = _myFriendBids[firstUserID] ?? [];
+
+    return firstUserFriends.contains(secondUserID);
   }
 
   @override
@@ -376,15 +487,8 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    final updatedFirstUser = firstUser.copyWith(
-      friends: List.of(firstUser.friends)..add(secondUserID),
-    );
-    final updatedSecondUser = secondUser.copyWith(
-      friends: List.of(secondUser.friends)..add(firstUserID),
-    );
-
-    _storage[firstUserID] = updatedFirstUser;
-    _storage[secondUserID] = updatedSecondUser;
+    _friends[firstUserID] = (_friends[firstUserID] ?? [])..add(secondUserID);
+    _friends[secondUserID] = (_friends[secondUserID] ?? [])..add(firstUserID);
   }
 
   @override
@@ -399,15 +503,9 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    final updatedFirstUser = firstUser.copyWith(
-      friends: List.of(firstUser.friends)..remove(secondUserID),
-    );
-    final updatedSecondUser = secondUser.copyWith(
-      friends: List.of(secondUser.friends)..remove(firstUserID),
-    );
-
-    _storage[firstUserID] = updatedFirstUser;
-    _storage[secondUserID] = updatedSecondUser;
+    _friends[firstUserID] = (_friends[firstUserID] ?? [])..remove(secondUserID);
+    _friends[secondUserID] = (_friends[secondUserID] ?? [])
+      ..remove(firstUserID);
   }
 
   @override
@@ -422,15 +520,10 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    final updatedSubscriber = subscriber.copyWith(
-      subscriptions: List.of(subscriber.subscriptions)..add(publisherID),
-    );
-    final updatedPublisher = publisher.copyWith(
-      subscribers: List.of(publisher.subscribers)..add(subscriberID),
-    );
-
-    _storage[subscriberID] = updatedSubscriber;
-    _storage[publisherID] = updatedPublisher;
+    _subscriptions[subscriberID] = (_subscriptions[subscriberID] ?? [])
+      ..add(publisherID);
+    _subscribers[publisherID] = (_subscribers[publisherID] ?? [])
+      ..add(subscriberID);
   }
 
   @override
@@ -445,15 +538,10 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    final updatedSubscriber = subscriber.copyWith(
-      subscriptions: List.of(subscriber.subscriptions)..remove(publisherID),
-    );
-    final updatedPublisher = publisher.copyWith(
-      subscribers: List.of(publisher.subscribers)..remove(subscriberID),
-    );
-
-    _storage[subscriberID] = updatedSubscriber;
-    _storage[publisherID] = updatedPublisher;
+    _subscriptions[subscriberID] = (_subscriptions[subscriberID] ?? [])
+      ..remove(publisherID);
+    _subscribers[publisherID] = (_subscribers[publisherID] ?? [])
+      ..remove(subscriberID);
   }
 
   @override
@@ -468,7 +556,9 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    return subscriber.subscriptions.contains(publisherID);
+    final subscribers = _subscribers[publisherID] ?? [];
+
+    return subscribers.contains(subscriberID);
   }
 
   @override
@@ -483,6 +573,8 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    return publisher.subscribers.contains(subscriberID);
+    final subscriptions = _subscriptions[subscriberID] ?? [];
+
+    return subscriptions.contains(publisherID);
   }
 }

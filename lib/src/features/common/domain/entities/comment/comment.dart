@@ -1,13 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../../utils/typedef.dart';
 import '../../value_objects/value_objects.dart';
 
 part 'comment.freezed.dart';
 
-part 'comment.g.dart';
-
-@freezed
+@Freezed(
+  toJson: false,
+  fromJson: false,
+)
 class Comment with _$Comment {
   /// If this [Comment] comments some Post,
   /// then [replyTo] == null
@@ -19,11 +19,7 @@ class Comment with _$Comment {
     required PostID postID,
     required DateTime createdAt,
     required String text,
-    required List<UserID> likedByIDs,
-    required List<CommentID> replyIDs,
     CommentID? replyToID,
     DateTime? modifiedAt,
   }) = _Comment;
-
-  factory Comment.fromJson(JsonMap json) => _$CommentFromJson(json);
 }

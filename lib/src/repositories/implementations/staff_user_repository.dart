@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,7 +10,10 @@ import '../interfaces/interfaces.dart';
 @dev
 @Singleton(as: StaffUserRepository)
 class TestStaffUserRepository implements StaffUserRepository {
-  final _storage = <UserID, StaffUser>{};
+  final _storage = HashMap<UserID, StaffUser>();
+
+  // TODO: replace url with Media
+  final _avatarUrls = HashMap<UserID, List<String>>();
 
   @override
   Future<void> add({required StaffUser user}) async {
@@ -32,6 +37,32 @@ class TestStaffUserRepository implements StaffUserRepository {
     return _storage.entries
         .firstWhereOrNull((e) => e.value.nick == nick)
         ?.value;
+  }
+
+  @override
+  Future<int> getAvatarsAmount({required UserID id}) async {
+    final user = _storage[id];
+
+    if (user == null) {
+      throw Exception('User not found');
+    }
+
+    final avatars = _avatarUrls[id] ?? [];
+
+    return avatars.length;
+  }
+
+  @override
+  Future<String?> getAvatar({required UserID id}) async {
+    final user = _storage[id];
+
+    if (user == null) {
+      throw Exception('User not found');
+    }
+
+    final avatars = _avatarUrls[id] ?? [];
+
+    return avatars.firstOrNull;
   }
 
   @override

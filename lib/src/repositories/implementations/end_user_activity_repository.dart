@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:injectable/injectable.dart';
 
 import '../../features/common/application/providers/date_time_provider.dart';
-import '../../features/common/domain/value_objects/user_id/user_id.dart';
+import '../../features/common/domain/domain.dart';
 import '../interfaces/end_user_activity_repository.dart';
 
 // TODO: remove comment when common Long-Polling is created

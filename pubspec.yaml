@@ -20,7 +20,7 @@ dependencies:
   injectable: ^2.1.0
   json_annotation: ^4.8.0
   logging: ^1.1.1
-  mapster: ^0.3.0
+  mapster: ^0.3.2
   mediator:
     git:
       url: https://github.com/bytes7bytes7/mediator

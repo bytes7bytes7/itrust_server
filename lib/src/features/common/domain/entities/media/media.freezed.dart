@@ -14,17 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Media _$MediaFromJson(Map<String, dynamic> json) {
-  return _Media.fromJson(json);
-}
-
 /// @nodoc
 mixin _$Media {
   MediaID get id => throw _privateConstructorUsedError;
   MediaType get type => throw _privateConstructorUsedError;
   List<int> get bytes => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $MediaCopyWith<Media> get copyWith => throw _privateConstructorUsedError;
 }
@@ -124,14 +119,11 @@ class __$$_MediaCopyWithImpl<$Res> extends _$MediaCopyWithImpl<$Res, _$_Media>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_Media implements _Media {
   const _$_Media(
       {required this.id, required this.type, required final List<int> bytes})
       : _bytes = bytes;
-
-  factory _$_Media.fromJson(Map<String, dynamic> json) =>
-      _$$_MediaFromJson(json);
 
   @override
   final MediaID id;
@@ -160,7 +152,6 @@ class _$_Media implements _Media {
             const DeepCollectionEquality().equals(other._bytes, _bytes));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType, id, type, const DeepCollectionEquality().hash(_bytes));
@@ -170,13 +161,6 @@ class _$_Media implements _Media {
   @pragma('vm:prefer-inline')
   _$$_MediaCopyWith<_$_Media> get copyWith =>
       __$$_MediaCopyWithImpl<_$_Media>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_MediaToJson(
-      this,
-    );
-  }
 }
 
 abstract class _Media implements Media {
@@ -184,8 +168,6 @@ abstract class _Media implements Media {
       {required final MediaID id,
       required final MediaType type,
       required final List<int> bytes}) = _$_Media;
-
-  factory _Media.fromJson(Map<String, dynamic> json) = _$_Media.fromJson;
 
   @override
   MediaID get id;

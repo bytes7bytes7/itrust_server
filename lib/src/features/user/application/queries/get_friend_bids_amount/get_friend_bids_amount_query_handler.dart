@@ -31,10 +31,16 @@ class GetFriendBidsAmountQueryHandler extends RequestHandler<
       );
     }
 
+    final inboxBidsAmount = await _endUserRepository.getFriendBidsToUserAmount(
+      userID: request.userID,
+    );
+    final outboxBidsAmount = await _endUserRepository
+        .getFriendBidsFromUserAmount(userID: request.userID);
+
     return right(
       FriendBidsAmountResult(
-        inboxAmount: user.friendsBidsToMe.length,
-        outboxAmount: user.myFriendBids.length,
+        inboxAmount: inboxBidsAmount,
+        outboxAmount: outboxBidsAmount,
       ),
     );
   }

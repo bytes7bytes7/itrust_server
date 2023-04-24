@@ -56,13 +56,6 @@ class RegisterCommandHandler extends RequestHandler<RegisterCommand,
       firstName: request.firstName,
       lastName: request.lastName,
       email: request.email,
-      avatarUrls: [],
-      friends: [],
-      subscribers: [],
-      subscriptions: [],
-      posts: [],
-      friendsBidsToMe: [],
-      myFriendBids: [],
       nick: null,
     );
 

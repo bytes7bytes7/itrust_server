@@ -9,6 +9,7 @@ import 'package:mediator/mediator.dart';
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/common/posts_result.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
+import '../../../../common/application/mapper_dto/to_post_vm.dart';
 import '../../../../common/application/view_models/media_vm/media_vm.dart';
 import '../../../../common/application/view_models/post_vm/post_vm.dart';
 import '../../../../common/domain/domain.dart';
@@ -53,7 +54,24 @@ class GetUserPostsQueryHandler extends RequestHandler<GetUserPostsQuery,
     );
 
     final postMediaVMs = HashMap<PostID, List<MediaVM>>();
+    final likedByMeMap = HashMap<PostID, bool>();
+    final likesAmountMap = HashMap<PostID, int>();
+    final commentAmountMap = HashMap<PostID, int>();
     for (final post in posts) {
+      final likedByMe = await _postRepository.isPostLikedByUser(
+        postID: post.id,
+        userID: request.userID,
+      );
+      likedByMeMap[post.id] = likedByMe;
+
+      final likesAmount = await _postRepository.getPostLikesAmount(id: post.id);
+      likesAmountMap[post.id] = likesAmount;
+
+      final commentAmount = await _postRepository.getPostCommentsAmount(
+        id: post.id,
+      );
+      commentAmountMap[post.id] = commentAmount;
+
       final mediaList = <MediaVM>[];
       for (final mediaID in post.mediaIDs) {
         final media = await _mediaRepository.get(mediaID);
@@ -72,10 +90,14 @@ class GetUserPostsQueryHandler extends RequestHandler<GetUserPostsQuery,
       PostsResult(
         posts: posts
             .map(
-              (e) => _mapster.map3(
+              (e) => _mapster.map2(
                 e,
-                request.userID,
-                postMediaVMs[e.id]!,
+                ToPostVM(
+                  media: postMediaVMs[e.id]!,
+                  likedByMe: likedByMeMap[e.id]!,
+                  likesAmount: likesAmountMap[e.id]!,
+                  commentsAmount: commentAmountMap[e.id]!,
+                ),
                 To<PostVM>(),
               ),
             )

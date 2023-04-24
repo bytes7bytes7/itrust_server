@@ -7,7 +7,9 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
+import '../../../../common/application/mapper_dto/to_user_vm.dart';
 import '../../../../common/application/view_models/user_vm/user_vm.dart';
+import '../../../../common/domain/value_objects/online_status/online_status.dart';
 import '../../common/common.dart';
 import 'get_user_by_nick_query.dart';
 
@@ -36,9 +38,22 @@ class GetUserByNickQueryHandler extends RequestHandler<GetUserByNickQuery,
     final staffUser = await _staffUserRepository.getByNick(nick: request.nick);
 
     if (staffUser != null) {
+      final avatarsAmount = await _staffUserRepository.getAvatarsAmount(
+        id: staffUser.id,
+      );
+      final avatar = await _staffUserRepository.getAvatar(id: staffUser.id);
+
       return right(
         UserResult(
-          user: _mapster.map1(staffUser, To<StaffUserVM>()),
+          user: _mapster.map2(
+            staffUser,
+            ToUserVM(
+              onlineStatus: const OnlineStatus.empty(),
+              avatarsAmount: avatarsAmount,
+              avatarUrl: avatar,
+            ),
+            To<StaffUserVM>(),
+          ),
         ),
       );
     }
@@ -47,10 +62,21 @@ class GetUserByNickQueryHandler extends RequestHandler<GetUserByNickQuery,
 
     if (endUser != null) {
       final onlineStatus = await _endUserActivityRepository.get(endUser.id);
+      final avatarsAmount =
+          await _endUserRepository.getAvatarsAmount(id: endUser.id);
+      final avatar = await _endUserRepository.getAvatar(id: endUser.id);
 
       return right(
         UserResult(
-          user: _mapster.map2(endUser, onlineStatus, To<EndUserVM>()),
+          user: _mapster.map2(
+            endUser,
+            ToUserVM(
+              onlineStatus: onlineStatus,
+              avatarsAmount: avatarsAmount,
+              avatarUrl: avatar,
+            ),
+            To<EndUserVM>(),
+          ),
         ),
       );
     }

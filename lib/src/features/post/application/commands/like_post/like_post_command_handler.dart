@@ -7,6 +7,7 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
+import '../../../../common/application/mapper_dto/to_post_vm.dart';
 import '../../../../common/application/view_models/view_models.dart';
 import '../../common/common.dart';
 import 'like_post_command.dart';
@@ -38,17 +39,16 @@ class LikePostCommandHandler extends RequestHandler<LikePostCommand,
       );
     }
 
-    if (post.likedByIDs.contains(request.userID)) {
+    final isAlreadyLikedByMy = await _postRepository.isPostLikedByUser(
+      postID: request.postID,
+      userID: request.userID,
+    );
+
+    if (isAlreadyLikedByMy) {
       return left(
         [const YouAlreadyLikedPost()],
       );
     }
-
-    final updatedPost = post.copyWith(
-      likedByIDs: List.of(post.likedByIDs)..add(request.userID),
-    );
-
-    await _postRepository.updatePost(post: updatedPost);
 
     final mediaList = <MediaVM>[];
     for (final id in post.mediaIDs) {
@@ -61,10 +61,23 @@ class LikePostCommandHandler extends RequestHandler<LikePostCommand,
       mediaList.add(_mapster.map1(media, To<MediaVM>()));
     }
 
+    final likesAmount =
+        await _postRepository.getPostLikesAmount(id: request.postID);
+    final commentsAmount =
+        await _postRepository.getPostCommentsAmount(id: request.postID);
+
     return right(
       PostResult(
-        post:
-            _mapster.map3(updatedPost, request.userID, mediaList, To<PostVM>()),
+        post: _mapster.map2(
+          post,
+          ToPostVM(
+            media: mediaList,
+            likedByMe: true,
+            likesAmount: likesAmount,
+            commentsAmount: commentsAmount,
+          ),
+          To<PostVM>(),
+        ),
       ),
     );
   }

@@ -9,6 +9,7 @@ import 'package:mediator/mediator.dart';
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/common/posts_result.dart';
 import '../../../../common/application/exceptions/detailed_exception.dart';
+import '../../../../common/application/mapper_dto/to_post_vm.dart';
 import '../../../../common/application/view_models/view_models.dart';
 import '../../../../common/domain/domain.dart';
 import 'get_feed_query.dart';
@@ -41,7 +42,23 @@ class GetFeedQueryHandler extends RequestHandler<GetFeedQuery,
     );
 
     final postMediaVMs = HashMap<PostID, List<MediaVM>>();
+    final likedByMeMap = HashMap<PostID, bool>();
+    final likesAmountMap = HashMap<PostID, int>();
+    final commentsAmountMap = HashMap<PostID, int>();
     for (final post in posts) {
+      final likedByMe = await _postRepository.isPostLikedByUser(
+        postID: post.id,
+        userID: request.userID,
+      );
+      likedByMeMap[post.id] = likedByMe;
+
+      final likesAmount = await _postRepository.getPostLikesAmount(id: post.id);
+      likesAmountMap[post.id] = likesAmount;
+
+      final commentsAmount =
+          await _postRepository.getPostCommentsAmount(id: post.id);
+      commentsAmountMap[post.id] = commentsAmount;
+
       final mediaList = <MediaVM>[];
       for (final mediaID in post.mediaIDs) {
         final media = await _mediaRepository.get(mediaID);
@@ -60,10 +77,14 @@ class GetFeedQueryHandler extends RequestHandler<GetFeedQuery,
       PostsResult(
         posts: posts
             .map(
-              (e) => _mapster.map3(
+              (e) => _mapster.map2(
                 e,
-                request.userID,
-                postMediaVMs[e.id]!,
+                ToPostVM(
+                  media: postMediaVMs[e.id]!,
+                  likedByMe: likedByMeMap[e.id]!,
+                  likesAmount: likesAmountMap[e.id]!,
+                  commentsAmount: commentsAmountMap[e.id]!,
+                ),
                 To<PostVM>(),
               ),
             )

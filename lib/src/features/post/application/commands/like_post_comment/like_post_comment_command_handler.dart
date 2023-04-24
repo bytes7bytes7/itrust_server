@@ -7,6 +7,7 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
+import '../../../../common/application/mapper_dto/to_comment_vm.dart';
 import '../../../../common/application/view_models/comment_vm/comment_vm.dart';
 import '../../common/common.dart';
 import 'like_post_comment_command.dart';
@@ -47,21 +48,51 @@ class LikePostCommentCommandHandler extends RequestHandler<
       );
     }
 
-    if (comment.likedByIDs.contains(request.userID)) {
+    final isAlreadyLikedByMe = await _postRepository.isCommentLikedByUser(
+      postID: request.postID,
+      commentID: request.commentID,
+      userID: request.userID,
+    );
+
+    if (isAlreadyLikedByMe) {
       return left(
         [const YouAlreadyLikedComment()],
       );
     }
 
-    final updatedComment = comment.copyWith(
-      likedByIDs: List.of(comment.likedByIDs)..add(request.userID),
+    await _postRepository.likeComment(
+      postID: request.postID,
+      commentID: request.commentID,
+      userID: request.userID,
     );
 
-    await _postRepository.updateComment(comment: updatedComment);
+    final likedByMe = await _postRepository.isCommentLikedByUser(
+      postID: request.postID,
+      commentID: comment.id,
+      userID: request.userID,
+    );
+
+    final likesAmount = await _postRepository.getCommentLikesAmount(
+      postID: request.postID,
+      commentID: comment.id,
+    );
+
+    final repliesAmount = await _postRepository.getCommentRepliesAmount(
+      postID: request.postID,
+      commentID: comment.id,
+    );
 
     return right(
       PostCommentResult(
-        comment: _mapster.map2(updatedComment, request.userID, To<CommentVM>()),
+        comment: _mapster.map2(
+          comment,
+          ToCommentVM(
+            likedByMe: likedByMe,
+            likesAmount: likesAmount,
+            repliesAmount: repliesAmount,
+          ),
+          To<CommentVM>(),
+        ),
       ),
     );
   }

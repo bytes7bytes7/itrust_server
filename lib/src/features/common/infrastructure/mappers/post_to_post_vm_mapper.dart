@@ -1,11 +1,10 @@
 import 'package:mapster/mapster.dart';
 
-import '../../application/view_models/media_vm/media_vm.dart';
+import '../../application/mapper_dto/mapper_dto.dart';
 import '../../application/view_models/post_vm/post_vm.dart';
 import '../../domain/domain.dart';
 
-class PostToPostVMMapper
-    extends ThreeSourcesMapper<Post, UserID, List<MediaVM>, PostVM> {
+class PostToPostVMMapper extends TwoSourcesMapper<Post, ToPostVM, PostVM> {
   PostToPostVMMapper(super.input);
 
   @override
@@ -15,17 +14,15 @@ class PostToPostVMMapper
       authorID: _post.authorID,
       createdAt: _post.createdAt,
       text: _post.text,
-      media: _media,
-      likedByMe: _post.likedByIDs.contains(_userID),
-      likesAmount: _post.likedByIDs.length,
-      commentsAmount: _post.commentIDs.length,
+      media: _dto.media,
+      likedByMe: _dto.likedByMe,
+      likesAmount: _dto.likesAmount,
+      commentsAmount: _dto.commentsAmount,
       tags: _post.tags,
     );
   }
 
   Post get _post => source1;
 
-  UserID get _userID => source2;
-
-  List<MediaVM> get _media => source3;
+  ToPostVM get _dto => source2;
 }

@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Comment _$CommentFromJson(Map<String, dynamic> json) {
-  return _Comment.fromJson(json);
-}
-
 /// @nodoc
 mixin _$Comment {
   CommentID get id => throw _privateConstructorUsedError;
@@ -25,12 +21,9 @@ mixin _$Comment {
   PostID get postID => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  List<UserID> get likedByIDs => throw _privateConstructorUsedError;
-  List<CommentID> get replyIDs => throw _privateConstructorUsedError;
   CommentID? get replyToID => throw _privateConstructorUsedError;
   DateTime? get modifiedAt => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $CommentCopyWith<Comment> get copyWith => throw _privateConstructorUsedError;
 }
@@ -46,8 +39,6 @@ abstract class $CommentCopyWith<$Res> {
       PostID postID,
       DateTime createdAt,
       String text,
-      List<UserID> likedByIDs,
-      List<CommentID> replyIDs,
       CommentID? replyToID,
       DateTime? modifiedAt});
 
@@ -75,8 +66,6 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
     Object? postID = null,
     Object? createdAt = null,
     Object? text = null,
-    Object? likedByIDs = null,
-    Object? replyIDs = null,
     Object? replyToID = freezed,
     Object? modifiedAt = freezed,
   }) {
@@ -101,14 +90,6 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      likedByIDs: null == likedByIDs
-          ? _value.likedByIDs
-          : likedByIDs // ignore: cast_nullable_to_non_nullable
-              as List<UserID>,
-      replyIDs: null == replyIDs
-          ? _value.replyIDs
-          : replyIDs // ignore: cast_nullable_to_non_nullable
-              as List<CommentID>,
       replyToID: freezed == replyToID
           ? _value.replyToID
           : replyToID // ignore: cast_nullable_to_non_nullable
@@ -170,8 +151,6 @@ abstract class _$$_CommentCopyWith<$Res> implements $CommentCopyWith<$Res> {
       PostID postID,
       DateTime createdAt,
       String text,
-      List<UserID> likedByIDs,
-      List<CommentID> replyIDs,
       CommentID? replyToID,
       DateTime? modifiedAt});
 
@@ -200,8 +179,6 @@ class __$$_CommentCopyWithImpl<$Res>
     Object? postID = null,
     Object? createdAt = null,
     Object? text = null,
-    Object? likedByIDs = null,
-    Object? replyIDs = null,
     Object? replyToID = freezed,
     Object? modifiedAt = freezed,
   }) {
@@ -226,14 +203,6 @@ class __$$_CommentCopyWithImpl<$Res>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      likedByIDs: null == likedByIDs
-          ? _value._likedByIDs
-          : likedByIDs // ignore: cast_nullable_to_non_nullable
-              as List<UserID>,
-      replyIDs: null == replyIDs
-          ? _value._replyIDs
-          : replyIDs // ignore: cast_nullable_to_non_nullable
-              as List<CommentID>,
       replyToID: freezed == replyToID
           ? _value.replyToID
           : replyToID // ignore: cast_nullable_to_non_nullable
@@ -247,7 +216,7 @@ class __$$_CommentCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_Comment implements _Comment {
   const _$_Comment(
       {required this.id,
@@ -255,15 +224,8 @@ class _$_Comment implements _Comment {
       required this.postID,
       required this.createdAt,
       required this.text,
-      required final List<UserID> likedByIDs,
-      required final List<CommentID> replyIDs,
       this.replyToID,
-      this.modifiedAt})
-      : _likedByIDs = likedByIDs,
-        _replyIDs = replyIDs;
-
-  factory _$_Comment.fromJson(Map<String, dynamic> json) =>
-      _$$_CommentFromJson(json);
+      this.modifiedAt});
 
   @override
   final CommentID id;
@@ -275,22 +237,6 @@ class _$_Comment implements _Comment {
   final DateTime createdAt;
   @override
   final String text;
-  final List<UserID> _likedByIDs;
-  @override
-  List<UserID> get likedByIDs {
-    if (_likedByIDs is EqualUnmodifiableListView) return _likedByIDs;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_likedByIDs);
-  }
-
-  final List<CommentID> _replyIDs;
-  @override
-  List<CommentID> get replyIDs {
-    if (_replyIDs is EqualUnmodifiableListView) return _replyIDs;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_replyIDs);
-  }
-
   @override
   final CommentID? replyToID;
   @override
@@ -298,7 +244,7 @@ class _$_Comment implements _Comment {
 
   @override
   String toString() {
-    return 'Comment(id: $id, authorID: $authorID, postID: $postID, createdAt: $createdAt, text: $text, likedByIDs: $likedByIDs, replyIDs: $replyIDs, replyToID: $replyToID, modifiedAt: $modifiedAt)';
+    return 'Comment(id: $id, authorID: $authorID, postID: $postID, createdAt: $createdAt, text: $text, replyToID: $replyToID, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -313,41 +259,21 @@ class _$_Comment implements _Comment {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.text, text) || other.text == text) &&
-            const DeepCollectionEquality()
-                .equals(other._likedByIDs, _likedByIDs) &&
-            const DeepCollectionEquality().equals(other._replyIDs, _replyIDs) &&
             (identical(other.replyToID, replyToID) ||
                 other.replyToID == replyToID) &&
             (identical(other.modifiedAt, modifiedAt) ||
                 other.modifiedAt == modifiedAt));
   }
 
-  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      authorID,
-      postID,
-      createdAt,
-      text,
-      const DeepCollectionEquality().hash(_likedByIDs),
-      const DeepCollectionEquality().hash(_replyIDs),
-      replyToID,
-      modifiedAt);
+  int get hashCode => Object.hash(runtimeType, id, authorID, postID, createdAt,
+      text, replyToID, modifiedAt);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$_CommentCopyWith<_$_Comment> get copyWith =>
       __$$_CommentCopyWithImpl<_$_Comment>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_CommentToJson(
-      this,
-    );
-  }
 }
 
 abstract class _Comment implements Comment {
@@ -357,12 +283,8 @@ abstract class _Comment implements Comment {
       required final PostID postID,
       required final DateTime createdAt,
       required final String text,
-      required final List<UserID> likedByIDs,
-      required final List<CommentID> replyIDs,
       final CommentID? replyToID,
       final DateTime? modifiedAt}) = _$_Comment;
-
-  factory _Comment.fromJson(Map<String, dynamic> json) = _$_Comment.fromJson;
 
   @override
   CommentID get id;
@@ -374,10 +296,6 @@ abstract class _Comment implements Comment {
   DateTime get createdAt;
   @override
   String get text;
-  @override
-  List<UserID> get likedByIDs;
-  @override
-  List<CommentID> get replyIDs;
   @override
   CommentID? get replyToID;
   @override

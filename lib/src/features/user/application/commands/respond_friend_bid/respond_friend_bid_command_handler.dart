@@ -7,6 +7,8 @@ import 'package:mediator/mediator.dart';
 
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/exceptions.dart';
+import '../../../../common/application/mapper_dto/to_user_info_vm.dart';
+import '../../../../common/application/mapper_dto/to_user_vm.dart';
 import '../../common/common.dart';
 import '../../exceptions/exceptions.dart';
 import '../../view_models/user_info_vm/user_info_vm.dart';
@@ -18,13 +20,16 @@ class RespondFriendBidCommandHandler extends RequestHandler<
   const RespondFriendBidCommandHandler({
     required EndUserRepository endUserRepository,
     required EndUserActivityRepository endUserActivityRepository,
+    required PostRepository postRepository,
     required Mapster mapster,
   })  : _endUserRepository = endUserRepository,
         _endUserActivityRepository = endUserActivityRepository,
+        _postRepository = postRepository,
         _mapster = mapster;
 
   final EndUserRepository _endUserRepository;
   final EndUserActivityRepository _endUserActivityRepository;
+  final PostRepository _postRepository;
   final Mapster _mapster;
 
   @override
@@ -91,18 +96,45 @@ class RespondFriendBidCommandHandler extends RequestHandler<
 
     final onlineStatus =
         await _endUserActivityRepository.get(request.respondToUserID);
+    final avatarsAmount =
+        await _endUserRepository.getAvatarsAmount(id: request.respondToUserID);
+    final avatar =
+        await _endUserRepository.getAvatar(id: request.respondToUserID);
 
+    final friendsAmount = await _endUserRepository.getFriendsAmount(
+      userID: request.respondToUserID,
+    );
+    final subscribersAmount = await _endUserRepository.getSubscribersAmount(
+      userID: request.respondToUserID,
+    );
+    final postsAmount =
+        await _postRepository.getUserPostsAmount(userID: request.userID);
+
+    final amIFriend = request.accept;
+    final amISubscriber = false;
+    final areTheySubscribedToMe = !request.accept;
     final didISentFriendBid = false;
     final haveIFriendBidFromThisUser = false;
 
     return right(
       UserInfoResult(
-        userInfo: _mapster.map5(
+        userInfo: _mapster.map2(
           updatedOtherUser,
-          request.userID,
-          didISentFriendBid,
-          haveIFriendBidFromThisUser,
-          onlineStatus,
+          ToUserInfoVM(
+            toUserVM: ToUserVM(
+              onlineStatus: onlineStatus,
+              avatarsAmount: avatarsAmount,
+              avatarUrl: avatar,
+            ),
+            friendsAmount: friendsAmount,
+            subscribersAmount: subscribersAmount,
+            postsAmount: postsAmount,
+            amIFriend: amIFriend,
+            amISubscriber: amISubscriber,
+            areTheySubscribedToMe: areTheySubscribedToMe,
+            didISentFriendBid: didISentFriendBid,
+            haveIFriendBidFromThisUser: haveIFriendBidFromThisUser,
+          ),
           To<UserInfoVM>(),
         ),
       ),

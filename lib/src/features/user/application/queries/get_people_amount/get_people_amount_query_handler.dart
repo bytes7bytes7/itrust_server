@@ -36,12 +36,20 @@ class GetPeopleAmountQueryHandler extends RequestHandler<GetPeopleAmountQuery,
     final endUsersAmount = await _endUserRepository.getAmountOfUsers();
     final staffUsersAmount = await _staffUserRepository.getAmountOfUsers();
 
+    final friendsAmount =
+        await _endUserRepository.getFriendsAmount(userID: request.userID);
+
+    final subscribersAmount =
+        await _endUserRepository.getSubscribersAmount(userID: request.userID);
+    final subscriptionsAmount =
+        await _endUserRepository.getSubscriptionsAmount(userID: request.userID);
+
     return right(
       PeopleAmountResult(
         allUsersAmount: endUsersAmount + staffUsersAmount,
-        friendsAmount: user.friends.length,
-        subscribersAmount: user.subscribers.length,
-        subscriptionsAmount: user.subscriptions.length,
+        friendsAmount: friendsAmount,
+        subscribersAmount: subscribersAmount,
+        subscriptionsAmount: subscriptionsAmount,
       ),
     );
   }

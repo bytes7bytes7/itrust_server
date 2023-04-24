@@ -1,11 +1,11 @@
 import 'package:mapster/mapster.dart';
 
+import '../../application/mapper_dto/mapper_dto.dart';
 import '../../application/view_models/comment_vm/comment_vm.dart';
 import '../../domain/entities/entities.dart';
-import '../../domain/value_objects/value_objects.dart';
 
 class CommentToCommentVMMapper
-    extends TwoSourcesMapper<Comment, UserID, CommentVM> {
+    extends TwoSourcesMapper<Comment, ToCommentVM, CommentVM> {
   CommentToCommentVMMapper(super.input);
 
   @override
@@ -16,9 +16,9 @@ class CommentToCommentVMMapper
       postID: _comment.postID,
       createdAt: _comment.createdAt,
       text: _comment.text,
-      likedByMe: _comment.likedByIDs.contains(_myID),
-      likesAmount: _comment.likedByIDs.length,
-      repliesAmount: _comment.replyIDs.length,
+      likedByMe: _dto.likedByMe,
+      likesAmount: _dto.likesAmount,
+      repliesAmount: _dto.repliesAmount,
       replyToID: _comment.replyToID,
       modifiedAt: _comment.modifiedAt,
     );
@@ -26,5 +26,5 @@ class CommentToCommentVMMapper
 
   Comment get _comment => source1;
 
-  UserID get _myID => source2;
+  ToCommentVM get _dto => source2;
 }

@@ -11,9 +11,17 @@ abstract class EndUserRepository {
 
   Future<int> getAmountOfUsers();
 
+  Future<int> getAvatarsAmount({required UserID id});
+
+  Future<String?> getAvatar({required UserID id});
+
   Future<List<EndUser>> getUsersByFilter({
     required int limit,
     UserID? startAfter,
+  });
+
+  Future<int> getFriendsAmount({
+    required UserID userID,
   });
 
   Future<List<EndUser>> getFriendsByFilter({
@@ -22,10 +30,18 @@ abstract class EndUserRepository {
     UserID? startAfter,
   });
 
+  Future<int> getSubscribersAmount({
+    required UserID userID,
+  });
+
   Future<List<EndUser>> getSubscribersByFilter({
     required UserID subscribersOf,
     required int limit,
     UserID? startAfter,
+  });
+
+  Future<int> getSubscriptionsAmount({
+    required UserID userID,
   });
 
   Future<List<EndUser>> getSubscriptionsByFilter({
@@ -47,6 +63,14 @@ abstract class EndUserRepository {
   Future<bool> hasBidToUser({
     required UserID from,
     required UserID to,
+  });
+
+  Future<int> getFriendBidsToUserAmount({
+    required UserID userID,
+  });
+
+  Future<int> getFriendBidsFromUserAmount({
+    required UserID userID,
   });
 
   Future<List<EndUser>> getUsersWithBidsToUserWithFilter({

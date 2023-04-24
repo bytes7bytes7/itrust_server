@@ -14,85 +14,32 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-User _$UserFromJson(Map<String, dynamic> json) {
-  switch (json['type']) {
-    case 'end':
-      return EndUser.fromJson(json);
-    case 'staff':
-      return StaffUser.fromJson(json);
-
-    default:
-      throw CheckedFromJsonException(
-          json, 'type', 'User', 'Invalid union type "${json['type']}"!');
-  }
-}
-
 /// @nodoc
 mixin _$User {
   UserID get id => throw _privateConstructorUsedError;
-  List<String> get avatarUrls => throw _privateConstructorUsedError;
   String? get nick => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            List<UserID> friends,
-            List<UserID> subscribers,
-            List<UserID> subscriptions,
-            List<PostID> posts,
-            List<UserID> myFriendBids,
-            List<UserID> friendsBidsToMe,
-            String? lastName,
-            String? nick)
+    required TResult Function(UserID id, String email, String firstName,
+            String? lastName, String? nick)
         end,
-    required TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)
-        staff,
+    required TResult Function(UserID id, String name, String? nick) staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            List<UserID> friends,
-            List<UserID> subscribers,
-            List<UserID> subscriptions,
-            List<PostID> posts,
-            List<UserID> myFriendBids,
-            List<UserID> friendsBidsToMe,
-            String? lastName,
-            String? nick)?
+    TResult? Function(UserID id, String email, String firstName,
+            String? lastName, String? nick)?
         end,
-    TResult? Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
-        staff,
+    TResult? Function(UserID id, String name, String? nick)? staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            List<UserID> friends,
-            List<UserID> subscribers,
-            List<UserID> subscriptions,
-            List<PostID> posts,
-            List<UserID> myFriendBids,
-            List<UserID> friendsBidsToMe,
-            String? lastName,
-            String? nick)?
+    TResult Function(UserID id, String email, String firstName,
+            String? lastName, String? nick)?
         end,
-    TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
-        staff,
+    TResult Function(UserID id, String name, String? nick)? staff,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -115,7 +62,7 @@ mixin _$User {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
 }
@@ -125,7 +72,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({UserID id, List<String> avatarUrls, String? nick});
+  $Res call({UserID id, String? nick});
 
   $UserIDCopyWith<$Res> get id;
 }
@@ -144,7 +91,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @override
   $Res call({
     Object? id = null,
-    Object? avatarUrls = null,
     Object? nick = freezed,
   }) {
     return _then(_value.copyWith(
@@ -152,10 +98,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UserID,
-      avatarUrls: null == avatarUrls
-          ? _value.avatarUrls
-          : avatarUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       nick: freezed == nick
           ? _value.nick
           : nick // ignore: cast_nullable_to_non_nullable
@@ -182,13 +124,6 @@ abstract class _$$EndUserCopyWith<$Res> implements $UserCopyWith<$Res> {
       {UserID id,
       String email,
       String firstName,
-      List<String> avatarUrls,
-      List<UserID> friends,
-      List<UserID> subscribers,
-      List<UserID> subscriptions,
-      List<PostID> posts,
-      List<UserID> myFriendBids,
-      List<UserID> friendsBidsToMe,
       String? lastName,
       String? nick});
 
@@ -208,13 +143,6 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
     Object? id = null,
     Object? email = null,
     Object? firstName = null,
-    Object? avatarUrls = null,
-    Object? friends = null,
-    Object? subscribers = null,
-    Object? subscriptions = null,
-    Object? posts = null,
-    Object? myFriendBids = null,
-    Object? friendsBidsToMe = null,
     Object? lastName = freezed,
     Object? nick = freezed,
   }) {
@@ -231,34 +159,6 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      avatarUrls: null == avatarUrls
-          ? _value._avatarUrls
-          : avatarUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      friends: null == friends
-          ? _value._friends
-          : friends // ignore: cast_nullable_to_non_nullable
-              as List<UserID>,
-      subscribers: null == subscribers
-          ? _value._subscribers
-          : subscribers // ignore: cast_nullable_to_non_nullable
-              as List<UserID>,
-      subscriptions: null == subscriptions
-          ? _value._subscriptions
-          : subscriptions // ignore: cast_nullable_to_non_nullable
-              as List<UserID>,
-      posts: null == posts
-          ? _value._posts
-          : posts // ignore: cast_nullable_to_non_nullable
-              as List<PostID>,
-      myFriendBids: null == myFriendBids
-          ? _value._myFriendBids
-          : myFriendBids // ignore: cast_nullable_to_non_nullable
-              as List<UserID>,
-      friendsBidsToMe: null == friendsBidsToMe
-          ? _value._friendsBidsToMe
-          : friendsBidsToMe // ignore: cast_nullable_to_non_nullable
-              as List<UserID>,
       lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
@@ -272,33 +172,14 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$EndUser implements EndUser {
   const _$EndUser(
       {required this.id,
       required this.email,
       required this.firstName,
-      required final List<String> avatarUrls,
-      required final List<UserID> friends,
-      required final List<UserID> subscribers,
-      required final List<UserID> subscriptions,
-      required final List<PostID> posts,
-      required final List<UserID> myFriendBids,
-      required final List<UserID> friendsBidsToMe,
       this.lastName,
-      this.nick,
-      final String? $type})
-      : _avatarUrls = avatarUrls,
-        _friends = friends,
-        _subscribers = subscribers,
-        _subscriptions = subscriptions,
-        _posts = posts,
-        _myFriendBids = myFriendBids,
-        _friendsBidsToMe = friendsBidsToMe,
-        $type = $type ?? 'end';
-
-  factory _$EndUser.fromJson(Map<String, dynamic> json) =>
-      _$$EndUserFromJson(json);
+      this.nick});
 
   @override
   final UserID id;
@@ -306,73 +187,14 @@ class _$EndUser implements EndUser {
   final String email;
   @override
   final String firstName;
-  final List<String> _avatarUrls;
-  @override
-  List<String> get avatarUrls {
-    if (_avatarUrls is EqualUnmodifiableListView) return _avatarUrls;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_avatarUrls);
-  }
-
-  final List<UserID> _friends;
-  @override
-  List<UserID> get friends {
-    if (_friends is EqualUnmodifiableListView) return _friends;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_friends);
-  }
-
-  final List<UserID> _subscribers;
-  @override
-  List<UserID> get subscribers {
-    if (_subscribers is EqualUnmodifiableListView) return _subscribers;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_subscribers);
-  }
-
-  final List<UserID> _subscriptions;
-  @override
-  List<UserID> get subscriptions {
-    if (_subscriptions is EqualUnmodifiableListView) return _subscriptions;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_subscriptions);
-  }
-
-  final List<PostID> _posts;
-  @override
-  List<PostID> get posts {
-    if (_posts is EqualUnmodifiableListView) return _posts;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_posts);
-  }
-
-  final List<UserID> _myFriendBids;
-  @override
-  List<UserID> get myFriendBids {
-    if (_myFriendBids is EqualUnmodifiableListView) return _myFriendBids;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_myFriendBids);
-  }
-
-  final List<UserID> _friendsBidsToMe;
-  @override
-  List<UserID> get friendsBidsToMe {
-    if (_friendsBidsToMe is EqualUnmodifiableListView) return _friendsBidsToMe;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_friendsBidsToMe);
-  }
-
   @override
   final String? lastName;
   @override
   final String? nick;
 
-  @JsonKey(name: 'type')
-  final String $type;
-
   @override
   String toString() {
-    return 'User.end(id: $id, email: $email, firstName: $firstName, avatarUrls: $avatarUrls, friends: $friends, subscribers: $subscribers, subscriptions: $subscriptions, posts: $posts, myFriendBids: $myFriendBids, friendsBidsToMe: $friendsBidsToMe, lastName: $lastName, nick: $nick)';
+    return 'User.end(id: $id, email: $email, firstName: $firstName, lastName: $lastName, nick: $nick)';
   }
 
   @override
@@ -384,39 +206,14 @@ class _$EndUser implements EndUser {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
-            const DeepCollectionEquality()
-                .equals(other._avatarUrls, _avatarUrls) &&
-            const DeepCollectionEquality().equals(other._friends, _friends) &&
-            const DeepCollectionEquality()
-                .equals(other._subscribers, _subscribers) &&
-            const DeepCollectionEquality()
-                .equals(other._subscriptions, _subscriptions) &&
-            const DeepCollectionEquality().equals(other._posts, _posts) &&
-            const DeepCollectionEquality()
-                .equals(other._myFriendBids, _myFriendBids) &&
-            const DeepCollectionEquality()
-                .equals(other._friendsBidsToMe, _friendsBidsToMe) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
             (identical(other.nick, nick) || other.nick == nick));
   }
 
-  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      email,
-      firstName,
-      const DeepCollectionEquality().hash(_avatarUrls),
-      const DeepCollectionEquality().hash(_friends),
-      const DeepCollectionEquality().hash(_subscribers),
-      const DeepCollectionEquality().hash(_subscriptions),
-      const DeepCollectionEquality().hash(_posts),
-      const DeepCollectionEquality().hash(_myFriendBids),
-      const DeepCollectionEquality().hash(_friendsBidsToMe),
-      lastName,
-      nick);
+  int get hashCode =>
+      Object.hash(runtimeType, id, email, firstName, lastName, nick);
 
   @JsonKey(ignore: true)
   @override
@@ -427,78 +224,36 @@ class _$EndUser implements EndUser {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            List<UserID> friends,
-            List<UserID> subscribers,
-            List<UserID> subscriptions,
-            List<PostID> posts,
-            List<UserID> myFriendBids,
-            List<UserID> friendsBidsToMe,
-            String? lastName,
-            String? nick)
+    required TResult Function(UserID id, String email, String firstName,
+            String? lastName, String? nick)
         end,
-    required TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)
-        staff,
+    required TResult Function(UserID id, String name, String? nick) staff,
   }) {
-    return end(id, email, firstName, avatarUrls, friends, subscribers,
-        subscriptions, posts, myFriendBids, friendsBidsToMe, lastName, nick);
+    return end(id, email, firstName, lastName, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            List<UserID> friends,
-            List<UserID> subscribers,
-            List<UserID> subscriptions,
-            List<PostID> posts,
-            List<UserID> myFriendBids,
-            List<UserID> friendsBidsToMe,
-            String? lastName,
-            String? nick)?
+    TResult? Function(UserID id, String email, String firstName,
+            String? lastName, String? nick)?
         end,
-    TResult? Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
-        staff,
+    TResult? Function(UserID id, String name, String? nick)? staff,
   }) {
-    return end?.call(id, email, firstName, avatarUrls, friends, subscribers,
-        subscriptions, posts, myFriendBids, friendsBidsToMe, lastName, nick);
+    return end?.call(id, email, firstName, lastName, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            List<UserID> friends,
-            List<UserID> subscribers,
-            List<UserID> subscriptions,
-            List<PostID> posts,
-            List<UserID> myFriendBids,
-            List<UserID> friendsBidsToMe,
-            String? lastName,
-            String? nick)?
+    TResult Function(UserID id, String email, String firstName,
+            String? lastName, String? nick)?
         end,
-    TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
-        staff,
+    TResult Function(UserID id, String name, String? nick)? staff,
     required TResult orElse(),
   }) {
     if (end != null) {
-      return end(id, email, firstName, avatarUrls, friends, subscribers,
-          subscriptions, posts, myFriendBids, friendsBidsToMe, lastName, nick);
+      return end(id, email, firstName, lastName, nick);
     }
     return orElse();
   }
@@ -533,13 +288,6 @@ class _$EndUser implements EndUser {
     }
     return orElse();
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$EndUserToJson(
-      this,
-    );
-  }
 }
 
 abstract class EndUser implements User {
@@ -547,30 +295,13 @@ abstract class EndUser implements User {
       {required final UserID id,
       required final String email,
       required final String firstName,
-      required final List<String> avatarUrls,
-      required final List<UserID> friends,
-      required final List<UserID> subscribers,
-      required final List<UserID> subscriptions,
-      required final List<PostID> posts,
-      required final List<UserID> myFriendBids,
-      required final List<UserID> friendsBidsToMe,
       final String? lastName,
       final String? nick}) = _$EndUser;
-
-  factory EndUser.fromJson(Map<String, dynamic> json) = _$EndUser.fromJson;
 
   @override
   UserID get id;
   String get email;
   String get firstName;
-  @override
-  List<String> get avatarUrls;
-  List<UserID> get friends;
-  List<UserID> get subscribers;
-  List<UserID> get subscriptions;
-  List<PostID> get posts;
-  List<UserID> get myFriendBids;
-  List<UserID> get friendsBidsToMe;
   String? get lastName;
   @override
   String? get nick;
@@ -587,7 +318,7 @@ abstract class _$$StaffUserCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$StaffUserCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({UserID id, String name, List<String> avatarUrls, String? nick});
+  $Res call({UserID id, String name, String? nick});
 
   @override
   $UserIDCopyWith<$Res> get id;
@@ -606,7 +337,6 @@ class __$$StaffUserCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? avatarUrls = null,
     Object? nick = freezed,
   }) {
     return _then(_$StaffUser(
@@ -618,10 +348,6 @@ class __$$StaffUserCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      avatarUrls: null == avatarUrls
-          ? _value._avatarUrls
-          : avatarUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       nick: freezed == nick
           ? _value.nick
           : nick // ignore: cast_nullable_to_non_nullable
@@ -631,41 +357,20 @@ class __$$StaffUserCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$StaffUser implements StaffUser {
-  const _$StaffUser(
-      {required this.id,
-      required this.name,
-      required final List<String> avatarUrls,
-      this.nick,
-      final String? $type})
-      : _avatarUrls = avatarUrls,
-        $type = $type ?? 'staff';
 
-  factory _$StaffUser.fromJson(Map<String, dynamic> json) =>
-      _$$StaffUserFromJson(json);
+class _$StaffUser implements StaffUser {
+  const _$StaffUser({required this.id, required this.name, this.nick});
 
   @override
   final UserID id;
   @override
   final String name;
-  final List<String> _avatarUrls;
-  @override
-  List<String> get avatarUrls {
-    if (_avatarUrls is EqualUnmodifiableListView) return _avatarUrls;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_avatarUrls);
-  }
-
   @override
   final String? nick;
 
-  @JsonKey(name: 'type')
-  final String $type;
-
   @override
   String toString() {
-    return 'User.staff(id: $id, name: $name, avatarUrls: $avatarUrls, nick: $nick)';
+    return 'User.staff(id: $id, name: $name, nick: $nick)';
   }
 
   @override
@@ -675,15 +380,11 @@ class _$StaffUser implements StaffUser {
             other is _$StaffUser &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality()
-                .equals(other._avatarUrls, _avatarUrls) &&
             (identical(other.nick, nick) || other.nick == nick));
   }
 
-  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name,
-      const DeepCollectionEquality().hash(_avatarUrls), nick);
+  int get hashCode => Object.hash(runtimeType, id, name, nick);
 
   @JsonKey(ignore: true)
   @override
@@ -694,75 +395,36 @@ class _$StaffUser implements StaffUser {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            List<UserID> friends,
-            List<UserID> subscribers,
-            List<UserID> subscriptions,
-            List<PostID> posts,
-            List<UserID> myFriendBids,
-            List<UserID> friendsBidsToMe,
-            String? lastName,
-            String? nick)
+    required TResult Function(UserID id, String email, String firstName,
+            String? lastName, String? nick)
         end,
-    required TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)
-        staff,
+    required TResult Function(UserID id, String name, String? nick) staff,
   }) {
-    return staff(id, name, avatarUrls, nick);
+    return staff(id, name, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            List<UserID> friends,
-            List<UserID> subscribers,
-            List<UserID> subscriptions,
-            List<PostID> posts,
-            List<UserID> myFriendBids,
-            List<UserID> friendsBidsToMe,
-            String? lastName,
-            String? nick)?
+    TResult? Function(UserID id, String email, String firstName,
+            String? lastName, String? nick)?
         end,
-    TResult? Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
-        staff,
+    TResult? Function(UserID id, String name, String? nick)? staff,
   }) {
-    return staff?.call(id, name, avatarUrls, nick);
+    return staff?.call(id, name, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            UserID id,
-            String email,
-            String firstName,
-            List<String> avatarUrls,
-            List<UserID> friends,
-            List<UserID> subscribers,
-            List<UserID> subscriptions,
-            List<PostID> posts,
-            List<UserID> myFriendBids,
-            List<UserID> friendsBidsToMe,
-            String? lastName,
-            String? nick)?
+    TResult Function(UserID id, String email, String firstName,
+            String? lastName, String? nick)?
         end,
-    TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
-        staff,
+    TResult Function(UserID id, String name, String? nick)? staff,
     required TResult orElse(),
   }) {
     if (staff != null) {
-      return staff(id, name, avatarUrls, nick);
+      return staff(id, name, nick);
     }
     return orElse();
   }
@@ -797,29 +459,17 @@ class _$StaffUser implements StaffUser {
     }
     return orElse();
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$StaffUserToJson(
-      this,
-    );
-  }
 }
 
 abstract class StaffUser implements User {
   const factory StaffUser(
       {required final UserID id,
       required final String name,
-      required final List<String> avatarUrls,
       final String? nick}) = _$StaffUser;
-
-  factory StaffUser.fromJson(Map<String, dynamic> json) = _$StaffUser.fromJson;
 
   @override
   UserID get id;
   String get name;
-  @override
-  List<String> get avatarUrls;
   @override
   String? get nick;
   @override

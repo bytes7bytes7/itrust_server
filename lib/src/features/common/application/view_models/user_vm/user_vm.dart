@@ -15,9 +15,10 @@ class UserVM with _$UserVM {
     required UserID id,
     required String email,
     required String firstName,
-    required List<String> avatarUrls,
+    required int avatarsAmount,
     required bool isOnline,
     int? lastSeenAtMSSinceEpoch,
+    String? avatarUrl,
     String? lastName,
     String? nick,
   }) = EndUserVM;
@@ -25,7 +26,8 @@ class UserVM with _$UserVM {
   const factory UserVM.staff({
     required UserID id,
     required String name,
-    required List<String> avatarUrls,
+    required int avatarsAmount,
+    String? avatarUrl,
     String? nick,
   }) = StaffUserVM;
 

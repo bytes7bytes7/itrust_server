@@ -1,11 +1,11 @@
 import 'package:mapster/mapster.dart';
 
-import '../../../../repositories/interfaces/end_user_activity_repository.dart';
+import '../../application/mapper_dto/mapper_dto.dart';
 import '../../application/view_models/user_vm/user_vm.dart';
 import '../../domain/domain.dart';
 
 class EndUserToEndUserVMMapper
-    extends TwoSourcesMapper<EndUser, OnlineStatus, EndUserVM> {
+    extends TwoSourcesMapper<EndUser, ToUserVM, EndUserVM> {
   EndUserToEndUserVMMapper(super.input);
 
   @override
@@ -14,15 +14,16 @@ class EndUserToEndUserVMMapper
       id: _user.id,
       email: _user.email,
       firstName: _user.firstName,
-      avatarUrls: _user.avatarUrls,
       lastName: _user.lastName,
+      avatarsAmount: _dto.avatarsAmount,
       nick: _user.nick,
-      isOnline: _onlineStatus.isOnline,
-      lastSeenAtMSSinceEpoch: _onlineStatus.lastSeenAtMSSinceEpoch,
+      isOnline: _dto.onlineStatus.isOnline,
+      avatarUrl: _dto.avatarUrl,
+      lastSeenAtMSSinceEpoch: _dto.onlineStatus.lastSeenAtMSSinceEpoch,
     );
   }
 
   EndUser get _user => source1;
 
-  OnlineStatus get _onlineStatus => source2;
+  ToUserVM get _dto => source2;
 }

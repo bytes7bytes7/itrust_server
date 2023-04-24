@@ -12,12 +12,16 @@ class CommonMapsterRegistrar {
   @postConstruct
   void register() {
     _mapster
-      ..register(MapperMeta.three(PostToPostVMMapper.new))
+      ..register(MapperMeta.two(PostToPostVMMapper.new))
       ..register(MapperMeta.one(MediaToMediaVMMapper.new))
       ..register(MapperMeta.two(CommentToCommentVMMapper.new))
-      ..register(MapperMeta.two(UserToUserVMMapper.new))
+      ..register(
+        MapperMeta.two(
+          (input) => UserToUserVMMapper(input, mapster: _mapster),
+        ),
+      )
       ..register(MapperMeta.two(EndUserToEndUserVMMapper.new))
-      ..register(MapperMeta.one(StaffUserToStaffUserVMMapper.new))
+      ..register(MapperMeta.two(StaffUserToStaffUserVMMapper.new))
       ..register(MapperMeta.one(PostsResultToPostsResponseMapper.new));
   }
 }

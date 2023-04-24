@@ -9,7 +9,7 @@ part of 'change_personal_info_response.dart';
 ChangePersonalInfoResponse _$ChangePersonalInfoResponseFromJson(
         Map<String, dynamic> json) =>
     ChangePersonalInfoResponse(
-      user: EndUser.fromJson(json['user'] as Map<String, dynamic>),
+      user: EndUserVM.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ChangePersonalInfoResponseToJson(

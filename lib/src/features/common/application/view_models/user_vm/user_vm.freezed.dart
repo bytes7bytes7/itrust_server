@@ -30,7 +30,8 @@ UserVM _$UserVMFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserVM {
   UserID get id => throw _privateConstructorUsedError;
-  List<String> get avatarUrls => throw _privateConstructorUsedError;
+  int get avatarsAmount => throw _privateConstructorUsedError;
+  String? get avatarUrl => throw _privateConstructorUsedError;
   String? get nick => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -38,14 +39,15 @@ mixin _$UserVM {
             UserID id,
             String email,
             String firstName,
-            List<String> avatarUrls,
+            int avatarsAmount,
             bool isOnline,
             int? lastSeenAtMSSinceEpoch,
+            String? avatarUrl,
             String? lastName,
             String? nick)
         end,
-    required TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)
+    required TResult Function(UserID id, String name, int avatarsAmount,
+            String? avatarUrl, String? nick)
         staff,
   }) =>
       throw _privateConstructorUsedError;
@@ -55,14 +57,15 @@ mixin _$UserVM {
             UserID id,
             String email,
             String firstName,
-            List<String> avatarUrls,
+            int avatarsAmount,
             bool isOnline,
             int? lastSeenAtMSSinceEpoch,
+            String? avatarUrl,
             String? lastName,
             String? nick)?
         end,
-    TResult? Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
+    TResult? Function(UserID id, String name, int avatarsAmount,
+            String? avatarUrl, String? nick)?
         staff,
   }) =>
       throw _privateConstructorUsedError;
@@ -72,14 +75,15 @@ mixin _$UserVM {
             UserID id,
             String email,
             String firstName,
-            List<String> avatarUrls,
+            int avatarsAmount,
             bool isOnline,
             int? lastSeenAtMSSinceEpoch,
+            String? avatarUrl,
             String? lastName,
             String? nick)?
         end,
-    TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
+    TResult Function(UserID id, String name, int avatarsAmount,
+            String? avatarUrl, String? nick)?
         staff,
     required TResult orElse(),
   }) =>
@@ -113,7 +117,7 @@ abstract class $UserVMCopyWith<$Res> {
   factory $UserVMCopyWith(UserVM value, $Res Function(UserVM) then) =
       _$UserVMCopyWithImpl<$Res, UserVM>;
   @useResult
-  $Res call({UserID id, List<String> avatarUrls, String? nick});
+  $Res call({UserID id, int avatarsAmount, String? avatarUrl, String? nick});
 
   $UserIDCopyWith<$Res> get id;
 }
@@ -132,7 +136,8 @@ class _$UserVMCopyWithImpl<$Res, $Val extends UserVM>
   @override
   $Res call({
     Object? id = null,
-    Object? avatarUrls = null,
+    Object? avatarsAmount = null,
+    Object? avatarUrl = freezed,
     Object? nick = freezed,
   }) {
     return _then(_value.copyWith(
@@ -140,10 +145,14 @@ class _$UserVMCopyWithImpl<$Res, $Val extends UserVM>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UserID,
-      avatarUrls: null == avatarUrls
-          ? _value.avatarUrls
-          : avatarUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      avatarsAmount: null == avatarsAmount
+          ? _value.avatarsAmount
+          : avatarsAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      avatarUrl: freezed == avatarUrl
+          ? _value.avatarUrl
+          : avatarUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       nick: freezed == nick
           ? _value.nick
           : nick // ignore: cast_nullable_to_non_nullable
@@ -171,9 +180,10 @@ abstract class _$$EndUserVMCopyWith<$Res> implements $UserVMCopyWith<$Res> {
       {UserID id,
       String email,
       String firstName,
-      List<String> avatarUrls,
+      int avatarsAmount,
       bool isOnline,
       int? lastSeenAtMSSinceEpoch,
+      String? avatarUrl,
       String? lastName,
       String? nick});
 
@@ -195,9 +205,10 @@ class __$$EndUserVMCopyWithImpl<$Res>
     Object? id = null,
     Object? email = null,
     Object? firstName = null,
-    Object? avatarUrls = null,
+    Object? avatarsAmount = null,
     Object? isOnline = null,
     Object? lastSeenAtMSSinceEpoch = freezed,
+    Object? avatarUrl = freezed,
     Object? lastName = freezed,
     Object? nick = freezed,
   }) {
@@ -214,10 +225,10 @@ class __$$EndUserVMCopyWithImpl<$Res>
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      avatarUrls: null == avatarUrls
-          ? _value._avatarUrls
-          : avatarUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      avatarsAmount: null == avatarsAmount
+          ? _value.avatarsAmount
+          : avatarsAmount // ignore: cast_nullable_to_non_nullable
+              as int,
       isOnline: null == isOnline
           ? _value.isOnline
           : isOnline // ignore: cast_nullable_to_non_nullable
@@ -226,6 +237,10 @@ class __$$EndUserVMCopyWithImpl<$Res>
           ? _value.lastSeenAtMSSinceEpoch
           : lastSeenAtMSSinceEpoch // ignore: cast_nullable_to_non_nullable
               as int?,
+      avatarUrl: freezed == avatarUrl
+          ? _value.avatarUrl
+          : avatarUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
@@ -245,14 +260,14 @@ class _$EndUserVM implements EndUserVM {
       {required this.id,
       required this.email,
       required this.firstName,
-      required final List<String> avatarUrls,
+      required this.avatarsAmount,
       required this.isOnline,
       this.lastSeenAtMSSinceEpoch,
+      this.avatarUrl,
       this.lastName,
       this.nick,
       final String? $type})
-      : _avatarUrls = avatarUrls,
-        $type = $type ?? 'end';
+      : $type = $type ?? 'end';
 
   factory _$EndUserVM.fromJson(Map<String, dynamic> json) =>
       _$$EndUserVMFromJson(json);
@@ -263,18 +278,14 @@ class _$EndUserVM implements EndUserVM {
   final String email;
   @override
   final String firstName;
-  final List<String> _avatarUrls;
   @override
-  List<String> get avatarUrls {
-    if (_avatarUrls is EqualUnmodifiableListView) return _avatarUrls;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_avatarUrls);
-  }
-
+  final int avatarsAmount;
   @override
   final bool isOnline;
   @override
   final int? lastSeenAtMSSinceEpoch;
+  @override
+  final String? avatarUrl;
   @override
   final String? lastName;
   @override
@@ -285,7 +296,7 @@ class _$EndUserVM implements EndUserVM {
 
   @override
   String toString() {
-    return 'UserVM.end(id: $id, email: $email, firstName: $firstName, avatarUrls: $avatarUrls, isOnline: $isOnline, lastSeenAtMSSinceEpoch: $lastSeenAtMSSinceEpoch, lastName: $lastName, nick: $nick)';
+    return 'UserVM.end(id: $id, email: $email, firstName: $firstName, avatarsAmount: $avatarsAmount, isOnline: $isOnline, lastSeenAtMSSinceEpoch: $lastSeenAtMSSinceEpoch, avatarUrl: $avatarUrl, lastName: $lastName, nick: $nick)';
   }
 
   @override
@@ -297,12 +308,14 @@ class _$EndUserVM implements EndUserVM {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
-            const DeepCollectionEquality()
-                .equals(other._avatarUrls, _avatarUrls) &&
+            (identical(other.avatarsAmount, avatarsAmount) ||
+                other.avatarsAmount == avatarsAmount) &&
             (identical(other.isOnline, isOnline) ||
                 other.isOnline == isOnline) &&
             (identical(other.lastSeenAtMSSinceEpoch, lastSeenAtMSSinceEpoch) ||
                 other.lastSeenAtMSSinceEpoch == lastSeenAtMSSinceEpoch) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
             (identical(other.nick, nick) || other.nick == nick));
@@ -315,9 +328,10 @@ class _$EndUserVM implements EndUserVM {
       id,
       email,
       firstName,
-      const DeepCollectionEquality().hash(_avatarUrls),
+      avatarsAmount,
       isOnline,
       lastSeenAtMSSinceEpoch,
+      avatarUrl,
       lastName,
       nick);
 
@@ -334,18 +348,19 @@ class _$EndUserVM implements EndUserVM {
             UserID id,
             String email,
             String firstName,
-            List<String> avatarUrls,
+            int avatarsAmount,
             bool isOnline,
             int? lastSeenAtMSSinceEpoch,
+            String? avatarUrl,
             String? lastName,
             String? nick)
         end,
-    required TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)
+    required TResult Function(UserID id, String name, int avatarsAmount,
+            String? avatarUrl, String? nick)
         staff,
   }) {
-    return end(id, email, firstName, avatarUrls, isOnline,
-        lastSeenAtMSSinceEpoch, lastName, nick);
+    return end(id, email, firstName, avatarsAmount, isOnline,
+        lastSeenAtMSSinceEpoch, avatarUrl, lastName, nick);
   }
 
   @override
@@ -355,18 +370,19 @@ class _$EndUserVM implements EndUserVM {
             UserID id,
             String email,
             String firstName,
-            List<String> avatarUrls,
+            int avatarsAmount,
             bool isOnline,
             int? lastSeenAtMSSinceEpoch,
+            String? avatarUrl,
             String? lastName,
             String? nick)?
         end,
-    TResult? Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
+    TResult? Function(UserID id, String name, int avatarsAmount,
+            String? avatarUrl, String? nick)?
         staff,
   }) {
-    return end?.call(id, email, firstName, avatarUrls, isOnline,
-        lastSeenAtMSSinceEpoch, lastName, nick);
+    return end?.call(id, email, firstName, avatarsAmount, isOnline,
+        lastSeenAtMSSinceEpoch, avatarUrl, lastName, nick);
   }
 
   @override
@@ -376,20 +392,21 @@ class _$EndUserVM implements EndUserVM {
             UserID id,
             String email,
             String firstName,
-            List<String> avatarUrls,
+            int avatarsAmount,
             bool isOnline,
             int? lastSeenAtMSSinceEpoch,
+            String? avatarUrl,
             String? lastName,
             String? nick)?
         end,
-    TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
+    TResult Function(UserID id, String name, int avatarsAmount,
+            String? avatarUrl, String? nick)?
         staff,
     required TResult orElse(),
   }) {
     if (end != null) {
-      return end(id, email, firstName, avatarUrls, isOnline,
-          lastSeenAtMSSinceEpoch, lastName, nick);
+      return end(id, email, firstName, avatarsAmount, isOnline,
+          lastSeenAtMSSinceEpoch, avatarUrl, lastName, nick);
     }
     return orElse();
   }
@@ -438,9 +455,10 @@ abstract class EndUserVM implements UserVM {
       {required final UserID id,
       required final String email,
       required final String firstName,
-      required final List<String> avatarUrls,
+      required final int avatarsAmount,
       required final bool isOnline,
       final int? lastSeenAtMSSinceEpoch,
+      final String? avatarUrl,
       final String? lastName,
       final String? nick}) = _$EndUserVM;
 
@@ -451,9 +469,11 @@ abstract class EndUserVM implements UserVM {
   String get email;
   String get firstName;
   @override
-  List<String> get avatarUrls;
+  int get avatarsAmount;
   bool get isOnline;
   int? get lastSeenAtMSSinceEpoch;
+  @override
+  String? get avatarUrl;
   String? get lastName;
   @override
   String? get nick;
@@ -470,7 +490,12 @@ abstract class _$$StaffUserVMCopyWith<$Res> implements $UserVMCopyWith<$Res> {
       __$$StaffUserVMCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({UserID id, String name, List<String> avatarUrls, String? nick});
+  $Res call(
+      {UserID id,
+      String name,
+      int avatarsAmount,
+      String? avatarUrl,
+      String? nick});
 
   @override
   $UserIDCopyWith<$Res> get id;
@@ -489,7 +514,8 @@ class __$$StaffUserVMCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? avatarUrls = null,
+    Object? avatarsAmount = null,
+    Object? avatarUrl = freezed,
     Object? nick = freezed,
   }) {
     return _then(_$StaffUserVM(
@@ -501,10 +527,14 @@ class __$$StaffUserVMCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      avatarUrls: null == avatarUrls
-          ? _value._avatarUrls
-          : avatarUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      avatarsAmount: null == avatarsAmount
+          ? _value.avatarsAmount
+          : avatarsAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      avatarUrl: freezed == avatarUrl
+          ? _value.avatarUrl
+          : avatarUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       nick: freezed == nick
           ? _value.nick
           : nick // ignore: cast_nullable_to_non_nullable
@@ -519,11 +549,11 @@ class _$StaffUserVM implements StaffUserVM {
   const _$StaffUserVM(
       {required this.id,
       required this.name,
-      required final List<String> avatarUrls,
+      required this.avatarsAmount,
+      this.avatarUrl,
       this.nick,
       final String? $type})
-      : _avatarUrls = avatarUrls,
-        $type = $type ?? 'staff';
+      : $type = $type ?? 'staff';
 
   factory _$StaffUserVM.fromJson(Map<String, dynamic> json) =>
       _$$StaffUserVMFromJson(json);
@@ -532,14 +562,10 @@ class _$StaffUserVM implements StaffUserVM {
   final UserID id;
   @override
   final String name;
-  final List<String> _avatarUrls;
   @override
-  List<String> get avatarUrls {
-    if (_avatarUrls is EqualUnmodifiableListView) return _avatarUrls;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_avatarUrls);
-  }
-
+  final int avatarsAmount;
+  @override
+  final String? avatarUrl;
   @override
   final String? nick;
 
@@ -548,7 +574,7 @@ class _$StaffUserVM implements StaffUserVM {
 
   @override
   String toString() {
-    return 'UserVM.staff(id: $id, name: $name, avatarUrls: $avatarUrls, nick: $nick)';
+    return 'UserVM.staff(id: $id, name: $name, avatarsAmount: $avatarsAmount, avatarUrl: $avatarUrl, nick: $nick)';
   }
 
   @override
@@ -558,15 +584,17 @@ class _$StaffUserVM implements StaffUserVM {
             other is _$StaffUserVM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality()
-                .equals(other._avatarUrls, _avatarUrls) &&
+            (identical(other.avatarsAmount, avatarsAmount) ||
+                other.avatarsAmount == avatarsAmount) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl) &&
             (identical(other.nick, nick) || other.nick == nick));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name,
-      const DeepCollectionEquality().hash(_avatarUrls), nick);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, avatarsAmount, avatarUrl, nick);
 
   @JsonKey(ignore: true)
   @override
@@ -581,17 +609,18 @@ class _$StaffUserVM implements StaffUserVM {
             UserID id,
             String email,
             String firstName,
-            List<String> avatarUrls,
+            int avatarsAmount,
             bool isOnline,
             int? lastSeenAtMSSinceEpoch,
+            String? avatarUrl,
             String? lastName,
             String? nick)
         end,
-    required TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)
+    required TResult Function(UserID id, String name, int avatarsAmount,
+            String? avatarUrl, String? nick)
         staff,
   }) {
-    return staff(id, name, avatarUrls, nick);
+    return staff(id, name, avatarsAmount, avatarUrl, nick);
   }
 
   @override
@@ -601,17 +630,18 @@ class _$StaffUserVM implements StaffUserVM {
             UserID id,
             String email,
             String firstName,
-            List<String> avatarUrls,
+            int avatarsAmount,
             bool isOnline,
             int? lastSeenAtMSSinceEpoch,
+            String? avatarUrl,
             String? lastName,
             String? nick)?
         end,
-    TResult? Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
+    TResult? Function(UserID id, String name, int avatarsAmount,
+            String? avatarUrl, String? nick)?
         staff,
   }) {
-    return staff?.call(id, name, avatarUrls, nick);
+    return staff?.call(id, name, avatarsAmount, avatarUrl, nick);
   }
 
   @override
@@ -621,19 +651,20 @@ class _$StaffUserVM implements StaffUserVM {
             UserID id,
             String email,
             String firstName,
-            List<String> avatarUrls,
+            int avatarsAmount,
             bool isOnline,
             int? lastSeenAtMSSinceEpoch,
+            String? avatarUrl,
             String? lastName,
             String? nick)?
         end,
-    TResult Function(
-            UserID id, String name, List<String> avatarUrls, String? nick)?
+    TResult Function(UserID id, String name, int avatarsAmount,
+            String? avatarUrl, String? nick)?
         staff,
     required TResult orElse(),
   }) {
     if (staff != null) {
-      return staff(id, name, avatarUrls, nick);
+      return staff(id, name, avatarsAmount, avatarUrl, nick);
     }
     return orElse();
   }
@@ -681,7 +712,8 @@ abstract class StaffUserVM implements UserVM {
   const factory StaffUserVM(
       {required final UserID id,
       required final String name,
-      required final List<String> avatarUrls,
+      required final int avatarsAmount,
+      final String? avatarUrl,
       final String? nick}) = _$StaffUserVM;
 
   factory StaffUserVM.fromJson(Map<String, dynamic> json) =
@@ -691,7 +723,9 @@ abstract class StaffUserVM implements UserVM {
   UserID get id;
   String get name;
   @override
-  List<String> get avatarUrls;
+  int get avatarsAmount;
+  @override
+  String? get avatarUrl;
   @override
   String? get nick;
   @override
