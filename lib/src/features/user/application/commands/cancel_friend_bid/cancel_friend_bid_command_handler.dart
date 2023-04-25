@@ -36,7 +36,7 @@ class CancelFriendBidCommandHandler extends RequestHandler<
   FutureOr<Either<List<DetailedException>, UserInfoResult>> handle(
     CancelFriendBidCommand request,
   ) async {
-    if (request.cancelToUserID.isStaffUserID) {
+    if (request.cancelToUserID.isStaffID) {
       return left(
         [const CanNotDoThisToStaffUser()],
       );

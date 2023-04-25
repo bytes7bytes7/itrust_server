@@ -36,7 +36,7 @@ class SendFriendBidCommandHandler extends RequestHandler<SendFriendBidCommand,
   FutureOr<Either<List<DetailedException>, UserInfoResult>> handle(
     SendFriendBidCommand request,
   ) async {
-    if (request.sendToUserID.isStaffUserID) {
+    if (request.sendToUserID.isStaffID) {
       return left(
         [const CanNotDoThisToStaffUser()],
       );

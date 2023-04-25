@@ -40,7 +40,7 @@ class GetAllUsersQueryHandler extends RequestHandler<GetAllUsersQuery,
   ) async {
     final lastUserID = request.lastUserID;
     if (lastUserID != null) {
-      if (lastUserID.isStaffUserID) {
+      if (lastUserID.isStaffID) {
         final lastUser = await _staffUserRepository.getByID(id: lastUserID);
 
         if (lastUser == null) {
@@ -63,7 +63,7 @@ class GetAllUsersQueryHandler extends RequestHandler<GetAllUsersQuery,
 
     final staffUsers = await _staffUserRepository.getUsersByFilter(
       limit: _limit,
-      startAfter: lastUserID?.isStaffUserID == true ? lastUserID : null,
+      startAfter: lastUserID?.isStaffID == true ? lastUserID : null,
     );
 
     users.addAll(staffUsers);
@@ -100,7 +100,7 @@ class GetAllUsersQueryHandler extends RequestHandler<GetAllUsersQuery,
 
     final endUsers = await _endUserRepository.getUsersByFilter(
       limit: _limit - users.length,
-      startAfter: lastUserID?.isEndUserID == true ? lastUserID : null,
+      startAfter: lastUserID?.isEndID == true ? lastUserID : null,
     );
 
     users.addAll(endUsers);

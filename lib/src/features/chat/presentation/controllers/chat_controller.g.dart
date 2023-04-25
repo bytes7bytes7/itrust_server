@@ -13,5 +13,15 @@ Router _$ChatControllerRouter(ChatController service) {
     r'/',
     service.getChats,
   );
+  router.add(
+    'GET',
+    r'/listen',
+    service.listenChats,
+  );
+  router.add(
+    'POST',
+    r'/monologue',
+    service.createMonologue,
+  );
   return router;
 }

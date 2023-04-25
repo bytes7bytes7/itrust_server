@@ -30,7 +30,7 @@ class UserID with _$UserID {
 
   String get str => value;
 
-  bool get isEndUserID => value.startsWith(_endUserPrefix);
+  bool get isEndID => value.startsWith(_endUserPrefix);
 
-  bool get isStaffUserID => value.startsWith(_staffUserPrefix);
+  bool get isStaffID => value.startsWith(_staffUserPrefix);
 }

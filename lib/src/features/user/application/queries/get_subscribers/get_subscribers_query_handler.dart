@@ -47,7 +47,7 @@ class GetSubscribersQueryHandler extends RequestHandler<GetSubscribersQuery,
 
     final lastUserID = request.lastUserID;
     if (lastUserID != null) {
-      if (lastUserID.isStaffUserID) {
+      if (lastUserID.isStaffID) {
         return left(
           [const CanNotDoThisToStaffUser()],
         );

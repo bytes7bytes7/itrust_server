@@ -44,24 +44,17 @@ class RegisterCommandHandler extends RequestHandler<RegisterCommand,
       return left([const DuplicateEmail()]);
     }
 
-    late UserID userID;
-    do {
-      userID = UserID.generateEnd();
-    } while ((await _endUserRepository.getByID(id: userID)) != null);
+    final user = await _endUserRepository.create(
+      email: request.email,
+      firstName: request.firstName,
+      lastName: request.lastName,
+    );
 
     final passwordHash = _hashService.hashPassword(request.password);
 
-    final user = EndUser(
-      id: userID,
-      firstName: request.firstName,
-      lastName: request.lastName,
-      email: request.email,
-      nick: null,
-    );
-
-    await _endUserRepository.addOrUpdate(user: user);
+    await _endUserRepository.update(user: user);
     await _passwordHashRepository.saveHashByID(
-      userID: userID,
+      userID: user.id,
       passwordHash: passwordHash,
     );
 
@@ -69,7 +62,7 @@ class RegisterCommandHandler extends RequestHandler<RegisterCommand,
 
     await _tokenRepository.addOrUpdate(
       tokenPair: tokenPair,
-      userID: userID,
+      userID: user.id,
       deviceInfo: request.deviceInfo,
       ip: request.ip,
       createdAt: _dateTimeProvider.nowUtc(),

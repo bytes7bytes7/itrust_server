@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/freezed_settings.dart';
 import '../../../../../utils/typedef.dart';
 import '../../../../common/application/view_models/user_vm/user_vm.dart';
 
@@ -8,7 +9,7 @@ part 'user_info_vm.freezed.dart';
 part 'user_info_vm.g.dart';
 
 @Freezed(
-  unionKey: 'type',
+  unionKey: unionKey,
 )
 class UserInfoVM with _$UserInfoVM {
   const factory UserInfoVM.end({

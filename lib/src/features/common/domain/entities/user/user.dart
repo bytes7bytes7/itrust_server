@@ -1,11 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/freezed_settings.dart';
 import '../../value_objects/value_objects.dart';
 
 part 'user.freezed.dart';
 
 @Freezed(
-  unionKey: 'type',
+  unionKey: unionKey,
   toJson: false,
   fromJson: false,
 )

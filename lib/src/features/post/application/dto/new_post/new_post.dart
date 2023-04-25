@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/typedef.dart';
-import '../new_media/new_media.dart';
+import '../../../../common/application/dto/dto.dart';
 
 part 'new_post.g.dart';
 

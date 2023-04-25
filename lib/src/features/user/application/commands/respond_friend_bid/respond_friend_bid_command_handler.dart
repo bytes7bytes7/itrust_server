@@ -36,7 +36,7 @@ class RespondFriendBidCommandHandler extends RequestHandler<
   FutureOr<Either<List<DetailedException>, UserInfoResult>> handle(
     RespondFriendBidCommand request,
   ) async {
-    if (request.respondToUserID.isStaffUserID) {
+    if (request.respondToUserID.isStaffID) {
       return left(
         [const CanNotDoThisToStaffUser()],
       );

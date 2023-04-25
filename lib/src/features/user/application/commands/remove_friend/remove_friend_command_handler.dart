@@ -36,7 +36,7 @@ class RemoveFriendCommandHandler extends RequestHandler<RemoveFriendCommand,
   FutureOr<Either<List<DetailedException>, UserInfoResult>> handle(
     RemoveFriendCommand request,
   ) async {
-    if (request.removeUserID.isStaffUserID) {
+    if (request.removeUserID.isStaffID) {
       return left(
         [const CanNotDoThisToStaffUser()],
       );

@@ -64,6 +64,10 @@ void main(List<String> args) async {
     ..mount(
       MediaController.path,
       _getIt.get<MediaController>().router.addAuthorization(),
+    )
+    ..mount(
+      ChatController.path,
+      _getIt.get<ChatController>().router.addAuthorization(),
     );
 
   final handler = Pipeline()

@@ -35,7 +35,7 @@ class GetUserByIDQueryHandler extends RequestHandler<GetUserByIDQuery,
   FutureOr<Either<List<DetailedException>, UserResult>> handle(
     GetUserByIDQuery request,
   ) async {
-    if (request.requestedUserID.isStaffUserID) {
+    if (request.requestedUserID.isStaffID) {
       final staffUser =
           await _staffUserRepository.getByID(id: request.requestedUserID);
 
@@ -62,7 +62,7 @@ class GetUserByIDQueryHandler extends RequestHandler<GetUserByIDQuery,
       }
     }
 
-    if (request.requestedUserID.isEndUserID) {
+    if (request.requestedUserID.isEndID) {
       final endUser =
           await _endUserRepository.getByID(id: request.requestedUserID);
 

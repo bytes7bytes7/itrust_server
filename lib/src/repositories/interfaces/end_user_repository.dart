@@ -1,7 +1,13 @@
 import '../../features/common/domain/domain.dart';
 
 abstract class EndUserRepository {
-  Future<void> addOrUpdate({required EndUser user});
+  Future<EndUser> create({
+    required String email,
+    required String firstName,
+    String? lastName,
+  });
+
+  Future<void> update({required EndUser user});
 
   Future<EndUser?> getByEmail({required String email});
 

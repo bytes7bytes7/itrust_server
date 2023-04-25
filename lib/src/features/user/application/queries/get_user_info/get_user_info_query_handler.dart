@@ -41,9 +41,9 @@ class GetUserInfoQueryHandler extends RequestHandler<GetUserInfoQuery,
   ) async {
     User? user;
 
-    if (request.aboutUserID.isEndUserID) {
+    if (request.aboutUserID.isEndID) {
       user = await _endUserRepository.getByID(id: request.aboutUserID);
-    } else if (request.aboutUserID.isStaffUserID) {
+    } else if (request.aboutUserID.isStaffID) {
       user = await _staffUserRepository.getByID(id: request.aboutUserID);
     }
 

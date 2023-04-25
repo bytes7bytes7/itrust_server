@@ -22,6 +22,17 @@ class CommonMapsterRegistrar {
       )
       ..register(MapperMeta.two(EndUserToEndUserVMMapper.new))
       ..register(MapperMeta.two(StaffUserToStaffUserVMMapper.new))
-      ..register(MapperMeta.one(PostsResultToPostsResponseMapper.new));
+      ..register(MapperMeta.one(PostsResultToPostsResponseMapper.new))
+      ..register(
+        MapperMeta.two(
+          (input) => ChatToChatVMMapper(
+            input,
+            mapster: _mapster,
+          ),
+        ),
+      )
+      ..register(MapperMeta.two(MonologueChatToMonologueChatVMMapper.new))
+      ..register(MapperMeta.two(DialogueChatToDialogueChatVMMapper.new))
+      ..register(MapperMeta.two(GroupChatToGroupChatVMMapper.new));
   }
 }

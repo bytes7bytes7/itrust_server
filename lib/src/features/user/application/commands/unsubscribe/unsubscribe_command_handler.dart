@@ -36,7 +36,7 @@ class UnsubscribeCommandHandler extends RequestHandler<UnsubscribeCommand,
   FutureOr<Either<List<DetailedException>, UserInfoResult>> handle(
     UnsubscribeCommand request,
   ) async {
-    if (request.unsubscribeUserID.isStaffUserID) {
+    if (request.unsubscribeUserID.isStaffID) {
       return left(
         [const CanNotDoThisToStaffUser()],
       );

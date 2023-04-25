@@ -20,7 +20,36 @@ class DevEndUserRepository implements EndUserRepository {
   final _friendsBidsToMe = HashMap<UserID, List<UserID>>();
 
   @override
-  Future<void> addOrUpdate({required EndUser user}) async {
+  Future<EndUser> create({
+    required String email,
+    required String firstName,
+    String? lastName,
+  }) async {
+    late UserID userID;
+    do {
+      userID = UserID.generateEnd();
+    } while (_storage.keys.contains(userID));
+
+    final user = EndUser(
+      id: userID,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+    );
+
+    _storage[userID] = user;
+
+    return user;
+  }
+
+  @override
+  Future<void> update({required EndUser user}) async {
+    final oldUser = _storage[user.id];
+
+    if (oldUser == null) {
+      throw Exception('User not found');
+    }
+
     _storage[user.id] = user;
   }
 

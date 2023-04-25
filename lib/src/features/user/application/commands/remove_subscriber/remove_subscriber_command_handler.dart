@@ -36,7 +36,7 @@ class RemoveSubscriberCommandHandler extends RequestHandler<
   FutureOr<Either<List<DetailedException>, UserInfoResult>> handle(
     RemoveSubscriberCommand request,
   ) async {
-    if (request.removeUserID.isStaffUserID) {
+    if (request.removeUserID.isStaffID) {
       return left(
         [const CanNotDoThisToStaffUser()],
       );

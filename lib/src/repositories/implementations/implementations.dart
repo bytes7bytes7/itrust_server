@@ -1,3 +1,4 @@
+export 'chat_repository.dart';
 export 'end_user_activity_repository.dart';
 export 'end_user_repository.dart';
 export 'media_repository.dart';

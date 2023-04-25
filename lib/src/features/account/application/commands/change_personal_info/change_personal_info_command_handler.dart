@@ -43,7 +43,7 @@ class ChangePersonalInfoCommandHandler extends RequestHandler<
       lastName: request.lastName,
     );
 
-    await _endUserRepository.addOrUpdate(user: newUser);
+    await _endUserRepository.update(user: newUser);
 
     final onlineStatus = await _endUserActivityRepository.get(request.userID);
     final avatarsAmount =
