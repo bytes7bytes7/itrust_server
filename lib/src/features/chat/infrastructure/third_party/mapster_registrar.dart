@@ -34,6 +34,12 @@ class ChatMapsterRegistrar {
       )
       ..register(MapperMeta.one(MessageResultToMessageResponseMapper.new))
       ..register(MapperMeta.two(GetMessagesRequestToGetMessagesQueryMapper.new))
-      ..register(MapperMeta.one(MessagesResultToMessagesResponseMapper.new));
+      ..register(MapperMeta.one(MessagesResultToMessagesResponseMapper.new))
+      ..register(
+        MapperMeta.three(ListenMessagesRequestToListenMessageQueryMapper.new),
+      )
+      ..register(
+        MapperMeta.one(MessageEventResultToMessageEventResponseMapper.new),
+      );
   }
 }

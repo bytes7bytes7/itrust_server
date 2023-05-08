@@ -43,13 +43,13 @@ class ListenChatsQueryHandler extends StreamRequestHandler<ListenChatsQuery,
     final resultStreamController =
         StreamController<Either<List<DetailedException>, ChatEventResult>>();
 
-    stream.bufferTime(_chatEventMinPeriod).listen((es) async {
+    stream.bufferTime(_chatEventMinPeriod).listen((events) async {
       final created = <ChatVM>[];
       final deleted = <ChatID>[];
       final updated = <ChatVM>[];
       final exceptions = <DetailedException>[];
 
-      for (final event in es) {
+      for (final event in events) {
         if (event is CreatedChatEvent) {
           final participantsAmount =
               await _chatRepository.getChatParticipantsAmount(id: event.chatID);
@@ -148,9 +148,6 @@ class ListenChatsQueryHandler extends StreamRequestHandler<ListenChatsQuery,
         resultStreamController.add(left(exceptions));
       }
     });
-
-    // TODO: close controller
-    // await resultStreamController.close();
 
     return resultStreamController.stream;
   }

@@ -3,10 +3,17 @@ import '../../features/common/domain/domain.dart';
 
 part 'chat_event.dart';
 
+part 'message_event.dart';
+
 abstract class ChatRepository {
   Future<void> dispose();
 
   Stream<ChatEvent> listenChatsForUser({required UserID userID});
+
+  Stream<MessageEvent> listenMessagesForUser({
+    required UserID userID,
+    required ChatID chatID,
+  });
 
   Future<MonologueChat> createMonologue({
     required UserID userID,

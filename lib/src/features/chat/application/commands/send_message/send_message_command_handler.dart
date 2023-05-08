@@ -63,13 +63,9 @@ class SendMessageCommandHandler extends RequestHandler<SendMessageCommand,
     for (final id in message.mediaIDs) {
       final media = await _mediaRepository.get(id);
 
-      if (media == null) {
-        return left(
-          [const MediaNotFound()],
-        );
+      if (media != null) {
+        mediaList.add(_mapster.map1(media, To<MediaVM>()));
       }
-
-      mediaList.add(_mapster.map1(media, To<MediaVM>()));
     }
 
     return right(

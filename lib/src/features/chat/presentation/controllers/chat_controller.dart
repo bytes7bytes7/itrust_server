@@ -224,4 +224,45 @@ class ChatController extends ApiController {
       (r) => ok(_mapster.map1(r, To<MessagesResponse>())),
     );
   }
+
+  @Route.get('/<$chatIDKey>/listen')
+  Future<Response> listenMessages(Request request) async {
+    return webSocketHandler((WebSocketChannel webSocket) async {
+      late final ListenMessagesRequest listenMessagesRequest;
+      try {
+        listenMessagesRequest =
+            await parseRequest<ListenMessagesRequest>(request);
+      } catch (e) {
+        return problem(
+          [const InvalidBodyException()],
+        );
+      }
+
+      final user = request.user;
+
+      if (user == null) {
+        return problem([const UserNotFound()]);
+      }
+
+      final query = _mapster.map3(
+        listenMessagesRequest,
+        user.id,
+        webSocket.stream,
+        To<ListenMessagesQuery>(),
+      );
+
+      final resultStream = await query.createStream(_mediator);
+
+      resultStream.listen((event) {
+        webSocket.sink.add(
+          _jsonEncoder.convert(
+            event.match(
+              createProblemDetails,
+              (r) => _mapster.map1(r, To<MessageEventResponse>()).toJson(),
+            ),
+          ),
+        );
+      });
+    }).call(request);
+  }
 }

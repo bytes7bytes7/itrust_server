@@ -6,6 +6,8 @@ export 'create_monologue_chat_request_to_create_monologue_chat_command_mapper.da
 export 'get_chats_request_to_get_chats_query_mapper.dart';
 export 'get_messages_request_to_get_messages_query_mapper.dart';
 export 'listen_chats_request_to_listen_chats_query_mapper.dart';
+export 'listen_messages_request_to_listen_messages_query_mapper.dart';
+export 'message_event_result_to_message_event_response_mapper.dart';
 export 'message_result_to_message_response_mapper.dart';
 export 'messages_result_to_messages_response_mapper.dart';
 export 'send_message_request_to_send_message_command_mapper.dart';

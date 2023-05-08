@@ -23,6 +23,7 @@ class DevChatRepository implements ChatRepository {
   final DateTimeProvider _dateTimeProvider;
 
   final _chatController = BehaviorSubject<ChatEvent>();
+  final _messageController = BehaviorSubject<MessageEvent>();
 
   final _chats = HashMap<ChatID, Chat?>();
   final _images = HashMap<ChatID, MediaID>();
@@ -35,6 +36,7 @@ class DevChatRepository implements ChatRepository {
   @override
   Future<void> dispose() async {
     await _chatController.close();
+    await _messageController.close();
   }
 
   @override
@@ -43,6 +45,16 @@ class DevChatRepository implements ChatRepository {
       final chats = _usersChatIDs[userID] ?? [];
 
       return chats.contains(e.chatID);
+    });
+  }
+
+  @override
+  Stream<MessageEvent> listenMessagesForUser({
+    required UserID userID,
+    required ChatID chatID,
+  }) {
+    return _messageController.where((e) {
+      return e.chatID == chatID;
     });
   }
 
@@ -398,6 +410,8 @@ class DevChatRepository implements ChatRepository {
     _chatMessageIDs[chatID] = messageIDs;
 
     _chatController.add(UpdatedChatEvent(chatID: chatID, chat: chat));
+    _messageController
+        .add(CreatedMessageEvent(chatID: chatID, message: message));
 
     return message;
   }
@@ -457,6 +471,8 @@ class DevChatRepository implements ChatRepository {
     _chatMessageIDs[chatID] = messageIDs;
 
     _chatController.add(UpdatedChatEvent(chatID: chatID, chat: chat));
+    _messageController
+        .add(CreatedMessageEvent(chatID: chatID, message: message));
 
     return message;
   }
