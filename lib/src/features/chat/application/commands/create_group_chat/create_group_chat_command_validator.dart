@@ -2,12 +2,12 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../common/application/behaviors/behavior_validator.dart';
 import '../../common/common.dart';
-import 'create_monologue_chat_command.dart';
+import 'create_group_chat_command.dart';
 
 @singleton
-class CreateMonologueChatCommandValidator
-    extends BehaviorValidator<CreateMonologueChatCommand, ChatResult> {
-  CreateMonologueChatCommandValidator() {
+class CreateGroupChatCommandValidator
+    extends BehaviorValidator<CreateGroupChatCommand, ChatResult> {
+  CreateGroupChatCommandValidator() {
     ruleFor((e) => e.title, key: 'title').notEmpty();
   }
 }

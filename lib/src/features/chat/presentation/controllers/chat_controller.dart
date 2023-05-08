@@ -133,6 +133,38 @@ class ChatController extends ApiController {
     );
   }
 
+  @Route.post('/group')
+  Future<Response> createGroup(Request request) async {
+    late final CreateGroupChatRequest createGroupChatRequest;
+    try {
+      createGroupChatRequest =
+          await parseRequest<CreateGroupChatRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final command = _mapster.map2(
+      createGroupChatRequest,
+      user.id,
+      To<CreateGroupChatCommand>(),
+    );
+
+    final result = await command.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<ChatResponse>())),
+    );
+  }
+
   @Route.post('/send_message')
   Future<Response> sendMessage(Request request) async {
     late final SendMessageRequest sendMessageRequest;

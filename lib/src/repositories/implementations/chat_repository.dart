@@ -188,7 +188,7 @@ class DevChatRepository implements ChatRepository {
     required int limit,
     ChatID? startAfter,
   }) async {
-    // TODO: change (base on time)
+    // TODO: change (base on time of the last msg)
     final result = <Chat>[];
 
     var reachStartAfter = startAfter == null;

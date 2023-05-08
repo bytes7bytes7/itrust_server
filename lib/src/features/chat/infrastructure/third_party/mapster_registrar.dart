@@ -19,6 +19,11 @@ class ChatMapsterRegistrar {
           CreateMonologueChatRequestToCreateMonologueChatCommandMapper.new,
         ),
       )
+      ..register(
+        MapperMeta.two(
+          CreateGroupChatRequestToCreateGroupChatCommandMapper.new,
+        ),
+      )
       ..register(MapperMeta.one(ChatResultToChatResponseMapper.new))
       ..register(
         MapperMeta.three(ListenChatsRequestToListenChatsQueryMapper.new),
