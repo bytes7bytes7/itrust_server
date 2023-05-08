@@ -6,10 +6,12 @@ import '../../../../common/domain/domain.dart';
 import '../../common/common.dart';
 
 class ListenChatsQuery
-    extends Request<Either<List<DetailedException>, ChatEventResult>> {
+    extends StreamRequest<Either<List<DetailedException>, ChatEventResult>> {
   ListenChatsQuery({
     required this.userID,
+    required this.inputStream,
   }) : super(ListenChatsQuery);
 
   final UserID userID;
+  final Stream inputStream;
 }

@@ -20,35 +20,9 @@ class ChatMapsterRegistrar {
         ),
       )
       ..register(MapperMeta.one(ChatResultToChatResponseMapper.new))
-      ..register(MapperMeta.two(ListenChatsRequestToListenChatsQueryMapper.new))
       ..register(
-        MapperMeta.one(
-          (input) => ChatEventResultToChatEventResponseMapper(
-            input,
-            mapster: _mapster,
-          ),
-        ),
+        MapperMeta.three(ListenChatsRequestToListenChatsQueryMapper.new),
       )
-      ..register(
-        MapperMeta.one(
-          CreatedChatEventResultToCreatedChatEventResponseMapper.new,
-        ),
-      )
-      ..register(
-        MapperMeta.one(
-          DeletedChatEventResultToDeletedChatEventResponseMapper.new,
-        ),
-      )
-      ..register(
-        MapperMeta.one(
-          UpdatedChatEventResultToUpdatedChatEventResponseMapper.new,
-        ),
-      )
-      ..register(
-        MapperMeta.one(
-          OnlineChangedChatEventResultToOnlineChangedChatEventResponseMapper
-              .new,
-        ),
-      );
+      ..register(MapperMeta.one(ChatEventResultToChatEventResponseMapper.new));
   }
 }

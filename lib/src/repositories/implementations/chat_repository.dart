@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../features/common/application/dto/dto.dart';
+import '../../features/common/application/providers/date_time_provider.dart';
 import '../../features/common/domain/domain.dart';
 import '../interfaces/chat_repository.dart';
 import '../interfaces/media_repository.dart';
@@ -14,9 +15,12 @@ import '../interfaces/media_repository.dart';
 class DevChatRepository implements ChatRepository {
   DevChatRepository({
     required MediaRepository mediaRepository,
-  }) : _mediaRepository = mediaRepository;
+    required DateTimeProvider dateTimeProvider,
+  })  : _mediaRepository = mediaRepository,
+        _dateTimeProvider = dateTimeProvider;
 
   final MediaRepository _mediaRepository;
+  final DateTimeProvider _dateTimeProvider;
 
   final _chatController = BehaviorSubject<ChatEvent>();
 
@@ -174,7 +178,7 @@ class DevChatRepository implements ChatRepository {
   }
 
   @override
-  Future<Chat?> getByID({required ChatID id}) async {
+  Future<Chat?> getChatByID({required ChatID id}) async {
     return _chats[id];
   }
 
@@ -220,6 +224,14 @@ class DevChatRepository implements ChatRepository {
       throw Exception('Chat not found');
     }
 
+    if (id.isMonologueID) {
+      return 1;
+    }
+
+    if (id.isDialogueID) {
+      return 2;
+    }
+
     final users = _groupParticipants[id] ?? [];
 
     return users.length;
@@ -263,5 +275,107 @@ class DevChatRepository implements ChatRepository {
     }
 
     return messageIDs.length - index;
+  }
+
+  @override
+  Future<Message?> getMessageByID({required MessageID id}) async {
+    return _messages[id];
+  }
+
+  @override
+  Future<void> addInfoMessage({
+    required ChatID chatID,
+    required String markUp,
+    required Map<String, String> markUpData,
+    Duration? willBeBurntAfter,
+  }) async {
+    final chat = _chats[chatID];
+
+    if (chat == null) {
+      throw Exception('Chat not found');
+    }
+
+    late MessageID id;
+    do {
+      id = MessageID.generate();
+    } while (_messages.keys.contains(id));
+
+    // book place
+    _messages[id] = null;
+
+    final sentAt = _dateTimeProvider.nowUtc();
+    DateTime? willBeBurntAt;
+    if (willBeBurntAfter != null) {
+      willBeBurntAt = sentAt.add(willBeBurntAfter);
+    }
+
+    final message = Message.info(
+      id: id,
+      chatID: chatID,
+      sentAt: sentAt,
+      markUp: markUp,
+      markUpData: markUpData,
+      willBeBurntAt: willBeBurntAt,
+    );
+
+    _messages[id] = message;
+
+    final messageIDs = List.of(_chatMessageIDs[chatID] ?? <MessageID>[])
+      ..add(id);
+    _chatMessageIDs[chatID] = messageIDs;
+
+    _chatController.add(UpdatedChatEvent(chatID: chatID, chat: chat));
+  }
+
+  @override
+  Future<void> addUserMessage({
+    required ChatID chatID,
+    required UserID userID,
+    required String text,
+    List<NewMedia> media = const [],
+    Duration? willBeBurntAfter,
+  }) async {
+    final chat = _chats[chatID];
+
+    if (chat == null) {
+      throw Exception('Chat not found');
+    }
+
+    late MessageID id;
+    do {
+      id = MessageID.generate();
+    } while (_messages.keys.contains(id));
+
+    // book place
+    _messages[id] = null;
+
+    final sentAt = _dateTimeProvider.nowUtc();
+    DateTime? willBeBurntAt;
+    if (willBeBurntAfter != null) {
+      willBeBurntAt = sentAt.add(willBeBurntAfter);
+    }
+
+    final mediaIDs = <MediaID>[];
+    for (final m in media) {
+      mediaIDs.add((await _mediaRepository.add(m)).id);
+    }
+
+    final message = Message.user(
+      id: id,
+      chatID: chatID,
+      senderID: userID,
+      sentAt: sentAt,
+      text: text,
+      mediaIDs: mediaIDs,
+      willBeBurntAt: willBeBurntAt,
+    );
+
+    _messages[id] = message;
+
+    final messageIDs = List.of(_chatMessageIDs[chatID] ?? <MessageID>[])
+      ..add(id);
+    _chatMessageIDs[chatID] = messageIDs;
+
+    _chatController.add(UpdatedChatEvent(chatID: chatID, chat: chat));
   }
 }

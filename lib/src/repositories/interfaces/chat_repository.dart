@@ -29,7 +29,7 @@ abstract class ChatRepository {
 
   Future<void> update({required Chat chat});
 
-  Future<Chat?> getByID({required ChatID id});
+  Future<Chat?> getChatByID({required ChatID id});
 
   Future<List<Chat>> getChatsByFilter({
     required UserID userID,
@@ -44,5 +44,22 @@ abstract class ChatRepository {
   Future<int> getChatUnreadMessagesAmount({
     required ChatID chatID,
     required UserID userID,
+  });
+
+  Future<Message?> getMessageByID({required MessageID id});
+
+  Future<void> addInfoMessage({
+    required ChatID chatID,
+    required String markUp,
+    required Map<String, String> markUpData,
+    Duration? willBeBurntAfter,
+  });
+
+  Future<void> addUserMessage({
+    required ChatID chatID,
+    required UserID userID,
+    required String text,
+    List<NewMedia> media = const [],
+    Duration? willBeBurntAfter,
   });
 }

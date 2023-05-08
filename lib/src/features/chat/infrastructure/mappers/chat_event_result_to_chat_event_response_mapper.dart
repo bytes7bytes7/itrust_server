@@ -5,34 +5,15 @@ import '../../presentation/contracts/chat_event_response/chat_event_response.dar
 
 class ChatEventResultToChatEventResponseMapper
     extends OneSourceMapper<ChatEventResult, ChatEventResponse> {
-  ChatEventResultToChatEventResponseMapper(
-    super.input, {
-    required Mapster mapster,
-  }) : _mapster = mapster;
-
-  final Mapster _mapster;
+  ChatEventResultToChatEventResponseMapper(super.input);
 
   @override
   ChatEventResponse map() {
-    final result = _result;
-
-    if (result is CreatedChatEventResult) {
-      return _mapster.map1(result, To<CreatedChatEventResponse>());
-    }
-
-    if (result is DeletedChatEventResult) {
-      return _mapster.map1(result, To<DeletedChatEventResponse>());
-    }
-
-    if (result is UpdatedChatEventResult) {
-      return _mapster.map1(result, To<UpdatedChatEventResponse>());
-    }
-
-    if (result is OnlineChangedChatEventResult) {
-      return _mapster.map1(result, To<OnlineChangedChatEventResponse>());
-    }
-
-    throw Exception('Unknown type of $ChatEventResult');
+    return ChatEventResponse(
+      created: _result.created,
+      deleted: _result.deleted,
+      updated: _result.updated,
+    );
   }
 
   ChatEventResult get _result => source;

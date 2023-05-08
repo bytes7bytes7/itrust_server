@@ -33,6 +33,16 @@ class CommonMapsterRegistrar {
       )
       ..register(MapperMeta.two(MonologueChatToMonologueChatVMMapper.new))
       ..register(MapperMeta.two(DialogueChatToDialogueChatVMMapper.new))
-      ..register(MapperMeta.two(GroupChatToGroupChatVMMapper.new));
+      ..register(MapperMeta.two(GroupChatToGroupChatVMMapper.new))
+      ..register(
+        MapperMeta.two(
+          (input) => MessageToMessageVMMapper(
+            input,
+            mapster: _mapster,
+          ),
+        ),
+      )
+      ..register(MapperMeta.two(InfoMessageToInfoMessageVMMapper.new))
+      ..register(MapperMeta.two(UserMessageToUserMessageVMMapper.new));
   }
 }

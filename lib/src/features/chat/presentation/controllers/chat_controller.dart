@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
 import 'package:mediator/mediator.dart' as mdtr;
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
+import 'package:shelf_web_socket/shelf_web_socket.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../../../utils/extensions/extensions.dart';
 import '../../../common/application/exceptions/exceptions.dart';
@@ -56,30 +60,38 @@ class ChatController extends ApiController {
 
   @Route.get('/listen')
   Future<Response> listenChats(Request request) async {
-    late final ListenChatsRequest listenChatsRequest;
-    try {
-      listenChatsRequest = await parseRequest<ListenChatsRequest>(request);
-    } catch (e) {
-      return problem(
-        [const InvalidBodyException()],
+    return webSocketHandler((WebSocketChannel webSocket) async {
+      late final ListenChatsRequest listenChatsRequest;
+      try {
+        listenChatsRequest = await parseRequest<ListenChatsRequest>(request);
+      } catch (e) {
+        return problem(
+          [const InvalidBodyException()],
+        );
+      }
+
+      final user = request.user;
+
+      if (user == null) {
+        return problem([const UserNotFound()]);
+      }
+
+      final query = _mapster.map3(
+        listenChatsRequest,
+        user.id,
+        webSocket.stream,
+        To<ListenChatsQuery>(),
       );
-    }
 
-    final user = request.user;
+      final resultStream = await query.createStream(_mediator);
 
-    if (user == null) {
-      return problem([const UserNotFound()]);
-    }
-
-    final query =
-        _mapster.map2(listenChatsRequest, user.id, To<ListenChatsQuery>());
-
-    final result = await query.sendTo(_mediator);
-
-    return result.match(
-      problem,
-      (r) => ok(_mapster.map1(r, To<ChatEventResponse>())),
-    );
+      resultStream.listen((event) {
+        return event.match(
+          problem,
+          (r) => ok(_mapster.map1(r, To<ChatEventResponse>())),
+        );
+      });
+    }).call(request);
   }
 
   @Route.post('/monologue')
