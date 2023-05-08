@@ -46,16 +46,22 @@ abstract class ChatRepository {
     required UserID userID,
   });
 
+  Future<bool> isMessageReadByUser({
+    required ChatID chatID,
+    required MessageID messageID,
+    required UserID userID,
+  });
+
   Future<Message?> getMessageByID({required MessageID id});
 
-  Future<void> addInfoMessage({
+  Future<InfoMessage> sendInfoMessage({
     required ChatID chatID,
     required String markUp,
     required Map<String, String> markUpData,
     Duration? willBeBurntAfter,
   });
 
-  Future<void> addUserMessage({
+  Future<UserMessage> sendUserMessage({
     required ChatID chatID,
     required UserID userID,
     required String text,

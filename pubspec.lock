@@ -200,10 +200,12 @@ packages:
   fluent_validation:
     dependency: "direct main"
     description:
-      name: fluent_validation
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.0"
+      path: "."
+      ref: e8406b7
+      resolved-ref: e8406b7be462e8e4ba134fa3a5815d805d30c173
+      url: "https://github.com/bytes7bytes7/fluent_validation"
+    source: git
+    version: "3.0.0"
   fpdart:
     dependency: "direct main"
     description:

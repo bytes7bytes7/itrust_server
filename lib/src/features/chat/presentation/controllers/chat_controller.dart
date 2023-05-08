@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
@@ -30,6 +31,8 @@ class ChatController extends ApiController {
   final Mapster _mapster;
 
   Router get router => _$ChatControllerRouter(this);
+
+  JsonEncoder get _jsonEncoder => const JsonEncoder();
 
   @Route.get('/')
   Future<Response> getChats(Request request) async {
@@ -86,9 +89,13 @@ class ChatController extends ApiController {
       final resultStream = await query.createStream(_mediator);
 
       resultStream.listen((event) {
-        return event.match(
-          problem,
-          (r) => ok(_mapster.map1(r, To<ChatEventResponse>())),
+        webSocket.sink.add(
+          _jsonEncoder.convert(
+            event.match(
+              createProblemDetails,
+              (r) => _mapster.map1(r, To<ChatEventResponse>()).toJson(),
+            ),
+          ),
         );
       });
     }).call(request);
@@ -123,6 +130,37 @@ class ChatController extends ApiController {
     return result.match(
       problem,
       (r) => ok(_mapster.map1(r, To<ChatResponse>())),
+    );
+  }
+
+  @Route.post('/send_message')
+  Future<Response> sendMessage(Request request) async {
+    late final SendMessageRequest sendMessageRequest;
+    try {
+      sendMessageRequest = await parseRequest<SendMessageRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final command = _mapster.map2(
+      sendMessageRequest,
+      user.id,
+      To<SendMessageCommand>(),
+    );
+
+    final result = await command.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<MessageResponse>())),
     );
   }
 }

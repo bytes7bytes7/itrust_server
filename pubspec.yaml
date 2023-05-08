@@ -13,7 +13,10 @@ dependencies:
   dart_jsonwebtoken: ^2.7.1
   envied: ^0.3.0
   equatable: ^2.0.5
-  fluent_validation: ^2.1.0
+  fluent_validation:
+    git:
+      url: https://github.com/bytes7bytes7/fluent_validation
+      ref: "e8406b7"
   fpdart: ^0.4.0
   freezed_annotation: ^2.2.0
   get_it: ^7.2.0

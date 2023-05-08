@@ -23,5 +23,10 @@ Router _$ChatControllerRouter(ChatController service) {
     r'/monologue',
     service.createMonologue,
   );
+  router.add(
+    'POST',
+    r'/send_message',
+    service.sendMessage,
+  );
   return router;
 }

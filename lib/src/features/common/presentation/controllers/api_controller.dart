@@ -85,16 +85,18 @@ class ApiController {
 }
 
 Response problemHandler(List<DetailedException> exceptions) {
+  return ResponseX.problem(
+    problemDetails: createProblemDetails(exceptions),
+  );
+}
+
+ProblemDetails createProblemDetails(List<DetailedException> exceptions) {
   if (exceptions.isEmpty) {
-    return ResponseX.problem(
-      problemDetails: ProblemDetails(),
-    );
+    return ProblemDetails();
   }
 
   if (exceptions.any((e) => e.type == DetailedExceptionType.validation)) {
-    return ResponseX.problem(
-      problemDetails: _validation(exceptions),
-    );
+    return _validation(exceptions);
   }
 
   final error = exceptions.first;
@@ -122,11 +124,9 @@ Response problemHandler(List<DetailedException> exceptions) {
     default:
   }
 
-  return ResponseX.problem(
-    problemDetails: ProblemDetails(
-      status: status,
-      title: error.description,
-    ),
+  return ProblemDetails(
+    status: status,
+    title: error.description,
   );
 }
 

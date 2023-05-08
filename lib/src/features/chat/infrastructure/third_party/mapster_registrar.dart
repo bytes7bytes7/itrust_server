@@ -23,6 +23,10 @@ class ChatMapsterRegistrar {
       ..register(
         MapperMeta.three(ListenChatsRequestToListenChatsQueryMapper.new),
       )
-      ..register(MapperMeta.one(ChatEventResultToChatEventResponseMapper.new));
+      ..register(MapperMeta.one(ChatEventResultToChatEventResponseMapper.new))
+      ..register(
+        MapperMeta.two(SendMessageRequestToSendMessageCommandMapper.new),
+      )
+      ..register(MapperMeta.one(MessageResultToMessageResponseMapper.new));
   }
 }

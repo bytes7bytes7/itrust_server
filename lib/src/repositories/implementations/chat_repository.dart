@@ -278,12 +278,45 @@ class DevChatRepository implements ChatRepository {
   }
 
   @override
+  Future<bool> isMessageReadByUser({
+    required ChatID chatID,
+    required MessageID messageID,
+    required UserID userID,
+  }) async {
+    final currentMessage = _messages[messageID];
+
+    if (currentMessage == null) {
+      throw Exception('Message not found');
+    }
+
+    if (currentMessage.chatID != chatID) {
+      throw Exception('Message belongs to another chat');
+    }
+
+    final lastMessagesForUsers = _userLastReadMessage[chatID] ?? HashMap();
+
+    final lastMessageID = lastMessagesForUsers[userID];
+
+    if (lastMessageID == null) {
+      return false;
+    }
+
+    final lastMessage = _messages[lastMessageID];
+
+    if (lastMessage == null) {
+      throw Exception('Message not found');
+    }
+
+    return lastMessage.sentAt.isAfter(currentMessage.sentAt);
+  }
+
+  @override
   Future<Message?> getMessageByID({required MessageID id}) async {
     return _messages[id];
   }
 
   @override
-  Future<void> addInfoMessage({
+  Future<InfoMessage> sendInfoMessage({
     required ChatID chatID,
     required String markUp,
     required Map<String, String> markUpData,
@@ -309,7 +342,7 @@ class DevChatRepository implements ChatRepository {
       willBeBurntAt = sentAt.add(willBeBurntAfter);
     }
 
-    final message = Message.info(
+    final message = InfoMessage(
       id: id,
       chatID: chatID,
       sentAt: sentAt,
@@ -325,10 +358,12 @@ class DevChatRepository implements ChatRepository {
     _chatMessageIDs[chatID] = messageIDs;
 
     _chatController.add(UpdatedChatEvent(chatID: chatID, chat: chat));
+
+    return message;
   }
 
   @override
-  Future<void> addUserMessage({
+  Future<UserMessage> sendUserMessage({
     required ChatID chatID,
     required UserID userID,
     required String text,
@@ -349,6 +384,11 @@ class DevChatRepository implements ChatRepository {
     // book place
     _messages[id] = null;
 
+    // message is read automatically by sender
+    final lastMessagesForUsers = (_userLastReadMessage[chatID] ?? HashMap())
+      ..[userID] = id;
+    _userLastReadMessage[chatID] = lastMessagesForUsers;
+
     final sentAt = _dateTimeProvider.nowUtc();
     DateTime? willBeBurntAt;
     if (willBeBurntAfter != null) {
@@ -360,7 +400,7 @@ class DevChatRepository implements ChatRepository {
       mediaIDs.add((await _mediaRepository.add(m)).id);
     }
 
-    final message = Message.user(
+    final message = UserMessage(
       id: id,
       chatID: chatID,
       senderID: userID,
@@ -377,5 +417,7 @@ class DevChatRepository implements ChatRepository {
     _chatMessageIDs[chatID] = messageIDs;
 
     _chatController.add(UpdatedChatEvent(chatID: chatID, chat: chat));
+
+    return message;
   }
 }
