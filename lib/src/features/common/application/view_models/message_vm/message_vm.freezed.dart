@@ -52,7 +52,7 @@ mixin _$MessageVM {
             DateTime sentAt,
             bool isReadByMe,
             String text,
-            List<MediaID> mediaIDs,
+            List<MediaVM> media,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)
         user,
@@ -76,7 +76,7 @@ mixin _$MessageVM {
             DateTime sentAt,
             bool isReadByMe,
             String text,
-            List<MediaID> mediaIDs,
+            List<MediaVM> media,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)?
         user,
@@ -100,7 +100,7 @@ mixin _$MessageVM {
             DateTime sentAt,
             bool isReadByMe,
             String text,
-            List<MediaID> mediaIDs,
+            List<MediaVM> media,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)?
         user,
@@ -377,7 +377,7 @@ class _$InfoMessageVM implements InfoMessageVM {
             DateTime sentAt,
             bool isReadByMe,
             String text,
-            List<MediaID> mediaIDs,
+            List<MediaVM> media,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)
         user,
@@ -405,7 +405,7 @@ class _$InfoMessageVM implements InfoMessageVM {
             DateTime sentAt,
             bool isReadByMe,
             String text,
-            List<MediaID> mediaIDs,
+            List<MediaVM> media,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)?
         user,
@@ -433,7 +433,7 @@ class _$InfoMessageVM implements InfoMessageVM {
             DateTime sentAt,
             bool isReadByMe,
             String text,
-            List<MediaID> mediaIDs,
+            List<MediaVM> media,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)?
         user,
@@ -531,7 +531,7 @@ abstract class _$$UserMessageVMCopyWith<$Res>
       DateTime sentAt,
       bool isReadByMe,
       String text,
-      List<MediaID> mediaIDs,
+      List<MediaVM> media,
       DateTime? willBeBurntAt,
       DateTime? modifiedAt});
 
@@ -559,7 +559,7 @@ class __$$UserMessageVMCopyWithImpl<$Res>
     Object? sentAt = null,
     Object? isReadByMe = null,
     Object? text = null,
-    Object? mediaIDs = null,
+    Object? media = null,
     Object? willBeBurntAt = freezed,
     Object? modifiedAt = freezed,
   }) {
@@ -588,10 +588,10 @@ class __$$UserMessageVMCopyWithImpl<$Res>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      mediaIDs: null == mediaIDs
-          ? _value._mediaIDs
-          : mediaIDs // ignore: cast_nullable_to_non_nullable
-              as List<MediaID>,
+      media: null == media
+          ? _value._media
+          : media // ignore: cast_nullable_to_non_nullable
+              as List<MediaVM>,
       willBeBurntAt: freezed == willBeBurntAt
           ? _value.willBeBurntAt
           : willBeBurntAt // ignore: cast_nullable_to_non_nullable
@@ -622,11 +622,11 @@ class _$UserMessageVM implements UserMessageVM {
       required this.sentAt,
       required this.isReadByMe,
       required this.text,
-      required final List<MediaID> mediaIDs,
+      required final List<MediaVM> media,
       this.willBeBurntAt,
       this.modifiedAt,
       final String? $type})
-      : _mediaIDs = mediaIDs,
+      : _media = media,
         $type = $type ?? 'user';
 
   factory _$UserMessageVM.fromJson(Map<String, dynamic> json) =>
@@ -644,12 +644,12 @@ class _$UserMessageVM implements UserMessageVM {
   final bool isReadByMe;
   @override
   final String text;
-  final List<MediaID> _mediaIDs;
+  final List<MediaVM> _media;
   @override
-  List<MediaID> get mediaIDs {
-    if (_mediaIDs is EqualUnmodifiableListView) return _mediaIDs;
+  List<MediaVM> get media {
+    if (_media is EqualUnmodifiableListView) return _media;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_mediaIDs);
+    return EqualUnmodifiableListView(_media);
   }
 
   @override
@@ -662,7 +662,7 @@ class _$UserMessageVM implements UserMessageVM {
 
   @override
   String toString() {
-    return 'MessageVM.user(id: $id, chatID: $chatID, senderID: $senderID, sentAt: $sentAt, isReadByMe: $isReadByMe, text: $text, mediaIDs: $mediaIDs, willBeBurntAt: $willBeBurntAt, modifiedAt: $modifiedAt)';
+    return 'MessageVM.user(id: $id, chatID: $chatID, senderID: $senderID, sentAt: $sentAt, isReadByMe: $isReadByMe, text: $text, media: $media, willBeBurntAt: $willBeBurntAt, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -678,7 +678,7 @@ class _$UserMessageVM implements UserMessageVM {
             (identical(other.isReadByMe, isReadByMe) ||
                 other.isReadByMe == isReadByMe) &&
             (identical(other.text, text) || other.text == text) &&
-            const DeepCollectionEquality().equals(other._mediaIDs, _mediaIDs) &&
+            const DeepCollectionEquality().equals(other._media, _media) &&
             (identical(other.willBeBurntAt, willBeBurntAt) ||
                 other.willBeBurntAt == willBeBurntAt) &&
             (identical(other.modifiedAt, modifiedAt) ||
@@ -695,7 +695,7 @@ class _$UserMessageVM implements UserMessageVM {
       sentAt,
       isReadByMe,
       text,
-      const DeepCollectionEquality().hash(_mediaIDs),
+      const DeepCollectionEquality().hash(_media),
       willBeBurntAt,
       modifiedAt);
 
@@ -724,12 +724,12 @@ class _$UserMessageVM implements UserMessageVM {
             DateTime sentAt,
             bool isReadByMe,
             String text,
-            List<MediaID> mediaIDs,
+            List<MediaVM> media,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)
         user,
   }) {
-    return user(id, chatID, senderID, sentAt, isReadByMe, text, mediaIDs,
+    return user(id, chatID, senderID, sentAt, isReadByMe, text, media,
         willBeBurntAt, modifiedAt);
   }
 
@@ -752,12 +752,12 @@ class _$UserMessageVM implements UserMessageVM {
             DateTime sentAt,
             bool isReadByMe,
             String text,
-            List<MediaID> mediaIDs,
+            List<MediaVM> media,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)?
         user,
   }) {
-    return user?.call(id, chatID, senderID, sentAt, isReadByMe, text, mediaIDs,
+    return user?.call(id, chatID, senderID, sentAt, isReadByMe, text, media,
         willBeBurntAt, modifiedAt);
   }
 
@@ -780,14 +780,14 @@ class _$UserMessageVM implements UserMessageVM {
             DateTime sentAt,
             bool isReadByMe,
             String text,
-            List<MediaID> mediaIDs,
+            List<MediaVM> media,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)?
         user,
     required TResult orElse(),
   }) {
     if (user != null) {
-      return user(id, chatID, senderID, sentAt, isReadByMe, text, mediaIDs,
+      return user(id, chatID, senderID, sentAt, isReadByMe, text, media,
           willBeBurntAt, modifiedAt);
     }
     return orElse();
@@ -840,7 +840,7 @@ abstract class UserMessageVM implements MessageVM {
       required final DateTime sentAt,
       required final bool isReadByMe,
       required final String text,
-      required final List<MediaID> mediaIDs,
+      required final List<MediaVM> media,
       final DateTime? willBeBurntAt,
       final DateTime? modifiedAt}) = _$UserMessageVM;
 
@@ -857,7 +857,7 @@ abstract class UserMessageVM implements MessageVM {
   @override
   bool get isReadByMe;
   String get text;
-  List<MediaID> get mediaIDs;
+  List<MediaVM> get media;
   @override
   DateTime? get willBeBurntAt;
   DateTime? get modifiedAt;

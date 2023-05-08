@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../../../utils/freezed_settings.dart';
 import '../../../../../utils/typedef.dart';
 import '../../../domain/value_objects/value_objects.dart';
+import '../media_vm/media_vm.dart';
 
 part 'message_vm.freezed.dart';
 
@@ -29,7 +30,7 @@ class MessageVM with _$MessageVM {
     required DateTime sentAt,
     required bool isReadByMe,
     required String text,
-    required List<MediaID> mediaIDs,
+    required List<MediaVM> media,
     DateTime? willBeBurntAt,
     DateTime? modifiedAt,
   }) = UserMessageVM;

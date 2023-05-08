@@ -4,6 +4,8 @@ export 'chats_response/chats_response.dart';
 export 'create_group_chat_request/create_group_chat_request.dart';
 export 'create_monologue_chat_request/create_monologue_chat_request.dart';
 export 'get_chats_request/get_chats_request.dart';
+export 'get_messages_request/get_messages_request.dart';
 export 'listen_chats_request/listen_chats_request.dart';
 export 'message_response/message_response.dart';
+export 'messages_response/messages_response.dart';
 export 'send_message_request/send_message_request.dart';

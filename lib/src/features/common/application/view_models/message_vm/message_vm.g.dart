@@ -40,8 +40,8 @@ _$UserMessageVM _$$UserMessageVMFromJson(Map<String, dynamic> json) =>
       sentAt: DateTime.parse(json['sentAt'] as String),
       isReadByMe: json['isReadByMe'] as bool,
       text: json['text'] as String,
-      mediaIDs: (json['mediaIDs'] as List<dynamic>)
-          .map((e) => MediaID.fromJson(e as Map<String, dynamic>))
+      media: (json['media'] as List<dynamic>)
+          .map((e) => MediaVM.fromJson(e as Map<String, dynamic>))
           .toList(),
       willBeBurntAt: json['willBeBurntAt'] == null
           ? null
@@ -60,7 +60,7 @@ Map<String, dynamic> _$$UserMessageVMToJson(_$UserMessageVM instance) =>
       'sentAt': instance.sentAt.toIso8601String(),
       'isReadByMe': instance.isReadByMe,
       'text': instance.text,
-      'mediaIDs': instance.mediaIDs.map((e) => e.toJson()).toList(),
+      'media': instance.media.map((e) => e.toJson()).toList(),
       'willBeBurntAt': instance.willBeBurntAt?.toIso8601String(),
       'modifiedAt': instance.modifiedAt?.toIso8601String(),
       'type': instance.$type,

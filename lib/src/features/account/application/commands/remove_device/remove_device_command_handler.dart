@@ -49,7 +49,7 @@ class RemoveDeviceCommandHandler extends RequestHandler<RemoveDeviceCommand,
 
     await _tokenRepository.removeNoteByUserIDSessionID(
       userID: request.userID,
-      sessionID: DeviceSessionID(request.sessionID),
+      sessionID: DeviceSessionID.fromString(request.sessionID),
     );
 
     final sessions = await _tokenRepository.getSessionsByUserID(

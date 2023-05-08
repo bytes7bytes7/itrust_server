@@ -316,6 +316,46 @@ class DevChatRepository implements ChatRepository {
   }
 
   @override
+  Future<List<Message>> getMessagesByFilter({
+    required UserID userID,
+    required ChatID chatID,
+    required int limit,
+    MessageID? startAfter,
+  }) async {
+    final result = <Message>[];
+
+    var reachStartAfter = startAfter == null;
+
+    final chat = _chats[chatID];
+
+    if (chat == null) {
+      throw Exception('Chat not found');
+    }
+
+    final messageIDs = _chatMessageIDs[chatID] ?? [];
+
+    for (final id in messageIDs) {
+      if (reachStartAfter) {
+        final message = _messages[id];
+
+        if (message == null) {
+          continue;
+        }
+
+        result.add(message);
+      } else if (id == startAfter) {
+        reachStartAfter = true;
+      }
+
+      if (result.length == limit) {
+        break;
+      }
+    }
+
+    return result;
+  }
+
+  @override
   Future<InfoMessage> sendInfoMessage({
     required ChatID chatID,
     required String markUp,
@@ -354,7 +394,7 @@ class DevChatRepository implements ChatRepository {
     _messages[id] = message;
 
     final messageIDs = List.of(_chatMessageIDs[chatID] ?? <MessageID>[])
-      ..add(id);
+      ..insert(0, id);
     _chatMessageIDs[chatID] = messageIDs;
 
     _chatController.add(UpdatedChatEvent(chatID: chatID, chat: chat));
@@ -413,7 +453,7 @@ class DevChatRepository implements ChatRepository {
     _messages[id] = message;
 
     final messageIDs = List.of(_chatMessageIDs[chatID] ?? <MessageID>[])
-      ..add(id);
+      ..insert(0, id);
     _chatMessageIDs[chatID] = messageIDs;
 
     _chatController.add(UpdatedChatEvent(chatID: chatID, chat: chat));

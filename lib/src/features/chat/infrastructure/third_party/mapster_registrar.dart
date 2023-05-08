@@ -32,6 +32,8 @@ class ChatMapsterRegistrar {
       ..register(
         MapperMeta.two(SendMessageRequestToSendMessageCommandMapper.new),
       )
-      ..register(MapperMeta.one(MessageResultToMessageResponseMapper.new));
+      ..register(MapperMeta.one(MessageResultToMessageResponseMapper.new))
+      ..register(MapperMeta.two(GetMessagesRequestToGetMessagesQueryMapper.new))
+      ..register(MapperMeta.one(MessagesResultToMessagesResponseMapper.new));
   }
 }

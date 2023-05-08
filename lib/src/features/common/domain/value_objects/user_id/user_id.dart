@@ -15,18 +15,18 @@ class UserID with _$UserID {
   const factory UserID(String value) = _UserID;
 
   factory UserID.generateEnd() {
-    return _UserID('$_endUserPrefix${Uuid().v4()}');
+    return UserID('$_endUserPrefix${Uuid().v4()}');
   }
 
   factory UserID.generateStaff() {
-    return _UserID('$_staffUserPrefix${Uuid().v4()}');
+    return UserID('$_staffUserPrefix${Uuid().v4()}');
   }
-
-  const UserID._();
 
   factory UserID.fromJson(JsonMap json) => _$UserIDFromJson(json);
 
   factory UserID.fromString(String string) => UserID(string);
+
+  const UserID._();
 
   String get str => value;
 

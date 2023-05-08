@@ -14,6 +14,7 @@ import '../../../common/application/exceptions/exceptions.dart';
 import '../../../common/presentation/controllers/api_controller.dart';
 import '../../application/application.dart';
 import '../contracts/contracts.dart';
+import '../contracts/json_keys.dart';
 
 part 'chat_controller.g.dart';
 
@@ -193,6 +194,34 @@ class ChatController extends ApiController {
     return result.match(
       problem,
       (r) => ok(_mapster.map1(r, To<MessageResponse>())),
+    );
+  }
+
+  @Route.get('/<$chatIDKey>/')
+  Future<Response> getMessages(Request request) async {
+    late final GetMessagesRequest getMessagesRequest;
+    try {
+      getMessagesRequest = await parseRequest<GetMessagesRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query =
+        _mapster.map2(getMessagesRequest, user.id, To<GetMessagesQuery>());
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<MessagesResponse>())),
     );
   }
 }

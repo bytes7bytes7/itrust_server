@@ -54,6 +54,13 @@ abstract class ChatRepository {
 
   Future<Message?> getMessageByID({required MessageID id});
 
+  Future<List<Message>> getMessagesByFilter({
+    required UserID userID,
+    required ChatID chatID,
+    required int limit,
+    MessageID? startAfter,
+  });
+
   Future<InfoMessage> sendInfoMessage({
     required ChatID chatID,
     required String markUp,

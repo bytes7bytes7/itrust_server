@@ -9,18 +9,18 @@ part 'device_session_id.g.dart';
 
 @freezed
 class DeviceSessionID with _$DeviceSessionID {
-  const factory DeviceSessionID(
-    String value,
-  ) = _DeviceSessionID;
+  const factory DeviceSessionID(String value) = _DeviceSessionID;
 
   factory DeviceSessionID.generate() {
-    return _DeviceSessionID(Uuid().v4());
+    return DeviceSessionID(Uuid().v4());
   }
-
-  const DeviceSessionID._();
 
   factory DeviceSessionID.fromJson(JsonMap json) =>
       _$DeviceSessionIDFromJson(json);
+
+  factory DeviceSessionID.fromString(String string) => DeviceSessionID(string);
+
+  const DeviceSessionID._();
 
   String get str => value;
 }

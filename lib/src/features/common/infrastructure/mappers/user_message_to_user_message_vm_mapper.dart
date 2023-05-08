@@ -17,7 +17,7 @@ class UserMessageToUserMessageVMMapper
       sentAt: _message.sentAt,
       isReadByMe: _dto.isReadByMe,
       text: _message.text,
-      mediaIDs: _message.mediaIDs,
+      media: _dto.media,
       willBeBurntAt: _message.willBeBurntAt,
       modifiedAt: _message.modifiedAt,
     );
