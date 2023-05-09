@@ -41,107 +41,110 @@ class ListenMessagesQueryHandler extends StreamRequestHandler<
       chatID: request.chatID,
     );
 
-    // TODO: think up how to close
-    // ignore: close_sinks
-    final resultStreamController =
-        StreamController<Either<List<DetailedException>, MessageEventResult>>();
+    return stream
+        .bufferTime(_messageEventMinPeriod)
+        .asyncMap<List<Either<List<DetailedException>, MessageEventResult>>>(
+            (events) async {
+          final created = <MessageVM>[];
+          final deleted = <MessageID>[];
+          final updated = <MessageVM>[];
+          final exceptions = <DetailedException>[];
 
-    stream.bufferTime(_messageEventMinPeriod).listen((events) async {
-      final created = <MessageVM>[];
-      final deleted = <MessageID>[];
-      final updated = <MessageVM>[];
-      final exceptions = <DetailedException>[];
+          for (final event in events) {
+            if (event is CreatedMessageEvent) {
+              final message = event.message;
 
-      for (final event in events) {
-        if (event is CreatedMessageEvent) {
-          final message = event.message;
+              final isReadByMe = await _chatRepository.isMessageReadByUser(
+                chatID: request.chatID,
+                messageID: message.id,
+                userID: request.userID,
+              );
 
-          final isReadByMe = await _chatRepository.isMessageReadByUser(
-            chatID: request.chatID,
-            messageID: message.id,
-            userID: request.userID,
-          );
+              final mediaList = <MediaVM>[];
+              if (message is UserMessage) {
+                for (final id in message.mediaIDs) {
+                  final media = await _mediaRepository.get(id);
 
-          final mediaList = <MediaVM>[];
-          if (message is UserMessage) {
-            for (final id in message.mediaIDs) {
-              final media = await _mediaRepository.get(id);
-
-              if (media != null) {
-                mediaList.add(_mapster.map1(media, To<MediaVM>()));
+                  if (media != null) {
+                    mediaList.add(_mapster.map1(media, To<MediaVM>()));
+                  }
+                }
               }
+
+              created.add(
+                _mapster.map2(
+                  event.message,
+                  ToMessageVM(
+                    isReadByMe: isReadByMe,
+                    media: mediaList,
+                  ),
+                  To<MessageVM>(),
+                ),
+              );
+            } else if (event is DeletedMessageEvent) {
+              deleted.add(event.messageID);
+            } else if (event is UpdatedMessageEvent) {
+              final message = event.message;
+
+              final isReadByMe = await _chatRepository.isMessageReadByUser(
+                chatID: request.chatID,
+                messageID: message.id,
+                userID: request.userID,
+              );
+
+              final mediaList = <MediaVM>[];
+              if (message is UserMessage) {
+                for (final id in message.mediaIDs) {
+                  final media = await _mediaRepository.get(id);
+
+                  if (media != null) {
+                    mediaList.add(_mapster.map1(media, To<MediaVM>()));
+                  }
+                }
+              }
+
+              updated.add(
+                _mapster.map2(
+                  event.message,
+                  ToMessageVM(
+                    isReadByMe: isReadByMe,
+                    media: mediaList,
+                  ),
+                  To<MessageVM>(),
+                ),
+              );
+            } else {
+              exceptions.add(
+                DetailedException.unexpected(
+                  code: 'messageEvent.unknown',
+                  description: 'Unknown message event.',
+                ),
+              );
             }
           }
 
-          created.add(
-            _mapster.map2(
-              event.message,
-              ToMessageVM(
-                isReadByMe: isReadByMe,
-                media: mediaList,
+          final resultEvents =
+              <Either<List<DetailedException>, MessageEventResult>>[];
+
+          if (created.isNotEmpty || deleted.isNotEmpty || updated.isNotEmpty) {
+            resultEvents.add(
+              right(
+                MessageEventResult(
+                  created: created,
+                  deleted: deleted,
+                  updated: updated,
+                ),
               ),
-              To<MessageVM>(),
-            ),
-          );
-        } else if (event is DeletedMessageEvent) {
-          deleted.add(event.messageID);
-        } else if (event is UpdatedMessageEvent) {
-          final message = event.message;
-
-          final isReadByMe = await _chatRepository.isMessageReadByUser(
-            chatID: request.chatID,
-            messageID: message.id,
-            userID: request.userID,
-          );
-
-          final mediaList = <MediaVM>[];
-          if (message is UserMessage) {
-            for (final id in message.mediaIDs) {
-              final media = await _mediaRepository.get(id);
-
-              if (media != null) {
-                mediaList.add(_mapster.map1(media, To<MediaVM>()));
-              }
-            }
+            );
           }
 
-          updated.add(
-            _mapster.map2(
-              event.message,
-              ToMessageVM(
-                isReadByMe: isReadByMe,
-                media: mediaList,
-              ),
-              To<MessageVM>(),
-            ),
-          );
-        } else {
-          exceptions.add(
-            DetailedException.unexpected(
-              code: 'messageEvent.unknown',
-              description: 'Unknown message event.',
-            ),
-          );
-        }
-      }
+          if (exceptions.isNotEmpty) {
+            resultEvents.add(left(exceptions));
+          }
 
-      if (created.isNotEmpty || deleted.isNotEmpty || updated.isNotEmpty) {
-        resultStreamController.add(
-          right(
-            MessageEventResult(
-              created: created,
-              deleted: deleted,
-              updated: updated,
-            ),
-          ),
-        );
-      }
-
-      if (exceptions.isNotEmpty) {
-        resultStreamController.add(left(exceptions));
-      }
-    });
-
-    return resultStreamController.stream;
+          return resultEvents;
+        })
+        .where((events) => events.isNotEmpty)
+        .expand((events) => events);
   }
 }

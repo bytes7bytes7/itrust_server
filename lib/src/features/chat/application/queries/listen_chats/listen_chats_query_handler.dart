@@ -38,117 +38,122 @@ class ListenChatsQueryHandler extends StreamRequestHandler<ListenChatsQuery,
   ) async {
     final stream = _chatRepository.listenChatsForUser(userID: request.userID);
 
-    // TODO: think up how to close
-    // ignore: close_sinks
-    final resultStreamController =
-        StreamController<Either<List<DetailedException>, ChatEventResult>>();
+    return stream
+        .bufferTime(_chatEventMinPeriod)
+        .asyncMap<List<Either<List<DetailedException>, ChatEventResult>>>(
+            (events) async {
+          final created = <ChatVM>[];
+          final deleted = <ChatID>[];
+          final updated = <ChatVM>[];
+          final exceptions = <DetailedException>[];
 
-    stream.bufferTime(_chatEventMinPeriod).listen((events) async {
-      final created = <ChatVM>[];
-      final deleted = <ChatID>[];
-      final updated = <ChatVM>[];
-      final exceptions = <DetailedException>[];
+          for (final event in events) {
+            if (event is CreatedChatEvent) {
+              final participantsAmount = await _chatRepository
+                  .getChatParticipantsAmount(id: event.chatID);
+              final unreadAmount =
+                  await _chatRepository.getChatUnreadMessagesAmount(
+                chatID: event.chatID,
+                userID: request.userID,
+              );
+              final lastMessageID =
+                  await _chatRepository.getChatLastMessageID(id: event.chatID);
 
-      for (final event in events) {
-        if (event is CreatedChatEvent) {
-          final participantsAmount =
-              await _chatRepository.getChatParticipantsAmount(id: event.chatID);
-          final unreadAmount =
-              await _chatRepository.getChatUnreadMessagesAmount(
-            chatID: event.chatID,
-            userID: request.userID,
-          );
-          final lastMessageID =
-              await _chatRepository.getChatLastMessageID(id: event.chatID);
+              final picID = event.chat.map(
+                monologue: (v) => v.picID,
+                dialogue: (_) => null,
+                group: (v) => v.picID,
+              );
 
-          final picID = event.chat.map(
-            monologue: (v) => v.picID,
-            dialogue: (_) => null,
-            group: (v) => v.picID,
-          );
+              Media? media;
+              if (picID != null) {
+                media = await _mediaRepository.get(picID);
+              }
 
-          Media? media;
-          if (picID != null) {
-            media = await _mediaRepository.get(picID);
+              created.add(
+                _mapster.map2(
+                  event.chat,
+                  ToChatVM(
+                    participantsAmount: participantsAmount,
+                    unreadAmount: unreadAmount,
+                    lastMessageID: lastMessageID,
+                    media: media != null
+                        ? _mapster.map1(media, To<MediaVM>())
+                        : null,
+                  ),
+                  To<ChatVM>(),
+                ),
+              );
+            } else if (event is DeletedChatEvent) {
+              deleted.add(event.chatID);
+            } else if (event is UpdatedChatEvent) {
+              final participantsAmount = await _chatRepository
+                  .getChatParticipantsAmount(id: event.chatID);
+              final unreadAmount =
+                  await _chatRepository.getChatUnreadMessagesAmount(
+                chatID: event.chatID,
+                userID: request.userID,
+              );
+              final lastMessageID =
+                  await _chatRepository.getChatLastMessageID(id: event.chatID);
+
+              final picID = event.chat.map(
+                monologue: (v) => v.picID,
+                dialogue: (_) => null,
+                group: (v) => v.picID,
+              );
+
+              Media? media;
+              if (picID != null) {
+                media = await _mediaRepository.get(picID);
+              }
+
+              updated.add(
+                _mapster.map2(
+                  event.chat,
+                  ToChatVM(
+                    participantsAmount: participantsAmount,
+                    unreadAmount: unreadAmount,
+                    lastMessageID: lastMessageID,
+                    media: media != null
+                        ? _mapster.map1(media, To<MediaVM>())
+                        : null,
+                  ),
+                  To<ChatVM>(),
+                ),
+              );
+            } else {
+              exceptions.add(
+                DetailedException.unexpected(
+                  code: 'chatEvent.unknown',
+                  description: 'Unknown chat event.',
+                ),
+              );
+            }
           }
 
-          created.add(
-            _mapster.map2(
-              event.chat,
-              ToChatVM(
-                participantsAmount: participantsAmount,
-                unreadAmount: unreadAmount,
-                lastMessageID: lastMessageID,
-                media:
-                    media != null ? _mapster.map1(media, To<MediaVM>()) : null,
+          final resultEvents =
+              <Either<List<DetailedException>, ChatEventResult>>[];
+
+          if (created.isNotEmpty || deleted.isNotEmpty || updated.isNotEmpty) {
+            resultEvents.add(
+              right(
+                ChatEventResult(
+                  created: created,
+                  deleted: deleted,
+                  updated: updated,
+                ),
               ),
-              To<ChatVM>(),
-            ),
-          );
-        } else if (event is DeletedChatEvent) {
-          deleted.add(event.chatID);
-        } else if (event is UpdatedChatEvent) {
-          final participantsAmount =
-              await _chatRepository.getChatParticipantsAmount(id: event.chatID);
-          final unreadAmount =
-              await _chatRepository.getChatUnreadMessagesAmount(
-            chatID: event.chatID,
-            userID: request.userID,
-          );
-          final lastMessageID =
-              await _chatRepository.getChatLastMessageID(id: event.chatID);
-
-          final picID = event.chat.map(
-            monologue: (v) => v.picID,
-            dialogue: (_) => null,
-            group: (v) => v.picID,
-          );
-
-          Media? media;
-          if (picID != null) {
-            media = await _mediaRepository.get(picID);
+            );
           }
 
-          updated.add(
-            _mapster.map2(
-              event.chat,
-              ToChatVM(
-                participantsAmount: participantsAmount,
-                unreadAmount: unreadAmount,
-                lastMessageID: lastMessageID,
-                media:
-                    media != null ? _mapster.map1(media, To<MediaVM>()) : null,
-              ),
-              To<ChatVM>(),
-            ),
-          );
-        } else {
-          exceptions.add(
-            DetailedException.unexpected(
-              code: 'chatEvent.unknown',
-              description: 'Unknown chat event.',
-            ),
-          );
-        }
-      }
+          if (exceptions.isNotEmpty) {
+            resultEvents.add(left(exceptions));
+          }
 
-      if (created.isNotEmpty || deleted.isNotEmpty || updated.isNotEmpty) {
-        resultStreamController.add(
-          right(
-            ChatEventResult(
-              created: created,
-              deleted: deleted,
-              updated: updated,
-            ),
-          ),
-        );
-      }
-
-      if (exceptions.isNotEmpty) {
-        resultStreamController.add(left(exceptions));
-      }
-    });
-
-    return resultStreamController.stream;
+          return resultEvents;
+        })
+        .where((events) => events.isNotEmpty)
+        .expand((events) => events);
   }
 }
