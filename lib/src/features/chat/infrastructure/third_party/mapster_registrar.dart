@@ -21,6 +21,11 @@ class ChatMapsterRegistrar {
       )
       ..register(
         MapperMeta.two(
+          CreateDialogueChatRequestToCreateDialogueChatCommandMapper.new,
+        ),
+      )
+      ..register(
+        MapperMeta.two(
           CreateGroupChatRequestToCreateGroupChatCommandMapper.new,
         ),
       )

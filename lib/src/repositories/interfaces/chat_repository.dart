@@ -22,6 +22,11 @@ abstract class ChatRepository {
     String? iconName,
   });
 
+  Future<DialogueChat?> getDialogueForUsers({
+    required UserID firstUserID,
+    required UserID secondUserID,
+  });
+
   Future<DialogueChat> createDialogue({
     required UserID firstUserID,
     required UserID secondUserID,

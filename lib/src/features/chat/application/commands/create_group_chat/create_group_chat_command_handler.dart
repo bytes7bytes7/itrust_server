@@ -12,6 +12,7 @@ import '../../../../common/application/view_models/chat_vm/chat_vm.dart';
 import '../../../../common/application/view_models/media_vm/media_vm.dart';
 import '../../../../common/domain/domain.dart';
 import '../../common/common.dart';
+import '../../exceptions/exceptions.dart';
 import 'create_group_chat_command.dart';
 
 @singleton
@@ -36,6 +37,7 @@ class CreateGroupChatCommandHandler extends RequestHandler<
   FutureOr<Either<List<DetailedException>, ChatResult>> handle(
     CreateGroupChatCommand request,
   ) async {
+    final participantIDsSet = {request.userID};
     for (final id in request.guestIDs) {
       final userExists = await _endUserRepository.getByID(id: id) != null;
 
@@ -44,6 +46,14 @@ class CreateGroupChatCommandHandler extends RequestHandler<
           [const UserNotFound()],
         );
       }
+
+      participantIDsSet.add(id);
+    }
+
+    if (participantIDsSet.length != request.guestIDs.length + 1) {
+      return left(
+        [const DuplicatedUserIDs()],
+      );
     }
 
     final chat = await _chatRepository.createGroup(

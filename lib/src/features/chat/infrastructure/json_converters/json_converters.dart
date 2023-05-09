@@ -1,3 +1,4 @@
+export 'create_dialogue_chat_request.dart';
 export 'create_group_chat_request_json_converter.dart';
 export 'create_monologue_chat_request_json_converter.dart';
 export 'get_chats_request_json_converter.dart';

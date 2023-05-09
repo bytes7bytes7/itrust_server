@@ -98,6 +98,33 @@ class DevChatRepository implements ChatRepository {
   }
 
   @override
+  Future<DialogueChat?> getDialogueForUsers({
+    required UserID firstUserID,
+    required UserID secondUserID,
+  }) async {
+    final firstChatIDs = List.of(_usersChatIDs[firstUserID] ?? <ChatID>[]);
+
+    for (final id in firstChatIDs) {
+      if (id.isDialogueID) {
+        final chat = _chats[id];
+
+        if (chat is! DialogueChat) {
+          continue;
+        }
+
+        if ((chat.firstUserID == firstUserID ||
+                chat.secondUserID == firstUserID) &&
+            (chat.firstUserID == secondUserID ||
+                chat.secondUserID == secondUserID)) {
+          return chat;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  @override
   Future<DialogueChat> createDialogue({
     required UserID firstUserID,
     required UserID secondUserID,
