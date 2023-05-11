@@ -78,6 +78,13 @@ class GetChatsQueryHandler extends RequestHandler<GetChatsQuery,
                 lastMessageID: lastMessageIDMap[e.id],
                 media:
                     media != null ? _mapster.map1(media, To<MediaVM>()) : null,
+                partnerID: e.map(
+                  monologue: (_) => null,
+                  dialogue: (e) => e.firstUserID == request.userID
+                    ? e.secondUserID
+                    : e.firstUserID,
+                  group: (_) => null,
+                ),
               ),
               To<ChatVM>(),
             );

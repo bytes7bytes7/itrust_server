@@ -41,6 +41,11 @@ Router _$ChatControllerRouter(ChatController service) {
   router.add(
     'GET',
     r'/<chatID>/',
+    service.getChat,
+  );
+  router.add(
+    'GET',
+    r'/<chatID>/messages',
     service.getMessages,
   );
   router.add(

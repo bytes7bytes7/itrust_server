@@ -7,10 +7,12 @@ class ToChatVM {
     this.media,
     this.lastMessageID,
     this.participantsAmount = 0,
+    this.partnerID,
   });
 
   final int unreadAmount;
   final MediaVM? media;
   final MessageID? lastMessageID;
   final int participantsAmount;
+  final UserID? partnerID;
 }

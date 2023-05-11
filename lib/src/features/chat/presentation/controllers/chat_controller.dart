@@ -230,6 +230,33 @@ class ChatController extends ApiController {
   }
 
   @Route.get('/<$chatIDKey>/')
+  Future<Response> getChat(Request request) async {
+    late final GetChatRequest getChatRequest;
+    try {
+      getChatRequest = await parseRequest<GetChatRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query = _mapster.map2(getChatRequest, user.id, To<GetChatQuery>());
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+          (r) => ok(_mapster.map1(r, To<ChatResponse>())),
+    );
+  }
+
+  @Route.get('/<$chatIDKey>/messages')
   Future<Response> getMessages(Request request) async {
     late final GetMessagesRequest getMessagesRequest;
     try {

@@ -70,6 +70,9 @@ class CreateDialogueChatCommandHandler extends RequestHandler<
               unreadAmount: unreadAmount,
               lastMessageID: lastMessageID,
               media: null,
+              partnerID: alreadyCreatedChat.firstUserID == request.userID
+                ? alreadyCreatedChat.secondUserID
+                : alreadyCreatedChat.firstUserID,
             ),
             To<DialogueChatVM>(),
           ),
@@ -91,6 +94,9 @@ class CreateDialogueChatCommandHandler extends RequestHandler<
             unreadAmount: 0,
             lastMessageID: null,
             media: null,
+            partnerID: chat.firstUserID == request.userID
+              ? chat.secondUserID
+              : chat.firstUserID,
           ),
           To<DialogueChatVM>(),
         ),

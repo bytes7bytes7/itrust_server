@@ -15,7 +15,6 @@ part 'chat_vm.g.dart';
 class ChatVM with _$ChatVM {
   const factory ChatVM.monologue({
     required ChatID id,
-    required UserID ownerID,
     required String title,
     String? iconName,
     MediaVM? pic,
@@ -24,8 +23,7 @@ class ChatVM with _$ChatVM {
 
   const factory ChatVM.dialogue({
     required ChatID id,
-    required UserID firstUserID,
-    required UserID secondUserID,
+    required UserID partnerID,
     required int unreadAmount,
     MessageID? lastMessageID,
   }) = DialogueChatVM;

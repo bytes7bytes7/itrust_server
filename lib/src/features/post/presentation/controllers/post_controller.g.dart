@@ -14,14 +14,14 @@ Router _$PostControllerRouter(PostController service) {
     service.getUserPosts,
   );
   router.add(
-    'GET',
-    r'/<postID>',
-    service.getPost,
-  );
-  router.add(
     'POST',
     r'/new',
     service.createPost,
+  );
+  router.add(
+    'GET',
+    r'/<postID>',
+    service.getPost,
   );
   router.add(
     'POST',

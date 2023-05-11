@@ -18,6 +18,7 @@ class ChatMediatorRegistrar {
     _mediator
       // RequestHandler
       ..registerRequestHandler(() => _getIt.get<GetChatsQueryHandler>())
+      ..registerRequestHandler(() => _getIt.get<GetChatQueryHandler>())
       ..registerRequestHandler(
         () => _getIt.get<CreateMonologueChatCommandHandler>(),
       )
@@ -39,6 +40,9 @@ class ChatMediatorRegistrar {
       // PipelineBehavior
       ..registerPipelineBehavior(
         () => ValidationBehavior([_getIt.get<GetChatsQueryValidator>()]),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior([_getIt.get<GetChatQueryValidator>()]),
       )
       ..registerPipelineBehavior(
         () => ValidationBehavior(

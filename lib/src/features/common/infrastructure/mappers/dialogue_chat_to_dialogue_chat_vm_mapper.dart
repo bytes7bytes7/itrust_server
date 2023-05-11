@@ -10,10 +10,15 @@ class DialogueChatToDialogueChatVMMapper
 
   @override
   DialogueChatVM map() {
+    final partnerID = _dto.partnerID;
+
+    if (partnerID == null) {
+      throw Exception('partnerID is null during mapping to $DialogueChatVM');
+    }
+
     return DialogueChatVM(
       id: _chat.id,
-      firstUserID: _chat.firstUserID,
-      secondUserID: _chat.secondUserID,
+      partnerID: partnerID,
       unreadAmount: _dto.unreadAmount,
       lastMessageID: _dto.lastMessageID,
     );

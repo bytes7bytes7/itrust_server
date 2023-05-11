@@ -9,7 +9,6 @@ part of 'chat_vm.dart';
 _$MonologueChatVM _$$MonologueChatVMFromJson(Map<String, dynamic> json) =>
     _$MonologueChatVM(
       id: ChatID.fromJson(json['id'] as Map<String, dynamic>),
-      ownerID: UserID.fromJson(json['ownerID'] as Map<String, dynamic>),
       title: json['title'] as String,
       iconName: json['iconName'] as String?,
       pic: json['pic'] == null
@@ -24,7 +23,6 @@ _$MonologueChatVM _$$MonologueChatVMFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$MonologueChatVMToJson(_$MonologueChatVM instance) =>
     <String, dynamic>{
       'id': instance.id.toJson(),
-      'ownerID': instance.ownerID.toJson(),
       'title': instance.title,
       'iconName': instance.iconName,
       'pic': instance.pic?.toJson(),
@@ -35,9 +33,7 @@ Map<String, dynamic> _$$MonologueChatVMToJson(_$MonologueChatVM instance) =>
 _$DialogueChatVM _$$DialogueChatVMFromJson(Map<String, dynamic> json) =>
     _$DialogueChatVM(
       id: ChatID.fromJson(json['id'] as Map<String, dynamic>),
-      firstUserID: UserID.fromJson(json['firstUserID'] as Map<String, dynamic>),
-      secondUserID:
-          UserID.fromJson(json['secondUserID'] as Map<String, dynamic>),
+      partnerID: UserID.fromJson(json['partnerID'] as Map<String, dynamic>),
       unreadAmount: json['unreadAmount'] as int,
       lastMessageID: json['lastMessageID'] == null
           ? null
@@ -48,8 +44,7 @@ _$DialogueChatVM _$$DialogueChatVMFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$DialogueChatVMToJson(_$DialogueChatVM instance) =>
     <String, dynamic>{
       'id': instance.id.toJson(),
-      'firstUserID': instance.firstUserID.toJson(),
-      'secondUserID': instance.secondUserID.toJson(),
+      'partnerID': instance.partnerID.toJson(),
       'unreadAmount': instance.unreadAmount,
       'lastMessageID': instance.lastMessageID?.toJson(),
       'type': instance.$type,

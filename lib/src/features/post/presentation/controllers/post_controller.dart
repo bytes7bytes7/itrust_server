@@ -57,33 +57,6 @@ class PostController extends ApiController {
     );
   }
 
-  @Route.get('/<$postIDKey>')
-  Future<Response> getPost(Request request) async {
-    late final GetPostRequest getPostRequest;
-    try {
-      getPostRequest = await parseRequest<GetPostRequest>(request);
-    } catch (e) {
-      return problem(
-        [const InvalidBodyException()],
-      );
-    }
-
-    final user = request.user;
-
-    if (user == null) {
-      return problem([const UserNotFound()]);
-    }
-
-    final query = _mapster.map2(getPostRequest, user.id, To<GetPostQuery>());
-
-    final result = await query.sendTo(_mediator);
-
-    return result.match(
-      problem,
-      (r) => ok(_mapster.map1(r, To<PostResponse>())),
-    );
-  }
-
   @Route.post('/new')
   Future<Response> createPost(Request request) async {
     late final CreatePostRequest createPostRequest;
@@ -112,6 +85,33 @@ class PostController extends ApiController {
     return result.match(
       problem,
       (r) => created(_mapster.map1(r, To<PostResponse>())),
+    );
+  }
+
+  @Route.get('/<$postIDKey>')
+  Future<Response> getPost(Request request) async {
+    late final GetPostRequest getPostRequest;
+    try {
+      getPostRequest = await parseRequest<GetPostRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query = _mapster.map2(getPostRequest, user.id, To<GetPostQuery>());
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<PostResponse>())),
     );
   }
 
