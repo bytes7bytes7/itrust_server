@@ -286,7 +286,7 @@ class DevChatRepository implements ChatRepository {
 
     final messageIDs = _chatMessageIDs[id] ?? [];
 
-    return messageIDs.lastOrNull;
+    return messageIDs.firstOrNull;
   }
 
   @override
@@ -436,7 +436,6 @@ class DevChatRepository implements ChatRepository {
       ..insert(0, id);
     _chatMessageIDs[chatID] = messageIDs;
 
-    _chatController.add(UpdatedChatEvent(chatID: chatID, chat: chat));
     _messageController
         .add(CreatedMessageEvent(chatID: chatID, message: message));
 
@@ -497,7 +496,6 @@ class DevChatRepository implements ChatRepository {
       ..insert(0, id);
     _chatMessageIDs[chatID] = messageIDs;
 
-    _chatController.add(UpdatedChatEvent(chatID: chatID, chat: chat));
     _messageController
         .add(CreatedMessageEvent(chatID: chatID, message: message));
 
