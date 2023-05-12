@@ -53,5 +53,10 @@ Router _$ChatControllerRouter(ChatController service) {
     r'/<chatID>/listen',
     service.listenMessages,
   );
+  router.add(
+    'GET',
+    r'/<chatID>/messages/<messageID>',
+    service.getMessage,
+  );
   return router;
 }

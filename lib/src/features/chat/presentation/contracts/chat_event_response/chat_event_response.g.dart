@@ -6,8 +6,8 @@ part of 'chat_event_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ChatEventResponse _$$_ChatEventResponseFromJson(Map<String, dynamic> json) =>
-    _$_ChatEventResponse(
+ChatEventResponse _$ChatEventResponseFromJson(Map<String, dynamic> json) =>
+    ChatEventResponse(
       created: (json['created'] as List<dynamic>?)
               ?.map((e) => ChatVM.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -22,8 +22,7 @@ _$_ChatEventResponse _$$_ChatEventResponseFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$$_ChatEventResponseToJson(
-        _$_ChatEventResponse instance) =>
+Map<String, dynamic> _$ChatEventResponseToJson(ChatEventResponse instance) =>
     <String, dynamic>{
       'created': instance.created.map((e) => e.toJson()).toList(),
       'deleted': instance.deleted.map((e) => e.toJson()).toList(),

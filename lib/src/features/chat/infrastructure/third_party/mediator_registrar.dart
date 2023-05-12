@@ -36,6 +36,7 @@ class ChatMediatorRegistrar {
       ..registerStreamRequestHandler(
         () => _getIt.get<ListenMessagesQueryHandler>(),
       )
+      ..registerRequestHandler(() => _getIt.get<GetMessageQueryHandler>())
 
       // PipelineBehavior
       ..registerPipelineBehavior(
@@ -73,6 +74,9 @@ class ChatMediatorRegistrar {
         () => StreamValidationBehavior(
           [_getIt.get<ListenMessagesQueryValidator>()],
         ),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior([_getIt.get<GetMessageQueryValidator>()]),
       );
   }
 }

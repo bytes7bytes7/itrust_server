@@ -252,7 +252,7 @@ class ChatController extends ApiController {
 
     return result.match(
       problem,
-          (r) => ok(_mapster.map1(r, To<ChatResponse>())),
+      (r) => ok(_mapster.map1(r, To<ChatResponse>())),
     );
   }
 
@@ -323,5 +323,33 @@ class ChatController extends ApiController {
         );
       });
     }).call(request);
+  }
+
+  @Route.get('/<$chatIDKey>/messages/<$messageIDKey>')
+  Future<Response> getMessage(Request request) async {
+    late final GetMessageRequest getMessageRequest;
+    try {
+      getMessageRequest = await parseRequest<GetMessageRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final query =
+        _mapster.map2(getMessageRequest, user.id, To<GetMessageQuery>());
+
+    final result = await query.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<MessageResponse>())),
+    );
   }
 }
