@@ -239,35 +239,35 @@ class DevChatRepository implements ChatRepository {
   }) async {
     final chats = <Chat>[];
 
-    var reachStartAfter = startAfter == null;
-
     final chatIDs = _usersChatIDs[userID] ?? [];
 
     for (final id in chatIDs) {
-      if (reachStartAfter) {
-        final chat = _chats[id];
+      final chat = _chats[id];
 
-        if (chat == null) {
-          continue;
-        }
-
-        chats.add(chat);
-      } else if (id == startAfter) {
-        reachStartAfter = true;
+      if (chat == null) {
+        continue;
       }
+
+      chats.add(chat);
 
       if (chats.length == limit) {
         break;
       }
     }
 
+    var reachStartAfter = startAfter == null;
+
     final chatsOrder = List.of(_chatsOrder);
     final result = <Chat>[];
     for (final id in chatsOrder) {
-      final chat = chats.firstWhereOrNull((e) => e.id == id);
+      if (reachStartAfter) {
+        final chat = chats.firstWhereOrNull((e) => e.id == id);
 
-      if (chat != null) {
-        result.add(chat);
+        if (chat != null) {
+          result.add(chat);
+        }
+      } else if (id == startAfter) {
+        reachStartAfter = true;
       }
     }
 
@@ -363,6 +363,10 @@ class DevChatRepository implements ChatRepository {
 
     if (lastMessage == null) {
       throw Exception('Message not found');
+    }
+
+    if (lastMessageID == messageID) {
+      return true;
     }
 
     return lastMessage.sentAt.isAfter(currentMessage.sentAt);
