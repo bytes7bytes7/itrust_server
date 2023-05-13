@@ -436,8 +436,12 @@ class DevChatRepository implements ChatRepository {
       ..insert(0, id);
     _chatMessageIDs[chatID] = messageIDs;
 
-    _messageController
-        .add(CreatedMessageEvent(chatID: chatID, message: message));
+    _chatController.add(
+      MessageChatEvent(chatID: chatID, lastMessageID: id),
+    );
+    _messageController.add(
+      CreatedMessageEvent(chatID: chatID, message: message),
+    );
 
     return message;
   }
@@ -496,8 +500,12 @@ class DevChatRepository implements ChatRepository {
       ..insert(0, id);
     _chatMessageIDs[chatID] = messageIDs;
 
-    _messageController
-        .add(CreatedMessageEvent(chatID: chatID, message: message));
+    _chatController.add(
+      MessageChatEvent(chatID: chatID, lastMessageID: id),
+    );
+    _messageController.add(
+      CreatedMessageEvent(chatID: chatID, message: message),
+    );
 
     return message;
   }

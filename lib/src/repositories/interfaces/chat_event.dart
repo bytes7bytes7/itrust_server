@@ -31,3 +31,12 @@ class UpdatedChatEvent extends ChatEvent {
 
   final Chat chat;
 }
+
+class MessageChatEvent extends ChatEvent {
+  const MessageChatEvent({
+    required super.chatID,
+    required this.lastMessageID,
+  });
+
+  final MessageID? lastMessageID;
+}

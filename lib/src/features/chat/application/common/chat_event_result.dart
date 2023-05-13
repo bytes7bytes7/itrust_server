@@ -6,9 +6,11 @@ class ChatEventResult {
     this.created = const [],
     this.deleted = const [],
     this.updated = const [],
+    this.lastMessageID = const {},
   });
 
   final List<ChatVM> created;
   final List<ChatID> deleted;
   final List<ChatVM> updated;
+  final Map<ChatID, MessageID?> lastMessageID;
 }

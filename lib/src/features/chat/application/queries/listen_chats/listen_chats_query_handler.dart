@@ -45,6 +45,7 @@ class ListenChatsQueryHandler extends StreamRequestHandler<ListenChatsQuery,
           final created = <ChatVM>[];
           final deleted = <ChatID>[];
           final updated = <ChatVM>[];
+          final lastMessageID = <ChatID, MessageID?>{};
           final exceptions = <DetailedException>[];
 
           for (final event in events) {
@@ -83,8 +84,8 @@ class ListenChatsQueryHandler extends StreamRequestHandler<ListenChatsQuery,
                     partnerID: event.chat.map(
                       monologue: (_) => null,
                       dialogue: (e) => e.firstUserID == request.userID
-                        ? e.secondUserID
-                        : e.firstUserID,
+                          ? e.secondUserID
+                          : e.firstUserID,
                       group: (_) => null,
                     ),
                   ),
@@ -128,14 +129,16 @@ class ListenChatsQueryHandler extends StreamRequestHandler<ListenChatsQuery,
                     partnerID: event.chat.map(
                       monologue: (_) => null,
                       dialogue: (e) => e.firstUserID == request.userID
-                        ? e.secondUserID
-                        : e.firstUserID,
+                          ? e.secondUserID
+                          : e.firstUserID,
                       group: (_) => null,
                     ),
                   ),
                   To<ChatVM>(),
                 ),
               );
+            } else if (event is MessageChatEvent) {
+              lastMessageID[event.chatID] = event.lastMessageID;
             } else {
               exceptions.add(
                 DetailedException.unexpected(
@@ -149,13 +152,17 @@ class ListenChatsQueryHandler extends StreamRequestHandler<ListenChatsQuery,
           final resultEvents =
               <Either<List<DetailedException>, ChatEventResult>>[];
 
-          if (created.isNotEmpty || deleted.isNotEmpty || updated.isNotEmpty) {
+          if (created.isNotEmpty ||
+              deleted.isNotEmpty ||
+              updated.isNotEmpty ||
+              lastMessageID.isNotEmpty) {
             resultEvents.add(
               right(
                 ChatEventResult(
                   created: created,
                   deleted: deleted,
                   updated: updated,
+                  lastMessageID: lastMessageID,
                 ),
               ),
             );
