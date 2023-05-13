@@ -106,61 +106,16 @@ class DevChatRepository implements ChatRepository {
     required UserID firstUserID,
     required UserID secondUserID,
   }) async {
-    final firstChatIDs = List.of(_usersChatIDs[firstUserID] ?? <ChatID>[]);
+    final dialogueID = ChatID.generateDialogue(firstUserID, secondUserID);
+    final chat = _chats[dialogueID];
 
-    for (final id in firstChatIDs) {
-      if (id.isDialogueID) {
-        final chat = _chats[id];
-
-        if (chat is! DialogueChat) {
-          continue;
-        }
-
-        if ((chat.firstUserID == firstUserID ||
-                chat.secondUserID == firstUserID) &&
-            (chat.firstUserID == secondUserID ||
-                chat.secondUserID == secondUserID)) {
-          return chat;
-        }
-      }
+    if (chat == null) {
+      return null;
     }
 
-    return null;
-  }
-
-  @override
-  Future<DialogueChat> createDialogue({
-    required UserID firstUserID,
-    required UserID secondUserID,
-  }) async {
-    late ChatID id;
-    do {
-      id = ChatID.generateDialogue();
-    } while (_chats.keys.contains(id));
-
-    // book place
-    _chats[id] = null;
-
-    final createdAt = _dateTimeProvider.nowUtc();
-
-    final chat = DialogueChat(
-      id: id,
-      createdAt: createdAt,
-      firstUserID: firstUserID,
-      secondUserID: secondUserID,
-    );
-
-    _chats[id] = chat;
-
-    final firstChatIDs = List.of(_usersChatIDs[firstUserID] ?? <ChatID>[])
-      ..add(id);
-    _usersChatIDs[firstUserID] = firstChatIDs;
-
-    final secondChatIDs = List.of(_usersChatIDs[secondUserID] ?? <ChatID>[])
-      ..add(id);
-    _usersChatIDs[secondUserID] = secondChatIDs;
-
-    _addChatEvent(CreatedChatEvent(chatID: id, chat: chat));
+    if (chat is! DialogueChat) {
+      throw Exception('Not a dialogue chat');
+    }
 
     return chat;
   }
@@ -369,7 +324,8 @@ class DevChatRepository implements ChatRepository {
       return true;
     }
 
-    return lastMessage.sentAt.isAfter(currentMessage.sentAt);
+    return lastMessage.sentAt.isAfter(currentMessage.sentAt) ||
+        lastMessage.sentAt.isAtSameMomentAs(currentMessage.sentAt);
   }
 
   @override
@@ -427,7 +383,22 @@ class DevChatRepository implements ChatRepository {
     final chat = _chats[chatID];
 
     if (chat == null) {
-      throw Exception('Chat not found');
+      if (!chatID.isDialogueID) {
+        throw Exception('Chat not found');
+      }
+
+      final userIDs = chatID.tryParseDialogueChatID();
+
+      if (userIDs == null || userIDs.length != 2) {
+        throw Exception(
+          'Unexpected error during sending message to dialogue chat',
+        );
+      }
+
+      await _createDialogue(
+        firstUserID: userIDs[0],
+        secondUserID: userIDs[1],
+      );
     }
 
     late MessageID id;
@@ -480,7 +451,22 @@ class DevChatRepository implements ChatRepository {
     final chat = _chats[chatID];
 
     if (chat == null) {
-      throw Exception('Chat not found');
+      if (!chatID.isDialogueID) {
+        throw Exception('Chat not found');
+      }
+
+      final userIDs = chatID.tryParseDialogueChatID();
+
+      if (userIDs == null || userIDs.length != 2) {
+        throw Exception(
+          'Unexpected error during sending message to dialogue chat',
+        );
+      }
+
+      await _createDialogue(
+        firstUserID: userIDs[0],
+        secondUserID: userIDs[1],
+      );
     }
 
     late MessageID id;
@@ -609,5 +595,38 @@ class DevChatRepository implements ChatRepository {
 
   void _addMessageEvent(MessageEvent event) {
     _messageController.add(event);
+  }
+
+  Future<DialogueChat> _createDialogue({
+    required UserID firstUserID,
+    required UserID secondUserID,
+  }) async {
+    final id = ChatID.generateDialogue(firstUserID, secondUserID);
+
+    // book place
+    _chats[id] = null;
+
+    final createdAt = _dateTimeProvider.nowUtc();
+
+    final chat = DialogueChat(
+      id: id,
+      createdAt: createdAt,
+      firstUserID: firstUserID,
+      secondUserID: secondUserID,
+    );
+
+    _chats[id] = chat;
+
+    final firstChatIDs = List.of(_usersChatIDs[firstUserID] ?? <ChatID>[])
+      ..add(id);
+    _usersChatIDs[firstUserID] = firstChatIDs;
+
+    final secondChatIDs = List.of(_usersChatIDs[secondUserID] ?? <ChatID>[])
+      ..add(id);
+    _usersChatIDs[secondUserID] = secondChatIDs;
+
+    _addChatEvent(CreatedChatEvent(chatID: id, chat: chat));
+
+    return chat;
   }
 }

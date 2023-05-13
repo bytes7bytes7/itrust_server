@@ -27,11 +27,6 @@ abstract class ChatRepository {
     required UserID secondUserID,
   });
 
-  Future<DialogueChat> createDialogue({
-    required UserID firstUserID,
-    required UserID secondUserID,
-  });
-
   Future<GroupChat> createGroup({
     required UserID userID,
     required String title,

@@ -25,11 +25,6 @@ Router _$ChatControllerRouter(ChatController service) {
   );
   router.add(
     'POST',
-    r'/dialogue',
-    service.createDialogue,
-  );
-  router.add(
-    'POST',
     r'/group',
     service.createGroup,
   );

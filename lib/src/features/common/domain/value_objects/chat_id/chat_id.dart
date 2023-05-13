@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../../utils/typedef.dart';
+import '../user_id/user_id.dart';
 
 part 'chat_id.freezed.dart';
 
@@ -19,8 +20,8 @@ class ChatID with _$ChatID {
     return ChatID('$_monologuePrefix${Uuid().v4()}');
   }
 
-  factory ChatID.generateDialogue() {
-    return ChatID('$_dialoguePrefix${Uuid().v4()}');
+  factory ChatID.generateDialogue(UserID firstID, UserID secondID) {
+    return ChatID('$_dialoguePrefix$firstID$secondID');
   }
 
   factory ChatID.generateGroup() {
@@ -40,4 +41,20 @@ class ChatID with _$ChatID {
   bool get isDialogueID => value.startsWith(_dialoguePrefix);
 
   bool get isGroupID => value.startsWith(_groupPrefix);
+}
+
+extension DialogueChatID on ChatID {
+  List<UserID>? tryParseDialogueChatID() {
+    if (!isDialogueID) {
+      return null;
+    }
+
+    final userIDs = value.replaceFirst(_dialoguePrefix, '');
+
+    final firstID =
+        UserID.fromString(userIDs.substring(0, userIDs.length ~/ 2));
+    final secondID = UserID.fromString(userIDs.substring(userIDs.length ~/ 2));
+
+    return [firstID, secondID];
+  }
 }
