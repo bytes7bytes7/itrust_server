@@ -79,8 +79,11 @@ class DevChatRepository implements ChatRepository {
       _images[id] = media.id;
     }
 
+    final createdAt = _dateTimeProvider.nowUtc();
+
     final chat = MonologueChat(
       id: id,
+      createdAt: createdAt,
       ownerID: userID,
       title: title,
       iconName: iconName,
@@ -137,8 +140,11 @@ class DevChatRepository implements ChatRepository {
     // book place
     _chats[id] = null;
 
+    final createdAt = _dateTimeProvider.nowUtc();
+
     final chat = DialogueChat(
       id: id,
+      createdAt: createdAt,
       firstUserID: firstUserID,
       secondUserID: secondUserID,
     );
@@ -179,8 +185,11 @@ class DevChatRepository implements ChatRepository {
       _images[id] = media.id;
     }
 
+    final createdAt = _dateTimeProvider.nowUtc();
+
     final chat = GroupChat(
       id: id,
+      createdAt: createdAt,
       ownerID: userID,
       title: title,
       picID: media?.id,

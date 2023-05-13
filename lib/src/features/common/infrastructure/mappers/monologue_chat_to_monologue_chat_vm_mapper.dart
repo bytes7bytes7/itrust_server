@@ -12,6 +12,7 @@ class MonologueChatToMonologueChatVMMapper
   MonologueChatVM map() {
     return MonologueChatVM(
       id: _chat.id,
+      createdAt: _chat.createdAt,
       title: _chat.title,
       iconName: _chat.iconName,
       lastMessageID: _dto.lastMessageID,

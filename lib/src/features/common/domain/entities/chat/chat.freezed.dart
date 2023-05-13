@@ -17,38 +17,43 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Chat {
   ChatID get id => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ChatID id, UserID ownerID, String title,
-            String? iconName, MediaID? picID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, String? iconName, MediaID? picID)
         monologue,
-    required TResult Function(
-            ChatID id, UserID firstUserID, UserID secondUserID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID firstUserID,
+            UserID secondUserID)
         dialogue,
-    required TResult Function(
-            ChatID id, UserID ownerID, String title, MediaID? picID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, MediaID? picID)
         group,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ChatID id, UserID ownerID, String title, String? iconName,
-            MediaID? picID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, String? iconName, MediaID? picID)?
         monologue,
-    TResult? Function(ChatID id, UserID firstUserID, UserID secondUserID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID firstUserID,
+            UserID secondUserID)?
         dialogue,
-    TResult? Function(ChatID id, UserID ownerID, String title, MediaID? picID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, MediaID? picID)?
         group,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ChatID id, UserID ownerID, String title, String? iconName,
-            MediaID? picID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, String? iconName, MediaID? picID)?
         monologue,
-    TResult Function(ChatID id, UserID firstUserID, UserID secondUserID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID firstUserID,
+            UserID secondUserID)?
         dialogue,
-    TResult Function(ChatID id, UserID ownerID, String title, MediaID? picID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, MediaID? picID)?
         group,
     required TResult orElse(),
   }) =>
@@ -85,7 +90,7 @@ abstract class $ChatCopyWith<$Res> {
   factory $ChatCopyWith(Chat value, $Res Function(Chat) then) =
       _$ChatCopyWithImpl<$Res, Chat>;
   @useResult
-  $Res call({ChatID id});
+  $Res call({ChatID id, DateTime createdAt});
 
   $ChatIDCopyWith<$Res> get id;
 }
@@ -104,12 +109,17 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
   @override
   $Res call({
     Object? id = null,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as ChatID,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 
@@ -131,6 +141,7 @@ abstract class _$$MonologueChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
   @useResult
   $Res call(
       {ChatID id,
+      DateTime createdAt,
       UserID ownerID,
       String title,
       String? iconName,
@@ -154,6 +165,7 @@ class __$$MonologueChatCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? createdAt = null,
     Object? ownerID = null,
     Object? title = null,
     Object? iconName = freezed,
@@ -164,6 +176,10 @@ class __$$MonologueChatCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as ChatID,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       ownerID: null == ownerID
           ? _value.ownerID
           : ownerID // ignore: cast_nullable_to_non_nullable
@@ -209,6 +225,7 @@ class __$$MonologueChatCopyWithImpl<$Res>
 class _$MonologueChat implements MonologueChat {
   const _$MonologueChat(
       {required this.id,
+      required this.createdAt,
       required this.ownerID,
       required this.title,
       this.iconName,
@@ -216,6 +233,8 @@ class _$MonologueChat implements MonologueChat {
 
   @override
   final ChatID id;
+  @override
+  final DateTime createdAt;
   @override
   final UserID ownerID;
   @override
@@ -227,7 +246,7 @@ class _$MonologueChat implements MonologueChat {
 
   @override
   String toString() {
-    return 'Chat.monologue(id: $id, ownerID: $ownerID, title: $title, iconName: $iconName, picID: $picID)';
+    return 'Chat.monologue(id: $id, createdAt: $createdAt, ownerID: $ownerID, title: $title, iconName: $iconName, picID: $picID)';
   }
 
   @override
@@ -236,6 +255,8 @@ class _$MonologueChat implements MonologueChat {
         (other.runtimeType == runtimeType &&
             other is _$MonologueChat &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.ownerID, ownerID) || other.ownerID == ownerID) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.iconName, iconName) ||
@@ -245,7 +266,7 @@ class _$MonologueChat implements MonologueChat {
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, ownerID, title, iconName, picID);
+      Object.hash(runtimeType, id, createdAt, ownerID, title, iconName, picID);
 
   @JsonKey(ignore: true)
   @override
@@ -256,47 +277,51 @@ class _$MonologueChat implements MonologueChat {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ChatID id, UserID ownerID, String title,
-            String? iconName, MediaID? picID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, String? iconName, MediaID? picID)
         monologue,
-    required TResult Function(
-            ChatID id, UserID firstUserID, UserID secondUserID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID firstUserID,
+            UserID secondUserID)
         dialogue,
-    required TResult Function(
-            ChatID id, UserID ownerID, String title, MediaID? picID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, MediaID? picID)
         group,
   }) {
-    return monologue(id, ownerID, title, iconName, picID);
+    return monologue(id, createdAt, ownerID, title, iconName, picID);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ChatID id, UserID ownerID, String title, String? iconName,
-            MediaID? picID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, String? iconName, MediaID? picID)?
         monologue,
-    TResult? Function(ChatID id, UserID firstUserID, UserID secondUserID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID firstUserID,
+            UserID secondUserID)?
         dialogue,
-    TResult? Function(ChatID id, UserID ownerID, String title, MediaID? picID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, MediaID? picID)?
         group,
   }) {
-    return monologue?.call(id, ownerID, title, iconName, picID);
+    return monologue?.call(id, createdAt, ownerID, title, iconName, picID);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ChatID id, UserID ownerID, String title, String? iconName,
-            MediaID? picID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, String? iconName, MediaID? picID)?
         monologue,
-    TResult Function(ChatID id, UserID firstUserID, UserID secondUserID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID firstUserID,
+            UserID secondUserID)?
         dialogue,
-    TResult Function(ChatID id, UserID ownerID, String title, MediaID? picID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, MediaID? picID)?
         group,
     required TResult orElse(),
   }) {
     if (monologue != null) {
-      return monologue(id, ownerID, title, iconName, picID);
+      return monologue(id, createdAt, ownerID, title, iconName, picID);
     }
     return orElse();
   }
@@ -339,6 +364,7 @@ class _$MonologueChat implements MonologueChat {
 abstract class MonologueChat implements Chat {
   const factory MonologueChat(
       {required final ChatID id,
+      required final DateTime createdAt,
       required final UserID ownerID,
       required final String title,
       final String? iconName,
@@ -346,6 +372,8 @@ abstract class MonologueChat implements Chat {
 
   @override
   ChatID get id;
+  @override
+  DateTime get createdAt;
   UserID get ownerID;
   String get title;
   String? get iconName;
@@ -363,7 +391,8 @@ abstract class _$$DialogueChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
       __$$DialogueChatCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ChatID id, UserID firstUserID, UserID secondUserID});
+  $Res call(
+      {ChatID id, DateTime createdAt, UserID firstUserID, UserID secondUserID});
 
   @override
   $ChatIDCopyWith<$Res> get id;
@@ -383,6 +412,7 @@ class __$$DialogueChatCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? createdAt = null,
     Object? firstUserID = null,
     Object? secondUserID = null,
   }) {
@@ -391,6 +421,10 @@ class __$$DialogueChatCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as ChatID,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       firstUserID: null == firstUserID
           ? _value.firstUserID
           : firstUserID // ignore: cast_nullable_to_non_nullable
@@ -424,11 +458,14 @@ class __$$DialogueChatCopyWithImpl<$Res>
 class _$DialogueChat implements DialogueChat {
   const _$DialogueChat(
       {required this.id,
+      required this.createdAt,
       required this.firstUserID,
       required this.secondUserID});
 
   @override
   final ChatID id;
+  @override
+  final DateTime createdAt;
   @override
   final UserID firstUserID;
   @override
@@ -436,7 +473,7 @@ class _$DialogueChat implements DialogueChat {
 
   @override
   String toString() {
-    return 'Chat.dialogue(id: $id, firstUserID: $firstUserID, secondUserID: $secondUserID)';
+    return 'Chat.dialogue(id: $id, createdAt: $createdAt, firstUserID: $firstUserID, secondUserID: $secondUserID)';
   }
 
   @override
@@ -445,6 +482,8 @@ class _$DialogueChat implements DialogueChat {
         (other.runtimeType == runtimeType &&
             other is _$DialogueChat &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.firstUserID, firstUserID) ||
                 other.firstUserID == firstUserID) &&
             (identical(other.secondUserID, secondUserID) ||
@@ -452,7 +491,8 @@ class _$DialogueChat implements DialogueChat {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, firstUserID, secondUserID);
+  int get hashCode =>
+      Object.hash(runtimeType, id, createdAt, firstUserID, secondUserID);
 
   @JsonKey(ignore: true)
   @override
@@ -463,47 +503,51 @@ class _$DialogueChat implements DialogueChat {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ChatID id, UserID ownerID, String title,
-            String? iconName, MediaID? picID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, String? iconName, MediaID? picID)
         monologue,
-    required TResult Function(
-            ChatID id, UserID firstUserID, UserID secondUserID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID firstUserID,
+            UserID secondUserID)
         dialogue,
-    required TResult Function(
-            ChatID id, UserID ownerID, String title, MediaID? picID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, MediaID? picID)
         group,
   }) {
-    return dialogue(id, firstUserID, secondUserID);
+    return dialogue(id, createdAt, firstUserID, secondUserID);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ChatID id, UserID ownerID, String title, String? iconName,
-            MediaID? picID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, String? iconName, MediaID? picID)?
         monologue,
-    TResult? Function(ChatID id, UserID firstUserID, UserID secondUserID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID firstUserID,
+            UserID secondUserID)?
         dialogue,
-    TResult? Function(ChatID id, UserID ownerID, String title, MediaID? picID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, MediaID? picID)?
         group,
   }) {
-    return dialogue?.call(id, firstUserID, secondUserID);
+    return dialogue?.call(id, createdAt, firstUserID, secondUserID);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ChatID id, UserID ownerID, String title, String? iconName,
-            MediaID? picID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, String? iconName, MediaID? picID)?
         monologue,
-    TResult Function(ChatID id, UserID firstUserID, UserID secondUserID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID firstUserID,
+            UserID secondUserID)?
         dialogue,
-    TResult Function(ChatID id, UserID ownerID, String title, MediaID? picID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, MediaID? picID)?
         group,
     required TResult orElse(),
   }) {
     if (dialogue != null) {
-      return dialogue(id, firstUserID, secondUserID);
+      return dialogue(id, createdAt, firstUserID, secondUserID);
     }
     return orElse();
   }
@@ -546,11 +590,14 @@ class _$DialogueChat implements DialogueChat {
 abstract class DialogueChat implements Chat {
   const factory DialogueChat(
       {required final ChatID id,
+      required final DateTime createdAt,
       required final UserID firstUserID,
       required final UserID secondUserID}) = _$DialogueChat;
 
   @override
   ChatID get id;
+  @override
+  DateTime get createdAt;
   UserID get firstUserID;
   UserID get secondUserID;
   @override
@@ -566,7 +613,12 @@ abstract class _$$GroupChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
       __$$GroupChatCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ChatID id, UserID ownerID, String title, MediaID? picID});
+  $Res call(
+      {ChatID id,
+      DateTime createdAt,
+      UserID ownerID,
+      String title,
+      MediaID? picID});
 
   @override
   $ChatIDCopyWith<$Res> get id;
@@ -586,6 +638,7 @@ class __$$GroupChatCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? createdAt = null,
     Object? ownerID = null,
     Object? title = null,
     Object? picID = freezed,
@@ -595,6 +648,10 @@ class __$$GroupChatCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as ChatID,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       ownerID: null == ownerID
           ? _value.ownerID
           : ownerID // ignore: cast_nullable_to_non_nullable
@@ -636,12 +693,15 @@ class __$$GroupChatCopyWithImpl<$Res>
 class _$GroupChat implements GroupChat {
   const _$GroupChat(
       {required this.id,
+      required this.createdAt,
       required this.ownerID,
       required this.title,
       this.picID});
 
   @override
   final ChatID id;
+  @override
+  final DateTime createdAt;
   @override
   final UserID ownerID;
   @override
@@ -651,7 +711,7 @@ class _$GroupChat implements GroupChat {
 
   @override
   String toString() {
-    return 'Chat.group(id: $id, ownerID: $ownerID, title: $title, picID: $picID)';
+    return 'Chat.group(id: $id, createdAt: $createdAt, ownerID: $ownerID, title: $title, picID: $picID)';
   }
 
   @override
@@ -660,13 +720,16 @@ class _$GroupChat implements GroupChat {
         (other.runtimeType == runtimeType &&
             other is _$GroupChat &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.ownerID, ownerID) || other.ownerID == ownerID) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.picID, picID) || other.picID == picID));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, ownerID, title, picID);
+  int get hashCode =>
+      Object.hash(runtimeType, id, createdAt, ownerID, title, picID);
 
   @JsonKey(ignore: true)
   @override
@@ -677,47 +740,51 @@ class _$GroupChat implements GroupChat {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ChatID id, UserID ownerID, String title,
-            String? iconName, MediaID? picID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, String? iconName, MediaID? picID)
         monologue,
-    required TResult Function(
-            ChatID id, UserID firstUserID, UserID secondUserID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID firstUserID,
+            UserID secondUserID)
         dialogue,
-    required TResult Function(
-            ChatID id, UserID ownerID, String title, MediaID? picID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, MediaID? picID)
         group,
   }) {
-    return group(id, ownerID, title, picID);
+    return group(id, createdAt, ownerID, title, picID);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ChatID id, UserID ownerID, String title, String? iconName,
-            MediaID? picID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, String? iconName, MediaID? picID)?
         monologue,
-    TResult? Function(ChatID id, UserID firstUserID, UserID secondUserID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID firstUserID,
+            UserID secondUserID)?
         dialogue,
-    TResult? Function(ChatID id, UserID ownerID, String title, MediaID? picID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, MediaID? picID)?
         group,
   }) {
-    return group?.call(id, ownerID, title, picID);
+    return group?.call(id, createdAt, ownerID, title, picID);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ChatID id, UserID ownerID, String title, String? iconName,
-            MediaID? picID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, String? iconName, MediaID? picID)?
         monologue,
-    TResult Function(ChatID id, UserID firstUserID, UserID secondUserID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID firstUserID,
+            UserID secondUserID)?
         dialogue,
-    TResult Function(ChatID id, UserID ownerID, String title, MediaID? picID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID ownerID,
+            String title, MediaID? picID)?
         group,
     required TResult orElse(),
   }) {
     if (group != null) {
-      return group(id, ownerID, title, picID);
+      return group(id, createdAt, ownerID, title, picID);
     }
     return orElse();
   }
@@ -760,12 +827,15 @@ class _$GroupChat implements GroupChat {
 abstract class GroupChat implements Chat {
   const factory GroupChat(
       {required final ChatID id,
+      required final DateTime createdAt,
       required final UserID ownerID,
       required final String title,
       final MediaID? picID}) = _$GroupChat;
 
   @override
   ChatID get id;
+  @override
+  DateTime get createdAt;
   UserID get ownerID;
   String get title;
   MediaID? get picID;

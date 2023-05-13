@@ -12,6 +12,7 @@ class GroupChatToGroupChatVMMapper
   GroupChatVM map() {
     return GroupChatVM(
       id: _chat.id,
+      createdAt: _chat.createdAt,
       ownerID: _chat.ownerID,
       participantsAmount: _dto.participantsAmount,
       title: _chat.title,

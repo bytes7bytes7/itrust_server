@@ -32,17 +32,19 @@ ChatVM _$ChatVMFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ChatVM {
   ChatID get id => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
   MessageID? get lastMessageID => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ChatID id, String title, String? iconName,
-            MediaVM? pic, MessageID? lastMessageID)
+    required TResult Function(ChatID id, DateTime createdAt, String title,
+            String? iconName, MediaVM? pic, MessageID? lastMessageID)
         monologue,
-    required TResult Function(ChatID id, UserID partnerID, int unreadAmount,
-            MessageID? lastMessageID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID partnerID,
+            int unreadAmount, MessageID? lastMessageID)
         dialogue,
     required TResult Function(
             ChatID id,
+            DateTime createdAt,
             UserID ownerID,
             int participantsAmount,
             String title,
@@ -54,14 +56,15 @@ mixin _$ChatVM {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ChatID id, String title, String? iconName, MediaVM? pic,
-            MessageID? lastMessageID)?
+    TResult? Function(ChatID id, DateTime createdAt, String title,
+            String? iconName, MediaVM? pic, MessageID? lastMessageID)?
         monologue,
-    TResult? Function(ChatID id, UserID partnerID, int unreadAmount,
-            MessageID? lastMessageID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID partnerID,
+            int unreadAmount, MessageID? lastMessageID)?
         dialogue,
     TResult? Function(
             ChatID id,
+            DateTime createdAt,
             UserID ownerID,
             int participantsAmount,
             String title,
@@ -73,14 +76,15 @@ mixin _$ChatVM {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ChatID id, String title, String? iconName, MediaVM? pic,
-            MessageID? lastMessageID)?
+    TResult Function(ChatID id, DateTime createdAt, String title,
+            String? iconName, MediaVM? pic, MessageID? lastMessageID)?
         monologue,
-    TResult Function(ChatID id, UserID partnerID, int unreadAmount,
-            MessageID? lastMessageID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID partnerID,
+            int unreadAmount, MessageID? lastMessageID)?
         dialogue,
     TResult Function(
             ChatID id,
+            DateTime createdAt,
             UserID ownerID,
             int participantsAmount,
             String title,
@@ -123,7 +127,7 @@ abstract class $ChatVMCopyWith<$Res> {
   factory $ChatVMCopyWith(ChatVM value, $Res Function(ChatVM) then) =
       _$ChatVMCopyWithImpl<$Res, ChatVM>;
   @useResult
-  $Res call({ChatID id, MessageID? lastMessageID});
+  $Res call({ChatID id, DateTime createdAt, MessageID? lastMessageID});
 
   $ChatIDCopyWith<$Res> get id;
   $MessageIDCopyWith<$Res>? get lastMessageID;
@@ -143,6 +147,7 @@ class _$ChatVMCopyWithImpl<$Res, $Val extends ChatVM>
   @override
   $Res call({
     Object? id = null,
+    Object? createdAt = null,
     Object? lastMessageID = freezed,
   }) {
     return _then(_value.copyWith(
@@ -150,6 +155,10 @@ class _$ChatVMCopyWithImpl<$Res, $Val extends ChatVM>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as ChatID,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       lastMessageID: freezed == lastMessageID
           ? _value.lastMessageID
           : lastMessageID // ignore: cast_nullable_to_non_nullable
@@ -188,6 +197,7 @@ abstract class _$$MonologueChatVMCopyWith<$Res>
   @useResult
   $Res call(
       {ChatID id,
+      DateTime createdAt,
       String title,
       String? iconName,
       MediaVM? pic,
@@ -212,6 +222,7 @@ class __$$MonologueChatVMCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? createdAt = null,
     Object? title = null,
     Object? iconName = freezed,
     Object? pic = freezed,
@@ -222,6 +233,10 @@ class __$$MonologueChatVMCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as ChatID,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -259,6 +274,7 @@ class __$$MonologueChatVMCopyWithImpl<$Res>
 class _$MonologueChatVM implements MonologueChatVM {
   const _$MonologueChatVM(
       {required this.id,
+      required this.createdAt,
       required this.title,
       this.iconName,
       this.pic,
@@ -271,6 +287,8 @@ class _$MonologueChatVM implements MonologueChatVM {
 
   @override
   final ChatID id;
+  @override
+  final DateTime createdAt;
   @override
   final String title;
   @override
@@ -285,7 +303,7 @@ class _$MonologueChatVM implements MonologueChatVM {
 
   @override
   String toString() {
-    return 'ChatVM.monologue(id: $id, title: $title, iconName: $iconName, pic: $pic, lastMessageID: $lastMessageID)';
+    return 'ChatVM.monologue(id: $id, createdAt: $createdAt, title: $title, iconName: $iconName, pic: $pic, lastMessageID: $lastMessageID)';
   }
 
   @override
@@ -294,6 +312,8 @@ class _$MonologueChatVM implements MonologueChatVM {
         (other.runtimeType == runtimeType &&
             other is _$MonologueChatVM &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.iconName, iconName) ||
                 other.iconName == iconName) &&
@@ -304,8 +324,8 @@ class _$MonologueChatVM implements MonologueChatVM {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, title, iconName, pic, lastMessageID);
+  int get hashCode => Object.hash(
+      runtimeType, id, createdAt, title, iconName, pic, lastMessageID);
 
   @JsonKey(ignore: true)
   @override
@@ -316,14 +336,15 @@ class _$MonologueChatVM implements MonologueChatVM {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ChatID id, String title, String? iconName,
-            MediaVM? pic, MessageID? lastMessageID)
+    required TResult Function(ChatID id, DateTime createdAt, String title,
+            String? iconName, MediaVM? pic, MessageID? lastMessageID)
         monologue,
-    required TResult Function(ChatID id, UserID partnerID, int unreadAmount,
-            MessageID? lastMessageID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID partnerID,
+            int unreadAmount, MessageID? lastMessageID)
         dialogue,
     required TResult Function(
             ChatID id,
+            DateTime createdAt,
             UserID ownerID,
             int participantsAmount,
             String title,
@@ -332,20 +353,21 @@ class _$MonologueChatVM implements MonologueChatVM {
             MessageID? lastMessageID)
         group,
   }) {
-    return monologue(id, title, iconName, pic, lastMessageID);
+    return monologue(id, createdAt, title, iconName, pic, lastMessageID);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ChatID id, String title, String? iconName, MediaVM? pic,
-            MessageID? lastMessageID)?
+    TResult? Function(ChatID id, DateTime createdAt, String title,
+            String? iconName, MediaVM? pic, MessageID? lastMessageID)?
         monologue,
-    TResult? Function(ChatID id, UserID partnerID, int unreadAmount,
-            MessageID? lastMessageID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID partnerID,
+            int unreadAmount, MessageID? lastMessageID)?
         dialogue,
     TResult? Function(
             ChatID id,
+            DateTime createdAt,
             UserID ownerID,
             int participantsAmount,
             String title,
@@ -354,20 +376,21 @@ class _$MonologueChatVM implements MonologueChatVM {
             MessageID? lastMessageID)?
         group,
   }) {
-    return monologue?.call(id, title, iconName, pic, lastMessageID);
+    return monologue?.call(id, createdAt, title, iconName, pic, lastMessageID);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ChatID id, String title, String? iconName, MediaVM? pic,
-            MessageID? lastMessageID)?
+    TResult Function(ChatID id, DateTime createdAt, String title,
+            String? iconName, MediaVM? pic, MessageID? lastMessageID)?
         monologue,
-    TResult Function(ChatID id, UserID partnerID, int unreadAmount,
-            MessageID? lastMessageID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID partnerID,
+            int unreadAmount, MessageID? lastMessageID)?
         dialogue,
     TResult Function(
             ChatID id,
+            DateTime createdAt,
             UserID ownerID,
             int participantsAmount,
             String title,
@@ -378,7 +401,7 @@ class _$MonologueChatVM implements MonologueChatVM {
     required TResult orElse(),
   }) {
     if (monologue != null) {
-      return monologue(id, title, iconName, pic, lastMessageID);
+      return monologue(id, createdAt, title, iconName, pic, lastMessageID);
     }
     return orElse();
   }
@@ -428,6 +451,7 @@ class _$MonologueChatVM implements MonologueChatVM {
 abstract class MonologueChatVM implements ChatVM {
   const factory MonologueChatVM(
       {required final ChatID id,
+      required final DateTime createdAt,
       required final String title,
       final String? iconName,
       final MediaVM? pic,
@@ -438,6 +462,8 @@ abstract class MonologueChatVM implements ChatVM {
 
   @override
   ChatID get id;
+  @override
+  DateTime get createdAt;
   String get title;
   String? get iconName;
   MediaVM? get pic;
@@ -459,6 +485,7 @@ abstract class _$$DialogueChatVMCopyWith<$Res>
   @useResult
   $Res call(
       {ChatID id,
+      DateTime createdAt,
       UserID partnerID,
       int unreadAmount,
       MessageID? lastMessageID});
@@ -482,6 +509,7 @@ class __$$DialogueChatVMCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? createdAt = null,
     Object? partnerID = null,
     Object? unreadAmount = null,
     Object? lastMessageID = freezed,
@@ -491,6 +519,10 @@ class __$$DialogueChatVMCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as ChatID,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       partnerID: null == partnerID
           ? _value.partnerID
           : partnerID // ignore: cast_nullable_to_non_nullable
@@ -520,6 +552,7 @@ class __$$DialogueChatVMCopyWithImpl<$Res>
 class _$DialogueChatVM implements DialogueChatVM {
   const _$DialogueChatVM(
       {required this.id,
+      required this.createdAt,
       required this.partnerID,
       required this.unreadAmount,
       this.lastMessageID,
@@ -532,6 +565,8 @@ class _$DialogueChatVM implements DialogueChatVM {
   @override
   final ChatID id;
   @override
+  final DateTime createdAt;
+  @override
   final UserID partnerID;
   @override
   final int unreadAmount;
@@ -543,7 +578,7 @@ class _$DialogueChatVM implements DialogueChatVM {
 
   @override
   String toString() {
-    return 'ChatVM.dialogue(id: $id, partnerID: $partnerID, unreadAmount: $unreadAmount, lastMessageID: $lastMessageID)';
+    return 'ChatVM.dialogue(id: $id, createdAt: $createdAt, partnerID: $partnerID, unreadAmount: $unreadAmount, lastMessageID: $lastMessageID)';
   }
 
   @override
@@ -552,6 +587,8 @@ class _$DialogueChatVM implements DialogueChatVM {
         (other.runtimeType == runtimeType &&
             other is _$DialogueChatVM &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.partnerID, partnerID) ||
                 other.partnerID == partnerID) &&
             (identical(other.unreadAmount, unreadAmount) ||
@@ -562,8 +599,8 @@ class _$DialogueChatVM implements DialogueChatVM {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, partnerID, unreadAmount, lastMessageID);
+  int get hashCode => Object.hash(
+      runtimeType, id, createdAt, partnerID, unreadAmount, lastMessageID);
 
   @JsonKey(ignore: true)
   @override
@@ -574,14 +611,15 @@ class _$DialogueChatVM implements DialogueChatVM {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ChatID id, String title, String? iconName,
-            MediaVM? pic, MessageID? lastMessageID)
+    required TResult Function(ChatID id, DateTime createdAt, String title,
+            String? iconName, MediaVM? pic, MessageID? lastMessageID)
         monologue,
-    required TResult Function(ChatID id, UserID partnerID, int unreadAmount,
-            MessageID? lastMessageID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID partnerID,
+            int unreadAmount, MessageID? lastMessageID)
         dialogue,
     required TResult Function(
             ChatID id,
+            DateTime createdAt,
             UserID ownerID,
             int participantsAmount,
             String title,
@@ -590,20 +628,21 @@ class _$DialogueChatVM implements DialogueChatVM {
             MessageID? lastMessageID)
         group,
   }) {
-    return dialogue(id, partnerID, unreadAmount, lastMessageID);
+    return dialogue(id, createdAt, partnerID, unreadAmount, lastMessageID);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ChatID id, String title, String? iconName, MediaVM? pic,
-            MessageID? lastMessageID)?
+    TResult? Function(ChatID id, DateTime createdAt, String title,
+            String? iconName, MediaVM? pic, MessageID? lastMessageID)?
         monologue,
-    TResult? Function(ChatID id, UserID partnerID, int unreadAmount,
-            MessageID? lastMessageID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID partnerID,
+            int unreadAmount, MessageID? lastMessageID)?
         dialogue,
     TResult? Function(
             ChatID id,
+            DateTime createdAt,
             UserID ownerID,
             int participantsAmount,
             String title,
@@ -612,20 +651,22 @@ class _$DialogueChatVM implements DialogueChatVM {
             MessageID? lastMessageID)?
         group,
   }) {
-    return dialogue?.call(id, partnerID, unreadAmount, lastMessageID);
+    return dialogue?.call(
+        id, createdAt, partnerID, unreadAmount, lastMessageID);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ChatID id, String title, String? iconName, MediaVM? pic,
-            MessageID? lastMessageID)?
+    TResult Function(ChatID id, DateTime createdAt, String title,
+            String? iconName, MediaVM? pic, MessageID? lastMessageID)?
         monologue,
-    TResult Function(ChatID id, UserID partnerID, int unreadAmount,
-            MessageID? lastMessageID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID partnerID,
+            int unreadAmount, MessageID? lastMessageID)?
         dialogue,
     TResult Function(
             ChatID id,
+            DateTime createdAt,
             UserID ownerID,
             int participantsAmount,
             String title,
@@ -636,7 +677,7 @@ class _$DialogueChatVM implements DialogueChatVM {
     required TResult orElse(),
   }) {
     if (dialogue != null) {
-      return dialogue(id, partnerID, unreadAmount, lastMessageID);
+      return dialogue(id, createdAt, partnerID, unreadAmount, lastMessageID);
     }
     return orElse();
   }
@@ -686,6 +727,7 @@ class _$DialogueChatVM implements DialogueChatVM {
 abstract class DialogueChatVM implements ChatVM {
   const factory DialogueChatVM(
       {required final ChatID id,
+      required final DateTime createdAt,
       required final UserID partnerID,
       required final int unreadAmount,
       final MessageID? lastMessageID}) = _$DialogueChatVM;
@@ -695,6 +737,8 @@ abstract class DialogueChatVM implements ChatVM {
 
   @override
   ChatID get id;
+  @override
+  DateTime get createdAt;
   UserID get partnerID;
   int get unreadAmount;
   @override
@@ -714,6 +758,7 @@ abstract class _$$GroupChatVMCopyWith<$Res> implements $ChatVMCopyWith<$Res> {
   @useResult
   $Res call(
       {ChatID id,
+      DateTime createdAt,
       UserID ownerID,
       int participantsAmount,
       String title,
@@ -741,6 +786,7 @@ class __$$GroupChatVMCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? createdAt = null,
     Object? ownerID = null,
     Object? participantsAmount = null,
     Object? title = null,
@@ -753,6 +799,10 @@ class __$$GroupChatVMCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as ChatID,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       ownerID: null == ownerID
           ? _value.ownerID
           : ownerID // ignore: cast_nullable_to_non_nullable
@@ -806,6 +856,7 @@ class __$$GroupChatVMCopyWithImpl<$Res>
 class _$GroupChatVM implements GroupChatVM {
   const _$GroupChatVM(
       {required this.id,
+      required this.createdAt,
       required this.ownerID,
       required this.participantsAmount,
       required this.title,
@@ -820,6 +871,8 @@ class _$GroupChatVM implements GroupChatVM {
 
   @override
   final ChatID id;
+  @override
+  final DateTime createdAt;
   @override
   final UserID ownerID;
   @override
@@ -838,7 +891,7 @@ class _$GroupChatVM implements GroupChatVM {
 
   @override
   String toString() {
-    return 'ChatVM.group(id: $id, ownerID: $ownerID, participantsAmount: $participantsAmount, title: $title, unreadAmount: $unreadAmount, pic: $pic, lastMessageID: $lastMessageID)';
+    return 'ChatVM.group(id: $id, createdAt: $createdAt, ownerID: $ownerID, participantsAmount: $participantsAmount, title: $title, unreadAmount: $unreadAmount, pic: $pic, lastMessageID: $lastMessageID)';
   }
 
   @override
@@ -847,6 +900,8 @@ class _$GroupChatVM implements GroupChatVM {
         (other.runtimeType == runtimeType &&
             other is _$GroupChatVM &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.ownerID, ownerID) || other.ownerID == ownerID) &&
             (identical(other.participantsAmount, participantsAmount) ||
                 other.participantsAmount == participantsAmount) &&
@@ -860,8 +915,8 @@ class _$GroupChatVM implements GroupChatVM {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, ownerID, participantsAmount,
-      title, unreadAmount, pic, lastMessageID);
+  int get hashCode => Object.hash(runtimeType, id, createdAt, ownerID,
+      participantsAmount, title, unreadAmount, pic, lastMessageID);
 
   @JsonKey(ignore: true)
   @override
@@ -872,14 +927,15 @@ class _$GroupChatVM implements GroupChatVM {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ChatID id, String title, String? iconName,
-            MediaVM? pic, MessageID? lastMessageID)
+    required TResult Function(ChatID id, DateTime createdAt, String title,
+            String? iconName, MediaVM? pic, MessageID? lastMessageID)
         monologue,
-    required TResult Function(ChatID id, UserID partnerID, int unreadAmount,
-            MessageID? lastMessageID)
+    required TResult Function(ChatID id, DateTime createdAt, UserID partnerID,
+            int unreadAmount, MessageID? lastMessageID)
         dialogue,
     required TResult Function(
             ChatID id,
+            DateTime createdAt,
             UserID ownerID,
             int participantsAmount,
             String title,
@@ -888,21 +944,22 @@ class _$GroupChatVM implements GroupChatVM {
             MessageID? lastMessageID)
         group,
   }) {
-    return group(id, ownerID, participantsAmount, title, unreadAmount, pic,
-        lastMessageID);
+    return group(id, createdAt, ownerID, participantsAmount, title,
+        unreadAmount, pic, lastMessageID);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ChatID id, String title, String? iconName, MediaVM? pic,
-            MessageID? lastMessageID)?
+    TResult? Function(ChatID id, DateTime createdAt, String title,
+            String? iconName, MediaVM? pic, MessageID? lastMessageID)?
         monologue,
-    TResult? Function(ChatID id, UserID partnerID, int unreadAmount,
-            MessageID? lastMessageID)?
+    TResult? Function(ChatID id, DateTime createdAt, UserID partnerID,
+            int unreadAmount, MessageID? lastMessageID)?
         dialogue,
     TResult? Function(
             ChatID id,
+            DateTime createdAt,
             UserID ownerID,
             int participantsAmount,
             String title,
@@ -911,21 +968,22 @@ class _$GroupChatVM implements GroupChatVM {
             MessageID? lastMessageID)?
         group,
   }) {
-    return group?.call(id, ownerID, participantsAmount, title, unreadAmount,
-        pic, lastMessageID);
+    return group?.call(id, createdAt, ownerID, participantsAmount, title,
+        unreadAmount, pic, lastMessageID);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ChatID id, String title, String? iconName, MediaVM? pic,
-            MessageID? lastMessageID)?
+    TResult Function(ChatID id, DateTime createdAt, String title,
+            String? iconName, MediaVM? pic, MessageID? lastMessageID)?
         monologue,
-    TResult Function(ChatID id, UserID partnerID, int unreadAmount,
-            MessageID? lastMessageID)?
+    TResult Function(ChatID id, DateTime createdAt, UserID partnerID,
+            int unreadAmount, MessageID? lastMessageID)?
         dialogue,
     TResult Function(
             ChatID id,
+            DateTime createdAt,
             UserID ownerID,
             int participantsAmount,
             String title,
@@ -936,8 +994,8 @@ class _$GroupChatVM implements GroupChatVM {
     required TResult orElse(),
   }) {
     if (group != null) {
-      return group(id, ownerID, participantsAmount, title, unreadAmount, pic,
-          lastMessageID);
+      return group(id, createdAt, ownerID, participantsAmount, title,
+          unreadAmount, pic, lastMessageID);
     }
     return orElse();
   }
@@ -987,6 +1045,7 @@ class _$GroupChatVM implements GroupChatVM {
 abstract class GroupChatVM implements ChatVM {
   const factory GroupChatVM(
       {required final ChatID id,
+      required final DateTime createdAt,
       required final UserID ownerID,
       required final int participantsAmount,
       required final String title,
@@ -999,6 +1058,8 @@ abstract class GroupChatVM implements ChatVM {
 
   @override
   ChatID get id;
+  @override
+  DateTime get createdAt;
   UserID get ownerID;
   int get participantsAmount;
   String get title;

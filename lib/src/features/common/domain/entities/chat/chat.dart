@@ -15,6 +15,7 @@ class Chat with _$Chat {
   /// All messages in this chat are always read.
   const factory Chat.monologue({
     required ChatID id,
+    required DateTime createdAt,
     required UserID ownerID,
     required String title,
     String? iconName,
@@ -25,6 +26,7 @@ class Chat with _$Chat {
   /// There is NO ability to add more users.
   const factory Chat.dialogue({
     required ChatID id,
+    required DateTime createdAt,
     required UserID firstUserID,
     required UserID secondUserID,
   }) = DialogueChat;
@@ -32,6 +34,7 @@ class Chat with _$Chat {
   /// Chat for 1..N user(s).
   const factory Chat.group({
     required ChatID id,
+    required DateTime createdAt,
     required UserID ownerID,
     required String title,
     MediaID? picID,

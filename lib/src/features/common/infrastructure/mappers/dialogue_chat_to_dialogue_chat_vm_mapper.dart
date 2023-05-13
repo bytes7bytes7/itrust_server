@@ -18,6 +18,7 @@ class DialogueChatToDialogueChatVMMapper
 
     return DialogueChatVM(
       id: _chat.id,
+      createdAt: _chat.createdAt,
       partnerID: partnerID,
       unreadAmount: _dto.unreadAmount,
       lastMessageID: _dto.lastMessageID,

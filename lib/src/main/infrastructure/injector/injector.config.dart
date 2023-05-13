@@ -21,17 +21,17 @@ import 'package:itrust_server/src/features/account/application/queries/get_devic
 import 'package:itrust_server/src/features/account/application/queries/get_devices/get_devices_query_validator.dart'
     as _i20;
 import 'package:itrust_server/src/features/account/infrastructure/json_converters/change_personal_info_request_json_converter.dart'
-    as _i73;
+    as _i98;
 import 'package:itrust_server/src/features/account/infrastructure/json_converters/get_devices_request_json_converter.dart'
-    as _i72;
+    as _i51;
 import 'package:itrust_server/src/features/account/infrastructure/json_converters/remove_device_request_json_converter.dart'
-    as _i71;
+    as _i50;
 import 'package:itrust_server/src/features/account/infrastructure/third_party/mapster_registrar.dart'
     as _i151;
 import 'package:itrust_server/src/features/account/infrastructure/third_party/mediator_registrar.dart'
     as _i152;
 import 'package:itrust_server/src/features/account/presentation/contracts/contracts.dart'
-    as _i70;
+    as _i49;
 import 'package:itrust_server/src/features/account/presentation/controllers/account_controller.dart'
     as _i150;
 import 'package:itrust_server/src/features/auth/application/application.dart'
@@ -65,23 +65,23 @@ import 'package:itrust_server/src/features/auth/application/services/jwt_token_s
 import 'package:itrust_server/src/features/auth/infrastructure/app_services/jwt_token_service.dart'
     as _i101;
 import 'package:itrust_server/src/features/auth/infrastructure/json_converters/get_rules_request_json_converter.dart'
-    as _i50;
-import 'package:itrust_server/src/features/auth/infrastructure/json_converters/log_in_request_json_converter.dart'
-    as _i49;
-import 'package:itrust_server/src/features/auth/infrastructure/json_converters/log_out_request_json_converter.dart'
-    as _i48;
-import 'package:itrust_server/src/features/auth/infrastructure/json_converters/refresh_token_request_json_converter.dart'
-    as _i98;
-import 'package:itrust_server/src/features/auth/infrastructure/json_converters/register_request_json_converter.dart'
-    as _i97;
-import 'package:itrust_server/src/features/auth/infrastructure/json_converters/verify_token_request_json_converter.dart'
     as _i95;
+import 'package:itrust_server/src/features/auth/infrastructure/json_converters/log_in_request_json_converter.dart'
+    as _i94;
+import 'package:itrust_server/src/features/auth/infrastructure/json_converters/log_out_request_json_converter.dart'
+    as _i93;
+import 'package:itrust_server/src/features/auth/infrastructure/json_converters/refresh_token_request_json_converter.dart'
+    as _i92;
+import 'package:itrust_server/src/features/auth/infrastructure/json_converters/register_request_json_converter.dart'
+    as _i91;
+import 'package:itrust_server/src/features/auth/infrastructure/json_converters/verify_token_request_json_converter.dart'
+    as _i89;
 import 'package:itrust_server/src/features/auth/infrastructure/third_party/mapster_registrar.dart'
     as _i154;
 import 'package:itrust_server/src/features/auth/infrastructure/third_party/mediator_registrar.dart'
     as _i155;
 import 'package:itrust_server/src/features/auth/presentation/contracts/contracts.dart'
-    as _i47;
+    as _i88;
 import 'package:itrust_server/src/features/auth/presentation/controllers/auth_controller.dart'
     as _i153;
 import 'package:itrust_server/src/features/auth/presentation/controllers/rules_controller.dart'
@@ -127,25 +127,25 @@ import 'package:itrust_server/src/features/chat/application/queries/listen_messa
 import 'package:itrust_server/src/features/chat/application/queries/listen_messages/listen_messages_query_validator.dart'
     as _i105;
 import 'package:itrust_server/src/features/chat/infrastructure/json_converters/create_dialogue_chat_request.dart'
-    as _i46;
+    as _i70;
 import 'package:itrust_server/src/features/chat/infrastructure/json_converters/create_group_chat_request_json_converter.dart'
-    as _i69;
+    as _i84;
 import 'package:itrust_server/src/features/chat/infrastructure/json_converters/create_monologue_chat_request_json_converter.dart'
-    as _i89;
+    as _i48;
 import 'package:itrust_server/src/features/chat/infrastructure/json_converters/get_chat_request_json_converter.dart'
-    as _i94;
+    as _i46;
 import 'package:itrust_server/src/features/chat/infrastructure/json_converters/get_chats_request_json_converter.dart'
-    as _i88;
+    as _i47;
 import 'package:itrust_server/src/features/chat/infrastructure/json_converters/get_message_request_json_converter.dart'
-    as _i74;
+    as _i69;
 import 'package:itrust_server/src/features/chat/infrastructure/json_converters/get_messages_request_json_converter.dart'
-    as _i82;
+    as _i97;
 import 'package:itrust_server/src/features/chat/infrastructure/json_converters/listen_chats_request_json_converter.dart'
-    as _i87;
+    as _i96;
 import 'package:itrust_server/src/features/chat/infrastructure/json_converters/listen_messages_request_json_converter.dart'
-    as _i77;
+    as _i81;
 import 'package:itrust_server/src/features/chat/infrastructure/json_converters/send_message_request_json_converter.dart'
-    as _i86;
+    as _i64;
 import 'package:itrust_server/src/features/chat/infrastructure/third_party/mapster_registrar.dart'
     as _i159;
 import 'package:itrust_server/src/features/chat/infrastructure/third_party/mediator_registrar.dart'
@@ -176,15 +176,15 @@ import 'package:itrust_server/src/features/feed/application/queries/get_tags/get
 import 'package:itrust_server/src/features/feed/application/queries/get_tags/get_tags_query_validator.dart'
     as _i37;
 import 'package:itrust_server/src/features/feed/infrastructure/json_converters/get_feed_request_json_converter.dart'
-    as _i76;
+    as _i86;
 import 'package:itrust_server/src/features/feed/infrastructure/json_converters/get_tags_request_json_converter.dart'
-    as _i85;
+    as _i87;
 import 'package:itrust_server/src/features/feed/infrastructure/third_party/mapster_registrar.dart'
     as _i170;
 import 'package:itrust_server/src/features/feed/infrastructure/third_party/mediator_registrar.dart'
     as _i171;
 import 'package:itrust_server/src/features/feed/presentation/contracts/contracts.dart'
-    as _i75;
+    as _i85;
 import 'package:itrust_server/src/features/feed/presentation/controllers/feed_controller.dart'
     as _i169;
 import 'package:itrust_server/src/features/media/application/queries/get_media/get_media_query_handler.dart'
@@ -192,13 +192,13 @@ import 'package:itrust_server/src/features/media/application/queries/get_media/g
 import 'package:itrust_server/src/features/media/application/queries/get_media/get_media_query_validator.dart'
     as _i26;
 import 'package:itrust_server/src/features/media/infrastructure/json_converters/get_media_request_json_converter.dart'
-    as _i84;
+    as _i83;
 import 'package:itrust_server/src/features/media/infrastructure/third_party/mapster_registrar.dart'
     as _i109;
 import 'package:itrust_server/src/features/media/infrastructure/third_party/mediator_registrar.dart'
     as _i202;
 import 'package:itrust_server/src/features/media/presentation/contracts/contracts.dart'
-    as _i83;
+    as _i82;
 import 'package:itrust_server/src/features/media/presentation/controllers/media_controller.dart'
     as _i201;
 import 'package:itrust_server/src/features/post/application/commands/comment_post/comment_post_command_handler.dart'
@@ -242,33 +242,33 @@ import 'package:itrust_server/src/features/post/application/queries/get_user_pos
 import 'package:itrust_server/src/features/post/application/queries/get_user_posts/get_user_posts_query_validator.dart'
     as _i41;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/comment_post_request_json_converter.dart'
-    as _i54;
+    as _i53;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/create_post_request_json_converter.dart'
-    as _i56;
+    as _i55;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/get_post_comment_request_json_converter.dart'
-    as _i58;
-import 'package:itrust_server/src/features/post/infrastructure/json_converters/get_post_comments_request_json_converter.dart'
     as _i57;
+import 'package:itrust_server/src/features/post/infrastructure/json_converters/get_post_comments_request_json_converter.dart'
+    as _i56;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/get_post_request_json_converter.dart'
-    as _i59;
+    as _i58;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/get_user_posts_request_json_converter.dart'
-    as _i60;
+    as _i59;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/like_post_comment_request_json_converter.dart'
-    as _i61;
+    as _i60;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/like_post_request_json_converter.dart'
-    as _i62;
+    as _i61;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/unlike_post_comment_request_json_converter.dart'
-    as _i63;
+    as _i62;
 import 'package:itrust_server/src/features/post/infrastructure/json_converters/unlike_post_request_json_converter.dart'
-    as _i64;
+    as _i63;
 import 'package:itrust_server/src/features/post/infrastructure/third_party/mapster_registrar.dart'
     as _i115;
 import 'package:itrust_server/src/features/post/infrastructure/third_party/mediator_registrar.dart'
     as _i116;
 import 'package:itrust_server/src/features/post/presentation/contracts/comment_post_request/comment_post_request.dart'
-    as _i53;
+    as _i52;
 import 'package:itrust_server/src/features/post/presentation/contracts/contracts.dart'
-    as _i55;
+    as _i54;
 import 'package:itrust_server/src/features/post/presentation/controllers/post_controller.dart'
     as _i114;
 import 'package:itrust_server/src/features/user/application/commands/cancel_friend_bid/cancel_friend_bid_command_handler.dart'
@@ -340,37 +340,37 @@ import 'package:itrust_server/src/features/user/application/queries/get_user_inf
 import 'package:itrust_server/src/features/user/application/queries/get_user_info/get_user_info_query_validator.dart'
     as _i40;
 import 'package:itrust_server/src/features/user/infrastructure/json_converters/get_for_user_request_json_converter.dart'
-    as _i79;
+    as _i80;
 import 'package:itrust_server/src/features/user/infrastructure/json_converters/get_friend_bids_amount_request_json_converter.dart'
-    as _i81;
+    as _i78;
 import 'package:itrust_server/src/features/user/infrastructure/json_converters/get_people_amount_request_json_converter.dart'
-    as _i91;
+    as _i76;
 import 'package:itrust_server/src/features/user/infrastructure/json_converters/get_user_by_id_request_json_converter.dart'
-    as _i52;
+    as _i72;
 import 'package:itrust_server/src/features/user/infrastructure/json_converters/get_user_by_nick_request_json_converter.dart'
-    as _i65;
+    as _i71;
 import 'package:itrust_server/src/features/user/infrastructure/json_converters/get_users_request_json_converter.dart'
-    as _i93;
+    as _i74;
 import 'package:itrust_server/src/features/user/infrastructure/json_converters/respond_friend_bid_request_json_converter.dart'
-    as _i67;
-import 'package:itrust_server/src/features/user/infrastructure/json_converters/user_action_request_json_converter.dart'
     as _i68;
+import 'package:itrust_server/src/features/user/infrastructure/json_converters/user_action_request_json_converter.dart'
+    as _i66;
 import 'package:itrust_server/src/features/user/infrastructure/third_party/mapster_registrar.dart'
     as _i145;
 import 'package:itrust_server/src/features/user/infrastructure/third_party/mediator_registrar.dart'
     as _i146;
 import 'package:itrust_server/src/features/user/presentation/contracts/contracts.dart'
-    as _i51;
+    as _i65;
 import 'package:itrust_server/src/features/user/presentation/contracts/get_for_user_request/get_for_user_request.dart'
-    as _i78;
+    as _i79;
 import 'package:itrust_server/src/features/user/presentation/contracts/get_friend_bids_amount_request/get_friend_bids_amount_request.dart'
-    as _i80;
+    as _i77;
 import 'package:itrust_server/src/features/user/presentation/contracts/get_people_amount_request/get_people_amount_request.dart'
-    as _i90;
+    as _i75;
 import 'package:itrust_server/src/features/user/presentation/contracts/get_users_request/get_users_request.dart'
-    as _i92;
+    as _i73;
 import 'package:itrust_server/src/features/user/presentation/contracts/respond_friend_bid_request/respond_friend_bid_request.dart'
-    as _i66;
+    as _i67;
 import 'package:itrust_server/src/features/user/presentation/controllers/user_controller.dart'
     as _i144;
 import 'package:itrust_server/src/repositories/implementations/chat_repository.dart'
@@ -408,7 +408,7 @@ import 'package:itrust_server/src/repositories/interfaces/rules_repository.dart'
 import 'package:itrust_server/src/repositories/interfaces/tag_repository.dart'
     as _i135;
 import 'package:itrust_server/src/utils/jwt_settings.dart' as _i99;
-import 'package:json_annotation/json_annotation.dart' as _i96;
+import 'package:json_annotation/json_annotation.dart' as _i90;
 import 'package:mapster/mapster.dart' as _i108;
 import 'package:mediator/mediator.dart' as _i112;
 
@@ -500,116 +500,116 @@ _i1.GetIt init(
   gh.singleton<_i41.GetUserPostsQueryValidator>(
       _i41.GetUserPostsQueryValidator());
   gh.singleton<_i42.HashService>(_i43.ProdHashService());
-  gh.singleton<
-      _i44.JsonConverter<_i45.CreateDialogueChatRequest,
-          Map<String, Object?>>>(_i46.CreateDialogueChatRequestJsonConverter());
-  gh.singleton<_i44.JsonConverter<_i47.LogOutRequest, Map<String, Object?>>>(
-      _i48.LogOutRequestJsonConverter());
-  gh.singleton<_i44.JsonConverter<_i47.LogInRequest, Map<String, Object?>>>(
-      _i49.LogInRequestJsonConverter());
-  gh.singleton<_i44.JsonConverter<_i47.GetRulesRequest, Map<String, Object?>>>(
-      _i50.GetRulesRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i51.GetUserByIDRequest, Map<String, Object?>>>(
-      _i52.GetUserByIDRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i53.CommentPostRequest, Map<String, Object?>>>(
-      _i54.CommentPostRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i55.CreatePostRequest, Map<String, Object?>>>(
-      _i56.CreatePostRequestJsonConverter());
-  gh.singleton<
-      _i44.JsonConverter<_i55.GetPostCommentsRequest,
-          Map<String, Object?>>>(_i57.GetPostCommentsRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i55.GetPostCommentRequest, Map<String, Object?>>>(
-      _i58.GetPostCommentRequestJsonConverter());
-  gh.singleton<_i44.JsonConverter<_i55.GetPostRequest, Map<String, Object?>>>(
-      _i59.GetPostRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i55.GetUserPostsRequest, Map<String, Object?>>>(
-      _i60.GetUserPostsRequestJsonConverter());
-  gh.singleton<
-      _i44.JsonConverter<_i55.LikePostCommentRequest,
-          Map<String, Object?>>>(_i61.LikePostCommentRequestJsonConverter());
-  gh.singleton<_i44.JsonConverter<_i55.LikePostRequest, Map<String, Object?>>>(
-      _i62.LikePostRequestJsonConverter());
-  gh.singleton<
-      _i44.JsonConverter<_i55.UnlikePostCommentRequest,
-          Map<String, Object?>>>(_i63.UnlikePostCommentRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i55.UnlikePostRequest, Map<String, Object?>>>(
-      _i64.UnlikePostRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i51.GetUserByNickRequest, Map<String, Object?>>>(
-      _i65.GetUserByNickRequestJsonConverter());
-  gh.singleton<
-      _i44.JsonConverter<_i66.RespondFriendBidRequest,
-          Map<String, Object?>>>(_i67.RespondFriendBidRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i51.UserActionRequest, Map<String, Object?>>>(
-      _i68.UserActionRequestJsonConverter());
-  gh.singleton<
-      _i44.JsonConverter<_i45.CreateGroupChatRequest,
-          Map<String, Object?>>>(_i69.CreateGroupChatRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i70.RemoveDeviceRequest, Map<String, Object?>>>(
-      _i71.RemoveDeviceRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i70.GetDevicesRequest, Map<String, Object?>>>(
-      _i72.GetDevicesRequestJsonConverter());
-  gh.singleton<
-      _i44.JsonConverter<_i70.ChangePersonalInfoRequest,
-          Map<String, Object?>>>(_i73.ChangePersonalInfoRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i45.GetMessageRequest, Map<String, Object?>>>(
-      _i74.GetMessageRequestJsonConverter());
-  gh.singleton<_i44.JsonConverter<_i75.GetFeedRequest, Map<String, Object?>>>(
-      _i76.GetFeedRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i45.ListenMessagesRequest, Map<String, Object?>>>(
-      _i77.ListenMessagesRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i78.GetForUserRequest, Map<String, Object?>>>(
-      _i79.GetForUserRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i80.GetFriendBidsAmountRequest,
-              Map<String, Object?>>>(
-      _i81.GetFriendBidsAmountRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i45.GetMessagesRequest, Map<String, Object?>>>(
-      _i82.GetMessagesRequestJsonConverter());
-  gh.singleton<_i44.JsonConverter<_i83.GetMediaRequest, Map<String, Object?>>>(
-      _i84.GetMediaRequestJsonConverter());
-  gh.singleton<_i44.JsonConverter<_i75.GetTagsRequest, Map<String, Object?>>>(
-      _i85.GetTagsRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i45.SendMessageRequest, Map<String, Object?>>>(
-      _i86.SendMessageRequestJsonConverter());
-  gh.singleton<
-          _i44.JsonConverter<_i45.ListenChatsRequest, Map<String, Object?>>>(
-      _i87.ListenChatsRequestJsonConverter());
+  gh.singleton<_i44.JsonConverter<_i45.GetChatRequest, Map<String, Object?>>>(
+      _i46.GetChatRequestJsonConverter());
   gh.singleton<_i44.JsonConverter<_i45.GetChatsRequest, Map<String, Object?>>>(
-      _i88.GetChatsRequestJsonConverter());
+      _i47.GetChatsRequestJsonConverter());
   gh.singleton<
           _i44.JsonConverter<_i45.CreateMonologueChatRequest,
               Map<String, Object?>>>(
-      _i89.CreateMonologueChatRequestJsonConverter());
+      _i48.CreateMonologueChatRequestJsonConverter());
   gh.singleton<
-      _i44.JsonConverter<_i90.GetPeopleAmountRequest,
-          Map<String, Object?>>>(_i91.GetPeopleAmountRequestJsonConverter());
-  gh.singleton<_i44.JsonConverter<_i92.GetUsersRequest, Map<String, Object?>>>(
-      _i93.GetUsersRequestJsonConverter());
-  gh.singleton<_i44.JsonConverter<_i45.GetChatRequest, Map<String, Object?>>>(
-      _i94.GetChatRequestJsonConverter());
+          _i44.JsonConverter<_i49.RemoveDeviceRequest, Map<String, Object?>>>(
+      _i50.RemoveDeviceRequestJsonConverter());
   gh.singleton<
-          _i44.JsonConverter<_i47.VerifyTokenRequest, Map<String, Object?>>>(
-      _i95.VerifyTokenRequestJsonConverter());
-  gh.singleton<_i96.JsonConverter<_i47.RegisterRequest, Map<String, Object?>>>(
-      _i97.RegisterRequestJsonConverter());
+          _i44.JsonConverter<_i49.GetDevicesRequest, Map<String, Object?>>>(
+      _i51.GetDevicesRequestJsonConverter());
   gh.singleton<
-          _i44.JsonConverter<_i47.RefreshTokenRequest, Map<String, Object?>>>(
-      _i98.RefreshTokenRequestJsonConverter());
+          _i44.JsonConverter<_i52.CommentPostRequest, Map<String, Object?>>>(
+      _i53.CommentPostRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i54.CreatePostRequest, Map<String, Object?>>>(
+      _i55.CreatePostRequestJsonConverter());
+  gh.singleton<
+      _i44.JsonConverter<_i54.GetPostCommentsRequest,
+          Map<String, Object?>>>(_i56.GetPostCommentsRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i54.GetPostCommentRequest, Map<String, Object?>>>(
+      _i57.GetPostCommentRequestJsonConverter());
+  gh.singleton<_i44.JsonConverter<_i54.GetPostRequest, Map<String, Object?>>>(
+      _i58.GetPostRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i54.GetUserPostsRequest, Map<String, Object?>>>(
+      _i59.GetUserPostsRequestJsonConverter());
+  gh.singleton<
+      _i44.JsonConverter<_i54.LikePostCommentRequest,
+          Map<String, Object?>>>(_i60.LikePostCommentRequestJsonConverter());
+  gh.singleton<_i44.JsonConverter<_i54.LikePostRequest, Map<String, Object?>>>(
+      _i61.LikePostRequestJsonConverter());
+  gh.singleton<
+      _i44.JsonConverter<_i54.UnlikePostCommentRequest,
+          Map<String, Object?>>>(_i62.UnlikePostCommentRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i54.UnlikePostRequest, Map<String, Object?>>>(
+      _i63.UnlikePostRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i45.SendMessageRequest, Map<String, Object?>>>(
+      _i64.SendMessageRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i65.UserActionRequest, Map<String, Object?>>>(
+      _i66.UserActionRequestJsonConverter());
+  gh.singleton<
+      _i44.JsonConverter<_i67.RespondFriendBidRequest,
+          Map<String, Object?>>>(_i68.RespondFriendBidRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i45.GetMessageRequest, Map<String, Object?>>>(
+      _i69.GetMessageRequestJsonConverter());
+  gh.singleton<
+      _i44.JsonConverter<_i45.CreateDialogueChatRequest,
+          Map<String, Object?>>>(_i70.CreateDialogueChatRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i65.GetUserByNickRequest, Map<String, Object?>>>(
+      _i71.GetUserByNickRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i65.GetUserByIDRequest, Map<String, Object?>>>(
+      _i72.GetUserByIDRequestJsonConverter());
+  gh.singleton<_i44.JsonConverter<_i73.GetUsersRequest, Map<String, Object?>>>(
+      _i74.GetUsersRequestJsonConverter());
+  gh.singleton<
+      _i44.JsonConverter<_i75.GetPeopleAmountRequest,
+          Map<String, Object?>>>(_i76.GetPeopleAmountRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i77.GetFriendBidsAmountRequest,
+              Map<String, Object?>>>(
+      _i78.GetFriendBidsAmountRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i79.GetForUserRequest, Map<String, Object?>>>(
+      _i80.GetForUserRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i45.ListenMessagesRequest, Map<String, Object?>>>(
+      _i81.ListenMessagesRequestJsonConverter());
+  gh.singleton<_i44.JsonConverter<_i82.GetMediaRequest, Map<String, Object?>>>(
+      _i83.GetMediaRequestJsonConverter());
+  gh.singleton<
+      _i44.JsonConverter<_i45.CreateGroupChatRequest,
+          Map<String, Object?>>>(_i84.CreateGroupChatRequestJsonConverter());
+  gh.singleton<_i44.JsonConverter<_i85.GetFeedRequest, Map<String, Object?>>>(
+      _i86.GetFeedRequestJsonConverter());
+  gh.singleton<_i44.JsonConverter<_i85.GetTagsRequest, Map<String, Object?>>>(
+      _i87.GetTagsRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i88.VerifyTokenRequest, Map<String, Object?>>>(
+      _i89.VerifyTokenRequestJsonConverter());
+  gh.singleton<_i90.JsonConverter<_i88.RegisterRequest, Map<String, Object?>>>(
+      _i91.RegisterRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i88.RefreshTokenRequest, Map<String, Object?>>>(
+      _i92.RefreshTokenRequestJsonConverter());
+  gh.singleton<_i44.JsonConverter<_i88.LogOutRequest, Map<String, Object?>>>(
+      _i93.LogOutRequestJsonConverter());
+  gh.singleton<_i44.JsonConverter<_i88.LogInRequest, Map<String, Object?>>>(
+      _i94.LogInRequestJsonConverter());
+  gh.singleton<_i44.JsonConverter<_i88.GetRulesRequest, Map<String, Object?>>>(
+      _i95.GetRulesRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i45.ListenChatsRequest, Map<String, Object?>>>(
+      _i96.ListenChatsRequestJsonConverter());
+  gh.singleton<
+          _i44.JsonConverter<_i45.GetMessagesRequest, Map<String, Object?>>>(
+      _i97.GetMessagesRequestJsonConverter());
+  gh.singleton<
+      _i44.JsonConverter<_i49.ChangePersonalInfoRequest,
+          Map<String, Object?>>>(_i98.ChangePersonalInfoRequestJsonConverter());
   gh.singleton<_i99.JwtSettings>(envModule.jwtSettings);
   gh.singleton<_i100.JwtTokenService>(
       _i101.ProdJwtTokenService(gh<_i99.JwtSettings>()));
