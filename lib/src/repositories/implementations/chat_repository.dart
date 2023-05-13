@@ -26,6 +26,7 @@ class DevChatRepository implements ChatRepository {
   final _messageController = BehaviorSubject<MessageEvent>();
 
   final _chats = HashMap<ChatID, Chat?>();
+  var _chatsOrder = <ChatID>[];
   final _images = HashMap<ChatID, MediaID>();
   final _usersChatIDs = HashMap<UserID, List<ChatID>>();
   final _groupParticipants = HashMap<ChatID, List<UserID>>();
@@ -95,7 +96,7 @@ class DevChatRepository implements ChatRepository {
     final chatIDs = List.of(_usersChatIDs[userID] ?? <ChatID>[])..add(id);
     _usersChatIDs[userID] = chatIDs;
 
-    _chatController.add(CreatedChatEvent(chatID: id, chat: chat));
+    _addChatEvent(CreatedChatEvent(chatID: id, chat: chat));
 
     return chat;
   }
@@ -159,7 +160,7 @@ class DevChatRepository implements ChatRepository {
       ..add(id);
     _usersChatIDs[secondUserID] = secondChatIDs;
 
-    _chatController.add(CreatedChatEvent(chatID: id, chat: chat));
+    _addChatEvent(CreatedChatEvent(chatID: id, chat: chat));
 
     return chat;
   }
@@ -207,7 +208,7 @@ class DevChatRepository implements ChatRepository {
 
     _groupParticipants[id] = [userID, ...guestIDs];
 
-    _chatController.add(CreatedChatEvent(chatID: id, chat: chat));
+    _addChatEvent(CreatedChatEvent(chatID: id, chat: chat));
 
     return chat;
   }
@@ -222,7 +223,7 @@ class DevChatRepository implements ChatRepository {
 
     _chats[chat.id] = chat;
 
-    _chatController.add(UpdatedChatEvent(chatID: chat.id, chat: chat));
+    _addChatEvent(UpdatedChatEvent(chatID: chat.id, chat: chat));
   }
 
   @override
@@ -236,8 +237,7 @@ class DevChatRepository implements ChatRepository {
     required int limit,
     ChatID? startAfter,
   }) async {
-    // TODO: change (base on time of the last msg)
-    final result = <Chat>[];
+    final chats = <Chat>[];
 
     var reachStartAfter = startAfter == null;
 
@@ -251,13 +251,23 @@ class DevChatRepository implements ChatRepository {
           continue;
         }
 
-        result.add(chat);
+        chats.add(chat);
       } else if (id == startAfter) {
         reachStartAfter = true;
       }
 
-      if (result.length == limit) {
+      if (chats.length == limit) {
         break;
+      }
+    }
+
+    final chatsOrder = List.of(_chatsOrder);
+    final result = <Chat>[];
+    for (final id in chatsOrder) {
+      final chat = chats.firstWhereOrNull((e) => e.id == id);
+
+      if (chat != null) {
+        result.add(chat);
       }
     }
 
@@ -445,10 +455,10 @@ class DevChatRepository implements ChatRepository {
       ..insert(0, id);
     _chatMessageIDs[chatID] = messageIDs;
 
-    _chatController.add(
+    _addChatEvent(
       MessageChatEvent(chatID: chatID, lastMessageID: id),
     );
-    _messageController.add(
+    _addMessageEvent(
       CreatedMessageEvent(chatID: chatID, message: message),
     );
 
@@ -509,13 +519,91 @@ class DevChatRepository implements ChatRepository {
       ..insert(0, id);
     _chatMessageIDs[chatID] = messageIDs;
 
-    _chatController.add(
+    _addChatEvent(
       MessageChatEvent(chatID: chatID, lastMessageID: id),
     );
-    _messageController.add(
+    _addMessageEvent(
       CreatedMessageEvent(chatID: chatID, message: message),
     );
 
     return message;
+  }
+
+  void _addChatEvent(ChatEvent event) {
+    _chatController.add(event);
+
+    final chatsOrder = List.of(_chatsOrder);
+
+    final index = chatsOrder.indexOf(event.chatID);
+
+    if (event is CreatedChatEvent) {
+      if (index == -1) {
+        chatsOrder.insert(0, event.chatID);
+      }
+    } else if (event is DeletedChatEvent) {
+      if (index != -1) {
+        chatsOrder.removeAt(index);
+      }
+    } else if (event is UpdatedChatEvent) {
+      if (index != -1) {
+        chatsOrder[index] = event.chatID;
+      }
+    } else if (event is MessageChatEvent) {
+      final chat = _chats[event.chatID];
+
+      if (chat == null) {
+        return;
+      }
+
+      final lastMessageID = (_chatMessageIDs[event.chatID] ?? []).firstOrNull;
+      final lastMessage = _messages[lastMessageID];
+
+      final chatDT = lastMessage?.map(
+            info: (e) => e.sentAt,
+            user: (e) => e.modifiedAt ?? e.sentAt,
+          ) ??
+          chat.createdAt;
+
+      if (index != -1) {
+        // remove old chat instance
+        chatsOrder.removeAt(index);
+      }
+
+      var pasted = false;
+
+      for (var i = 0; i < chatsOrder.length; i++) {
+        final oldChatID = chatsOrder[i];
+        final oldChat = _chats[oldChatID];
+
+        if (oldChat == null) {
+          continue;
+        }
+
+        final oldLastMessageID = (_chatMessageIDs[oldChatID] ?? []).firstOrNull;
+        final oldLastMessage = _messages[oldLastMessageID];
+
+        final oldChatDT = oldLastMessage?.map(
+              info: (e) => e.sentAt,
+              user: (e) => e.modifiedAt ?? e.sentAt,
+            ) ??
+            oldChat.createdAt;
+
+        if (oldChatDT.isBefore(chatDT)) {
+          chatsOrder.insert(i, event.chatID);
+          pasted = true;
+          break;
+        }
+      }
+
+      if (!pasted) {
+        chatsOrder.add(event.chatID);
+      }
+    }
+
+    _chatsOrder = chatsOrder;
+  }
+
+  void _addMessageEvent(MessageEvent event) {
+    _messageController.add(event);
   }
 }
