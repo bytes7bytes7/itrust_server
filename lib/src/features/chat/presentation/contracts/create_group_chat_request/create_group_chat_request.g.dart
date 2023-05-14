@@ -10,17 +10,18 @@ CreateGroupChatRequest _$CreateGroupChatRequestFromJson(
         Map<String, dynamic> json) =>
     CreateGroupChatRequest(
       title: json['title'] as String,
+      guestIDs: (json['guestIDs'] as List<dynamic>)
+          .map((e) => UserID.fromJson(e as Map<String, dynamic>))
+          .toList(),
       image: json['image'] == null
           ? null
           : NewMedia.fromJson(json['image'] as Map<String, dynamic>),
-      guestIDs:
-          (json['guestIDs'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$CreateGroupChatRequestToJson(
         CreateGroupChatRequest instance) =>
     <String, dynamic>{
       'title': instance.title,
+      'guestIDs': instance.guestIDs.map((e) => e.toJson()).toList(),
       'image': instance.image?.toJson(),
-      'guestIDs': instance.guestIDs,
     };

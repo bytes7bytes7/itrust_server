@@ -15,7 +15,7 @@ class CreateGroupChatRequestToCreateGroupChatCommandMapper
       userID: _userID,
       title: _request.title,
       image: _request.image,
-      guestIDs: _request.guestIDs.map(UserID.fromString).toList(),
+      guestIDs: _request.guestIDs,
     );
   }
 
