@@ -12,3 +12,4 @@ export 'posts_result_to_posts_response_mapper.dart';
 export 'staff_user_to_staff_user_vm_mapper.dart';
 export 'user_message_to_user_message_vm_mapper.dart';
 export 'user_to_user_vm_mapper.dart';
+export 'users_result_to_users_response_mapper.dart';

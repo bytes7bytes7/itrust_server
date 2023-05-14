@@ -11,4 +11,3 @@ export 'respond_friend_bid_request/respond_friend_bid_request.dart';
 export 'user_action_request/user_action_request.dart';
 export 'user_info_response/user_info_response.dart';
 export 'user_response/user_response.dart';
-export 'users_response/users_response.dart';

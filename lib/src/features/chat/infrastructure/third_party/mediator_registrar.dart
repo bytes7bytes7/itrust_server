@@ -25,6 +25,9 @@ class ChatMediatorRegistrar {
       ..registerRequestHandler(
         () => _getIt.get<CreateGroupChatCommandHandler>(),
       )
+      ..registerRequestHandler(
+        () => _getIt.get<GetChatPartnersQueryHandler>(),
+      )
       ..registerStreamRequestHandler(
         () => _getIt.get<ListenChatsQueryHandler>(),
       )
@@ -50,6 +53,11 @@ class ChatMediatorRegistrar {
       ..registerPipelineBehavior(
         () => ValidationBehavior(
           [_getIt.get<CreateGroupChatCommandValidator>()],
+        ),
+      )
+      ..registerPipelineBehavior(
+        () => ValidationBehavior(
+          [_getIt.get<GetChatPartnersQueryValidator>()],
         ),
       )
       ..registerStreamPipelineBehavior(

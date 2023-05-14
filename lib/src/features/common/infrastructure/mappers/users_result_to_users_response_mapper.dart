@@ -1,7 +1,7 @@
 import 'package:mapster/mapster.dart';
 
 import '../../application/common/common.dart';
-import '../../presentation/contracts/users_response/users_response.dart';
+import '../../presentation/contracts/contracts.dart';
 
 class UsersResultToUsersResponseMapper
     extends OneSourceMapper<UsersResult, UsersResponse> {

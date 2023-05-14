@@ -43,6 +43,7 @@ class CommonMapsterRegistrar {
         ),
       )
       ..register(MapperMeta.two(InfoMessageToInfoMessageVMMapper.new))
-      ..register(MapperMeta.two(UserMessageToUserMessageVMMapper.new));
+      ..register(MapperMeta.two(UserMessageToUserMessageVMMapper.new))
+      ..register(MapperMeta.one(UsersResultToUsersResponseMapper.new));
   }
 }

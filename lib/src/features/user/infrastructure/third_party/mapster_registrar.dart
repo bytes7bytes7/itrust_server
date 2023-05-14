@@ -25,9 +25,6 @@ class UserMapsterRegistrar {
         MapperMeta.two(GetForUserRequestToGetFriendsQueryMapper.new),
       )
       ..register(
-        MapperMeta.one(UsersResultToUsersResponseMapper.new),
-      )
-      ..register(
         MapperMeta.one(EndUsersResultToEndUsersResponseMapper.new),
       )
       ..register(

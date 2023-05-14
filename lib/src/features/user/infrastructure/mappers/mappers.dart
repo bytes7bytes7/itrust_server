@@ -23,4 +23,3 @@ export 'user_action_request_to_unsubscribe_command_mapper.dart';
 export 'user_info_result_to_user_info_response_mapper.dart';
 export 'user_result_to_user_response.dart';
 export 'user_to_user_info_vm_mapper.dart';
-export 'users_result_to_users_response_mapper.dart';

@@ -11,6 +11,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../../../utils/extensions/extensions.dart';
 import '../../../common/application/exceptions/exceptions.dart';
+import '../../../common/presentation/contracts/users_response/users_response.dart';
 import '../../../common/presentation/controllers/api_controller.dart';
 import '../../application/application.dart';
 import '../contracts/contracts.dart';
@@ -163,6 +164,38 @@ class ChatController extends ApiController {
     return result.match(
       problem,
       (r) => ok(_mapster.map1(r, To<ChatResponse>())),
+    );
+  }
+
+  @Route.get('/chat_partners')
+  Future<Response> getChatPartners(Request request) async {
+    late final GetChatPartnersRequest getChatPartnersRequest;
+    try {
+      getChatPartnersRequest =
+          await parseRequest<GetChatPartnersRequest>(request);
+    } catch (e) {
+      return problem(
+        [const InvalidBodyException()],
+      );
+    }
+
+    final user = request.user;
+
+    if (user == null) {
+      return problem([const UserNotFound()]);
+    }
+
+    final command = _mapster.map2(
+      getChatPartnersRequest,
+      user.id,
+      To<GetChatPartnersQuery>(),
+    );
+
+    final result = await command.sendTo(_mediator);
+
+    return result.match(
+      problem,
+      (r) => ok(_mapster.map1(r, To<UsersResponse>())),
     );
   }
 

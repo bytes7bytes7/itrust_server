@@ -46,6 +46,9 @@ class ChatMapsterRegistrar {
       )
       ..register(
         MapperMeta.two(GetMessageRequestToGetMessageQueryMapper.new),
+      )
+      ..register(
+        MapperMeta.two(GetChatPartnersRequestToGetChatPartnersQueryMapper.new),
       );
   }
 }

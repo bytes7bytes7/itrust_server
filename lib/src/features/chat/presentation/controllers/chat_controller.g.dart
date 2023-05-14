@@ -29,6 +29,11 @@ Router _$ChatControllerRouter(ChatController service) {
     service.createGroup,
   );
   router.add(
+    'GET',
+    r'/chat_partners',
+    service.getChatPartners,
+  );
+  router.add(
     'POST',
     r'/send_message',
     service.sendMessage,

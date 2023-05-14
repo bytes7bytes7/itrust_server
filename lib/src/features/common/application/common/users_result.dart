@@ -1,4 +1,4 @@
-import '../../../common/application/view_models/user_vm/user_vm.dart';
+import '../view_models/user_vm/user_vm.dart';
 
 class UsersResult {
   const UsersResult({
