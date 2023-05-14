@@ -601,6 +601,10 @@ class DevChatRepository implements ChatRepository {
     required UserID firstUserID,
     required UserID secondUserID,
   }) async {
+    if (firstUserID == secondUserID) {
+      throw Exception('User IDs can not be equal for dialogue chat');
+    }
+
     final id = ChatID.generateDialogue(firstUserID, secondUserID);
 
     // book place

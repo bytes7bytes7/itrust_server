@@ -8,6 +8,7 @@ import 'package:mediator/mediator.dart';
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/exceptions/detailed_exception.dart';
 import '../../../../common/application/mapper_dto/to_chat_vm.dart';
+import '../../../../common/application/providers/date_time_provider.dart';
 import '../../../../common/application/view_models/chat_vm/chat_vm.dart';
 import '../../../../common/application/view_models/media_vm/media_vm.dart';
 import '../../../../common/domain/domain.dart';
@@ -19,13 +20,22 @@ import 'get_chat_query.dart';
 class GetChatQueryHandler extends RequestHandler<GetChatQuery,
     Either<List<DetailedException>, ChatResult>> {
   const GetChatQueryHandler({
+    required EndUserRepository endUserRepository,
+    required StaffUserRepository staffUserRepository,
+    required DateTimeProvider dateTimeProvider,
     required ChatRepository chatRepository,
     required MediaRepository mediaRepository,
     required Mapster mapster,
-  })  : _chatRepository = chatRepository,
+  })  : _endUserRepository = endUserRepository,
+        _staffUserRepository = staffUserRepository,
+        _dateTimeProvider = dateTimeProvider,
+        _chatRepository = chatRepository,
         _mediaRepository = mediaRepository,
         _mapster = mapster;
 
+  final EndUserRepository _endUserRepository;
+  final StaffUserRepository _staffUserRepository;
+  final DateTimeProvider _dateTimeProvider;
   final ChatRepository _chatRepository;
   final MediaRepository _mediaRepository;
   final Mapster _mapster;
@@ -37,8 +47,70 @@ class GetChatQueryHandler extends RequestHandler<GetChatQuery,
     final chat = await _chatRepository.getChatByID(id: request.chatID);
 
     if (chat == null) {
-      return left(
-        [const ChatNotFound()],
+      if (!request.chatID.isDialogueID) {
+        return left(
+          [const ChatNotFound()],
+        );
+      }
+
+      final userIDs = request.chatID.tryParseDialogueChatID();
+
+      if (userIDs == null) {
+        return left(
+          [const ChatNotFound()],
+        );
+      }
+
+      if (userIDs.length != 2) {
+        return left(
+          [const ChatNotFound()],
+        );
+      }
+
+      if (userIDs[0] == userIDs[1]) {
+        return left(
+          [const ChatNotFound()],
+        );
+      }
+
+      for (final userID in userIDs) {
+        User? user;
+        if (userID.isEndID) {
+          user = await _endUserRepository.getByID(id: userID);
+        } else if (userID.isStaffID) {
+          user = await _staffUserRepository.getByID(id: userID);
+        }
+
+        if (user == null) {
+          return left(
+            [const ChatNotFound()],
+          );
+        }
+      }
+
+      final tempDialogueChat = DialogueChat(
+        id: request.chatID,
+        createdAt: _dateTimeProvider.nowUtc(),
+        firstUserID: userIDs[0],
+        secondUserID: userIDs[1],
+      );
+
+      return right(
+        ChatResult(
+          chat: _mapster.map2(
+            tempDialogueChat,
+            ToChatVM(
+              participantsAmount: 2,
+              unreadAmount: 0,
+              lastMessageID: null,
+              media: null,
+              partnerID: tempDialogueChat.firstUserID == request.userID
+                ? tempDialogueChat.secondUserID
+                : tempDialogueChat.firstUserID,
+            ),
+            To<DialogueChatVM>(),
+          ),
+        ),
       );
     }
 

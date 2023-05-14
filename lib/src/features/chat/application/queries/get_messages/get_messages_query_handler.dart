@@ -22,13 +22,19 @@ const _limit = 15;
 class GetMessagesQueryHandler extends RequestHandler<GetMessagesQuery,
     Either<List<DetailedException>, MessagesResult>> {
   const GetMessagesQueryHandler({
-    required Mapster mapster,
+    required EndUserRepository endUserRepository,
+    required StaffUserRepository staffUserRepository,
     required MediaRepository mediaRepository,
     required ChatRepository chatRepository,
-  })  : _chatRepository = chatRepository,
+    required Mapster mapster,
+  })  : _endUserRepository = endUserRepository,
+        _staffUserRepository = staffUserRepository,
+        _chatRepository = chatRepository,
         _mediaRepository = mediaRepository,
         _mapster = mapster;
 
+  final EndUserRepository _endUserRepository;
+  final StaffUserRepository _staffUserRepository;
   final ChatRepository _chatRepository;
   final MediaRepository _mediaRepository;
   final Mapster _mapster;
@@ -40,8 +46,51 @@ class GetMessagesQueryHandler extends RequestHandler<GetMessagesQuery,
     final chat = await _chatRepository.getChatByID(id: request.chatID);
 
     if (chat == null) {
-      return left(
-        [const ChatNotFound()],
+      if (!request.chatID.isDialogueID) {
+        return left(
+          [const ChatNotFound()],
+        );
+      }
+
+      final userIDs = request.chatID.tryParseDialogueChatID();
+
+      if (userIDs == null) {
+        return left(
+          [const ChatNotFound()],
+        );
+      }
+
+      if (userIDs.length != 2) {
+        return left(
+          [const ChatNotFound()],
+        );
+      }
+
+      if (userIDs[0] == userIDs[1]) {
+        return left(
+          [const ChatNotFound()],
+        );
+      }
+
+      for (final userID in userIDs) {
+        User? user;
+        if (userID.isEndID) {
+          user = await _endUserRepository.getByID(id: userID);
+        } else if (userID.isStaffID) {
+          user = await _staffUserRepository.getByID(id: userID);
+        }
+
+        if (user == null) {
+          return left(
+            [const ChatNotFound()],
+          );
+        }
+      }
+
+      return right(
+        MessagesResult(
+          messages: [],
+        ),
       );
     }
 

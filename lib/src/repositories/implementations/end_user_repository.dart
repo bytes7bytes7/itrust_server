@@ -499,7 +499,7 @@ class DevEndUserRepository implements EndUserRepository {
       throw Exception('User not found');
     }
 
-    final firstUserFriends = _myFriendBids[firstUserID] ?? [];
+    final firstUserFriends = _friends[firstUserID] ?? [];
 
     return firstUserFriends.contains(secondUserID);
   }

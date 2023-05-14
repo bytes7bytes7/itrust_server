@@ -55,6 +55,12 @@ class SendMessageCommandHandler extends RequestHandler<SendMessageCommand,
         );
       }
 
+      if (userIDs[0] == userIDs[1]) {
+        return left(
+          [const ChatNotFound()],
+        );
+      }
+
       for (final userID in userIDs) {
         User? user;
         if (userID.isEndID) {

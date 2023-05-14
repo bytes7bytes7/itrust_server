@@ -21,7 +21,7 @@ class ChatID with _$ChatID {
   }
 
   factory ChatID.generateDialogue(UserID firstID, UserID secondID) {
-    return ChatID('$_dialoguePrefix$firstID$secondID');
+    return ChatID('$_dialoguePrefix${firstID.str}${secondID.str}');
   }
 
   factory ChatID.generateGroup() {
