@@ -279,15 +279,11 @@ class DevChatRepository implements ChatRepository {
 
     final messageIDs = _chatMessageIDs[chatID] ?? [];
 
-    late int index;
-    if (lastMessageID != null) {
-      final i = messageIDs.indexOf(lastMessageID);
-      index = i != -1 ? i : 0;
-    } else {
-      index = 0;
+    if (lastMessageID == null) {
+      return messageIDs.length;
     }
 
-    return messageIDs.length - index - 1;
+    return messageIDs.indexOf(lastMessageID);
   }
 
   @override
