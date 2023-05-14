@@ -59,6 +59,12 @@ abstract class ChatRepository {
     required UserID userID,
   });
 
+  Future<void> readMessage({
+    required ChatID chatID,
+    required MessageID messageID,
+    required UserID userID,
+  });
+
   Future<Message?> getMessageByID({required MessageID id});
 
   Future<List<Message>> getMessagesByFilter({

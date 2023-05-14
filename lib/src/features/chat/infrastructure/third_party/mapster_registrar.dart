@@ -49,6 +49,9 @@ class ChatMapsterRegistrar {
       )
       ..register(
         MapperMeta.two(GetChatPartnersRequestToGetChatPartnersQueryMapper.new),
+      )
+      ..register(
+        MapperMeta.two(ReadMessageRequestToReadMessageCommandMapper.new),
       );
   }
 }

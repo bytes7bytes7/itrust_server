@@ -14,4 +14,5 @@ export 'listen_messages_request/listen_messages_request.dart';
 export 'message_event_response/message_event_response.dart';
 export 'message_response/message_response.dart';
 export 'messages_response/messages_response.dart';
+export 'read_message_request/read_message_request.dart';
 export 'send_message_request/send_message_request.dart';

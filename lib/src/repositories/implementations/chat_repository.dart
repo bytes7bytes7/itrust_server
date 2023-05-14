@@ -325,6 +325,17 @@ class DevChatRepository implements ChatRepository {
   }
 
   @override
+  Future<void> readMessage({
+    required ChatID chatID,
+    required MessageID messageID,
+    required UserID userID,
+  }) async {
+    final lastMessagesForUsers = _userLastReadMessage[chatID] ?? HashMap();
+    lastMessagesForUsers[userID] = messageID;
+    _userLastReadMessage[chatID] = lastMessagesForUsers;
+  }
+
+  @override
   Future<Message?> getMessageByID({required MessageID id}) async {
     return _messages[id];
   }
