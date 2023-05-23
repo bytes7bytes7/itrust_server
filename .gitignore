@@ -7,7 +7,6 @@ build/
 
 .idea/
 .env.*
-**/env.dart
 **/env.g.dart
 
 .fvm/
