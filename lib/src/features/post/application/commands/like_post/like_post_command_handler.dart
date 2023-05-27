@@ -39,16 +39,21 @@ class LikePostCommandHandler extends RequestHandler<LikePostCommand,
       );
     }
 
-    final isAlreadyLikedByMy = await _postRepository.isPostLikedByUser(
+    final isAlreadyLikedByMe = await _postRepository.isPostLikedByUser(
       postID: request.postID,
       userID: request.userID,
     );
 
-    if (isAlreadyLikedByMy) {
+    if (isAlreadyLikedByMe) {
       return left(
         [const YouAlreadyLikedPost()],
       );
     }
+
+    await _postRepository.likePost(
+      postID: request.postID,
+      userID: request.userID,
+    );
 
     final mediaList = <MediaVM>[];
     for (final id in post.mediaIDs) {
