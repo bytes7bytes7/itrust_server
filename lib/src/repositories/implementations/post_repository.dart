@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import '../../features/common/application/providers/date_time_provider.dart';
 import '../../features/common/domain/domain.dart';
 import '../../features/post/application/dto/dto.dart';
+import '../interfaces/end_user_repository.dart';
 import '../interfaces/media_repository.dart';
 import '../interfaces/post_repository.dart';
 
@@ -14,8 +15,10 @@ class DevPostRepository implements PostRepository {
   DevPostRepository({
     required DateTimeProvider dateTimeProvider,
     required MediaRepository mediaRepository,
+    required EndUserRepository endUserRepository,
   })  : _dateTimeProvider = dateTimeProvider,
-        _mediaRepository = mediaRepository;
+        _mediaRepository = mediaRepository,
+        _endUserRepository = endUserRepository;
 
   // Key's type is `Post?` to be able to book ID for new Post
   final _postOrder = <PostID>[];
@@ -29,6 +32,7 @@ class DevPostRepository implements PostRepository {
 
   final DateTimeProvider _dateTimeProvider;
   final MediaRepository _mediaRepository;
+  final EndUserRepository _endUserRepository;
 
   @override
   Future<Post> createPost({
@@ -175,10 +179,9 @@ class DevPostRepository implements PostRepository {
   }
 
   @override
-  Future<List<Post>> getPostsByFilter({
+  Future<List<Post>> getFeedByFilter({
+    required UserID forUser,
     required int limit,
-    List<UserID> byUsers = const [],
-    bool byAllUsers = false,
     PostID? startAfter,
   }) async {
     final result = <Post>[];
@@ -193,7 +196,46 @@ class DevPostRepository implements PostRepository {
         continue;
       }
 
-      if (byAllUsers || byUsers.contains(post.authorID)) {
+      final isFriend = await _endUserRepository.isFriend(
+        firstUserID: forUser,
+        secondUserID: post.authorID,
+      );
+
+      if (isFriend) {
+        if (reachStartAster) {
+          result.add(post);
+        } else if (post.id == startAfter) {
+          reachStartAster = true;
+        }
+      }
+
+      if (result.length == limit) {
+        break;
+      }
+    }
+
+    return result;
+  }
+
+  @override
+  Future<List<Post>> getPostsByFilter({
+    required int limit,
+    required UserID byUser,
+    PostID? startAfter,
+  }) async {
+    final result = <Post>[];
+
+    var reachStartAster = startAfter == null;
+
+    for (final id in _postOrder) {
+      final post = _posts[id];
+
+      // booked place
+      if (post == null) {
+        continue;
+      }
+
+      if (byUser == post.authorID) {
         if (reachStartAster) {
           result.add(post);
         } else if (post.id == startAfter) {

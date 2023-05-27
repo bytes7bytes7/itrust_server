@@ -48,9 +48,9 @@ class GetUserPostsQueryHandler extends RequestHandler<GetUserPostsQuery,
     }
 
     final posts = await _postRepository.getPostsByFilter(
+      byUser: request.byUserID,
       limit: _limit,
       startAfter: request.lastPostID,
-      byUsers: [request.byUserID],
     );
 
     final postMediaVMs = HashMap<PostID, List<MediaVM>>();

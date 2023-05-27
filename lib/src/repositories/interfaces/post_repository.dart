@@ -32,10 +32,15 @@ abstract class PostRepository {
 
   Future<int> getPostCommentsAmount({required PostID id});
 
+  Future<List<Post>> getFeedByFilter({
+    required UserID forUser,
+    required int limit,
+    PostID? startAfter,
+  });
+
   Future<List<Post>> getPostsByFilter({
     required int limit,
-    List<UserID> byUsers = const [],
-    bool byAllUsers = false,
+    required UserID byUser,
     PostID? startAfter,
   });
 
